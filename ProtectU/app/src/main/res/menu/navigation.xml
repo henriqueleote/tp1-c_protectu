@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/white">
+    <item
+        android:id="@+id/navigation_map"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="@string/map" />
+    <!--<item
+        android:id="@+id/scan"
+        android:icon="@drawable/black_qr"
+        android:title="@string/scan_qr"/>-->
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/ic_person_black_24dp"
+        android:title="@string/profile" />
+</menu>
