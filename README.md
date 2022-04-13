@@ -2,7 +2,6 @@
 
 ## Concept
 
-Originality study and added value indications:
 With this application, it’s generally intended to inform the users about catastrophes,
 mainly war situations in the world. After the group discussion about the topic to be
 developed, a search for applications with the same purpose was carried out, having only
