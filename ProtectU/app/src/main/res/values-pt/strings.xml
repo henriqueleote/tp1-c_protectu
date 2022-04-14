@@ -3,11 +3,12 @@
     <string name="app_name">ProtectU</string>
     <string name="profile">Perfil</string>
     <string name="map">Mapa</string>
-    <string name="enter_your_name">Introduza o seu nome</string>
-    <string name="enter_your_surname">Introduza o seu apelido</string>
-    <string name="enter_your_mail">Introduza o seu email</string>
-    <string name="enter_your_password">Introduza a sua palavra-passe</string>
-    <string name="email_not_valid">Introduza um email válido</string>
-    <string name="password_dont_match">As palavras-passe não coincidem</string>
-    <string name="email_in_use">Email já se encontra em uso</string>
+    <string name="error_enter_your_name">Introduza o seu nome</string>
+    <string name="error_enter_your_surname">Introduza o seu apelido</string>
+    <string name="error_enter_your_mail">Introduza o seu email</string>
+    <string name="error_enter_your_password">Introduza a sua palavra-passe</string>
+    <string name="error_email_not_valid">Introduza um email válido</string>
+    <string name="error_password_dont_match">As palavras-passe não coincidem</string>
+    <string name="error_email_in_use">Email já se encontra em uso</string>
+    <string name="error_weak_password">Palavra-passe fraca</string>
 </resources>
