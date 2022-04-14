@@ -16,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -41,7 +40,7 @@ public class RegisterFragment extends BottomSheetDialogFragment {
     private Button signUpBtn;
 
     //EditText
-    private EditText nameText, surnameText, emailText, passwordText;
+    private EditText nameText, surnameText, emailText, passwordText, passwordConfirmText;
 
     //Firebase Authentication
     private FirebaseAuth mAuth;
@@ -73,6 +72,7 @@ public class RegisterFragment extends BottomSheetDialogFragment {
         surnameText = view.findViewById(R.id.surnameText);
         emailText = view.findViewById(R.id.emailText);
         passwordText = view.findViewById(R.id.passwordText);
+        passwordConfirmText = view.findViewById(R.id.passwordText2);
 
 
         //On click closes the form sheet
@@ -90,7 +90,7 @@ public class RegisterFragment extends BottomSheetDialogFragment {
                 registerUser(nameText.getText().toString().trim()
                         , surnameText.getText().toString().trim(),
                         emailText.getText().toString().trim().toLowerCase(Locale.ROOT),
-                        passwordText.getText().toString());
+                        passwordText.getText().toString(), passwordConfirmText.getText().toString());
             }
         });
 
@@ -99,51 +99,62 @@ public class RegisterFragment extends BottomSheetDialogFragment {
     }
 
     //User register
-    public void registerUser(String name, String surname, String email, String password) {
+    public void registerUser(String name, String surname, String email, String password, String confirmPassword) {
 
         //TODO - Test and change the toast to Focus
         // E-mail's field check
         if (TextUtils.isEmpty(name)) {
-            Toast.makeText(getActivity().getApplicationContext(), "Please enter name", Toast.LENGTH_LONG).show();
-            //focus
+            nameText.setError(getResources().getString(R.string.enter_your_name));  //Apresentar um erro
+            nameText.requestFocus();
             return;
         }
 
-        //TODO - Test and change the toast to Focus
+        //TODO - Test
         // E-mail's field check
         if (TextUtils.isEmpty(surname)) {
-            Toast.makeText(getActivity().getApplicationContext(), "Please enter surname", Toast.LENGTH_LONG).show();
-            //focus
+            surnameText.setError(getResources().getString(R.string.enter_your_surname));  //Apresentar um erro
+            surnameText.requestFocus();
             return;
         }
 
-        //TODO - Test and change the toast to Focus
+        //TODO - Test
         // E-mail's field check
         if (TextUtils.isEmpty(email)) {
-            Toast.makeText(getActivity().getApplicationContext(), "Please enter email", Toast.LENGTH_LONG).show();
-            //focus
+            emailText.setError(getResources().getString(R.string.enter_your_mail));  //Apresentar um erro
+            emailText.requestFocus();
             return;
         }
 
-        //TODO - Test and change the toast to Focus
+        //TODO - Test
         // Password's field check
         if (TextUtils.isEmpty(password)) {
-            Toast.makeText(getActivity().getApplicationContext(),"Please enter password",Toast.LENGTH_LONG).show();
-            //focus
+            passwordText.setError(getResources().getString(R.string.enter_your_password));  //Apresentar um erro
+            passwordText.requestFocus();
             return;
         }
 
-        //TODO - Test and change the toast to Focus
+
+        //TODO - Test
         // Email's string check
         if(!isEmailValid(email)){
-            Toast.makeText(getActivity().getApplicationContext(),"Email not valid",Toast.LENGTH_LONG).show();
-            //focus
+            emailText.setError(getResources().getString(R.string.email_not_valid));  //Apresentar um erro
+            emailText.requestFocus();
+            return;
+        }
+
+        //TODO - Test
+        //Check if both passwords match
+        if(!confirmPassword.equals(password)){
+            passwordConfirmText.setError(getResources().getString(R.string.password_dont_match));  //Apresentar um erro
+            passwordConfirmText.requestFocus();
             return;
         }
 
         //Check if the email is already registered in any other authenticatio  provider
         if (mAuth.fetchSignInMethodsForEmail(email).isSuccessful()) {
-            Log.d(TAG, "E-mail already in use");
+            emailText.setError(getResources().getString(R.string.email_in_use));  //Apresentar um erro
+            emailText.requestFocus();
+            return;
         } else
             //Firebase Authentication function to register the user via email and password, with success listeners
             mAuth.createUserWithEmailAndPassword(email, password)
@@ -179,8 +190,6 @@ public class RegisterFragment extends BottomSheetDialogFragment {
                                 //Shows error message and clears the sensible input fields
                                 Log.d(TAG, task.getException().toString());
                                 Toast.makeText(getActivity(), "Something happened, please try again", Toast.LENGTH_LONG).show();
-                                emailText.setText("");
-                                passwordText.setText("");
 
                             }
                         }

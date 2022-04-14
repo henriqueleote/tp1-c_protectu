@@ -2,4 +2,11 @@
     <string name="app_name">ProtectU</string>
     <string name="profile">Profile</string>
     <string name="map">Map</string>
+    <string name="enter_your_name">Enter your name</string>
+    <string name="enter_your_surname">Enter your surname</string>
+    <string name="enter_your_mail">Enter your mail</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="email_not_valid">Enter a valid email</string>
+    <string name="password_dont_match">Passwords don\'t match</string>
+    <string name="email_in_use">Email already in use</string>
 </resources>

@@ -78,11 +78,24 @@
         android:inputType="textPassword"
         android:textSize="15sp" />
 
+
+    <EditText
+        android:id="@+id/passwordText2"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/passwordText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:drawablePadding="10dp"
+        android:hint="Confirm your password"
+        android:inputType="textPassword"
+        android:textSize="15sp" />
+
     <CheckBox
         android:id="@+id/showPassword"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/passwordText"
+        android:layout_below="@+id/passwordText2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
         android:text="Password"
