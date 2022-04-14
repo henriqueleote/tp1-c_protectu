@@ -3,7 +3,10 @@ package cm.protectu;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -25,7 +28,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 public class ProfileFragment extends Fragment {
 
     //TextView
-    TextView nameTextView;
+    TextView nameTextView, optionBtn;
 
     //Button
     Button logoutBtn;
@@ -54,6 +57,16 @@ public class ProfileFragment extends Fragment {
         //Link the view objects with the XML
         nameTextView = view.findViewById(R.id.nameTextView);
         logoutBtn = view.findViewById(R.id.logoutButton);
+        optionBtn = view.findViewById(R.id.options);
+        registerForContextMenu(optionBtn);
+
+        //Quando clicado, abre um menú de opções
+        optionBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().openContextMenu(v);
+            }
+        });
 
         //TODO Check the animation
         //Checks if there is a session, if not, redirects to the Auth page
@@ -71,9 +84,7 @@ public class ProfileFragment extends Fragment {
         logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mAuth.signOut();
-                Toast.makeText(getActivity(), "See you next time", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getActivity(), AuthActivity.class));
+                logout();
             }
         });
 
@@ -109,4 +120,32 @@ public class ProfileFragment extends Fragment {
                     }
                 });
     }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater menuInflater = getActivity().getMenuInflater();
+        menuInflater.inflate(R.menu.options_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        // Handle item click
+        switch (item.getItemId()) {
+            case R.id.logout:
+                logout();
+                break;
+            default:
+                break;
+
+        }
+        return super.onContextItemSelected(item);
+    }
+
+    public void logout(){
+        mAuth.signOut();
+        Toast.makeText(getActivity(), "See you next time", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(getActivity(), AuthActivity.class));
+    }
+
 }

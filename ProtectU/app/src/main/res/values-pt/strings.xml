@@ -13,4 +13,6 @@
     <string name="error_weak_password">Palavra-passe fraca</string>
     <string name="error_invalid_email">Email inválido</string>
     <string name="error_invalid_password">Palavra-passe inválida</string>
+    <string name="options">Opções</string>
+    <string name="logout">Terminar sessão</string>
 </resources>

@@ -12,4 +12,6 @@
     <string name="error_weak_password">Weak password</string>
     <string name="error_invalid_email">Invalid email</string>
     <string name="error_invalid_password">Invalid password</string>
+    <string name="options">Options</string>
+    <string name="logout">Logout</string>
 </resources>
