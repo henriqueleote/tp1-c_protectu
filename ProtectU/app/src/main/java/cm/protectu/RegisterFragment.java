@@ -58,7 +58,7 @@ public class RegisterFragment extends BottomSheetDialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         //Link the layout to the Fragment
-        View view = inflater.inflate(R.layout.login_bottom, container, false);
+        View view = inflater.inflate(R.layout.register_bottom, container, false);
 
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
