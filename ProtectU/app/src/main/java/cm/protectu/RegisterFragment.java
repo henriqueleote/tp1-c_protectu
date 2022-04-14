@@ -181,7 +181,7 @@ public class RegisterFragment extends BottomSheetDialogFragment {
                                     });
 
                                 //Show success message and redirects to the app
-                                Toast.makeText(getActivity(), "Registration successful!", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getActivity(), getString(R.string.registration_sucessful), Toast.LENGTH_LONG).show();
                                 startActivity(new Intent(getActivity(), MainActivity.class));
                             } else {
                                 try {

@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     //Method to load Fragments
-    private boolean loadFragment(Fragment fragment) {
+    public boolean loadFragment(Fragment fragment) {
         if (fragment != null) {
             getSupportFragmentManager()
                     .beginTransaction()

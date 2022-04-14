@@ -2,22 +2,38 @@ package cm.protectu;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class AuthActivity extends AppCompatActivity {
 
     //Buttons
     private Button signInBtn, signUpBtn;
 
+    //TextView
+    private TextView anonymousButton;
+
     //Firebase Authentication
     private FirebaseAuth mAuth;
+
+    //Firebase User
+    private FirebaseUser user;
+
+    private static final String TAG =  AuthActivity.class.getName();
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,12 +46,14 @@ public class AuthActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         //Check if has stored session, if true, redirects to the App
-        if(mAuth.getCurrentUser() != null)
+        if(mAuth.getCurrentUser() != null){
             startActivity(new Intent(this, MainActivity.class));
+        }
 
         //Link the view objects with the XML
         signInBtn = findViewById(R.id.signInButton);
         signUpBtn = findViewById(R.id.signUpButton);
+        anonymousButton = findViewById(R.id.anonymousButton);
 
         //On click opens the Login form sheet
         signInBtn.setOnClickListener(new View.OnClickListener() {
@@ -54,5 +72,34 @@ public class AuthActivity extends AppCompatActivity {
                 bottomRegister.show(getSupportFragmentManager(), bottomRegister.getTag());
             }
         });
+
+        anonymousButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loginUserAnonymous(); //this is the correct code
+            }
+        });
+    }
+
+    public void loginUserAnonymous(){
+        mAuth.signInAnonymously()
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+
+                            //Set the Firebase User to the just logged in one
+                            user = mAuth.getCurrentUser();
+
+                            //Show success message and redirects to the app
+                            Toast.makeText(AuthActivity.this, getString(R.string.registration_sucessful), Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(AuthActivity.this, MainActivity.class));
+                            Log.d(TAG,"Data: " + user.getUid() + "\nEmail: " + user.getEmail());
+                        } else {
+                            Log.w(TAG, "signInAnonymously:failure", task.getException());
+                            Toast.makeText(AuthActivity.this, getString(R.string.registration_failed), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 }

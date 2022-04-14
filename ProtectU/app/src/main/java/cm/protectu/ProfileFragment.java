@@ -60,7 +60,7 @@ public class ProfileFragment extends Fragment {
         optionBtn = view.findViewById(R.id.options);
         registerForContextMenu(optionBtn);
 
-        //Quando clicado, abre um menú de opções
+        //On click, opens the menu
         optionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,7 +77,15 @@ public class ProfileFragment extends Fragment {
             startActivity(new Intent(getActivity(), AuthActivity.class));
         }
 
-        //Gets the data from firestore
+        //TODO Check the animation
+        //If the user is anonymous
+        if (mAuth.getCurrentUser().getEmail().equals(null)) {
+            getActivity().finish();
+            MainActivity main = new MainActivity();
+            main.loadFragment(new MapFragment());
+        }
+
+        //Gets the data from Firestore
         getData();
 
         //On click signs out the session and redirects to the Auth page
@@ -124,8 +132,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater menuInflater = getActivity().getMenuInflater();
-        menuInflater.inflate(R.menu.options_menu, menu);
+        getActivity().getMenuInflater().inflate(R.menu.options_menu, menu);
     }
 
     @Override
@@ -144,7 +151,7 @@ public class ProfileFragment extends Fragment {
 
     public void logout(){
         mAuth.signOut();
-        Toast.makeText(getActivity(), "See you next time", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), getString(R.string.see_you_next_time), Toast.LENGTH_SHORT).show();
         startActivity(new Intent(getActivity(), AuthActivity.class));
     }
 

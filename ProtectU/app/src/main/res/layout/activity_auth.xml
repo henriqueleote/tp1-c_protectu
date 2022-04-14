@@ -31,6 +31,15 @@
             android:backgroundTint="@color/primary_button"
             android:text="Sign Up" />
 
+        <TextView
+            android:id="@+id/anonymousButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/signUpButton"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="20dp"
+            android:text="Login Anonymously"/>
+
     </RelativeLayout>
 
 </RelativeLayout>

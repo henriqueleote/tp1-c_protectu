@@ -10,10 +10,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -22,8 +24,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
-import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Locale;
@@ -35,6 +35,9 @@ public class LoginFragment extends BottomSheetDialogFragment {
 
     //Button
     private Button signInBtn;
+
+    //TextView
+    private TextView forgotPasswordBtn;
 
     //EditText
     private EditText emailText, passwordText;
@@ -61,6 +64,17 @@ public class LoginFragment extends BottomSheetDialogFragment {
         signInBtn = view.findViewById(R.id.signInButton);
         emailText = view.findViewById(R.id.emailText);
         passwordText = view.findViewById(R.id.passwordText);
+        forgotPasswordBtn = view.findViewById(R.id.forgotPasswordBtn);
+
+        //TODO Close the one in the back
+        //If users forgot the password, sends a recover link
+        forgotPasswordBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ForgotPasswordFragment bottomForgot = new ForgotPasswordFragment();
+                bottomForgot.show(getParentFragmentManager(), bottomForgot.getTag());
+            }
+        });
 
         //On click closes the form sheet
         closeBtn.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +88,7 @@ public class LoginFragment extends BottomSheetDialogFragment {
         signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loginUser(emailText.getText().toString().toLowerCase(Locale.ROOT),
+                loginUserWithCredentials(emailText.getText().toString().toLowerCase(Locale.ROOT),
                         passwordText.getText().toString());
             }
         });
@@ -83,20 +97,21 @@ public class LoginFragment extends BottomSheetDialogFragment {
         return view;
     }
 
-    //User login
-    public void loginUser(String email, String password){
+    //User login with credentials
+    public void loginUserWithCredentials(String email, String password){
 
         // E-mail's field check
         if (TextUtils.isEmpty(email)) {
-            emailText.setError("Email is Missing");  //Apresentar um erro
-            emailText.requestFocus(); //Mostrar o erro
+            emailText.setError(getString(R.string.error_enter_your_mail));
+
+            emailText.requestFocus();
             return;
         }
 
         // Password's field check
         if (TextUtils.isEmpty(password)) {
-            passwordText.setError("Password is Missing");  //Apresentar um erro
-            passwordText.requestFocus(); //Mostrar o erro
+            passwordText.setError(getString(R.string.error_enter_your_password));
+            passwordText.requestFocus();
             return;
         }
 
@@ -111,7 +126,7 @@ public class LoginFragment extends BottomSheetDialogFragment {
                             user = mAuth.getCurrentUser();
 
                             //Show success message and redirects to the app
-                            Toast.makeText(getActivity(), "Registration successful!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getActivity(), getString(R.string.registration_sucessful), Toast.LENGTH_LONG).show();
                             startActivity(new Intent(getActivity(), MainActivity.class));
                         } else {
                             try {
@@ -130,6 +145,5 @@ public class LoginFragment extends BottomSheetDialogFragment {
                     }
                 });
     }
-
 
 }

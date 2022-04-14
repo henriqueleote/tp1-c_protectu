@@ -14,4 +14,9 @@
     <string name="error_invalid_password">Invalid password</string>
     <string name="options">Options</string>
     <string name="logout">Logout</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="email_sent">Email sent</string>
+    <string name="registration_sucessful">Registration successful</string>
+    <string name="registration_failed">Registration failed</string>
+    <string name="see_you_next_time">See you next time</string>
 </resources>
