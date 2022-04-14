@@ -144,12 +144,13 @@ public class RegisterFragment extends BottomSheetDialogFragment {
                                 user = mAuth.getCurrentUser();
                                 if(user != null){
 
-                                    Map<String, Object> user = new HashMap<>();
-                                    user.put("firstName", name);
-                                    user.put("lastName", surname);
+                                    Map<String, Object> userData = new HashMap<>();
+                                    userData.put("uid", user.getUid());
+                                    userData.put("firstName", name);
+                                    userData.put("lastName", surname);
 
                                     firebaseFirestore.collection("users")
-                                        .add(user)
+                                        .add(userData)
                                             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                         @Override
                                         public void onSuccess(DocumentReference documentReference) {

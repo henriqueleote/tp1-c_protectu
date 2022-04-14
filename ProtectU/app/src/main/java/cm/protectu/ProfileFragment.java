@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,8 +23,16 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 public class ProfileFragment extends Fragment {
 
+    //TextView
     TextView nameTextView;
+
+    //Button
+    Button logoutButton;
+
+    //Firebase Authentication
     FirebaseAuth mAuth;
+
+    //Firebase Firestore
     FirebaseFirestore firebaseFirestore;
 
     private static final String TAG = MainActivity.class.getName();
@@ -41,6 +50,7 @@ public class ProfileFragment extends Fragment {
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         nameTextView = view.findViewById(R.id.nameTextView);
+        logoutButton = view.findViewById(R.id.logoutButton);
 
         if (mAuth.getCurrentUser() == null) {
             getActivity().finish();
@@ -51,12 +61,24 @@ public class ProfileFragment extends Fragment {
 
         getData();
 
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAuth.signOut();
+                startActivity(new Intent(getActivity(), AuthActivity.class));
+            }
+        });
+
         return view;
 
     }
 
+    //TODO - Progress bar or splash screen
     public void getData(){
+
+        //gets the data from that specific user
         firebaseFirestore.collection("users")
+                .whereEqualTo("uid", mAuth.getCurrentUser().getUid())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -64,8 +86,8 @@ public class ProfileFragment extends Fragment {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 //nameTextView.setText(document.getData().firstname);
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                nameTextView.setText(document.getString("firstName") + document.getString("lastName"));
+                                Log.d(TAG, "Dados1 :" + document.getId() + " => " + document.getData());
+                                nameTextView.setText(document.getString("firstName") + " " + document.getString("lastName"));
                             }
                         } else {
                             Log.w(TAG, "Error getting documents.", task.getException());
