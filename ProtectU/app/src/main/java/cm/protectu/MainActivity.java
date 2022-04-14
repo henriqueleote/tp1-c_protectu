@@ -13,26 +13,35 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
 
-    FirebaseAuth mAuth;
+    //Firebase Authentication
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Link the layout to the activity
         setContentView(R.layout.activity_main);
 
+        //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
 
-        BottomNavigationView navigation = findViewById(R.id.nav_view);
-        navigation.setOnNavigationItemSelectedListener(this);
-
+        //Checks if there is a session, if not, redirects to the Auth page
         if (mAuth.getCurrentUser() == null) {
             finish();
             startActivity(new Intent(MainActivity.this, AuthActivity.class));
         }
 
+        //Link the view objects with the XML
+        BottomNavigationView navigation = findViewById(R.id.nav_view);
+        navigation.setOnNavigationItemSelectedListener(this);
+
+        //Loads the Profile fragment as default when onStart
         loadFragment(new ProfileFragment());
 
     }
+
+    //Method to load Fragments
     private boolean loadFragment(Fragment fragment) {
         if (fragment != null) {
             getSupportFragmentManager()
@@ -45,11 +54,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         return false;
     }
 
+    //Method
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         Fragment fragment = null;
 
+        //Switch case to load the fragment based on the bottom navbar option
         switch (item.getItemId()) {
             case R.id.navigation_map:
                 fragment = new MapFragment();
@@ -58,8 +69,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             case R.id.navigation_profile:
                 fragment = new ProfileFragment();
                 break;
-
         }
+
+        //loads the fragment
         return loadFragment(fragment);
     }
 

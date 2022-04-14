@@ -14,23 +14,29 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MapFragment extends Fragment {
 
-    FirebaseAuth mAuth;
+    //Firebase Authentication
+    private FirebaseAuth mAuth;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        //Link the layout to the Fragment
         View view = inflater.inflate(R.layout.fragment_map, container, false);
 
+        //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
 
+        //TODO Check the animation
+        //Checks if there is a session, if not, redirects to the Auth page
         if (mAuth.getCurrentUser() == null) {
             getActivity().finish();
-            //verificar o que isto fazia no outro codigo
+            //Swipe animation ?? not sure, consult previous code
             //getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             startActivity(new Intent(getActivity(), AuthActivity.class));
         }
 
+        //Returns the view
         return view;
 
     }

@@ -34,31 +34,39 @@ import java.util.regex.Pattern;
 
 public class RegisterFragment extends BottomSheetDialogFragment {
 
+    //ImageView
     private ImageView closeBtn;
-    private Button signUpBtn;
-    private EditText nameText, surnameText, emailText, passwordText;
 
+    //Button
+    private Button signUpBtn;
+
+    //EditText
+    private EditText nameText, surnameText, emailText, passwordText;
 
     //Firebase Authentication
     private FirebaseAuth mAuth;
 
+    //Firebase User
     private FirebaseUser user;
-    FirebaseFirestore firebaseFirestore;
 
+    //Firebase Firestore Database
+    private FirebaseFirestore firebaseFirestore;
+
+    //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme);
 
-        //Initialize firebase auth
+        //Link the layout to the Fragment
+        View view = inflater.inflate(R.layout.login_bottom, container, false);
+
+        //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
 
-        //Initialize firebase firestore
+        //Initialize Firebase Firestore Database
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        //Initialize the layout
-        View view = inflater.inflate(R.layout.register_bottom, container, false);
-
+        //Link the view objects with the XML
         closeBtn = view.findViewById(R.id.close);
         signUpBtn = view.findViewById(R.id.signUpButton);
         nameText = view.findViewById(R.id.nameText);
@@ -67,7 +75,7 @@ public class RegisterFragment extends BottomSheetDialogFragment {
         passwordText = view.findViewById(R.id.passwordText);
 
 
-        //Quando é carregado no fechar, fecha a página
+        //On click closes the form sheet
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,22 +83,22 @@ public class RegisterFragment extends BottomSheetDialogFragment {
             }
         });
 
+        //On click starts the register process
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String name = nameText.getText().toString().trim();
-                String surname = surnameText.getText().toString().trim();
-                String email = emailText.getText().toString().trim().toLowerCase(Locale.ROOT);
-                String password = passwordText.getText().toString();
-
-                registerUser(name, surname, email, password);
+                registerUser(nameText.getText().toString().trim()
+                        , surnameText.getText().toString().trim(),
+                        emailText.getText().toString().trim().toLowerCase(Locale.ROOT),
+                        passwordText.getText().toString());
             }
         });
 
+        //Returns the view
         return view;
     }
 
+    //User register
     public void registerUser(String name, String surname, String email, String password) {
 
         //TODO - Test and change the toast to Focus
@@ -133,22 +141,27 @@ public class RegisterFragment extends BottomSheetDialogFragment {
             return;
         }
 
+        //Check if the email is already registered in any other authenticatio  provider
         if (mAuth.fetchSignInMethodsForEmail(email).isSuccessful()) {
             Log.d(TAG, "E-mail already in use");
         } else
+            //Firebase Authentication function to register the user via email and password, with success listeners
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                user = mAuth.getCurrentUser();
-                                if(user != null){
 
+                                //Set the Firebase User to the just logged in one
+                                user = mAuth.getCurrentUser();
+
+                                //Create HashMap object with the user's profile data
                                     Map<String, Object> userData = new HashMap<>();
                                     userData.put("uid", user.getUid());
                                     userData.put("firstName", name);
                                     userData.put("lastName", surname);
 
+                                //Firebase Firestore function to store data with objects, with success listeners
                                     firebaseFirestore.collection("users")
                                         .add(userData)
                                             .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -156,28 +169,25 @@ public class RegisterFragment extends BottomSheetDialogFragment {
                                         public void onSuccess(DocumentReference documentReference) {
                                             Log.d(TAG, "DocumentSnapshot with the ID: " + documentReference.getId());
                                         }
-                                    }).addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Log.w(TAG, "Erro");
-                                        }
                                     });
-                                }
-                                Log.d(TAG, "Dados: " + user.getEmail());
 
+                                //Show success message and redirects to the app
                                 Toast.makeText(getActivity(), "Registration successful!", Toast.LENGTH_LONG).show();
                                 startActivity(new Intent(getActivity(), MainActivity.class));
                             } else {
 
+                                //Shows error message and clears the sensible input fields
                                 Log.d(TAG, task.getException().toString());
                                 Toast.makeText(getActivity(), "Something happened, please try again", Toast.LENGTH_LONG).show();
+                                emailText.setText("");
+                                passwordText.setText("");
 
                             }
                         }
                     });
     }
 
-    //verifica se o email é valido
+    //Method that checks if the email's string is valid within a certain pattern
     public static boolean isEmailValid(String email) {
         String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
         Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);

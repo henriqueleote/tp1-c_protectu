@@ -26,29 +26,39 @@ import java.util.Locale;
 
 public class LoginFragment extends BottomSheetDialogFragment {
 
+    //ImageView
     private ImageView closeBtn;
-    private Button signIn;
+
+    //Button
+    private Button signInBtn;
+
+    //EditText
     private EditText emailText, passwordText;
 
+    //Firebase Authentication
     private FirebaseAuth mAuth;
+
+    //Firebase User
     private FirebaseUser user;
 
+    //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-    //setStyle(BottomSheetDialogFragment.STYLE_NORMAL, R.style.CustomBottomSheetDialogTheme);
 
-        //Initialize firebase auth
-        mAuth = FirebaseAuth.getInstance();
-
+        //Link the layout to the Fragment
         View view = inflater.inflate(R.layout.login_bottom, container, false);
 
+        //Initialize Firebase Authentication
+        mAuth = FirebaseAuth.getInstance();
+
+        //Link the view objects with the XML
         closeBtn = view.findViewById(R.id.close);
-        signIn = view.findViewById(R.id.signInButton);
+        signInBtn = view.findViewById(R.id.signInButton);
         emailText = view.findViewById(R.id.emailText);
         passwordText = view.findViewById(R.id.passwordText);
 
-        //Quando é carregado no fechar, fecha a página
+        //On click closes the form sheet
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,22 +66,20 @@ public class LoginFragment extends BottomSheetDialogFragment {
             }
         });
 
-
-
-        signIn.setOnClickListener(new View.OnClickListener() {
+        //On click starts the login process
+        signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String email = emailText.getText().toString().toLowerCase(Locale.ROOT);
-                String password = passwordText.getText().toString();
-
-                loginUser(email, password);
+                loginUser(emailText.getText().toString().toLowerCase(Locale.ROOT),
+                        passwordText.getText().toString());
             }
         });
 
+        //Returns the view
         return view;
     }
 
+    //User login
     public void loginUser(String email, String password){
 
         //TODO - Test and change the toast to Focus
@@ -90,21 +98,26 @@ public class LoginFragment extends BottomSheetDialogFragment {
             return;
         }
 
+        //Firebase Authentication function to login the user via email and password, with success listeners
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            user = mAuth.getCurrentUser();
-                            Log.d(TAG, "Dados: " + user.getEmail());
 
+                            //Set the Firebase User to the just logged in one
+                            user = mAuth.getCurrentUser();
+
+                            //Show success message and redirects to the app
                             Toast.makeText(getActivity(), "Registration successful!", Toast.LENGTH_LONG).show();
                             startActivity(new Intent(getActivity(), MainActivity.class));
                         } else {
 
+                            //Shows error message and clears the sensible input fields
                             Log.d(TAG, task.getException().toString());
                             Toast.makeText(getActivity(), "Something happened, please try again", Toast.LENGTH_LONG).show();
-
+                            emailText.setText("");
+                            passwordText.setText("");
                         }
                     }
                 });

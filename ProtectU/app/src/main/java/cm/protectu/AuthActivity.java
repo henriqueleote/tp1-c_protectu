@@ -22,16 +22,22 @@ public class AuthActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //Link the layout to the activity
         setContentView(R.layout.activity_auth);
 
+        //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
 
+        //Check if has stored session, if true, redirects to the App
         if(mAuth.getCurrentUser() != null)
             startActivity(new Intent(this, MainActivity.class));
 
+        //Link the view objects with the XML
         signInBtn = findViewById(R.id.signInButton);
         signUpBtn = findViewById(R.id.signUpButton);
 
+        //On click opens the Login form sheet
         signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,6 +46,7 @@ public class AuthActivity extends AppCompatActivity {
             }
         });
 
+        //On click opens the register form sheet
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -27,7 +27,7 @@ public class ProfileFragment extends Fragment {
     TextView nameTextView;
 
     //Button
-    Button logoutButton;
+    Button logoutBtn;
 
     //Firebase Authentication
     FirebaseAuth mAuth;
@@ -35,6 +35,7 @@ public class ProfileFragment extends Fragment {
     //Firebase Firestore
     FirebaseFirestore firebaseFirestore;
 
+    //TAG for debug logs
     private static final String TAG = MainActivity.class.getName();
 
     @Nullable
@@ -43,25 +44,30 @@ public class ProfileFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
-        //Initialize firebase auth
+        //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
 
-        //Initialize firebase firestore
+        //Initialize Firebase Firestore Database
         firebaseFirestore = FirebaseFirestore.getInstance();
 
+        //Link the view objects with the XML
         nameTextView = view.findViewById(R.id.nameTextView);
-        logoutButton = view.findViewById(R.id.logoutButton);
+        logoutBtn = view.findViewById(R.id.logoutButton);
 
+        //TODO Check the animation
+        //Checks if there is a session, if not, redirects to the Auth page
         if (mAuth.getCurrentUser() == null) {
             getActivity().finish();
-            //verificar o que isto fazia no outro codigo
+            //Swipe animation ?? not sure, consult previous code
             //getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             startActivity(new Intent(getActivity(), AuthActivity.class));
         }
 
+        //Gets the data from firestore
         getData();
 
-        logoutButton.setOnClickListener(new View.OnClickListener() {
+        //On click signs out the session and redirects to the Auth page
+        logoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mAuth.signOut();
@@ -69,15 +75,18 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        //Returns the view
         return view;
 
     }
 
-    //TODO - Progress bar or splash screen
+    //TODO - Add progress bar or splash screen
+    //Method to get profile data from Firestore Database
     public void getData(){
 
-        //gets the data from that specific user
+        //Firebase Authentication function get the data from firebase with certain criteria
         firebaseFirestore.collection("users")
+                //where the userID is the same as the logged in user
                 .whereEqualTo("uid", mAuth.getCurrentUser().getUid())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -85,11 +94,14 @@ public class ProfileFragment extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                //nameTextView.setText(document.getData().firstname);
-                                Log.d(TAG, "Dados1 :" + document.getId() + " => " + document.getData());
+                                //Prints in debug the data object
+                                Log.d(TAG, "Data :" + document.getId() + " => " + document.getData());
+                                //Sets the text in the view with the name and surname of the authenticated user
                                 nameTextView.setText(document.getString("firstName") + " " + document.getString("lastName"));
                             }
                         } else {
+                            //TODO Maybe reload the page or kill the session?
+                            //Shows the error
                             Log.w(TAG, "Error getting documents.", task.getException());
                         }
                     }
