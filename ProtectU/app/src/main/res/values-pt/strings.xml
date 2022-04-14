@@ -11,4 +11,6 @@
     <string name="error_password_dont_match">As palavras-passe não coincidem</string>
     <string name="error_email_in_use">Email já se encontra em uso</string>
     <string name="error_weak_password">Palavra-passe fraca</string>
+    <string name="error_invalid_email">Email inválido</string>
+    <string name="error_invalid_password">Palavra-passe inválida</string>
 </resources>

@@ -20,6 +20,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Locale;
@@ -82,19 +86,17 @@ public class LoginFragment extends BottomSheetDialogFragment {
     //User login
     public void loginUser(String email, String password){
 
-        //TODO - Test and change the toast to Focus
         // E-mail's field check
         if (TextUtils.isEmpty(email)) {
-            Toast.makeText(getActivity().getApplicationContext(), "Please enter email!!", Toast.LENGTH_LONG).show();
-            //focus
+            emailText.setError("Email is Missing");  //Apresentar um erro
+            emailText.requestFocus(); //Mostrar o erro
             return;
         }
 
-        //TODO - Test and change the toast to Focus
         // Password's field check
         if (TextUtils.isEmpty(password)) {
-            Toast.makeText(getActivity().getApplicationContext(),"Please enter password!!",Toast.LENGTH_LONG).show();
-            //focus
+            passwordText.setError("Password is Missing");  //Apresentar um erro
+            passwordText.requestFocus(); //Mostrar o erro
             return;
         }
 
@@ -112,12 +114,18 @@ public class LoginFragment extends BottomSheetDialogFragment {
                             Toast.makeText(getActivity(), "Registration successful!", Toast.LENGTH_LONG).show();
                             startActivity(new Intent(getActivity(), MainActivity.class));
                         } else {
-
-                            //Shows error message and clears the sensible input fields
-                            Log.d(TAG, task.getException().toString());
-                            Toast.makeText(getActivity(), "Something happened, please try again", Toast.LENGTH_LONG).show();
-                            emailText.setText("");
-                            passwordText.setText("");
+                            try {
+                                throw task.getException();
+                            } catch(FirebaseAuthInvalidCredentialsException e) { //Error if password doesnt match the account
+                                passwordText.setError(getString(R.string.error_invalid_password));
+                                passwordText.requestFocus();
+                                passwordText.setText("");
+                            }catch(FirebaseAuthInvalidUserException e){ //Error if email does not exists
+                                emailText.setError(getString(R.string.error_invalid_email));
+                                emailText.requestFocus();
+                            }catch(Exception e) {
+                                Log.e(TAG, e.getMessage());
+                            }
                         }
                     }
                 });
