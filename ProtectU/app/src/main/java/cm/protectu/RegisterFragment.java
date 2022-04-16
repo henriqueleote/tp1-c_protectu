@@ -165,6 +165,8 @@ public class RegisterFragment extends BottomSheetDialogFragment {
                                 //Set the Firebase User to the just logged in one
                                 user = mAuth.getCurrentUser();
 
+                                // TODO - Add date of register
+
                                 //Create HashMap object with the user's profile data
                                     Map<String, Object> userData = new HashMap<>();
                                     userData.put("uid", user.getUid());
