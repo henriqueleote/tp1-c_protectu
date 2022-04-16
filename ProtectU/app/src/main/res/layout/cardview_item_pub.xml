@@ -13,11 +13,51 @@
         android:layout_height="match_parent" />
 
         <ImageView
-            android:id="@+id/image_card_id"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:background="#2d2d2d"/>
+            android:id="@+id/back_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/tommy"
+            />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/profile_name_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="David Ferreira"
+                android:textColor="@color/black"
+                android:layout_marginLeft="20dp"
+                android:textSize="8dp"
+                android:layout_marginTop="5dp"
+                />
+
+            <TextView
+                android:id="@+id/name_of_the_missing_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Luke,"
+                android:textColor="@color/black"
+                android:layout_marginTop="100dp"
+                android:layout_marginLeft="5dp"
+                android:layout_below="@+id/profile_name_id"
+                />
+
+            <TextView
+                android:id="@+id/age_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="6"
+                android:textColor="@color/black"
+                android:layout_toRightOf="@+id/name_of_the_missing_id"
+                android:layout_marginTop="116dp"
+
+                />
+
+        </RelativeLayout>
+
         <TextView
             android:id="@+id/card_id"
             android:textSize="13sp"
@@ -27,5 +67,7 @@
             android:layout_height="match_parent"
             android:text="Luke"
             android:textColor="@color/white"/>
+
+
 
 </androidx.cardview.widget.CardView>
