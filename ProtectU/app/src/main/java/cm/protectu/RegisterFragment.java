@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -170,15 +171,21 @@ public class RegisterFragment extends BottomSheetDialogFragment {
                                     userData.put("firstName", name);
                                     userData.put("lastName", surname);
 
-                                //Firebase Firestore function to store data with objects, with success listeners
-                                    firebaseFirestore.collection("users")
-                                        .add(userData)
-                                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                        @Override
-                                        public void onSuccess(DocumentReference documentReference) {
-                                            Log.d(TAG, "DocumentSnapshot with the ID: " + documentReference.getId());
-                                        }
-                                    });
+                                //Inserts in Firestore the user data with the correspondent user ID from Authentication
+                                firebaseFirestore.collection("users").document(user.getUid())
+                                        .set(userData)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d(TAG, "DocumentSnapshot with the ID: " + user.getUid());
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w(TAG, "Error writing document", e);
+                                            }
+                                        });
 
                                 //Show success message and redirects to the app
                                 Toast.makeText(getActivity(), getString(R.string.registration_sucessful), Toast.LENGTH_LONG).show();
