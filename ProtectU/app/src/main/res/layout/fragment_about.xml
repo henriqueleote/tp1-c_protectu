@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="About"
+        android:textSize="24dp"
+        android:textColor="@color/black"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="15dp"
+        />
+
+    <TextView
+        android:id="@+id/text_about_us"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dui sapien eget mi proin. Eu volutpat odio facilisis mauris sit amet massa vitae. Aliquam vestibulum morbi blandit cursus risus at ultrices mi. Enim ut sem viverra aliquet eget sit amet tellus. Eleifend donec pretium vulputate sapien nec. Metus aliquam eleifend mi in nulla posuere sollicitudin aliquam ultrices. Aliquam ut porttitor leo a diam sollicitudin tempor. Lorem ipsum dolor sit amet consectetur. At erat pellentesque adipiscing commodo elit at imperdiet. Vel pretium lectus quam id leo in vitae turpis. At lectus urna duis convallis convallis tellus id. Quis vel eros donec ac. Felis imperdiet proin fermentum leo vel. Elit ullamcorper dignissim cras tincidunt lobortis feugiat vivamus at. Eu turpis egestas pretium aenean pharetra magna ac placerat. "
+        android:textColor="@color/black"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="100dp"
+        />
+    <TextView
+        android:id="@+id/version_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Version:"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_below="@+id/text_about_us"
+        android:layout_marginLeft="40dp"
+        android:paddingTop="20dp"
+        />
+    <TextView
+        android:id="@+id/version_number_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1.0.0"
+        android:textColor="@color/black"
+        android:layout_below="@+id/version_id"
+        android:layout_marginLeft="40dp"
+        android:paddingTop="5dp"
+        />
+    <TextView
+        android:id="@+id/grup_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Grup:"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_below="@+id/version_number_id"
+        android:layout_marginLeft="40dp"
+        android:paddingTop="20dp"
+        />
+    <TextView
+        android:id="@+id/grup_names_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="David Belchior, André Matias, Pedro Peralta, \n Ulyana...,Guilherme Oliveira, Henrrique Leote"
+        android:textColor="@color/black"
+        android:layout_below="@+id/grup_id"
+        android:layout_marginLeft="40dp"
+        android:paddingTop="5dp"
+        />
+    <TextView
+        android:id="@+id/terms_respons_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Terms and Responsabilities"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_below="@+id/grup_names_id"
+        android:layout_marginLeft="40dp"
+        android:paddingTop="20dp"
+        />
+    <TextView
+    android:id="@+id/contacts_id"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Contacts_id"
+    android:textColor="@color/black"
+    android:textStyle="bold"
+    android:layout_below="@+id/terms_respons_id"
+    android:layout_marginLeft="40dp"
+    android:paddingTop="20dp"
+    />
+    <TextView
+        android:id="@+id/all_contacts_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+123456789 \n example@gmail.com"
+        android:textColor="@color/black"
+        android:layout_below="@+id/contacts_id"
+        android:layout_marginLeft="40dp"
+        android:paddingTop="5dp"
+        />
+
+    <ImageView
+        android:id="@+id/back_id"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/back"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="8dp"
+
+        />
+
+</RelativeLayout>
