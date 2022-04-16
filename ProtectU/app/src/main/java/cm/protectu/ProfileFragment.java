@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,10 +29,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 public class ProfileFragment extends Fragment {
 
     //TextView
-    TextView nameTextView, optionBtn;
+    TextView nameTextView, optionBtn, emailTextView, contactTextView;
 
-    //Button
-    Button logoutBtn;
+    //ImageView
+    ImageView editImageView;
 
     //Firebase Authentication
     FirebaseAuth mAuth;
@@ -56,7 +57,9 @@ public class ProfileFragment extends Fragment {
 
         //Link the view objects with the XML
         nameTextView = view.findViewById(R.id.nameTextView);
-        logoutBtn = view.findViewById(R.id.logoutButton);
+        emailTextView = view.findViewById(R.id.emailTextView);
+        contactTextView = view.findViewById(R.id.contactTextView);
+        editImageView = view.findViewById(R.id.editImageView);
         optionBtn = view.findViewById(R.id.options);
         registerForContextMenu(optionBtn);
 
@@ -65,6 +68,15 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getActivity().openContextMenu(v);
+            }
+        });
+
+        //TODO Open edit profile page
+        //On click opens edit page
+        editImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 
@@ -79,22 +91,14 @@ public class ProfileFragment extends Fragment {
 
         //TODO Check the animation
         //If the user is anonymous
-        if (mAuth.getCurrentUser().getEmail().equals(null)) {
+        /*if (mAuth.getCurrentUser().getEmail().equals(null)) {
             getActivity().finish();
             MainActivity main = new MainActivity();
             main.loadFragment(new MapFragment());
-        }
+        }*/
 
         //Gets the data from Firestore
         getData();
-
-        //On click signs out the session and redirects to the Auth page
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                logout();
-            }
-        });
 
         //Returns the view
         return view;
@@ -119,6 +123,7 @@ public class ProfileFragment extends Fragment {
                                 Log.d(TAG, "Data :" + document.getId() + " => " + document.getData());
                                 //Sets the text in the view with the name and surname of the authenticated user
                                 nameTextView.setText(document.getString("firstName") + " " + document.getString("lastName"));
+                                emailTextView.setText("E-mail: " + mAuth.getCurrentUser().getEmail());
                             }
                         } else {
                             //TODO Maybe reload the page or kill the session?
