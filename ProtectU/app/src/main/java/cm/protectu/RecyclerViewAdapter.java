@@ -14,6 +14,8 @@ import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
 
+    //TODO - Change variables names and comment
+
     private Context mContext;
     private List<Card> mData;
 

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -29,6 +30,7 @@ public class EditProfileFragment extends Fragment {
     private EditText firstNameEditText;
     private EditText lastNameEditText;
     private EditText contactEditText;
+    private ImageView backButton;
     private FirebaseFirestore firebaseFirestore;
     private String name, surname, phoneNumber;
 
@@ -54,6 +56,7 @@ public class EditProfileFragment extends Fragment {
         firstNameEditText = view.findViewById(R.id.firstNameEditText);
         lastNameEditText = view.findViewById(R.id.lastNameEditText);
         contactEditText = view.findViewById(R.id.contactEditText);
+        backButton = view.findViewById(R.id.backButton);
 
         firstNameEditText.setText(name);
         lastNameEditText.setText(surname);
@@ -97,6 +100,18 @@ public class EditProfileFragment extends Fragment {
                 transaction.commit();
             }
         });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ProfileFragment fragment = new ProfileFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+
 
 
         //Returns the view

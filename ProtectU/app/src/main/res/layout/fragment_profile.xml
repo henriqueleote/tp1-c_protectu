@@ -67,7 +67,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginTop="475dp"
         android:fontFamily="@font/lexend_regular"
-        android:text="Contact: " />
+        android:text="Phone number: " />
 
     <ImageView
         android:id="@+id/editImageView"

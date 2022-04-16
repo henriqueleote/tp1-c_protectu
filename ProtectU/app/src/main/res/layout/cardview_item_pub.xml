@@ -16,7 +16,6 @@
             android:id="@+id/back_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/tommy"
             />
 
         <RelativeLayout

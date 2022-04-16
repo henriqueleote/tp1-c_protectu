@@ -16,7 +16,7 @@
         android:drawablePadding="10dp"
         android:fontFamily="@font/lexend_regular"
         android:hint="First name"
-        android:inputType="textEmailAddress"
+        android:inputType="textAutoComplete"
         android:textSize="15sp" />
 
     <EditText
@@ -29,8 +29,10 @@
         android:drawablePadding="10dp"
         android:fontFamily="@font/lexend_regular"
         android:hint="Last name"
-        android:inputType="textEmailAddress"
+        android:inputType="textAutoComplete"
         android:textSize="15sp"/>
+
+    <!-- TODO - Verify input number fields -->
 
     <EditText
         android:id="@+id/contactEditText"
@@ -41,8 +43,8 @@
         android:layout_marginTop="10dp"
         android:drawablePadding="10dp"
         android:fontFamily="@font/lexend_regular"
-        android:hint="Contact"
-        android:inputType="textEmailAddress"
+        android:hint="Phone number"
+        android:inputType="phone"
         android:textSize="15sp" />
 
     <Button
@@ -70,6 +72,15 @@
         android:layout_marginTop="300dp"
         android:layout_marginLeft="250dp"
         android:src="@drawable/ic_camera_black_24dp"
+        app:tint="@color/black"/>
+
+    <ImageView
+        android:id="@+id/backButton"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="15dp"
+        android:src="@drawable/ic_arrow_back_black_24dp"
         app:tint="@color/black"/>
 
 </RelativeLayout>
