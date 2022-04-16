@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         navigation.setOnNavigationItemSelectedListener(this);
 
         //Loads the Profile fragment as default when onStart
-        loadFragment(new ProfileFragment());
+        loadFragment(new MapFragment());
 
     }
 
