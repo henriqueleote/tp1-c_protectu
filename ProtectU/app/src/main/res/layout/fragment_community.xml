@@ -18,7 +18,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
 
-        android:id="@+id/CommunityRecyclerView"
+        android:id="@+id/communityRecyclerView"
         android:layout_below="@+id/communityText"
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"

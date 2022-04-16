@@ -33,8 +33,9 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.userName.setText(listOfCommunityCards.get(position).getUserId());
-        holder.text.setText(listOfCommunityCards.get(position).getText());
+        //holder.userName.setText(listOfCommunityCards.get(position).getUserID());
+        holder.text.setText(listOfCommunityCards.get(position).getMessageText());
+        
     }
 
     @Override

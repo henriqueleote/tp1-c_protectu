@@ -1,10 +1,10 @@
 package cm.protectu;
 
 public class CommunityCard {
-    private String userId;
-    private String id;
-    private String text;
-    private String image;
+    private int userID;
+    private int messageID;
+    private String messageText;
+    private String imageURL;
     private int likes;
     private int dislikes;
     private boolean verified;
@@ -12,46 +12,46 @@ public class CommunityCard {
     public CommunityCard() {
     }
 
-    public CommunityCard(String userId, String id, String text, String image, int likes, int dislikes, boolean verified) {
-        this.userId = userId;
-        this.id = id;
+    public CommunityCard(int userID, int messageID, String messageText, String imageURL, int likes, int dislikes, boolean verified) {
+        this.userID = userID;
+        this.messageID = messageID;
         this.likes = likes;
         this.dislikes = dislikes;
         this.verified = verified;
-        this.text = text;
-        this.image = image;
+        this.messageText = messageText;
+        this.imageURL = imageURL;
     }
 
-    public String getImage() {
-        return image;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
-    public String getText() {
-        return text;
+    public String getMessageText() {
+        return messageText;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setMessageText(String messageText) {
+        this.messageText = messageText;
     }
 
-    public String getUserId() {
-        return userId;
+    public int getUserID() {
+        return userID;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
-    public String getId() {
-        return id;
+    public int getMessageID() {
+        return messageID;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setMessageID(int messageID) {
+        this.messageID = messageID;
     }
 
     public int getLikes() {
