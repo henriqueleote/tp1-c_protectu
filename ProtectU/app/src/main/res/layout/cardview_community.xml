@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -10,9 +9,9 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardCommunity"
         android:layout_width="350dp"
-        android:layout_height="200dp"
-        android:layout_marginVertical="10dp"
+        android:layout_height="150dp"
         android:layout_marginHorizontal="30dp"
+        android:layout_marginVertical="10dp"
         app:cardCornerRadius="12dp"
         app:cardElevation="6dp">
 
@@ -21,29 +20,83 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/userImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    app:srcCompat="@drawable/ic_person_black_24dp" />
+
+                <TextView
+                    android:id="@+id/userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="35dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/lexend_regular"
+                    android:text="UserName"
+                    android:textAlignment="center"
+                    android:textSize="13sp" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="130dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                >
+
+                <ImageView
+                    android:id="@+id/likeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/ic_thumb_up_black_24dp" />
+
+                <TextView
+                    android:id="@+id/numberOfLikes"
+                    android:layout_toRightOf="@id/likeButton"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lexend_regular"
+                    android:text="1"
+                    android:textAlignment="center"
+                    android:textSize="15sp"
+                    android:layout_marginLeft="10dp"/>
+
+                <ImageView
+                    android:id="@+id/dislikeButton"
+                    app:srcCompat="@drawable/ic_thumb_down_black_24dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@id/numberOfLikes"
+                    android:layout_marginLeft="10dp"/>
+
+                <TextView
+                    android:id="@+id/numberOfDislikes"
+                    android:layout_toRightOf="@id/dislikeButton"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lexend_regular"
+                    android:text="1"
+                    android:textAlignment="center"
+                    android:textSize="15sp"
+                    android:layout_marginLeft="10dp"/>
+
+            </RelativeLayout>
+
+
             <ImageView
-                android:id="@+id/userImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                app:srcCompat="@drawable/ic_person_black_24dp" />
-
-            <TextView
-                android:id="@+id/userName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="35dp"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/lexend_regular"
-                android:text="UserName"
-                android:textAlignment="center"
-                android:textSize="13sp" />
-
-
-            <ImageButton
                 android:id="@+id/shareButton"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_alignParentBottom="true"
                 android:layout_marginLeft="8dp"
                 app:srcCompat="@android:drawable/ic_menu_share" />

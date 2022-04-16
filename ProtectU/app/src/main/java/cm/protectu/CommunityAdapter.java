@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,7 +34,9 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         //holder.userName.setText(listOfCommunityCards.get(position).getUserID());
         holder.text.setText(listOfCommunityCards.get(position).getMessageText());
-        
+        holder.likeButton.setText(listOfCommunityCards.get(position).getLikes()+"");
+        holder.dislikeButton.setText(listOfCommunityCards.get(position).getDislikes()+"");
+
     }
 
     @Override
@@ -44,9 +45,8 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
-        TextView userName, text;
+        TextView userName, text, likeButton,dislikeButton;
         ImageView userImage;
-        ImageButton shareButton;
         CardView cardCommunity;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -54,8 +54,10 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
             userName = itemView.findViewById(R.id.userName);
             text = itemView.findViewById(R.id.communityText);
             userImage = itemView.findViewById(R.id.userImage);
-            shareButton = itemView.findViewById(R.id.shareButton);
+            likeButton = itemView.findViewById(R.id.numberOfLikes);
+            dislikeButton = itemView.findViewById(R.id.numberOfDislikes);
             cardCommunity = itemView.findViewById(R.id.cardCommunity);
+
         }
     }
 }
