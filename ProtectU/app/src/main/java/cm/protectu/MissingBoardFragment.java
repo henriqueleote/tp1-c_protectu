@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MissingBoard extends Fragment {
+public class MissingBoardFragment extends Fragment {
 
     private List<Card> cards;
     RecyclerView myrv;

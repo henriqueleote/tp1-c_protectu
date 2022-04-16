@@ -28,7 +28,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         View view;
         LayoutInflater mInflater = LayoutInflater.from(mContext);
-        view = mInflater.inflate(R.layout.cardveiw_item_pub,parent,false);
+        view = mInflater.inflate(R.layout.cardview_item_pub,parent,false);
         return new MyViewHolder(view);
     }
 

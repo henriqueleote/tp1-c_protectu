@@ -15,7 +15,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.firebase.auth.FirebaseAuth;
 
 
-public class About extends Fragment {
+public class AboutFragment extends Fragment {
 
     //Firebase Authentication
     private FirebaseAuth mAuth;
@@ -34,7 +34,7 @@ public class About extends Fragment {
         imageBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MapFragment fragment = new EditProfileFragment();
+                MapFragment fragment = new MapFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container, fragment);
                 transaction.addToBackStack(null);
