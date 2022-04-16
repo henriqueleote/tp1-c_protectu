@@ -2,22 +2,36 @@ package cm.protectu;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 
 
 public class CommunityFragment extends Fragment {
 
     //Firebase Authentication
     private FirebaseAuth mAuth;
-    RecyclerView recyclerView;
+    private FirebaseFirestore firebaseFirestore;
+    private RecyclerView recyclerView;
+    private CommunityAdapter communityAdapter;
+    private ArrayList<CommunityCard> listOfCommunityCards;
 
 
     @Nullable
@@ -30,6 +44,8 @@ public class CommunityFragment extends Fragment {
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
 
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
         //TODO Check the animation
         //Checks if there is a session, if not, redirects to the Auth page
         if (mAuth.getCurrentUser() == null) {
@@ -39,8 +55,36 @@ public class CommunityFragment extends Fragment {
             startActivity(new Intent(getActivity(), AuthActivity.class));
         }
 
+        recyclerView = view.findViewById(R.id.CommunityRecyclerView);
+
+        listOfCommunityCards = new ArrayList<>();
+
+        CommunityCardsData();
+
         //Returns the view
         return view;
 
     }
+
+    public void CommunityCardsData() {
+        firebaseFirestore.collection("community-chat")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                CommunityCard communityCard = document.toObject(CommunityCard.class);
+                                listOfCommunityCards.add(communityCard);
+                                communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards);
+                                recyclerView.setAdapter(communityAdapter);
+                                communityAdapter.notifyDataSetChanged();
+                            }
+                    } else {
+                        Toast.makeText(getActivity(),"erro", Toast.LENGTH_SHORT).show();
+                    }
+                }
+    });
+
+}
 }
