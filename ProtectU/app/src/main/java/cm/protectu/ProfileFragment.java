@@ -17,6 +17,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,6 +29,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 
 public class ProfileFragment extends Fragment {
+    //Strings
+    String userName, lastName, phoneNumber;
 
     //TextView
     TextView nameTextView, optionBtn, emailTextView, contactTextView;
@@ -76,7 +80,11 @@ public class ProfileFragment extends Fragment {
         editImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                EditProfileFragment fragment = new EditProfileFragment(userName, lastName, phoneNumber);
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
 
@@ -122,8 +130,12 @@ public class ProfileFragment extends Fragment {
                                 //Prints in debug the data object
                                 Log.d(TAG, "Data :" + document.getId() + " => " + document.getData());
                                 //Sets the text in the view with the name and surname of the authenticated user
-                                nameTextView.setText(document.getString("firstName") + " " + document.getString("lastName"));
+                                userName = document.getString("firstName");
+                                lastName = document.getString("lastName");
+                                phoneNumber = document.getString("phoneNumber");
+                                nameTextView.setText(userName + " " + lastName);
                                 emailTextView.setText("E-mail: " + mAuth.getCurrentUser().getEmail());
+                                contactTextView.setText("Contact: " + phoneNumber);
                             }
                         } else {
                             //TODO Maybe reload the page or kill the session?
