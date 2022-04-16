@@ -9,6 +9,13 @@ import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 
 
@@ -35,6 +42,28 @@ public class MapFragment extends Fragment {
             //getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             startActivity(new Intent(getActivity(), AuthActivity.class));
         }
+
+        //Initialize the map fragment
+        SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.google_map);
+
+        supportMapFragment.getMapAsync(new OnMapReadyCallback() {
+            @Override
+            public void onMapReady(GoogleMap googleMap) {
+                //When the map is loaded
+                googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+                    @Override
+                    public void onMapClick(LatLng latLng) {
+                        //When clicked
+                        MarkerOptions markerOptions = new MarkerOptions();
+                        markerOptions.position(latLng);
+                        markerOptions.title(latLng.latitude + ": " + latLng.longitude);
+                        googleMap.clear();
+                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+                        googleMap.addMarker(markerOptions);
+                    }
+                });
+            }
+        });
 
         //Returns the view
         return view;
