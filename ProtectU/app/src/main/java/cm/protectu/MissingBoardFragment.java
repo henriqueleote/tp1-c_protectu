@@ -34,6 +34,8 @@ public class MissingBoardFragment extends Fragment {
         //Link the layout to the Fragment
         View view = inflater.inflate(R.layout.fragment_missingboard, container, false);
 
+        myrv = (RecyclerView) view.findViewById(R.id.idCourseRV);
+
         cards = new ArrayList<>();
         cards.add(new Card("Tommy", "blablalbalblalbalbalblbalblalbalblalbal", 56, 91919919,R.drawable.tommy));
         cards.add(new Card("Tommy", "blablalbalblalbalbalblbalblalbalblalbal", 56, 91919919,R.drawable.tommy));
@@ -42,9 +44,9 @@ public class MissingBoardFragment extends Fragment {
         cards.add(new Card("Tommy", "blablalbalblalbalbalblbalblalbalblalbal", 56, 91919919,R.drawable.tommy));
         cards.add(new Card("Tommy", "blablalbalblalbalbalblbalblalbalblalbal", 56, 91919919,R.drawable.tommy));
 
-        myrv = (RecyclerView) view.findViewById(R.id.recyclerview_id);
+
         myAdapter = new RecyclerViewAdapter(getActivity(),cards);
-        myrv.setLayoutManager(new GridLayoutManager(getActivity(),3));
+        myrv.setLayoutManager(new GridLayoutManager(getActivity(),2));
         myrv.setAdapter(myAdapter);
 
         //Initialize Firebase Authentication

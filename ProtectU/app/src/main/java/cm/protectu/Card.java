@@ -72,3 +72,9 @@ public class Card {
         PhoneNumber = phoneNumber;
     }
 }
+/*
+*
+Card Layout: The card layout is an XML file that will represent each individual grid item inside your Recycler view.
+View Holder: View Holder Class is the java class that stores the reference to the UI Elements in the Card Layout and they can be modified dynamically during the execution of the program by the list of data.
+Data Class: Data Class is an object class that holds information to be displayed in each recycler view item that is to be displayed in Recycler View.
+* */
