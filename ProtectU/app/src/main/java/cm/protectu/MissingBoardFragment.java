@@ -5,13 +5,22 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,13 +30,14 @@ import java.util.List;
  */
 public class MissingBoardFragment extends Fragment {
 
-    private List<Card> cards;
-    RecyclerView myrv;
-    RecyclerViewAdapter myAdapter;
+    private ArrayList<MissingCard> missingCards;
+    private RecyclerView myRecycleView;
+    private MissingBoardAdapter myAdapter;
+    private FirebaseFirestore firebaseFirestore;
+    private ImageView imageBack;
 
     //Firebase Authentication
     private FirebaseAuth mAuth;
-
 
     @Nullable
     @Override
@@ -36,23 +46,32 @@ public class MissingBoardFragment extends Fragment {
         //Link the layout to the Fragment
         View view = inflater.inflate(R.layout.fragment_missingboard, container, false);
 
-        myrv = (RecyclerView) view.findViewById(R.id.idCourseRV);
+        myRecycleView = (RecyclerView) view.findViewById(R.id.idCourseRV);
 
-        cards = new ArrayList<>();
-        cards.add(new Card("Tommy", "blablalbalblalbalbalblbalblalbalblalbal", 56, 91919919,R.drawable.tommy));
-        cards.add(new Card("Tommy", "blablalbalblalbalbalblbalblalbalblalbal", 56, 91919919,R.drawable.tommy));
-        cards.add(new Card("Tommy", "blablalbalblalbalbalblbalblalbalblalbal", 56, 91919919,R.drawable.tommy));
-        cards.add(new Card("Tommy", "blablalbalblalbalbalblbalblalbalblalbal", 56, 91919919,R.drawable.tommy));
-        cards.add(new Card("Tommy", "blablalbalblalbalbalblbalblalbalblalbal", 56, 91919919,R.drawable.tommy));
-        cards.add(new Card("Tommy", "blablalbalblalbalbalblbalblalbalblalbal", 56, 91919919,R.drawable.tommy));
+        missingCards = new ArrayList<>();
 
 
-        myAdapter = new RecyclerViewAdapter(getActivity(),cards);
-        myrv.setLayoutManager(new GridLayoutManager(getActivity(),2));
-        myrv.setAdapter(myAdapter);
+        myAdapter = new MissingBoardAdapter(getActivity(), missingCards);
+        myRecycleView.setLayoutManager(new GridLayoutManager(getActivity(),2));
+        myRecycleView.setAdapter(myAdapter);
 
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
+        imageBack = view.findViewById(R.id.back_missing_id);
+
+        /*
+        imageBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CommunityFragment fragment = new CommunityFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+
+            }
+        });*/
+
 
         //TODO Check the animation
         //Checks if there is a session, if not, redirects to the Auth page
@@ -63,8 +82,38 @@ public class MissingBoardFragment extends Fragment {
             startActivity(new Intent(getActivity(), AuthActivity.class));
         }
 
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
+        missingCardsData();
+
         //Returns the view
         return view;
 
+
+
     }
+
+    /**
+     * Permite verificar se a tarefa de ir buiscar os dados na colecao é bem sucessido ou n e dps transforma os dados devolvidos na classe pretendida, cria os respetivos cards
+     */
+    public void missingCardsData() {
+        firebaseFirestore.collection("missing-board")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                MissingCard missingCard = document.toObject(MissingCard.class);
+                                missingCards.add(missingCard);
+                                myAdapter = new MissingBoardAdapter(getActivity(), missingCards);
+                                myRecycleView.setAdapter(myAdapter);
+                                myAdapter.notifyDataSetChanged();
+                            }
+                        } else {
+                            Toast.makeText(getActivity(),"erro", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+}
 }
