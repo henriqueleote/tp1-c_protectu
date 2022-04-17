@@ -45,10 +45,14 @@ public class AuthActivity extends AppCompatActivity {
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
 
+        if(mAuth.getCurrentUser().isAnonymous())
+            mAuth.signOut();
+
         //Check if has stored session, if true, redirects to the App
         if(mAuth.getCurrentUser() != null){
             startActivity(new Intent(this, MainActivity.class));
         }
+
 
         //Link the view objects with the XML
         signInBtn = findViewById(R.id.signInButton);

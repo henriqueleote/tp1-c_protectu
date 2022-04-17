@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -19,6 +20,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     //Firebase Authentication
     private FirebaseAuth mAuth;
+
+    //Bottom navigation bar
+    BottomNavigationView navigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +40,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             finish();
             startActivity(new Intent(MainActivity.this, AuthActivity.class));
         }
+        navigation = findViewById(R.id.nav_view);
 
-        //Link the view objects with the XML
-        BottomNavigationView navigation = findViewById(R.id.nav_view);
+        //If the user is anonymous, removes the profile option
+        if(mAuth.getCurrentUser().isAnonymous()){
+            navigation.getMenu().removeItem(R.id.navigation_profile);
+        }
+
         navigation.setOnNavigationItemSelectedListener(this);
 
         //Loads the Profile fragment as default when onStart
@@ -76,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
 
             case R.id.navigation_news:
-                fragment = new NewsFragment();
+                fragment = new MissingBoardFragment();
                 break;
 
             case R.id.navigation_community:
