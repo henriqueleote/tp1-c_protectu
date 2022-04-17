@@ -17,10 +17,6 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
 
-    DrawerLayout drawerLayout;
-    NavigationView navigationView;
-    Toolbar toolbar;
-
     //Firebase Authentication
     private FirebaseAuth mAuth;
 
@@ -33,17 +29,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
-
-        /*************Hooks************/
-        drawerLayout = findViewById(R.id.container);
-        navigationView = findViewById(R.id.nav_view_2);
-        //toolbar = findViewById(R.id.toolbar);
-
-        /*************ToolBar************/
-        //setSupportActionBar(toolbar);
-
-        /***********Navigation Drawe Menu**************/
-        //ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar);
 
 
         //Checks if there is a session, if not, redirects to the Auth page
