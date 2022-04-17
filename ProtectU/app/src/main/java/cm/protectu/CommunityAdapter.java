@@ -1,6 +1,7 @@
 package cm.protectu;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,15 +12,25 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 
 public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyViewHolder>{
 
     Context context;
     ArrayList<CommunityCard> listOfCommunityCards;
+    FirebaseFirestore firebaseFirestore;
 
+    private static final String TAG =  MainActivity.class.getName();
 
     public CommunityAdapter(Context ct, ArrayList<CommunityCard> l){
+        firebaseFirestore = FirebaseFirestore.getInstance();
         context = ct;
         listOfCommunityCards = l;
     }
@@ -32,11 +43,13 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        //holder.userName.setText(listOfCommunityCards.get(position).getUserID());
+        String id = listOfCommunityCards.get(position).getUserID();
+        //String[] userData = getUserData(id);
+        //holder.userName.setText(userData[1]); //username
+        //holder.userName.setText(username); //username
         holder.text.setText(listOfCommunityCards.get(position).getMessageText());
         holder.likeButton.setText(listOfCommunityCards.get(position).getLikes()+"");
         holder.dislikeButton.setText(listOfCommunityCards.get(position).getDislikes()+"");
-
     }
 
     @Override
@@ -60,4 +73,24 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
 
         }
     }
+
+    /*public String[] getUserData(String id){
+        String[] userData = {};
+
+        DocumentReference docRef = firebaseFirestore.collection("users").document(id);
+        Log.d(TAG, "DocRef -> " + id);
+
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Log.d(TAG, "Data -> " + documentSnapshot.get("firstName").toString());
+                userData[0] = documentSnapshot.get("uid").toString();
+                userData[1] = documentSnapshot.get("firstName").toString();
+                userData[2] = documentSnapshot.get("lastName").toString();
+                //userData[3] = documentSnapshot.get("profilePic").toString();
+            }
+        });
+
+        return userData;
+    }*/
 }

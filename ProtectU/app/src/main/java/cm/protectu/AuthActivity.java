@@ -34,7 +34,6 @@ public class AuthActivity extends AppCompatActivity {
 
     private static final String TAG =  AuthActivity.class.getName();
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,8 +44,10 @@ public class AuthActivity extends AppCompatActivity {
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
 
-        if(mAuth.getCurrentUser().isAnonymous())
-            mAuth.signOut();
+        //TODO - Fix this
+        //The code is right, but it has some bugs and it says that the mAuth is null
+        //if(mAuth.getCurrentUser().isAnonymous())
+        //    mAuth.signOut();
 
         //Check if has stored session, if true, redirects to the App
         if(mAuth.getCurrentUser() != null){

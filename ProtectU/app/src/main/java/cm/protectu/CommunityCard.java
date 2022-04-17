@@ -1,8 +1,8 @@
 package cm.protectu;
 
 public class CommunityCard {
-    private int userID;
-    private int messageID;
+    private String userID;
+    private String messageID;
     private String messageText;
     private String imageURL;
     private int likes;
@@ -12,7 +12,7 @@ public class CommunityCard {
     public CommunityCard() {
     }
 
-    public CommunityCard(int userID, int messageID, String messageText, String imageURL, int likes, int dislikes, boolean verified) {
+    public CommunityCard(String userID, String messageID, String messageText, String imageURL, int likes, int dislikes, boolean verified) {
         this.userID = userID;
         this.messageID = messageID;
         this.likes = likes;
@@ -38,19 +38,19 @@ public class CommunityCard {
         this.messageText = messageText;
     }
 
-    public int getUserID() {
+    public String getUserID() {
         return userID;
     }
 
-    public void setUserID(int userID) {
+    public void setUserID(String userID) {
         this.userID = userID;
     }
 
-    public int getMessageID() {
+    public String getMessageID() {
         return messageID;
     }
 
-    public void setMessageID(int messageID) {
+    public void setMessageID(String messageID) {
         this.messageID = messageID;
     }
 
