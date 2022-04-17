@@ -31,6 +31,7 @@ public class AboutFragment extends Fragment {
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
         imageBack = view.findViewById(R.id.back_id);
+        //go back to the map frame
         imageBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

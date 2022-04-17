@@ -16,7 +16,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * calss of missing board
+ */
 public class MissingBoardFragment extends Fragment {
 
     private List<Card> cards;

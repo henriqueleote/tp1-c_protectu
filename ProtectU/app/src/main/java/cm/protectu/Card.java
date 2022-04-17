@@ -11,6 +11,9 @@ import androidx.fragment.app.Fragment;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * Card of the missing people, on missing Board
+ */
 public class Card {
 
     private String nameOfWhoisMissing;
