@@ -54,10 +54,12 @@ public class CommunityFragment extends Fragment {
 
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        recyclerView = view.findViewById(R.id.communityRecyclerView);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
-
         listOfCommunityCards = new ArrayList<>();
+        recyclerView = view.findViewById(R.id.communityRecyclerView);
+        communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards,mAuth);
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+        recyclerView.setAdapter(communityAdapter);
+
 
         communityCardsData();
 

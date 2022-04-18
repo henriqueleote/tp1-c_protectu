@@ -53,12 +53,24 @@
         android:inputType="text"
         android:textSize="15sp" />
 
+    <EditText
+        android:id="@+id/contactText"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/surnameText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:drawablePadding="10dp"
+        android:hint="Contact"
+        android:inputType="text"
+        android:textSize="15sp" />
+
 
     <EditText
         android:id="@+id/emailText"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/surnameText"
+        android:layout_below="@+id/contactText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:drawablePadding="10dp"

@@ -44,7 +44,7 @@ public class RegisterFragment extends BottomSheetDialogFragment {
     private Button signUpBtn;
 
     //EditText
-    private EditText nameText, surnameText, emailText, passwordText, passwordConfirmText;
+    private EditText nameText, surnameText,contactText, emailText, passwordText, passwordConfirmText;
 
     //Firebase Authentication
     private FirebaseAuth mAuth;
@@ -74,6 +74,7 @@ public class RegisterFragment extends BottomSheetDialogFragment {
         signUpBtn = view.findViewById(R.id.signUpButton);
         nameText = view.findViewById(R.id.nameText);
         surnameText = view.findViewById(R.id.surnameText);
+        contactText = view.findViewById(R.id.contactText);
         emailText = view.findViewById(R.id.emailText);
         passwordText = view.findViewById(R.id.passwordText);
         passwordConfirmText = view.findViewById(R.id.passwordText2);
@@ -91,8 +92,9 @@ public class RegisterFragment extends BottomSheetDialogFragment {
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                registerUser(nameText.getText().toString().trim()
-                        , surnameText.getText().toString().trim(),
+                registerUser(nameText.getText().toString().trim(),
+                        surnameText.getText().toString().trim(),
+                        contactText.getText().toString().trim(),
                         emailText.getText().toString().trim().toLowerCase(Locale.ROOT),
                         passwordText.getText().toString(), passwordConfirmText.getText().toString());
             }
@@ -103,19 +105,27 @@ public class RegisterFragment extends BottomSheetDialogFragment {
     }
 
     //User register
-    public void registerUser(String name, String surname, String email, String password, String confirmPassword) {
+    public void registerUser(String name, String surname,String contact, String email, String password, String confirmPassword) {
 
-        // E-mail's field check
+        // First name field check
         if (TextUtils.isEmpty(name)) {
             nameText.setError(getResources().getString(R.string.error_enter_your_name));  //Apresentar um erro
             nameText.requestFocus();
             return;
         }
 
-        // E-mail's field check
+        // Last name field check
         if (TextUtils.isEmpty(surname)) {
             surnameText.setError(getResources().getString(R.string.error_enter_your_surname));  //Apresentar um erro
             surnameText.requestFocus();
+            return;
+        }
+
+        //TODO: add string check
+        // Contact's field check
+        if (TextUtils.isEmpty(contact)) {
+            contactText.setError(getResources().getString(R.string.error_invalid_contact));  //Apresentar um erro
+            contactText.requestFocus();
             return;
         }
 
@@ -172,6 +182,7 @@ public class RegisterFragment extends BottomSheetDialogFragment {
                                     userData.put("uid", user.getUid());
                                     userData.put("firstName", name);
                                     userData.put("lastName", surname);
+                                    userData.put("phoneNumber", contact);
 
                                 //Inserts in Firestore the user data with the correspondent user ID from Authentication
                                 firebaseFirestore.collection("users").document(user.getUid())
