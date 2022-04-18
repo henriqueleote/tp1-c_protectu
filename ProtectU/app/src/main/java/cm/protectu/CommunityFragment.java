@@ -43,8 +43,6 @@ public class CommunityFragment extends Fragment {
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
 
-        firebaseFirestore = FirebaseFirestore.getInstance();
-
         //TODO Check the animation
         //Checks if there is a session, if not, redirects to the Auth page
         if (mAuth.getCurrentUser() == null) {
@@ -54,12 +52,15 @@ public class CommunityFragment extends Fragment {
             startActivity(new Intent(getActivity(), AuthActivity.class));
         }
 
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
         recyclerView = view.findViewById(R.id.communityRecyclerView);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
 
         listOfCommunityCards = new ArrayList<>();
 
         communityCardsData();
+
 
         //Returns the view
         return view;
@@ -76,15 +77,15 @@ public class CommunityFragment extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 CommunityCard communityCard = document.toObject(CommunityCard.class);
                                 listOfCommunityCards.add(communityCard);
-                                communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards);
+                                communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards,mAuth);
                                 recyclerView.setAdapter(communityAdapter);
                                 communityAdapter.notifyDataSetChanged();
                             }
-                    } else {
-                        Toast.makeText(getActivity(),"erro", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getActivity(), "erro", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                }
-    });
+                });
 
-}
+    }
 }
