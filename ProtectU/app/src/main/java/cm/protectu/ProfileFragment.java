@@ -1,5 +1,7 @@
 package cm.protectu;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,7 +38,10 @@ public class ProfileFragment extends Fragment {
     TextView nameTextView, optionBtn, emailTextView, contactTextView;
 
     //ImageView
-    ImageView editImageView;
+    ImageView editImageView, profileImageView;
+
+    //Button
+    Button removeCommunityBtn, removeMissingBtn;
 
     //Firebase Authentication
     FirebaseAuth mAuth;
@@ -53,6 +58,8 @@ public class ProfileFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
+
+
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
 
@@ -65,7 +72,43 @@ public class ProfileFragment extends Fragment {
         contactTextView = view.findViewById(R.id.contactTextView);
         editImageView = view.findViewById(R.id.editImageView);
         optionBtn = view.findViewById(R.id.options);
+        removeCommunityBtn = view.findViewById(R.id.removeCommunityButton);
+        removeMissingBtn = view.findViewById(R.id.removeMissingButton);
+        profileImageView = view.findViewById(R.id.profileImageView);
+
         registerForContextMenu(optionBtn);
+
+        if(mAuth.getCurrentUser().isAnonymous()){
+
+            nameTextView.setVisibility(View.GONE);
+            emailTextView.setVisibility(View.GONE);
+            contactTextView.setVisibility(View.GONE);
+            editImageView.setVisibility(View.GONE);
+            optionBtn.setVisibility(View.GONE);
+            removeCommunityBtn.setVisibility(View.GONE);
+            removeMissingBtn.setVisibility(View.GONE);
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage("Want to go to the login page")
+                    .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            mAuth.signOut();
+                            getActivity().finish();
+                            startActivity(new Intent(getActivity(), AuthActivity.class));
+                        }
+                    })
+                    .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            MapFragment fragment = new MapFragment();
+                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                            transaction.replace(R.id.fragment_container, fragment);
+                            transaction.addToBackStack(null);
+                            transaction.commit();
+                        }
+                    });
+            // Create the AlertDialog object and return it
+            builder.show();
+        }
 
         //On click, opens the menu
         optionBtn.setOnClickListener(new View.OnClickListener() {
@@ -88,6 +131,22 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        //TODO remove missing publication
+        removeMissingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+        //TODO remove community publication
+        removeCommunityBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
         //TODO Check the animation
         //Checks if there is a session, if not, redirects to the Auth page
         if (mAuth.getCurrentUser() == null) {
@@ -104,6 +163,13 @@ public class ProfileFragment extends Fragment {
             MainActivity main = new MainActivity();
             main.loadFragment(new MapFragment());
         }*/
+
+        //TODO way to login
+        //If the user is anonymous
+        if(mAuth.getCurrentUser().isAnonymous()){
+
+        }
+
 
         //Gets the data from Firestore
         getData();
