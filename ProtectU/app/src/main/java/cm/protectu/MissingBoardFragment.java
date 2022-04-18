@@ -34,7 +34,7 @@ public class MissingBoardFragment extends Fragment {
     private RecyclerView myRecycleView;
     private MissingBoardAdapter myAdapter;
     private FirebaseFirestore firebaseFirestore;
-    private ImageView imageBack;
+    
 
     //Firebase Authentication
     private FirebaseAuth mAuth;
@@ -57,20 +57,8 @@ public class MissingBoardFragment extends Fragment {
 
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
-        imageBack = view.findViewById(R.id.back_missing_id);
 
-        /*
-        imageBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CommunityFragment fragment = new CommunityFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
 
-            }
-        });*/
 
 
         //TODO Check the animation
