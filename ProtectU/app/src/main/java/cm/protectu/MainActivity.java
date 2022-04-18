@@ -42,11 +42,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
         navigation = findViewById(R.id.nav_view);
 
+        /*
         //If the user is anonymous, removes the profile option
         if(mAuth.getCurrentUser().isAnonymous()){
             navigation.getMenu().removeItem(R.id.navigation_profile);
         }
-
+        */
         navigation.setOnNavigationItemSelectedListener(this);
 
         //Loads the Profile fragment as default when onStart

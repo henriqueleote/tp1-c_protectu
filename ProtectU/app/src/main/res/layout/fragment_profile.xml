@@ -83,7 +83,7 @@
         android:layout_height="200dp"
         android:layout_above="@+id/nameTextView"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_person_black_24dp"/>
+        android:src="@drawable/ic_person_black_24dp" />
 
 
 </RelativeLayout>
