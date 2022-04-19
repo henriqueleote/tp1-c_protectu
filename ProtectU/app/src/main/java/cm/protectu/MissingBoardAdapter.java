@@ -1,6 +1,7 @@
 package cm.protectu;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -44,6 +46,18 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
         holder.missingName.setText(mData.get(position).getMissingName());
         holder.age.setText(String.valueOf(mData.get(position).getMissingAge()));
         //falta buscar imagens
+
+        //set click listener
+        /*
+        holder.cardMissing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Intent intent = new Intent(mContext,CardActivity.class);
+                //intent.putExtra("ProfileName",mData.get(position).getProfileName());
+                //mContext.startActivity(intent);
+            }
+        });*/
+
     }
 
     @Override

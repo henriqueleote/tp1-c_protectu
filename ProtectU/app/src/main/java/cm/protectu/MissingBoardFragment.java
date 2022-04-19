@@ -34,7 +34,7 @@ public class MissingBoardFragment extends Fragment {
     private RecyclerView myRecycleView;
     private MissingBoardAdapter myAdapter;
     private FirebaseFirestore firebaseFirestore;
-    
+
 
     //Firebase Authentication
     private FirebaseAuth mAuth;

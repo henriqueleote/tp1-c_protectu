@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--XMl Layout for RecyclerView-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MainActivity"
+    android:background="#F1EFEF"
+    android:id="@+id/main_post_id">
+
+    <ImageView
+        android:id="@+id/back_id"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/ic_arrow_back_black_24dp"
+        app:tint="@color/black" />
+
+    <TextView
+        android:id="@+id/title_page_missing_post_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="Missing Board"
+        android:textColor="@color/black"
+        android:textSize="23dp"
+        tools:ignore="MissingConstraints"></TextView>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="570dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/title_page_missing_post_id"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        app:cardCornerRadius="15dp"
+        android:background="@color/white"
+        >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+
+        <ImageView
+            android:id="@+id/foto"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_menu"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:id="@+id/profile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="David Ferreira"
+            android:textSize="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_toRightOf="@+id/foto"
+            />
+
+
+
+<!--
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+            -->
+
+
+            <ImageView
+                android:id="@+id/image_missing_id"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:layout_below="@+id/profile_name"
+                android:layout_marginTop="10dp"
+                android:background="@color/black"
+                android:scaleType="centerCrop"
+
+
+                />
+
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/black"
+                android:background="#879CA6"
+                android:text="fddsffdsadasd"
+                android:layout_below="@+id/image_missing_id"
+                />
+
+
+        </RelativeLayout>
+       <!-- </LinearLayout>-->
+
+
+    </androidx.cardview.widget.CardView>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginRight="35dp"
+        android:backgroundTint="@color/white">
+
+        <RelativeLayout
+            android:id="@+id/all_card_id"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:background="@drawable/missing_post_corner_radius"
+            android:layout_marginTop="70dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp">
+
+
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:background="@drawable/missing_post_description_rectangle"
+                android:layout_alignEnd="@+id/all_card_id"
+                tools:ignore="NotSibling">
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+
+     </androidx.core.widget.NestedScrollView> -->
+
+</RelativeLayout>

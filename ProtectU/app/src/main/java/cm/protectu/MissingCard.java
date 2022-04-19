@@ -12,12 +12,13 @@ public class MissingCard {
     private int phoneNumber;
     private int missingID;
     private String foto;
+    private String fotoMissing;
 
     public MissingCard(){
 
     }
 
-    public MissingCard(String missingName, String description, int missingAge, int phoneNumber, String foto, String profileName,int missingID) {
+    public MissingCard(String missingName, String description, int missingAge, int phoneNumber, String foto, String profileName,int missingID,String fotoMissing) {
         this.missingName = missingName;
         this.description = description;
         this.missingAge = missingAge;
@@ -25,10 +26,19 @@ public class MissingCard {
         this.foto = foto;
         this.profileName = profileName;
         this.missingID = missingID;
+        this.fotoMissing = fotoMissing;
     }
 
     public int getMissingID() {
         return missingID;
+    }
+
+    public String getFotoMissing() {
+        return fotoMissing;
+    }
+
+    public void setFotoMissing(String fotoMissing) {
+        this.fotoMissing = fotoMissing;
     }
 
     public void setMissingID(int missingID) {
