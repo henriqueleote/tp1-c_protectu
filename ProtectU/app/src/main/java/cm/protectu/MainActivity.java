@@ -1,19 +1,15 @@
 package cm.protectu;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Toast;
-import android.widget.Toolbar;
+import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
@@ -22,7 +18,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private FirebaseAuth mAuth;
 
     //Bottom navigation bar
-    BottomNavigationView navigation;
+    BottomNavigationView bottomBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             finish();
             startActivity(new Intent(MainActivity.this, AuthActivity.class));
         }
-        navigation = findViewById(R.id.nav_view);
+        bottomBar = findViewById(R.id.nav_view);
 
         /*
         //If the user is anonymous, removes the profile option
@@ -48,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             navigation.getMenu().removeItem(R.id.navigation_profile);
         }
         */
-        navigation.setOnNavigationItemSelectedListener(this);
+        bottomBar.setOnNavigationItemSelectedListener(this);
 
         //Loads the Profile fragment as default when onStart
         loadFragment(new MapFragment());

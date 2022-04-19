@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -33,6 +34,7 @@ public class EditProfileFragment extends Fragment {
     private ImageView backButton;
     private FirebaseFirestore firebaseFirestore;
     private String name, surname, phoneNumber;
+    BottomNavigationView bottomBar;
 
 
     private static final String TAG = MainActivity.class.getName();
@@ -57,6 +59,11 @@ public class EditProfileFragment extends Fragment {
         lastNameEditText = view.findViewById(R.id.lastNameEditText);
         contactEditText = view.findViewById(R.id.contactEditText);
         backButton = view.findViewById(R.id.backButton);
+        BottomNavigationView bottomBar = getActivity().findViewById(R.id.nav_view);
+
+        //TODO -- It works but it's gone forever, doesn't restore
+        //Hide the bottom bar in this page
+        //bottomBar.setVisibility(View.INVISIBLE);
 
         firstNameEditText.setText(name);
         lastNameEditText.setText(surname);

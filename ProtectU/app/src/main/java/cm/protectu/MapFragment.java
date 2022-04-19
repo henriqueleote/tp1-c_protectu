@@ -1,7 +1,6 @@
 package cm.protectu;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -9,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,17 +17,15 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 
 
@@ -39,6 +37,8 @@ public class MapFragment extends Fragment {
     FusedLocationProviderClient client;
 
     SupportMapFragment supportMapFragment;
+
+    FloatingActionButton resetLocation;
 
     @Nullable
     @Override
@@ -60,6 +60,14 @@ public class MapFragment extends Fragment {
         }
 
         client = LocationServices.getFusedLocationProviderClient(getActivity());
+        resetLocation = view.findViewById(R.id.resetLocationBtn);
+
+        resetLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getCurrentLocation();
+            }
+        });
 
         //Check map permissions
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -107,6 +115,13 @@ public class MapFragment extends Fragment {
         return view;
 
     }
+
+    //resets the location
+    public void resetLocation(){
+
+    }
+
+
     //TODO - Check if the users location is enabled
     private void getCurrentLocation() {
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -127,6 +142,9 @@ public class MapFragment extends Fragment {
                     supportMapFragment.getMapAsync(new OnMapReadyCallback() {
                         @Override
                         public void onMapReady(GoogleMap googleMap) {
+
+                            //TODO It would be nice instead of a marker, put those blue dots from google
+                            // and apple maps with the compass sensor telling where it's turned to
                             LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
 
                             MarkerOptions options = new MarkerOptions().position(latLng).title("I'm here");
