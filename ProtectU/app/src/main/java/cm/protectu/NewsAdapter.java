@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,14 +28,16 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder>{
     ArrayList<NewsCard> listOfNewsCards;
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth mAuth;
+    FragmentManager parentFragment;
 
     private static final String TAG = MainActivity.class.getName();
 
-    public NewsAdapter(Context context, ArrayList<NewsCard> listOfNewsCards, FirebaseAuth firebaseAuth) {
+    public NewsAdapter(Context context, ArrayList<NewsCard> listOfNewsCards, FirebaseAuth firebaseAuth, FragmentManager fm) {
         firebaseFirestore = FirebaseFirestore.getInstance();
         this.context = context;
         this.listOfNewsCards = listOfNewsCards;
         mAuth = firebaseAuth;
+        parentFragment = fm;
     }
     @NonNull
     @Override
@@ -43,10 +47,19 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        int pos = position;
-
         holder.newsText.setText(listOfNewsCards.get(position).getNewsText() + "");
         holder.newsTitle.setText(listOfNewsCards.get(position).getNewsTitle() + "");
+
+        holder.cardNews.setOnClickListener(new  View.OnClickListener() {
+            public void onClick(View v) {
+                NewsDetailsFragment fragment = new NewsDetailsFragment(listOfNewsCards.get(holder.getAdapterPosition()));
+                FragmentTransaction transaction = parentFragment.beginTransaction();
+                transaction.replace(R.id.fragment_container, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+
     }
 
     @Override
@@ -66,7 +79,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder>{
             newsTitle = itemView.findViewById(R.id.newsTitle);
             newsPublisherImage = itemView.findViewById(R.id.newsPublisherImage);
             cardNews = itemView.findViewById(R.id.cardNews);
-
         }
     }
 }

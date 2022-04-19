@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/back_id"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/ic_arrow_back_black_24dp"
+        app:tint="@color/black" />
+
+    <ImageView
+        android:id="@+id/newsBigImage"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:src="@drawable/ic_camera_black_24dp"/>
+
+    <TextView
+        android:id="@+id/newsBigTitle"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/newsBigImage"
+        android:layout_marginLeft="50dp"
+        android:fontFamily="@font/lexend_bold"
+        android:text="Titulo"
+        android:textSize="40dp" />
+
+    <RelativeLayout
+        android:id="@+id/date"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/newsBigTitle"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/calendar"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_calendar_month_black_24dp"/>
+
+        <TextView
+            android:id="@+id/newsDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/calendar"
+            android:fontFamily="@font/lexend_regular"
+            android:text="20 August, 2021"
+            android:textSize="15dp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/newsBigText"
+        android:layout_width="310dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/date"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/lexend_regular"
+        android:text="alsdkmçldfmlfafksldfsd"
+        android:textSize="20dp" />
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/newsBigText"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/publisherImg"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_person_black_24dp"/>
+
+        <TextView
+            android:id="@+id/publisherID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/publisherImg"
+            android:fontFamily="@font/lexend_regular"
+            android:text="GNR"
+            android:textSize="15dp" />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

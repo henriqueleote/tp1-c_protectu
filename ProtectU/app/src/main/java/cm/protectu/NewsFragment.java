@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -55,12 +56,12 @@ public class NewsFragment extends Fragment {
 
         listOfNewsCards = new ArrayList<>();
         recyclerView = view.findViewById(R.id.newsRecyclerView);
-        newsAdapter = new NewsAdapter(getActivity(), listOfNewsCards,mAuth);
+        newsAdapter = new NewsAdapter(getActivity(), listOfNewsCards,mAuth, getParentFragmentManager());
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         recyclerView.setAdapter(newsAdapter);
 
-
         newsCardsData();
+
 
         //Returns the view
         return view;
@@ -77,7 +78,7 @@ public class NewsFragment extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 NewsCard newsCard = document.toObject(NewsCard.class);
                                 listOfNewsCards.add(newsCard);
-                                newsAdapter = new NewsAdapter(getActivity(), listOfNewsCards,mAuth);
+                                newsAdapter = new NewsAdapter(getActivity(), listOfNewsCards,mAuth,getParentFragmentManager());
                                 recyclerView.setAdapter(newsAdapter);
                                 newsAdapter.notifyDataSetChanged();
                             }

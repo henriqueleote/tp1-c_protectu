@@ -3,18 +3,26 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/35193/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/drawable/bottom_sheet_background.xml" value="0.2595" />
         <entry key="..\:/Users/35193/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/drawable/ic_camera_black_24dp.xml" value="0.281" />
         <entry key="..\:/Users/35193/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/drawable/ic_map_black_24dp.xml" value="0.281" />
         <entry key="..\:/Users/35193/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/drawable/ic_menu.xml" value="0.281" />
+        <entry key="..\:/Users/35193/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/drawable/ic_more_horiz_black_24dp.xml" value="0.122" />
         <entry key="..\:/Users/35193/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/drawable/ic_notifications_menu.xml" value="0.281" />
         <entry key="..\:/Users/35193/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/layout/activity_main.xml" value="0.2677083333333333" />
         <entry key="..\:/Users/35193/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/layout/cardview_community.xml" value="0.3411458333333333" />
-        <entry key="..\:/Users/35193/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/layout/cardview_news.xml" value="0.3411458333333333" />
+        <entry key="..\:/Users/35193/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/layout/cardview_news.xml" value="0.1" />
+        <entry key="..\:/Users/35193/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_about.xml" value="0.3625" />
         <entry key="..\:/Users/35193/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_community.xml" value="0.3411458333333333" />
+        <entry key="..\:/Users/35193/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_details_news.xml" value="0.33" />
         <entry key="..\:/Users/35193/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_edit_profile.xml" value="0.2677083333333333" />
         <entry key="..\:/Users/35193/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_news.xml" value="0.3411458333333333" />
         <entry key="..\:/Users/35193/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_profile.xml" value="0.25" />
+        <entry key="..\:/Users/35193/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/layout/header.xml" value="0.3625" />
         <entry key="..\:/Users/35193/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/layout/login_bottom.xml" value="0.2677083333333333" />
+        <entry key="..\:/Users/35193/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/menu/navigation.xml" value="0.3625" />
+        <entry key="..\:/Users/35193/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/menu/options_menu.xml" value="0.3625" />
+        <entry key="..\:/Users/35193/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/menu/side_menu.xml" value="0.3625" />
         <entry key="..\:/Users/CucasPC/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/drawable/ic_close_black_24dp.xml" value="0.164" />
         <entry key="..\:/Users/CucasPC/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/layout/activity_auth.xml" value="0.3625" />
         <entry key="..\:/Users/CucasPC/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/layout/activity_main.xml" value="0.3625" />

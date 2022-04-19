@@ -1,5 +1,7 @@
 package cm.protectu;
 
+import java.util.Date;
+
 public class NewsCard {
     private String newsTitle;
     private String newsText;
@@ -12,7 +14,7 @@ public class NewsCard {
 
     }
 
-    public NewsCard(String newsTitle,String newsText, String newsID, String imgUrl, String pubImgURL, String pubID){
+    public NewsCard(String newsTitle, String newsText, String newsID, String imgUrl, String pubImgURL, String pubID){
         this.newsTitle = newsTitle;
         this.newsText = newsText;
         this.newsID = newsID;
