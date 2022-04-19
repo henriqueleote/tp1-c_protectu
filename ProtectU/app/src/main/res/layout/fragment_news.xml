@@ -9,22 +9,29 @@
         android:id="@+id/newsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="News"
-        android:textSize="20sp"
-        android:fontFamily="@font/lexend_regular"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/lexend_regular"
+        android:text="News"
+        android:textSize="20sp" />
 
-    <androidx.recyclerview.widget.RecyclerView
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/newsText">
 
-        android:id="@+id/newsRecyclerView"
-        android:layout_below="@+id/newsText"
-        android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        <androidx.recyclerview.widget.RecyclerView
 
-    </androidx.recyclerview.widget.RecyclerView>
+            android:id="@+id/newsRecyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/newsText"
+            android:layout_centerHorizontal="true">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/createMessageButton"
