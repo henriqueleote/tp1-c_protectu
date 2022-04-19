@@ -103,7 +103,6 @@ public class LoginFragment extends BottomSheetDialogFragment {
         // E-mail's field check
         if (TextUtils.isEmpty(email)) {
             emailText.setError(getString(R.string.error_enter_your_mail));
-
             emailText.requestFocus();
             return;
         }

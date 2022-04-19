@@ -5,6 +5,7 @@
     <string name="error_enter_your_name">Enter your name</string>
     <string name="error_enter_your_surname">Enter your surname</string>
     <string name="error_enter_your_mail">Enter your mail</string>
+    <string name="error_enter_a_new_message">Write a message</string>
     <string name="error_enter_your_password">Enter your password</string>
     <string name="error_email_not_valid">Enter a valid email</string>
     <string name="error_password_dont_match">Passwords don\'t match</string>

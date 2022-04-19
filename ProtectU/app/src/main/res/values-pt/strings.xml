@@ -6,6 +6,7 @@
     <string name="error_enter_your_name">Introduza o seu nome</string>
     <string name="error_enter_your_surname">Introduza o seu apelido</string>
     <string name="error_enter_your_mail">Introduza o seu email</string>
+    <string name="error_enter_a_new_message">Escreva uma mensagem</string>
     <string name="error_enter_your_password">Introduza a sua palavra-passe</string>
     <string name="error_email_not_valid">Introduza um email válido</string>
     <string name="error_password_dont_match">As palavras-passe não coincidem</string>

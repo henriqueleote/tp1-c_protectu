@@ -83,6 +83,10 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
         holder.likeCounter.setText(listOfCommunityCards.get(position).getLikes() + "");
         holder.dislikeCounter.setText(listOfCommunityCards.get(position).getDislikes() + "");
 
+        if (!listOfCommunityCards.get(position).isVerified()){
+            holder.verified.setVisibility(View.INVISIBLE);
+        }
+
         holder.likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,7 +102,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                                     holder.likeCounter.setText(actualLikes + "");
                                     UserReactions userReactions = new UserReactions(userID, messageID, "Likes", new Date());
                                     firebaseFirestore.collection("community-chat-reactions").add(userReactions);
-                                    Log.d(TAG, "DocumentSnapshot successfully updated!");
+                                    Log.d(TAG, "Document successfully updated!");
                                 }
                             })
                             .addOnFailureListener(new OnFailureListener() {
@@ -170,7 +174,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
             TextView userName, text, likeCounter, dislikeCounter;
-            ImageView userImage;
+            ImageView userImage,verified;
             CardView cardCommunity;
             ImageView likeButton, dislikeButton;
 
@@ -183,6 +187,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                 dislikeCounter = itemView.findViewById(R.id.numberOfDislikes);
                 likeButton = itemView.findViewById(R.id.likeButton);
                 dislikeButton = itemView.findViewById(R.id.dislikeButton);
+                verified = itemView.findViewById(R.id.verified);
                 cardCommunity = itemView.findViewById(R.id.cardCommunity);
 
             }
