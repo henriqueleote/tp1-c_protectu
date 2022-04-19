@@ -87,17 +87,18 @@ public class ProfileFragment extends Fragment {
             optionBtn.setVisibility(View.GONE);
             removeCommunityBtn.setVisibility(View.GONE);
             removeMissingBtn.setVisibility(View.GONE);
+            profileImageView.setVisibility(View.GONE);
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage("Want to go to the login page")
-                    .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            builder.setMessage(R.string.want_to_go_to_login)
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             mAuth.signOut();
                             getActivity().finish();
                             startActivity(new Intent(getActivity(), AuthActivity.class));
                         }
                     })
-                    .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             MapFragment fragment = new MapFragment();
                             FragmentTransaction transaction = getFragmentManager().beginTransaction();

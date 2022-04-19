@@ -131,7 +131,7 @@ public class LoginFragment extends BottomSheetDialogFragment {
                         } else {
                             try {
                                 throw task.getException();
-                            } catch(FirebaseAuthInvalidCredentialsException e) { //Error if password doesnt match the account
+                            } catch(FirebaseAuthInvalidCredentialsException e) { //Error if password doesnt match the account //TODO error appears when email is wrong
                                 passwordText.setError(getString(R.string.error_invalid_password));
                                 passwordText.requestFocus();
                                 passwordText.setText("");

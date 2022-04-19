@@ -20,4 +20,7 @@
     <string name="registration_sucessful">Registration successful</string>
     <string name="registration_failed">Registration failed</string>
     <string name="see_you_next_time">See you next time</string>
+    <string name="want_to_go_to_login">Want to go to the login page</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
 </resources>
