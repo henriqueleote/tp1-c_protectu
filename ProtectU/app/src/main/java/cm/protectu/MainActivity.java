@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
 
             case R.id.navigation_news:
-                fragment = new MissingBoardFragment();
+                fragment = new NewsFragment();
                 break;
 
             case R.id.navigation_community:
