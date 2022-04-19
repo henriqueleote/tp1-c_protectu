@@ -1,6 +1,5 @@
 package cm.protectu;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -30,7 +29,7 @@ public class AboutFragment extends Fragment {
 
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
-        arrowBack = view.findViewById(R.id.back_id);
+        arrowBack = view.findViewById(R.id.backID);
         //go back to the map frame
         arrowBack.setOnClickListener(new View.OnClickListener() {
             @Override

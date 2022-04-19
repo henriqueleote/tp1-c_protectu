@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity"
-    android:id="@+id/missing_board_main_id"
-    >
+    android:id="@+id/missingBoardMainID"
+    android:background="#F1EFEF">
 
 
     <TextView
-        android:id="@+id/title_missing_main_id"
+        android:id="@+id/titleMissingMainID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -21,24 +21,53 @@
         android:textSize="23dp"
         tools:ignore="MissingConstraints"></TextView>
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/ageFilterButtonID"
+        android:layout_width="50dp"
+        android:layout_height="20dp"
+        app:cardCornerRadius="10dp"
+        app:cardBackgroundColor="@color/white"
+        android:layout_below="@+id/titleMissingMainID"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="20dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="Age"
+                android:textColor="@color/black"
+                android:textSize="13dp" />
+
+        </RelativeLayout>
+
+
+
+    </androidx.cardview.widget.CardView>
+
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/local_cards_id"
+        android:id="@+id/localCardsID"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="495dp"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="50dp"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="50dp"
         android:layout_marginRight="40dp"
-        android:layout_marginBottom="50dp">
+        android:layout_marginBottom="50dp"
+        android:layout_below="@+id/ageFilterButtonID">
 
 
     </androidx.recyclerview.widget.RecyclerView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/create_Missing_Board_Button_id"
+        android:id="@+id/createMissingBoardButtonID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

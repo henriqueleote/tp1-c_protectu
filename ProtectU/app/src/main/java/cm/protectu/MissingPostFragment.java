@@ -6,9 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -20,7 +20,16 @@ public class MissingPostFragment extends Fragment {
     //Firebase Authentication
     private FirebaseAuth mAuth;
     private ImageView arrowBack;
+    private TextView profileName;
+    private TextView description_post_id;
+    private String userName;
+    private String description;
 
+    public MissingPostFragment(String userName, String description) {
+        this.userName = userName;
+        this.description = description;
+
+    }
 
     @Nullable
     @Override
@@ -31,9 +40,11 @@ public class MissingPostFragment extends Fragment {
 
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
-        arrowBack = view.findViewById(R.id.back_id);
-
-
+        arrowBack = view.findViewById(R.id.backID);
+        profileName = view.findViewById(R.id.profileNamePostID);
+        profileName.setText(userName);
+        description_post_id = view.findViewById(R.id.descriptionPostID);
+        description_post_id.setText(description);
 
         //go back to the map frame
         arrowBack.setOnClickListener(new View.OnClickListener() {
@@ -41,7 +52,7 @@ public class MissingPostFragment extends Fragment {
             public void onClick(View view) {
                 MissingBoardFragment fragment = new MissingBoardFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.missing_board_main_id, fragment);
+                transaction.replace(R.id.fragment_container, fragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
 

@@ -7,10 +7,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MainActivity"
     android:background="#F1EFEF"
-    android:id="@+id/main_post_id">
+    android:id="@+id/mainPostID">
 
     <ImageView
-        android:id="@+id/back_id"
+        android:id="@+id/backID"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginLeft="15dp"
@@ -19,7 +19,7 @@
         app:tint="@color/black" />
 
     <TextView
-        android:id="@+id/title_page_missing_post_id"
+        android:id="@+id/titlePageMissingPostID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -31,11 +31,11 @@
 
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/post_card_id"
+        android:id="@+id/postCardID"
         android:layout_width="match_parent"
         android:layout_height="570dp"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/title_page_missing_post_id"
+        android:layout_below="@+id/titlePageMissingPostID"
         android:layout_marginTop="30dp"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
@@ -48,47 +48,45 @@
             android:layout_height="wrap_content">
 
 
-        <ImageView
-            android:id="@+id/foto"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_menu"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="5dp"/>
+            <ImageView
+                android:id="@+id/foto"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/ic_person_black_24dp" />
 
-        <TextView
-            android:id="@+id/profile_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="David Ferreira"
-            android:textSize="16dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@+id/foto"
-            />
+            <TextView
+                android:id="@+id/profileNamePostID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/foto"
+                android:text="David Ferreira"
+                android:textSize="16dp" />
 
 
             <ImageView
-                android:id="@+id/image_missing_id"
+                android:id="@+id/imageMissingID"
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
-                android:layout_below="@+id/profile_name"
+                android:layout_below="@+id/profileNamePostID"
                 android:layout_marginTop="10dp"
                 android:background="@color/black"
                 android:scaleType="centerCrop"/>
 
             <TextView
-                android:id="@+id/description_post_id"
+                android:id="@+id/descriptionPostID"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textColor="@color/black"
+                android:layout_below="@+id/imageMissingID"
                 android:background="#879CA6"
                 android:text="fddsffdsadasd"
-                android:layout_below="@+id/image_missing_id"
-                />
+                android:textColor="@color/black" />
 
             <RelativeLayout
-                android:id="@+id/phone_share_id"
+                android:id="@+id/phoneShareID"
                 android:layout_width="90dp"
                 android:layout_height="60dp"
                 android:layout_alignParentRight="true"
@@ -96,20 +94,20 @@
                 android:layout_marginRight="11dp">
 
                 <ImageView
-                    android:id="@+id/phone_Number_id"
+                    android:id="@+id/phoneNumberID"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="3dp"
                     android:layout_marginTop="12dp"
-                    android:src="@drawable/ic_about_menu"/>
+                    android:src="@drawable/ic_baseline_phone_24" />
 
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="4dp"
                     android:layout_marginTop="12dp"
-                    android:layout_toRightOf="@+id/phone_Number_id"
-                    android:src="@drawable/ic_about_menu" />
+                    android:layout_toRightOf="@+id/phoneNumberID"
+                    android:src="@drawable/ic_baseline_share_24" />
 
             </RelativeLayout>
 

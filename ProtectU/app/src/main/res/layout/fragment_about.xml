@@ -7,7 +7,7 @@
     android:background="#F1EFEF">
 
     <ImageView
-        android:id="@+id/back_id"
+        android:id="@+id/backID"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginLeft="15dp"
@@ -16,7 +16,7 @@
         app:tint="@color/black" />
 
     <TextView
-        android:id="@+id/title_about_id"
+        android:id="@+id/titleAboutID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -27,7 +27,7 @@
 
 
     <TextView
-        android:id="@+id/text_about_us_id"
+        android:id="@+id/textAboutUsID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -37,10 +37,10 @@
         android:textColor="@color/black" />
 
     <TextView
-        android:id="@+id/version_id"
+        android:id="@+id/versionID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text_about_us_id"
+        android:layout_below="@+id/textAboutUsID"
         android:layout_marginLeft="40dp"
         android:paddingTop="20dp"
         android:text="Version:"
@@ -48,20 +48,20 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/version_number_id"
+        android:id="@+id/versionNumberID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/version_id"
+        android:layout_below="@+id/versionID"
         android:layout_marginLeft="40dp"
         android:paddingTop="5dp"
         android:text="1.0.0"
         android:textColor="@color/black" />
 
     <TextView
-        android:id="@+id/grup_id"
+        android:id="@+id/grupID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/version_number_id"
+        android:layout_below="@+id/versionNumberID"
         android:layout_marginLeft="40dp"
         android:paddingTop="20dp"
         android:text="Grup:"
@@ -69,20 +69,20 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/grup_names_id"
+        android:id="@+id/grupNamesID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/grup_id"
+        android:layout_below="@+id/grupID"
         android:layout_marginLeft="40dp"
         android:paddingTop="5dp"
         android:text="David Belchior, André Matias, Pedro Peralta, \n Ulyana...,Guilherme Oliveira, Henrrique Leote"
         android:textColor="@color/black" />
 
     <TextView
-        android:id="@+id/terms_respons_id"
+        android:id="@+id/termsResponsID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/grup_names_id"
+        android:layout_below="@+id/grupNamesID"
         android:layout_marginLeft="40dp"
         android:paddingTop="20dp"
         android:text="Terms and Responsabilities"
@@ -90,10 +90,10 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/contacts_id"
+        android:id="@+id/contactsID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/terms_respons_id"
+        android:layout_below="@+id/termsResponsID"
         android:layout_marginLeft="40dp"
         android:paddingTop="20dp"
         android:text="Contacts_id"
@@ -101,10 +101,10 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/all_contacts_id"
+        android:id="@+id/allContactsID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/contacts_id"
+        android:layout_below="@+id/contactsID"
         android:layout_marginLeft="40dp"
         android:paddingTop="5dp"
         android:text="+123456789 \n example@gmail.com"

@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
 
             case R.id.navigation_panic:
-                fragment = new PanicFragment();
+                fragment = new MissingBoardFragment();
                 break;
         }
 

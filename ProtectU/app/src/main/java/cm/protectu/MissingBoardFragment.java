@@ -5,14 +5,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,7 +22,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * calss of missing board
@@ -50,8 +46,8 @@ public class MissingBoardFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_missingboard, container, false);
 
         missingCards = new ArrayList<>();
-        myRecycleView = (RecyclerView) view.findViewById(R.id.local_cards_id);
-        floatingActionButton = view.findViewById(R.id.create_Missing_Board_Button_id);
+        myRecycleView = (RecyclerView) view.findViewById(R.id.localCardsID);
+        floatingActionButton = view.findViewById(R.id.createMissingBoardButtonID);
         myAdapter = new MissingBoardAdapter(getActivity(), missingCards,getParentFragmentManager());
 
         myRecycleView.setLayoutManager(new GridLayoutManager(getActivity(),2));

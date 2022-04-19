@@ -7,7 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="5dp"
     app:cardCornerRadius="15dp"
-    android:id="@+id/cardMissing_id">
+    android:id="@+id/cardMissingID">
 
 
     <LinearLayout
@@ -16,13 +16,13 @@
         android:layout_height="match_parent" />
 
         <ImageView
-            android:id="@+id/image_profile_id"
+            android:id="@+id/imageProfileID"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@drawable/ic_about_menu"
             />
         <ImageView
-            android:id="@+id/image_missing_id"
+            android:id="@+id/imageMissingID"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@mipmap/ic_launcher"
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/profile_name_id"
+                android:id="@+id/profileNameID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="David Ferreira"
@@ -43,22 +43,22 @@
                 android:layout_marginTop="5dp" />
 
             <TextView
-                android:id="@+id/name_of_the_missing_id"
+                android:id="@+id/nameOfTheMissingID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Luke,"
                 android:textColor="@color/black"
                 android:layout_marginTop="98dp"
                 android:layout_marginLeft="10dp"
-                android:layout_below="@+id/profile_name_id" />
+                android:layout_below="@+id/profileNameID" />
 
             <TextView
-                android:id="@+id/age_id"
+                android:id="@+id/ageID"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="6"
                 android:textColor="@color/black"
-                android:layout_toRightOf="@+id/name_of_the_missing_id"
+                android:layout_toRightOf="@+id/nameOfTheMissingID"
                 android:layout_marginTop="114dp" />
 
         </RelativeLayout>
