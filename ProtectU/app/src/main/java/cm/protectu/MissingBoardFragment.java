@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -34,6 +36,7 @@ public class MissingBoardFragment extends Fragment {
     private RecyclerView myRecycleView;
     private MissingBoardAdapter myAdapter;
     private FirebaseFirestore firebaseFirestore;
+    private FloatingActionButton floatingActionButton;
 
 
     //Firebase Authentication
@@ -46,19 +49,16 @@ public class MissingBoardFragment extends Fragment {
         //Link the layout to the Fragment
         View view = inflater.inflate(R.layout.fragment_missingboard, container, false);
 
-        myRecycleView = (RecyclerView) view.findViewById(R.id.idCourseRV);
-
         missingCards = new ArrayList<>();
+        myRecycleView = (RecyclerView) view.findViewById(R.id.local_cards_id);
+        floatingActionButton = view.findViewById(R.id.create_Missing_Board_Button_id);
+        myAdapter = new MissingBoardAdapter(getActivity(), missingCards,getParentFragmentManager());
 
-
-        myAdapter = new MissingBoardAdapter(getActivity(), missingCards);
         myRecycleView.setLayoutManager(new GridLayoutManager(getActivity(),2));
         myRecycleView.setAdapter(myAdapter);
 
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
-
-
 
 
         //TODO Check the animation
@@ -74,10 +74,18 @@ public class MissingBoardFragment extends Fragment {
 
         missingCardsData();
 
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!mAuth.getCurrentUser().isAnonymous()){
+                    //NewMessageCommunity newMessageCommunity = new NewMessageCommunity();
+                    //newMessageCommunity.show(new FragmentActivity().getSupportFragmentManager(), newMessageCommunity.getTag());
+                }
+            }
+        });
+
         //Returns the view
         return view;
-
-
 
     }
 
@@ -94,7 +102,7 @@ public class MissingBoardFragment extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 MissingCard missingCard = document.toObject(MissingCard.class);
                                 missingCards.add(missingCard);
-                                myAdapter = new MissingBoardAdapter(getActivity(), missingCards);
+                                myAdapter = new MissingBoardAdapter(getActivity(), missingCards,getParentFragmentManager());
                                 myRecycleView.setAdapter(myAdapter);
                                 myAdapter.notifyDataSetChanged();
                             }

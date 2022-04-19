@@ -6,7 +6,17 @@
     android:layout_height="match_parent"
     android:background="#F1EFEF">
 
+    <ImageView
+        android:id="@+id/back_id"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/ic_arrow_back_black_24dp"
+        app:tint="@color/black" />
+
     <TextView
+        android:id="@+id/title_about_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -17,7 +27,7 @@
 
 
     <TextView
-        android:id="@+id/text_about_us"
+        android:id="@+id/text_about_us_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -30,7 +40,7 @@
         android:id="@+id/version_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/text_about_us"
+        android:layout_below="@+id/text_about_us_id"
         android:layout_marginLeft="40dp"
         android:paddingTop="20dp"
         android:text="Version:"
@@ -100,13 +110,6 @@
         android:text="+123456789 \n example@gmail.com"
         android:textColor="@color/black" />
 
-    <ImageView
-        android:id="@+id/back_id"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
-        android:src="@drawable/ic_arrow_back_black_24dp"
-        app:tint="@color/black" />
+
 
 </RelativeLayout>

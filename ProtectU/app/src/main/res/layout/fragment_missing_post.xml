@@ -31,6 +31,7 @@
 
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/post_card_id"
         android:layout_width="match_parent"
         android:layout_height="570dp"
         android:layout_centerHorizontal="true"
@@ -67,16 +68,6 @@
             />
 
 
-
-<!--
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-            -->
-
-
             <ImageView
                 android:id="@+id/image_missing_id"
                 android:layout_width="match_parent"
@@ -84,14 +75,10 @@
                 android:layout_below="@+id/profile_name"
                 android:layout_marginTop="10dp"
                 android:background="@color/black"
-                android:scaleType="centerCrop"
-
-
-                />
-
+                android:scaleType="centerCrop"/>
 
             <TextView
-                android:id="@+id/description"
+                android:id="@+id/description_post_id"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textColor="@color/black"
@@ -100,26 +87,35 @@
                 android:layout_below="@+id/image_missing_id"
                 />
 
+            <RelativeLayout
+                android:id="@+id/phone_share_id"
+                android:layout_width="90dp"
+                android:layout_height="60dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="11dp">
+
+                <ImageView
+                    android:id="@+id/phone_Number_id"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="3dp"
+                    android:layout_marginTop="12dp"
+                    android:src="@drawable/ic_about_menu"/>
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginTop="12dp"
+                    android:layout_toRightOf="@+id/phone_Number_id"
+                    android:src="@drawable/ic_about_menu" />
+
+            </RelativeLayout>
 
         </RelativeLayout>
-       <!-- </LinearLayout>-->
-
 
     </androidx.cardview.widget.CardView>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     <!--
     <androidx.core.widget.NestedScrollView
