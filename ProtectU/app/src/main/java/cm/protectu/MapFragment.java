@@ -1,10 +1,16 @@
 package cm.protectu;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +18,7 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
@@ -23,10 +30,18 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 
 public class MapFragment extends Fragment {
@@ -34,11 +49,17 @@ public class MapFragment extends Fragment {
     //Firebase Authentication
     private FirebaseAuth mAuth;
 
+    private FirebaseFirestore firebaseFirestore;
+
     FusedLocationProviderClient client;
 
     SupportMapFragment supportMapFragment;
 
     FloatingActionButton resetLocation;
+
+    private ArrayList<MapPin> mapPins;
+
+    private static final String TAG =  AuthActivity.class.getName();
 
     @Nullable
     @Override
@@ -59,19 +80,24 @@ public class MapFragment extends Fragment {
             startActivity(new Intent(getActivity(), AuthActivity.class));
         }
 
+        firebaseFirestore = FirebaseFirestore.getInstance();
         client = LocationServices.getFusedLocationProviderClient(getActivity());
         resetLocation = view.findViewById(R.id.resetLocationBtn);
 
+        mapPins = new ArrayList<>();
+
+        //On click resets the location and goes back showing where the user is in the map
         resetLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getCurrentLocation();
+                //getCurrentLocation();
             }
         });
 
         //Check map permissions
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             //When permission granted, calls the method
+            getPinsFromDatabase();
             getCurrentLocation();
         } else {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
@@ -81,45 +107,11 @@ public class MapFragment extends Fragment {
         //Initialize the map fragment
         supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.google_map);
 
-        /*supportMapFragment.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-
-                LatLngBounds australiaBounds = new LatLngBounds(
-                        new LatLng(-44, 113), // SW bounds
-                        new LatLng(-10, 154)  // NE bounds
-                );
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(australiaBounds.getCenter(), 10));
-
-                LatLng sydney = new LatLng(-33.852, 151.211);
-                googleMap.addMarker(new MarkerOptions()
-                        .position(sydney)
-                        .title("Marker in Sydney"));
-                //When the map is loaded
-                googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-                    @Override
-                    public void onMapClick(LatLng latLng) {
-                        //When clicked
-                        MarkerOptions markerOptions = new MarkerOptions();
-                        markerOptions.position(latLng);
-                        markerOptions.title(latLng.latitude + ": " + latLng.longitude);
-                        googleMap.clear();
-                        googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
-                        googleMap.addMarker(markerOptions);
-                    }
-                });
-            }
-        });*/
-
         //Returns the view
         return view;
 
     }
 
-    //resets the location
-    public void resetLocation(){
-
-    }
 
 
     //TODO - Check if the users location is enabled
@@ -140,9 +132,12 @@ public class MapFragment extends Fragment {
             public void onSuccess(Location location) {
                 if(location != null){
                     supportMapFragment.getMapAsync(new OnMapReadyCallback() {
+                        @SuppressLint("NewApi")
                         @Override
                         public void onMapReady(GoogleMap googleMap) {
 
+                            //places the pins from the database
+                            placePins(googleMap);
                             //TODO It would be nice instead of a marker, put those blue dots from google
                             // and apple maps with the compass sensor telling where it's turned to
                             LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
@@ -165,6 +160,48 @@ public class MapFragment extends Fragment {
                 getCurrentLocation();
             }
         }
+    }
+
+    //TODO - Add the filter with the method where equals before the get,
+    // would be nice if it was possible to do without duplicate code
+    public void getPinsFromDatabase(){
+        firebaseFirestore.collection("map-pins")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                GeoPoint location = document.getGeoPoint("location");
+                                MapPin pin = new MapPin(document.getId(), location, document.get("type").toString());
+                                Log.d(TAG, "\nObject Data => " + pin.toString());
+                                mapPins.add(pin);
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
+    @SuppressLint("NewApi")
+    public void placePins(GoogleMap googleMap){
+        mapPins.forEach(mapPin -> {
+            Bitmap icon;
+            LatLng latLng = new LatLng(mapPin.getLocation().getLatitude(),mapPin.getLocation().getLongitude());
+            if(mapPin.getType().equals("shelter")){
+                //icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_bunker_pin);
+            }
+            MarkerOptions options = new MarkerOptions().position(latLng).title(mapPin.getType());
+            googleMap.addMarker(options);
+        });
+    }
+
+    //TODO - Finish this, i dont know if it works because it needs a bottom
+    // to see the onclick and the hard part is to refresh the map
+    public void removePins(GoogleMap googleMap){
+        mapPins.clear();
+        placePins(googleMap);
     }
 
 
