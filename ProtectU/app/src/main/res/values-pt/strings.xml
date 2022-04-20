@@ -17,4 +17,15 @@
     <string name="error_invalid_password">Palavra-passe inválida</string>
     <string name="options">Opções</string>
     <string name="logout">Terminar sessão</string>
+    <string name="forgot_password">Esqueci-me da Password</string>
+    <string name="email_sent">Email Enviado</string>
+    <string name="registration_sucessful">Registado com Sucesso</string>
+    <string name="registration_failed">Erro no Registo</string>
+    <string name="see_you_next_time">Até uma Próxima</string>
+    <string name="lbl_languague">Linguagem</string>
+    <string name="btn_save">Guardar</string>
+    <string name="want_to_go_to_login">Deseja ir para a Página de Login</string>
+    <string name="yes">SIM</string>
+    <string name="no">NÃO</string>
+    <string name="backarrow">voltar</string>
 </resources>

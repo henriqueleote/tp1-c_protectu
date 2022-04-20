@@ -24,4 +24,7 @@
     <string name="want_to_go_to_login">Want to go to the login page</string>
     <string name="yes">YES</string>
     <string name="no">NO</string>
+    <string name="lbl_languague">Language</string>
+    <string name="btn_save">Save</string>
+    <string name="backarrow">back</string>
 </resources>
