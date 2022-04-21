@@ -1,6 +1,7 @@
 package cm.protectu;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.List;
 
 
@@ -23,11 +31,17 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
     private Context mContext;
     private List<MissingCard> mData;
     private FragmentManager parentFragment;
+    FirebaseFirestore firebaseFirestore;
+    FirebaseAuth mAuth;
 
-    public MissingBoardAdapter(Context mContext, List<MissingCard> mData, FragmentManager fragment) {
+    private static final String TAG = MainActivity.class.getName();
+
+    public MissingBoardAdapter(Context mContext, List<MissingCard> mData, FragmentManager fragment, FirebaseAuth firebaseAuth) {
         this.mContext = mContext;
         this.mData = mData;
         this.parentFragment= fragment;
+        this.mAuth = firebaseAuth;
+        firebaseFirestore = FirebaseFirestore.getInstance();
     }
 
     @NonNull
@@ -50,12 +64,35 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
         holder.age.setText(String.valueOf(mData.get(position).getMissingAge()));
         //falta buscar imagens
 
+        String userID = mData.get(position).getUserID();
+
+        firebaseFirestore.collection("users")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                if (document.getId().equals(userID)) {
+                                    UserData userData = document.toObject(UserData.class);
+                                    holder.userName.setText(userData.getFirstName() + " " + userData.getLastName());
+                                    break;
+                                } else {
+                                    holder.userName.setText("Not Found");
+                                }
+                            }
+                        } else {
+                            Log.d(TAG, "Insucess");
+                        }
+                    }
+                });
+
 
         //set click listener
         holder.cardMissing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MissingPostFragment fragment = new MissingPostFragment(mData.get(holder.getAdapterPosition()).getProfileName(),mData.get(holder.getAdapterPosition()).getDescription());
+                MissingPostFragment fragment = new MissingPostFragment(mData.get(holder.getAdapterPosition()).getUserID(),mData.get(holder.getAdapterPosition()).getMissingName(),mData.get(holder.getAdapterPosition()).getDescription(),mData.get(holder.getAdapterPosition()).getMissingAge(),mData.get(holder.getAdapterPosition()).getPhoneNumber());
                 FragmentTransaction transaction = parentFragment.beginTransaction();
                 transaction.replace(R.id.fragment_container, fragment);
                 transaction.addToBackStack(null);
@@ -91,5 +128,13 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
 
         }
 
+    }
+
+    public List<MissingCard> getmData() {
+        return mData;
+    }
+
+    public void setmData(List<MissingCard> mData) {
+        this.mData = mData;
     }
 }

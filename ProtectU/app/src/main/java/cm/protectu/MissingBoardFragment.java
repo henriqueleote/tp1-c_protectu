@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -48,7 +49,7 @@ public class MissingBoardFragment extends Fragment {
         missingCards = new ArrayList<>();
         myRecycleView = (RecyclerView) view.findViewById(R.id.localCardsID);
         floatingActionButton = view.findViewById(R.id.createMissingBoardButtonID);
-        myAdapter = new MissingBoardAdapter(getActivity(), missingCards,getParentFragmentManager());
+        myAdapter = new MissingBoardAdapter(getActivity(), missingCards,getParentFragmentManager(),mAuth);
 
         myRecycleView.setLayoutManager(new GridLayoutManager(getActivity(),2));
         myRecycleView.setAdapter(myAdapter);
@@ -70,13 +71,18 @@ public class MissingBoardFragment extends Fragment {
 
         missingCardsData();
 
+
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!mAuth.getCurrentUser().isAnonymous()){
-                    //NewMessageCommunity newMessageCommunity = new NewMessageCommunity();
-                    //newMessageCommunity.show(new FragmentActivity().getSupportFragmentManager(), newMessageCommunity.getTag());
+                if (!mAuth.getCurrentUser().isAnonymous()) {
+                    NewMissingPubFragment fragment = new NewMissingPubFragment();
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragment_container, fragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
                 }
+
             }
         });
 
@@ -98,7 +104,7 @@ public class MissingBoardFragment extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 MissingCard missingCard = document.toObject(MissingCard.class);
                                 missingCards.add(missingCard);
-                                myAdapter = new MissingBoardAdapter(getActivity(), missingCards,getParentFragmentManager());
+                                myAdapter = new MissingBoardAdapter(getActivity(), missingCards,getParentFragmentManager(),mAuth);
                                 myRecycleView.setAdapter(myAdapter);
                                 myAdapter.notifyDataSetChanged();
                             }

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--XMl Layout for RecyclerView-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".MainActivity"
+    android:background="#F1EFEF"
+    android:id="@+id/mainPostID"
+    >
+
+    <ImageView
+        android:id="@+id/backID"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/ic_arrow_back_black_24dp"
+        app:tint="@color/black" />
+
+    <TextView
+        android:id="@+id/titlePageMissingPostID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="New Post"
+        android:textColor="@color/black"
+        android:textSize="23dp"
+        tools:ignore="MissingConstraints"></TextView>
+
+    <EditText
+        android:id="@+id/nameNewMissingPostID"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/titlePageMissingPostID"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:drawablePadding="10dp"
+        android:hint="Name"
+        android:inputType="text"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/ageNewMissingPostID"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nameNewMissingPostID"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:drawablePadding="10dp"
+        android:hint="Age"
+        android:inputType="number"
+        android:textSize="15sp" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/addDescriptionCardID"
+        android:layout_width="290dp"
+        android:layout_height="160dp"
+        app:cardCornerRadius="15dp"
+        android:layout_below="@id/ageNewMissingPostID"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp">
+
+        <EditText
+            android:id="@+id/descriptionNewMissingPostID"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:drawablePadding="10dp"
+            android:hint="Age"
+            android:inputType="number"
+            android:textSize="15sp" />
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/informationAboutAddImagesID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/addDescriptionCardID"
+        android:layout_marginLeft="70dp"
+        android:layout_marginTop="20dp"
+        android:drawablePadding="10dp"
+        android:hint="Add Image(max. 1)"
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/signInButton"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/informationAboutAddImagesID"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="Login"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="@color/primary_button"/>
+
+
+
+
+</RelativeLayout>

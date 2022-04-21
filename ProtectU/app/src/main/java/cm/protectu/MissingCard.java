@@ -10,28 +10,40 @@ public class MissingCard {
     private String description;
     private int missingAge;
     private int phoneNumber;
-    private int missingID;
+    private String userID;
     private String foto;
     private String fotoMissing;
+    private String missingID;
 
     public MissingCard(){
 
     }
 
-    public MissingCard(String missingName, String description, int missingAge, int phoneNumber, String foto, String profileName,int missingID,String fotoMissing) {
+    public MissingCard(String missingName, String description, int missingAge, int phoneNumber, String foto, String profileName,String userID,String fotoMissing,String missingID) {
         this.missingName = missingName;
         this.description = description;
         this.missingAge = missingAge;
         this.phoneNumber = phoneNumber;
         this.foto = foto;
         this.profileName = profileName;
-        this.missingID = missingID;
+        this.userID = userID;
         this.fotoMissing = fotoMissing;
+        this.missingID = missingID;
     }
 
-    public int getMissingID() {
+    public String getMissingID() {
         return missingID;
     }
+
+    public void setMissingID(String missingID) {
+        this.missingID = missingID;
+    }
+
+    public String getUserID() {
+        return userID; }
+
+    public void setUserID(String userID) {
+        this.userID = userID; }
 
     public String getFotoMissing() {
         return fotoMissing;
@@ -41,9 +53,6 @@ public class MissingCard {
         this.fotoMissing = fotoMissing;
     }
 
-    public void setMissingID(int missingID) {
-        this.missingID = missingID;
-    }
 
     public String getFoto() {
         return foto;

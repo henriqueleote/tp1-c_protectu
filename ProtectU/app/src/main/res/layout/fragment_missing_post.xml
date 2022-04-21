@@ -77,13 +77,52 @@
                 android:scaleType="centerCrop"/>
 
             <TextView
+                android:id="@+id/nameMissingPostID"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@+id/imageMissingID"
+                android:background="#879CA6"
+                android:text="Luke Xavier"
+                android:textSize="20dp"
+                android:textColor="@color/white"
+                android:paddingLeft="12dp"
+                android:paddingTop="8dp"/>
+
+            <RelativeLayout
+                android:id="@+id/ageLabelID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/nameMissingPostID"
+                android:background="#879CA6"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:id="@+id/labelAID"
+                    android:layout_width="45dp"
+                    android:layout_height="20dp"
+                    android:paddingLeft="12dp"
+                    android:text="Age"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/ageMissingPostID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_toRightOf="@+id/labelAID"
+                    android:text="12"
+                    android:textColor="@color/white" />
+            </RelativeLayout>
+
+
+            <TextView
                 android:id="@+id/descriptionPostID"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/imageMissingID"
+                android:layout_below="@+id/ageLabelID"
                 android:background="#879CA6"
                 android:text="fddsffdsadasd"
-                android:textColor="@color/black" />
+                android:textColor="@color/white"
+                android:paddingLeft="12dp"/>
 
             <RelativeLayout
                 android:id="@+id/phoneShareID"
@@ -94,19 +133,26 @@
                 android:layout_marginRight="11dp">
 
                 <ImageView
-                    android:id="@+id/phoneNumberID"
+                    android:id="@+id/phoneNumberIconID"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="3dp"
                     android:layout_marginTop="12dp"
                     android:src="@drawable/ic_baseline_phone_24" />
 
+                <TextView
+                    android:id="@+id/contactID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""/>
+
                 <ImageView
+                    android:id="@+id/sharePostID"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="4dp"
                     android:layout_marginTop="12dp"
-                    android:layout_toRightOf="@+id/phoneNumberID"
+                    android:layout_toRightOf="@+id/phoneNumberIconID"
                     android:src="@drawable/ic_baseline_share_24" />
 
             </RelativeLayout>
