@@ -9,7 +9,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/cardCommunity"
         android:layout_width="350dp"
-        android:layout_height="150dp"
+        android:layout_height="match_parent"
         android:layout_marginHorizontal="30dp"
         android:layout_marginVertical="10dp"
         app:cardCornerRadius="12dp"
@@ -30,8 +30,9 @@
                 android:layout_margin="10dp" />
 
             <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:id="@+id/userDetails"
+                android:layout_width="170dp"
+                android:layout_height="40dp">
 
                 <ImageView
                     android:id="@+id/userImage"
@@ -44,8 +45,8 @@
                     android:id="@+id/userName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="35dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/userImage"
                     android:fontFamily="@font/lexend_regular"
                     android:text="UserName"
                     android:textAlignment="center"
@@ -59,6 +60,7 @@
                 android:layout_height="40dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
+                android:layout_marginTop="20dp"
                 >
 
                 <ImageView
@@ -107,19 +109,51 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_alignParentBottom="true"
+                android:layout_marginTop="20dp"
                 android:layout_marginLeft="8dp"
-                app:srcCompat="@android:drawable/ic_menu_share" />
+                app:srcCompat="@android:drawable/ic_menu_share"/>
 
             <TextView
                 android:id="@+id/communityText"
-                android:layout_width="298dp"
-                android:layout_height="85dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/userDetails"
+                android:layout_centerInParent="true"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginBottom="40dp"
+                android:padding="5dp"
                 android:text="dfgsdrgsdfgsdfghjfghjfghjfghjfhjfghjfghjg
                 ggggggggggggggggggggggggggggggggggggggggg
                 gggggggggggggsdfgsdfgsdfgsdfgsdfg"
                 android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/communityTextWithImage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/userDetails"
+                android:layout_centerInParent="true"
+                android:layout_marginHorizontal="8dp"
+                android:layout_marginBottom="140dp"
+                android:padding="5dp"
+                android:text="dfgsdrgsdfgsdfghjfghjfghjfghjfhjfghjfghjg
+                ggggggggggggggggggggggggggggggggggggggggg
+                gggggggggggggsdfgsdfgsdfgsdfgsdfg"
+                android:textAlignment="center"
+                android:visibility="invisible"/>
+
+
+
+            <ImageView
+                android:id="@+id/imageCommunity"
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="8dp"
+                android:layout_marginBottom="30dp"
+                android:visibility="invisible"
+                app:srcCompat="@android:drawable/ic_menu_share" />
 
 
         </RelativeLayout>

@@ -49,38 +49,40 @@
         <entry key="..\:/Users/LeotePro/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/layout/login_bottom.xml" value="0.264" />
         <entry key="..\:/Users/LeotePro/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/layout/register_bottom.xml" value="0.2" />
         <entry key="..\:/Users/LeotePro/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/menu/options_menu.xml" value="0.1" />
+        <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/drawable/ic_add_black_24dp.xml" value="0.2925" />
+        <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/drawable/ic_arrow_back_black_24dp.xml" value="0.2925" />
+        <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/drawable/ic_baseline_share_24.xml" value="0.2925" />
+        <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/drawable/ic_edit_black_24dp.xml" value="0.2925" />
+        <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/drawable/ic_gps_fixed_black_24dp.xml" value="0.2925" />
+        <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.2925" />
+        <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/drawable/ic_three_dots_menu_black_24dp.xml" value="0.2925" />
         <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/activity_auth.xml" value="0.17864583333333334" />
         <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/activity_main.xml" value="0.17864583333333334" />
         <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/activity_main2.xml" value="0.17864583333333334" />
         <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/activity_welcome.xml" value="0.1984375" />
         <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/cardview_community.xml" value="0.33" />
         <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/cardview_missing.xml" value="0.1984375" />
+        <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/cardview_news.xml" value="0.28854166666666664" />
         <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/forgot_password_bottom.xml" value="0.17864583333333334" />
         <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_about.xml" value="0.17864583333333334" />
         <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_add_message.xml" value="0.25" />
         <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_community.xml" value="0.33" />
+        <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_details_news.xml" value="0.28854166666666664" />
         <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_edit_profile.xml" value="0.17864583333333334" />
         <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_map.xml" value="0.17864583333333334" />
         <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_missing_post.xml" value="0.17864583333333334" />
         <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_missingboard.xml" value="0.17864583333333334" />
+        <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_more_information_community.xml" value="0.28854166666666664" />
         <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_news.xml" value="0.17864583333333334" />
         <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_panic.xml" value="0.17864583333333334" />
         <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_profile.xml" value="0.17864583333333334" />
         <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/header.xml" value="0.17864583333333334" />
         <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/login_bottom.xml" value="0.17864583333333334" />
         <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/register_bottom.xml" value="0.1984375" />
-        <entry key="..\:/Users/pedri/AndroidStudioProjects/tp1-c_protectuAgor/ProtectU/app/src/main/res/drawable/ic_about_menu.xml" value="0.2115" />
-        <entry key="..\:/Users/pedri/AndroidStudioProjects/tp1-c_protectuAgor/ProtectU/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/pedri/AndroidStudioProjects/tp1-c_protectuAgor/ProtectU/app/src/main/res/layout/fragment_language.xml" value="0.25" />
-        <entry key="..\:/Users/pedri/AndroidStudioProjects/tp1-c_protectuAgor/ProtectU/app/src/main/res/layout/fragment_missingboard.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/pedri/AndroidStudioProjects/tp1-c_protectuAgor/ProtectU/app/src/main/res/layout/header.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/pedri/AndroidStudioProjects/tp1-c_protectuAgor/ProtectU/app/src/main/res/layout/login_bottom.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/pedri/AndroidStudioProjects/tp1-c_protectuAgor/ProtectU/app/src/main/res/layout/register_bottom.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/pedri/AndroidStudioProjects/tp1-c_protectuAgor/ProtectU/app/src/main/res/menu/side_menu.xml" value="0.20416666666666666" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

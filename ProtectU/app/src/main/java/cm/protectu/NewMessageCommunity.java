@@ -85,7 +85,7 @@ public class NewMessageCommunity extends BottomSheetDialogFragment {
         }
 
         firebaseFirestore.collection("community-chat")
-                .add(new CommunityCard(userID,"",messageText,"",0,0,false))
+                .add(new CommunityCard(userID,"",messageText,"","",0,0,false))
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {

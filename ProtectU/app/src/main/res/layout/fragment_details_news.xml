@@ -20,7 +20,7 @@
         android:id="@+id/newsBigImage"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:src="@drawable/ic_camera_black_24dp"/>
+        android:src="@drawable/ic_camera_black_24dp" />
 
     <TextView
         android:id="@+id/newsBigTitle"
