@@ -102,22 +102,20 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
         holder.likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                likesAndDislikes(listOfCommunityCards.get(pos).getLikes(),messageID, "likes",
-                        holder.likeCounter,currentUserID,holder);
+                likesAndDislikes(messageID, "likes", holder.likeCounter,currentUserID,holder);
             }
         });
 
         holder.dislikeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                likesAndDislikes(listOfCommunityCards.get(pos).getDislikes(), messageID, "dislikes",
-                        holder.dislikeCounter,currentUserID,holder);
+                likesAndDislikes(messageID, "dislikes", holder.dislikeCounter,currentUserID,holder);
             }
         });
 
     }
 
-    public void likesAndDislikes(int number, String messageID, String type, TextView textNumber, String currentUserID,MyViewHolder holder) {
+    public void likesAndDislikes(String messageID, String type, TextView textNumber, String currentUserID,MyViewHolder holder) {
         if (!mAuth.getCurrentUser().isAnonymous()) {
             firebaseFirestore.collection("community-chat-reactions")
                     .get()
@@ -134,7 +132,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                                     }
                                 }
                                 if (!hasLike) {
-                                    int actualNumber = number + 1;
+                                    int actualNumber = Integer.parseInt(textNumber.getText().toString()) + 1;
                                     DocumentReference likeRef = firebaseFirestore.collection("community-chat").document(messageID);
                                     likeRef
                                             .update(type, actualNumber)
@@ -176,10 +174,14 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                                         if (document.get("type").equals("likes")){
                                             holder.likeButtonClicked.setVisibility(View.VISIBLE);
                                             holder.likeButton.setVisibility(View.INVISIBLE);
+                                            removeLikeOrDislike(holder.likeButton,holder.likeButtonClicked,"likes",
+                                                    document.getId(),messageID, holder.likeCounter);
                                         }
                                         else{
                                             holder.dislikeButtonClicked.setVisibility(View.VISIBLE);
                                             holder.dislikeButton.setVisibility(View.INVISIBLE);
+                                            removeLikeOrDislike(holder.dislikeButton,holder.dislikeButtonClicked,"dislikes",
+                                                    document.getId(),messageID, holder.dislikeCounter);
                                         }
                                     }
                                 }
@@ -189,6 +191,47 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                         }
                     });
         }
+    }
+
+    public void removeLikeOrDislike(ImageView button,ImageView buttonClicked,String type,String reactionID,String messageID,TextView textNumber){
+        buttonClicked.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    buttonClicked.setVisibility(View.INVISIBLE);
+                    firebaseFirestore.collection("community-chat-reactions").document(reactionID)
+                            .delete()
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    button.setVisibility(View.VISIBLE);
+                                    int numberOfLikes = Integer.parseInt(textNumber.getText().toString()) - 1;
+                                    DocumentReference likeRef = firebaseFirestore.collection("community-chat").document(messageID);
+                                    likeRef
+                                            .update(type, numberOfLikes)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    textNumber.setText(numberOfLikes + "");
+                                                    Log.d(TAG, "Document successfully updated!");
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.w(TAG, "Error updating document", e);
+                                                }
+                                            });
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w(TAG, "Error deleting document", e);
+                                }
+                            });
+
+                }
+            });
     }
 
     @Override
