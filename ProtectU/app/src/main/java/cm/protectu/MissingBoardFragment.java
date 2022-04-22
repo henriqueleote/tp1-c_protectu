@@ -76,7 +76,7 @@ public class MissingBoardFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (!mAuth.getCurrentUser().isAnonymous()) {
-                    NewMissingPubFragment fragment = new NewMissingPubFragment();
+                    NewMissingPostFragment fragment = new NewMissingPostFragment();
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     transaction.replace(R.id.fragment_container, fragment);
                     transaction.addToBackStack(null);

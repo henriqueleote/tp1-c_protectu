@@ -74,8 +74,8 @@ public class MissingPostFragment extends Fragment {
                 String shareBody = "Your Body here";
                 String shareSub = "Your Subject here";
                 intent.putExtra(Intent.EXTRA_SUBJECT,shareBody);
-                intent.putExtra(Intent.EXTRA_TEXT,shareBody);
-                startActivity(Intent.createChooser(intent,"Share using"));
+                intent.putExtra(Intent.EXTRA_TEXT,shareSub);
+                startActivity(Intent.createChooser(intent,"Share this Post"));
             }
         });
 
