@@ -1,5 +1,6 @@
 package cm.protectu;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -68,18 +69,19 @@ public class CommunityFragment extends Fragment {
 
         communityCardsData();
 
-        floatingActionButton = view.findViewById(R.id.createMessageButton);
+        CommunityFragment fragment = this;
 
+        floatingActionButton = view.findViewById(R.id.createMessageButton);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!mAuth.getCurrentUser().isAnonymous()) {
-                    NewMessageCommunity newMessageCommunity = new NewMessageCommunity();
+                    NewMessageCommunity newMessageCommunity = new NewMessageCommunity(fragment);
                     newMessageCommunity.show(getParentFragmentManager(), newMessageCommunity.getTag());
                 }
-
             }
-        });
+        }
+        );
 
         missingPeopleButton = view.findViewById(R.id.missingPeopleButton);
 
@@ -100,6 +102,7 @@ public class CommunityFragment extends Fragment {
     }
 
     public void communityCardsData() {
+        listOfCommunityCards.clear();
         firebaseFirestore.collection("community-chat")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -121,3 +124,4 @@ public class CommunityFragment extends Fragment {
 
     }
 }
+

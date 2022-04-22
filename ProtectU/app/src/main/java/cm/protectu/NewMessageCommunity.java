@@ -1,6 +1,12 @@
 package cm.protectu;
 
+import static android.app.Activity.RESULT_OK;
+
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +18,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -29,12 +36,20 @@ public class NewMessageCommunity extends BottomSheetDialogFragment {
     //Button
     private Button createButton;
 
-    private ImageView closeButton;
+    private ImageView closeButton, upLoadedImage;
 
     //Firebase Authentication
     private FirebaseAuth mAuth;
 
     private FirebaseFirestore firebaseFirestore;
+
+    private String imagePath;
+
+    private CommunityFragment communityFragment;
+
+    public NewMessageCommunity(CommunityFragment communityFragment) {
+        this.communityFragment = communityFragment;
+    }
 
     //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
@@ -51,14 +66,31 @@ public class NewMessageCommunity extends BottomSheetDialogFragment {
         closeButton = view.findViewById(R.id.closeMessage);
         message = view.findViewById(R.id.message);
         createButton = view.findViewById(R.id.createNewMessageButton);
+        upLoadedImage = view.findViewById(R.id.uploadImage);
+        imagePath = "";
 
         firebaseFirestore = FirebaseFirestore.getInstance();
+
+        getDialog().setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                communityFragment.communityCardsData();
+            }
+        });
 
         //On click closes the form sheet
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getDialog().cancel();
+            }
+        });
+
+        upLoadedImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent,3);
             }
         });
 
@@ -76,6 +108,16 @@ public class NewMessageCommunity extends BottomSheetDialogFragment {
         return view;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK && data!=null){
+            Uri selectedImages = data.getData();
+            imagePath = selectedImages.getPath();
+            upLoadedImage.setImageURI(selectedImages);
+        }
+    }
+
     public void createMessage(String messageText,String userID){
         // Message's field check
         if (TextUtils.isEmpty(messageText)) {
@@ -85,7 +127,7 @@ public class NewMessageCommunity extends BottomSheetDialogFragment {
         }
 
         firebaseFirestore.collection("community-chat")
-                .add(new CommunityCard(userID,"",messageText,"","",0,0,false))
+                .add(new CommunityCard(userID,"",messageText,"",imagePath,0,0,false))
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {

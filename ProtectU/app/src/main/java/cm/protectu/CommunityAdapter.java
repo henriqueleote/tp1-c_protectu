@@ -98,81 +98,63 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
         holder.likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!mAuth.getCurrentUser().isAnonymous() && !checkUserHasLike(userID)) {
-                    Log.d(TAG, "2");
-                    int actualLikes = listOfCommunityCards.get(pos).getLikes() + 1;
-                    DocumentReference likeRef = firebaseFirestore.collection("community-chat").document(listOfCommunityCards.get(pos).getMessageID());
-                    likeRef
-                            .update("likes", actualLikes)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    holder.likeCounter.setText(actualLikes + "");
-                                    UserReactions userReactions = new UserReactions(userID, messageText, "Likes", new Date());
-                                    firebaseFirestore.collection("community-chat-reactions").add(userReactions);
-                                    Log.d(TAG, "Document successfully updated!");
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.w(TAG, "Error updating document", e);
-                                }
-                            });
-                }
+                likesAndDislekes(listOfCommunityCards.get(pos).getLikes(), listOfCommunityCards.get(pos).getMessageID(), "likes",
+                        holder.likeCounter,userID);
             }
         });
 
         holder.dislikeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!mAuth.getCurrentUser().isAnonymous() && !checkUserHasLike(userID)) {
-                    int actualDislikes = listOfCommunityCards.get(pos).getDislikes() + 1;
-                    DocumentReference likeRef = firebaseFirestore.collection("community-chat").document(listOfCommunityCards.get(pos).getMessageID());
-                    likeRef
-                            .update("likes", actualDislikes)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    holder.dislikeCounter.setText(actualDislikes + "");
-                                    UserReactions userReactions = new UserReactions(userID, messageText, "Dislikes", new Date());
-                                    firebaseFirestore.collection("community-chat-reactions").add(userReactions);
-                                    Log.d(TAG, "DocumentSnapshot successfully updated!");
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.w(TAG, "Error updating document", e);
-                                }
-                            });
-                }
+                likesAndDislekes(listOfCommunityCards.get(pos).getDislikes(), listOfCommunityCards.get(pos).getMessageID(), "dislikes",
+                        holder.dislikeCounter,userID);
             }
         });
     }
 
-    public boolean checkUserHasLike(String userID) {
-        final boolean[] asLike = {false};
-
-        firebaseFirestore.collection("community-chat-reactions")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                if (document.get("userID").equals(userID)) {
-                                    asLike[0] = true;
-                                    Log.d(TAG, "1");
+    public void likesAndDislekes(int number, String messageID, String type, TextView textNumber, String userID) {
+        if (!mAuth.getCurrentUser().isAnonymous()) {
+            firebaseFirestore.collection("community-chat-reactions")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                boolean hasLike = false;
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    if (document.get("userID").equals(userID)) {
+                                        Log.d(TAG, "User already has a like or dislike in this message");
+                                        hasLike = true;
+                                        break;
+                                    }
                                 }
+                                if (!hasLike) {
+                                    int actualNumber = number + 1;
+                                    DocumentReference likeRef = firebaseFirestore.collection("community-chat").document(messageID);
+                                    likeRef
+                                            .update(type, actualNumber)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    textNumber.setText(actualNumber + "");
+                                                    UserReactions userReactions = new UserReactions(userID, messageID, type, new Date());
+                                                    firebaseFirestore.collection("community-chat-reactions").add(userReactions);
+                                                    Log.d(TAG, "Document successfully updated!");
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.w(TAG, "Error updating document", e);
+                                                }
+                                            });
+                                }
+                            } else {
+                                Log.d(TAG, "Insucess");
                             }
-                        } else {
-                            Log.d(TAG, "Insucess");
                         }
-                    }
-                });
-
-        return asLike[0];
+                    });
+        }
     }
 
     @Override

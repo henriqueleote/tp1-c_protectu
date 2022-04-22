@@ -4,19 +4,19 @@
     android:id="@+id/add_message_bottom"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/layout_bg"
     android:orientation="vertical"
     android:padding="16dp"
     app:behavior_hideable="false"
     app:behavior_peekHeight="0dp"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-    android:background="@drawable/layout_bg">
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <ImageView
         android:id="@+id/closeMessage"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_alignParentRight="true"
-        android:src="@drawable/ic_close_black_24dp"/>
+        android:src="@drawable/ic_close_black_24dp" />
 
 
     <TextView
@@ -24,9 +24,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
+        android:fontFamily="@font/lexend_regular"
         android:text="New Message"
         android:textColor="#000000"
-        android:fontFamily="@font/lexend_regular"
         android:textSize="20sp" />
 
 
@@ -38,21 +38,42 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:drawablePadding="10dp"
+        android:fontFamily="@font/lexend_regular"
         android:hint="Message"
         android:inputType="text"
-        android:fontFamily="@font/lexend_regular"
         android:textSize="15sp" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/uploadImageCard"
+        android:layout_width="150dp"
+        android:layout_height="130dp"
+        android:layout_below="@+id/message"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:elevation="20dp"
+        app:cardCornerRadius="15dp">
+
+        <ImageView
+            android:id="@+id/uploadImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_camera_black_24dp"
+            android:scaleType="fitXY"/>
+
+
+    </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/createNewMessageButton"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_below="@+id/message"
+        android:layout_below="@+id/uploadImageCard"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="Create"
-        android:textColor="#FFFFFF"
+        android:backgroundTint="@color/primary_button"
         android:fontFamily="@font/lexend_regular"
-        android:backgroundTint="@color/primary_button"/>
+        android:text="Create"
+        android:textColor="#FFFFFF" />
 
 </RelativeLayout>
