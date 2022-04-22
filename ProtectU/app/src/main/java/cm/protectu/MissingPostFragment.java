@@ -1,5 +1,6 @@
 package cm.protectu;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,27 +22,31 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 
 public class MissingPostFragment extends Fragment {
 
     //Firebase Authentication
     private FirebaseAuth mAuth;
-    private ImageView arrowBack, phone, share;
+    private ImageView arrowBack, phone, share,profileImage,MissingImage;
     private TextView profileNameID,descriptionPostID,ageMssingPostID,nameMissingPostID;
-    private String userID,description,nameMissing,ageMssing,phoneNumber;
+    private String userID,description,nameMissing,ageMssing,phoneNumber,urlProflie,urlMissing;
+    private Context context;
     private FirebaseFirestore firebaseFirestore;
 
     private static final String TAG =  AuthActivity.class.getName();
 
 
-    public MissingPostFragment(String userID,String nameMissing , String description,int ageMssing, int phoneNumber) {
+    public MissingPostFragment(String userID, String nameMissing , String description, int ageMssing, int phoneNumber, String urlProflie, String urlMissing, Context context) {
         this.userID = userID;
         this.nameMissing = nameMissing;
         this.description = description;
         this.ageMssing = "" + ageMssing;
         this.phoneNumber = "" + phoneNumber;
-
+        this.urlProflie = urlProflie;
+        this.urlMissing = urlMissing;
+        this.context = context;
 
     }
 
@@ -65,6 +70,10 @@ public class MissingPostFragment extends Fragment {
         profileNameID = view.findViewById(R.id.profileNamePostID);
         phone = view.findViewById(R.id.phoneNumberIconID);
         share = view.findViewById(R.id.sharePostID);
+        profileImage = view.findViewById(R.id.foto);
+        MissingImage = view.findViewById(R.id.imageMissingID);
+        Picasso.with(context).load(urlProflie).error(R.drawable.ic_baseline_share_24).into(profileImage);
+
 
         share.setOnClickListener(new View.OnClickListener() {
             @Override

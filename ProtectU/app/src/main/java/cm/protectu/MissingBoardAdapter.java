@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -62,9 +63,18 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
         holder.userName.setText(mData.get(position).getProfileName());
         holder.missingName.setText(mData.get(position).getMissingName());
         holder.age.setText(String.valueOf(mData.get(position).getMissingAge()));
+
+
         //falta buscar imagens
 
         String userID = mData.get(position).getUserID();
+        String url = mData.get(position).getFoto();
+        String url2 = mData.get(position).getFotoMissing();
+        Picasso.with(mContext).load(url).fit().centerCrop().placeholder(R.drawable.ic_camera_black_24dp)
+                .error(R.drawable.ic_baseline_share_24).into(holder.userImage);
+        Picasso.with(mContext).load(url2).fit().centerCrop().placeholder(R.drawable.ic_bunker_pin)
+                .error(R.drawable.ic_add_black_24dp).into(holder.missingImage);
+
 
         firebaseFirestore.collection("users")
                 .get()
@@ -92,7 +102,7 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
         holder.cardMissing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MissingPostFragment fragment = new MissingPostFragment(mData.get(holder.getAdapterPosition()).getUserID(),mData.get(holder.getAdapterPosition()).getMissingName(),mData.get(holder.getAdapterPosition()).getDescription(),mData.get(holder.getAdapterPosition()).getMissingAge(),mData.get(holder.getAdapterPosition()).getPhoneNumber());
+                MissingPostFragment fragment = new MissingPostFragment(mData.get(holder.getAdapterPosition()).getUserID(),mData.get(holder.getAdapterPosition()).getMissingName(),mData.get(holder.getAdapterPosition()).getDescription(),mData.get(holder.getAdapterPosition()).getMissingAge(),mData.get(holder.getAdapterPosition()).getPhoneNumber(),mData.get(holder.getAdapterPosition()).getFoto(),mData.get(holder.getAdapterPosition()).getFotoMissing(), mContext);
                 FragmentTransaction transaction = parentFragment.beginTransaction();
                 transaction.replace(R.id.fragment_container, fragment);
                 transaction.addToBackStack(null);
@@ -125,6 +135,7 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
             userImage = itemView.findViewById(R.id.imageProfileID);
             missingImage = itemView.findViewById(R.id.imageMissingID);
             cardMissing = itemView.findViewById(R.id.cardMissingID);
+
 
         }
 

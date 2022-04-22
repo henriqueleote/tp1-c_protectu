@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 
 public class NewMissingPostFragment extends Fragment {
@@ -32,7 +33,7 @@ public class NewMissingPostFragment extends Fragment {
     //Firebase Authentication
     private FirebaseAuth mAuth;
     private CardView cardView;
-    private ImageView arrowBack, imageUploaded;
+    private ImageView arrowBack, imageUploaded, cameraIcon;
     private FirebaseFirestore firebaseFirestore;
 
     private static final String TAG =  AuthActivity.class.getName();
@@ -57,12 +58,14 @@ public class NewMissingPostFragment extends Fragment {
         arrowBack = view.findViewById(R.id.backID);
         cardView = view.findViewById(R.id.uploadImageID);
         imageUploaded = view.findViewById(R.id.imageUplaodedID);
+        cameraIcon = view.findViewById(R.id.uploadImageIconID);
 
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(intent,3);
+                cameraIcon.setVisibility(View.INVISIBLE);
             }
         });
 
