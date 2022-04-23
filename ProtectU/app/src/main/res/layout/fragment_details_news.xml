@@ -78,7 +78,7 @@
             android:id="@+id/publisherImg"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/ic_person_black_24dp"/>
+            android:src="@drawable/ic_bottom_profile_black_24dp"/>
 
         <TextView
             android:id="@+id/publisherID"

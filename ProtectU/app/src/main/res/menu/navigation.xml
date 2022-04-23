@@ -2,29 +2,30 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@color/white">
-    <item
-        android:id="@+id/navigation_map"
-        android:icon="@drawable/ic_map_black_24dp"
-        android:title="@string/map" />
 
     <item
         android:id="@+id/navigation_news"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/ic_bottom_home_black_24dp"
         android:title="News" />
 
     <item
+        android:id="@+id/navigation_map"
+        android:icon="@drawable/ic_bottom_map_black_24dp"
+        android:title="@string/map" />
+
+    <item
         android:id="@+id/navigation_panic"
-        android:icon="@drawable/ic_edit_black_24dp"
+        android:icon="@drawable/ic_bottom_panic_red_24dp"
         android:title="Panic" />
 
     <item
         android:id="@+id/navigation_community"
-        android:icon="@drawable/ic_chat_black_24dp"
+        android:icon="@drawable/ic_bottom_community_black_24dp"
         android:title="Community" />
 
     <item
         android:id="@+id/navigation_profile"
-        android:icon="@drawable/ic_person_black_24dp"
+        android:icon="@drawable/ic_bottom_profile_black_24dp"
         android:title="@string/profile" />
 
 </menu>

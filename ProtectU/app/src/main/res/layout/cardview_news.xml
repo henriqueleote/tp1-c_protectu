@@ -37,7 +37,7 @@
                 android:layout_height="75dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="110dp"
-                app:srcCompat="@drawable/ic_person_black_24dp" />
+                app:srcCompat="@drawable/ic_bottom_profile_black_24dp" />
 
             <TextView
                 android:id="@+id/newsTitle"
