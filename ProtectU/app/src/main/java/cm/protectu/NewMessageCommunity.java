@@ -27,6 +27,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Date;
+
 
 public class NewMessageCommunity extends BottomSheetDialogFragment {
 
@@ -127,7 +129,7 @@ public class NewMessageCommunity extends BottomSheetDialogFragment {
         }
 
         firebaseFirestore.collection("community-chat")
-                .add(new CommunityCard(userID,"",messageText,"",imagePath,0,0,false))
+                .add(new CommunityCard(userID,"",messageText,"",imagePath,new Date(),0,0,false))
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {

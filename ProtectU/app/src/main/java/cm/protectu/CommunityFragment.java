@@ -27,6 +27,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class CommunityFragment extends Fragment {
@@ -112,15 +113,20 @@ public class CommunityFragment extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 CommunityCard communityCard = document.toObject(CommunityCard.class);
                                 listOfCommunityCards.add(communityCard);
-                                communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth);
-                                recyclerView.setAdapter(communityAdapter);
-                                communityAdapter.notifyDataSetChanged();
                             }
+
+                            Collections.sort(listOfCommunityCards,new SortCommunityCard());
+
+                            communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth);
+                            recyclerView.setAdapter(communityAdapter);
+                            communityAdapter.notifyDataSetChanged();
                         } else {
                             Toast.makeText(getActivity(), "erro", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
+
+
 
     }
 }
