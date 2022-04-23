@@ -153,10 +153,11 @@ public class MapFragment extends Fragment {
             public void onSuccess(Location location) {
                 if(location != null){
                     supportMapFragment.getMapAsync(new OnMapReadyCallback() {
-                        @SuppressLint("NewApi")
+                        @SuppressLint({"NewApi", "MissingPermission"})
                         @Override
                         public void onMapReady(GoogleMap googleMap) {
-
+                            //TODO CHECK IF IT ROTATES WHEN ON MOBILE
+                            googleMap.setMyLocationEnabled(true);
                             placeZoneMarker(googleMap);
                             //TODO - FIX THIS
                             //places the pins from the database
@@ -165,10 +166,7 @@ public class MapFragment extends Fragment {
                             // and apple maps with the compass sensor telling where it's turned to
                             LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
 
-                            MarkerOptions options = new MarkerOptions().position(latLng).title("I'm here");
-
-                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
-                            googleMap.addMarker(options);
+                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
                             }
                     });
                 }
