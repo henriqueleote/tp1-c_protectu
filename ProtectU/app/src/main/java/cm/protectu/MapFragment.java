@@ -2,24 +2,24 @@ package cm.protectu;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -28,6 +28,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -41,7 +43,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 
 public class MapFragment extends Fragment {
@@ -85,19 +86,21 @@ public class MapFragment extends Fragment {
         resetLocation = view.findViewById(R.id.resetLocationBtn);
 
         mapPins = new ArrayList<>();
+        mapPins.add(new MapPin("idsodka", new GeoPoint(37.47370592890489,-122.13161490149692),"war"));
+        mapPins.add(new MapPin("hdklsad", new GeoPoint(37.53871235343273, -122.05999266014223), "hospital"));
+        //getPinsFromDatabase();
 
         //On click resets the location and goes back showing where the user is in the map
         resetLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //getCurrentLocation();
+                getCurrentLocation();
             }
         });
 
         //Check map permissions
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             //When permission granted, calls the method
-            getPinsFromDatabase();
             getCurrentLocation();
         } else {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
@@ -136,6 +139,7 @@ public class MapFragment extends Fragment {
                         @Override
                         public void onMapReady(GoogleMap googleMap) {
 
+                            //TODO - FIX THIS
                             //places the pins from the database
                             placePins(googleMap);
                             //TODO It would be nice instead of a marker, put those blue dots from google
@@ -184,15 +188,36 @@ public class MapFragment extends Fragment {
                 });
     }
 
+    private BitmapDescriptor bitmapDescriptorFromVector(Context context, @DrawableRes int drawableType) {
+        Drawable background = ContextCompat.getDrawable(context, drawableType);
+        background.setBounds(0, 0, background.getIntrinsicWidth(), background.getIntrinsicHeight());
+        Bitmap bitmap = Bitmap.createBitmap(background.getIntrinsicWidth(), background.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        background.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
+    }
+
     @SuppressLint("NewApi")
     public void placePins(GoogleMap googleMap){
+        Log.d(TAG, "Numero: " + mapPins.size());
+        Log.d(TAG, "MapPin: " + mapPins.toString());
+        //TODO FIX THE INTERNET PROBLEM, IF THATS THE PROBLEM
+        //TODO FIX THE ICON PROBLEM, FROM DRAWABLE VECTOR TO BITMAP
+        //TODO ADD THE IFS WITH THE TYPE
+        //TODO ADD THE DANGER ZONE
+        //TODO ADD THE WINDOW ON CLICK
         mapPins.forEach(mapPin -> {
-            Bitmap icon;
+            BitmapDescriptor icon = null;
             LatLng latLng = new LatLng(mapPin.getLocation().getLatitude(),mapPin.getLocation().getLongitude());
-            if(mapPin.getType().equals("shelter")){
-                //icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_bunker_pin);
+            if(mapPin.getType().trim().equals("war")){
+                Log.d(TAG, "oi 1");
+                icon = bitmapDescriptorFromVector(getActivity(), R.drawable.ic_map_war_pin_45dp);
             }
-            MarkerOptions options = new MarkerOptions().position(latLng).title(mapPin.getType());
+            if(mapPin.getType().trim().equals("hospital")){
+                Log.d(TAG, "oi 2");
+                icon = bitmapDescriptorFromVector(getActivity(), R.drawable.ic_map_hospital_pin_45dp);
+            }
+            MarkerOptions options = new MarkerOptions().position(latLng).title(mapPin.getType()).icon(icon);
             googleMap.addMarker(options);
         });
     }
