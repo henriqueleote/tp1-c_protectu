@@ -48,33 +48,29 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MapFragment extends Fragment {
 
+    //TAG for debug logs
+    private static final String TAG = AuthActivity.class.getName();
     //Firebase Authentication
     private FirebaseAuth mAuth;
-
     //Firebase Firestore
     private FirebaseFirestore firebaseFirestore;
-
     //FusedLocationProviderClient
     private FusedLocationProviderClient client;
-
     //Map Fragment
     private SupportMapFragment supportMapFragment;
-
     //Floating Action Button
     private FloatingActionButton resetLocation;
-
     //List with the pins of the map
     private ArrayList<MapPin> mapPins;
-
+    //private ArrayList<MapZone> mapZones;
+    //private List<Object> polyPoint;
     //List with the zones of the map
-    private ArrayList<MapZone> mapZones;
-
-    //TAG for debug logs
-    private static final String TAG =  AuthActivity.class.getName();
+    private ArrayList<List<Object>> mapZones;
 
     @Nullable
     @Override
@@ -101,6 +97,7 @@ public class MapFragment extends Fragment {
 
         mapPins = new ArrayList<>();
         mapZones = new ArrayList<>();
+        //polyPoint = new ArrayList<>();
 
         //mapPins.add(new MapPin("idsodka", new GeoPoint(37.47370592890489,-122.13161490149692),"war"));
         //mapPins.add(new MapPin("hdklsad", new GeoPoint(37.53871235343273, -122.05999266014223), "hospital"));
@@ -151,7 +148,7 @@ public class MapFragment extends Fragment {
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
-                if(location != null){
+                if (location != null) {
                     supportMapFragment.getMapAsync(new OnMapReadyCallback() {
                         @SuppressLint({"NewApi", "MissingPermission"})
                         @Override
@@ -164,10 +161,10 @@ public class MapFragment extends Fragment {
                             placePins(googleMap);
                             //TODO It would be nice instead of a marker, put those blue dots from google
                             // and apple maps with the compass sensor telling where it's turned to
-                            LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
+                            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
                             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
-                            }
+                        }
                     });
                 }
             }
@@ -176,9 +173,9 @@ public class MapFragment extends Fragment {
 
     //TODO - COMMENT
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permission, @NonNull int[] grantResults){
-        if(requestCode == 44){
-            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permission, @NonNull int[] grantResults) {
+        if (requestCode == 44) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 getCurrentLocation();
             }
         }
@@ -187,7 +184,7 @@ public class MapFragment extends Fragment {
     //TODO - Add the filter with the method where equals before the get, would be nice if it was possible to do without duplicate code.
     //TODO CHECK IF IT WORKS PROPERLY
     //Gets the map's pins from firebase to an arraylist
-    public void getPinsFromDatabase(){
+    public void getPinsFromDatabase() {
         firebaseFirestore.collection("map-pins")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -208,9 +205,10 @@ public class MapFragment extends Fragment {
                 });
     }
 
+    //TODO - IT WORKS WITH THE ARRAY
     //TODO - SOMETIMES DOESN'T WORK, I THINK ITS BECAUSE OF THE INTERNET ACCESS, WE HAVE TO PUT THE LOAD AS AN ASYNC FUNCTION
     //Gets the map's zones from firebase to an arraylist
-    public void getZoneFromDatabase(){
+    public void getZoneFromDatabase() {
         firebaseFirestore.collection("map-zones")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -218,15 +216,11 @@ public class MapFragment extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, "\nZone Object Data (Database) => " + document.getData() + "\n");
-
-                                MapZone zone = new MapZone(document.getId(),
-                                        new GeoPoint(document.getGeoPoint("top1").getLatitude(),document.getGeoPoint("top1").getLongitude()),
-                                        new GeoPoint(document.getGeoPoint("top2").getLatitude(),document.getGeoPoint("top2").getLongitude()),
-                                                new GeoPoint(document.getGeoPoint("bottom1").getLatitude(),document.getGeoPoint("bottom1").getLongitude()),
-                                                        new GeoPoint(document.getGeoPoint("bottom2").getLatitude(),document.getGeoPoint("bottom2").getLongitude()));
-                                Log.d(TAG, "\nZone Object Data (Object) => " + zone + "\n");
-                                mapZones.add(zone);
+                                if (document.get("show").equals("true")) {
+                                    Log.d(TAG, "\nZone Object Data (Database) => " + document.getData() + "\n");
+                                    List<Object> polyPoint = (List<Object>) document.get("points");
+                                    mapZones.add(polyPoint);
+                                }
                             }
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
@@ -234,6 +228,7 @@ public class MapFragment extends Fragment {
                     }
                 });
     }
+
 
     //Converts the drawable to a bitmap
     private BitmapDescriptor bitmapDescriptorFromVector(Context context, @DrawableRes int drawableType) {
@@ -247,7 +242,7 @@ public class MapFragment extends Fragment {
 
     @SuppressLint("NewApi")
     //Places the pins from the arraylist in the map
-    public void placePins(GoogleMap googleMap){
+    public void placePins(GoogleMap googleMap) {
         Log.d(TAG, "Numero: " + mapPins.size());
         Log.d(TAG, "MapPin: " + mapPins.toString());
         //TODO FIX THE INTERNET PROBLEM, IF THATS THE PROBLEM
@@ -257,12 +252,12 @@ public class MapFragment extends Fragment {
         //TODO ADD THE WINDOW ON CLICK
         mapPins.forEach(mapPin -> {
             BitmapDescriptor icon = null;
-            LatLng latLng = new LatLng(mapPin.getLocation().getLatitude(),mapPin.getLocation().getLongitude());
-            if(mapPin.getType().trim().equals("war")){
+            LatLng latLng = new LatLng(mapPin.getLocation().getLatitude(), mapPin.getLocation().getLongitude());
+            if (mapPin.getType().trim().equals("war")) {
                 Log.d(TAG, "oi 1");
                 icon = bitmapDescriptorFromVector(getActivity(), R.drawable.ic_map_war_pin_45dp);
             }
-            if(mapPin.getType().trim().equals("hospital")){
+            if (mapPin.getType().trim().equals("hospital")) {
                 Log.d(TAG, "oi 2");
                 icon = bitmapDescriptorFromVector(getActivity(), R.drawable.ic_map_hospital_pin_45dp);
             }
@@ -272,24 +267,22 @@ public class MapFragment extends Fragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    //Places the pins from the arraylist in the map
-    public void placeZoneMarker(GoogleMap googleMap){
+    public void placeZoneMarker(GoogleMap googleMap) {
         mapZones.forEach(mapZone -> {
-            Log.d(TAG, "Latitude: " + mapZone.getTopOneLocation().getLatitude());
-            PolygonOptions polygonOptions = new PolygonOptions().add(
-                    new LatLng(mapZone.getTopOneLocation().getLatitude(), mapZone.getTopOneLocation().getLongitude()),
-                    new LatLng(mapZone.getTopTwoLocation().getLatitude(), mapZone.getTopTwoLocation().getLongitude()),
-                    new LatLng(mapZone.getBottomOneLocation().getLatitude(), mapZone.getBottomOneLocation().getLongitude()),
-                    new LatLng(mapZone.getBottomTwoLocation().getLatitude(), mapZone.getBottomTwoLocation().getLongitude()))
-                    .strokeColor(Color.RED)
-                    .fillColor(0x3Fb0233d);
-            polygonOptions.isClickable();
-            googleMap.addPolygon(polygonOptions);
+            PolygonOptions poly = new PolygonOptions().strokeColor(Color.RED).fillColor(0x3Fb0233d).clickable(true);
+            for (int i = 0; i < mapZone.size(); i++) {
+                GeoPoint polyGeo = (GeoPoint) mapZone.get(i);
+                double lat = polyGeo.getLatitude();
+                double lng = polyGeo.getLongitude();
+                LatLng latLng = new LatLng(lat, lng);
+                poly.add(latLng);
+            }
+            googleMap.addPolygon(poly);
         });
     }
 
     //TODO - Finish this, i dont know if it works because it needs a bottom to see the onclick and the hard part is to refresh the map
-    public void removePins(GoogleMap googleMap){
+    public void removePins(GoogleMap googleMap) {
         mapPins.clear();
         placePins(googleMap);
     }

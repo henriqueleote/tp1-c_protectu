@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         Fragment fragment = null;
 
+        //TODO CHECK WHY THE MAP SHOWS IN THE NEWS WHEN IN LAUNCH
         //Switch case to load the fragment based on the bottom navbar option
         switch (item.getItemId()) {
             case R.id.navigation_map:
