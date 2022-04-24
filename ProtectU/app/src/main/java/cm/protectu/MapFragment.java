@@ -55,20 +55,25 @@ public class MapFragment extends Fragment {
 
     //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
+
     //Firebase Authentication
     private FirebaseAuth mAuth;
+
     //Firebase Firestore
     private FirebaseFirestore firebaseFirestore;
+
     //FusedLocationProviderClient
     private FusedLocationProviderClient client;
+
     //Map Fragment
     private SupportMapFragment supportMapFragment;
+
     //Floating Action Button
     private FloatingActionButton resetLocation;
+
     //List with the pins of the map
     private ArrayList<MapPin> mapPins;
-    //private ArrayList<MapZone> mapZones;
-    //private List<Object> polyPoint;
+
     //List with the zones of the map
     private ArrayList<List<Object>> mapZones;
 
@@ -216,11 +221,9 @@ public class MapFragment extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                if (document.get("show").equals("true")) {
-                                    Log.d(TAG, "\nZone Object Data (Database) => " + document.getData() + "\n");
-                                    List<Object> polyPoint = (List<Object>) document.get("points");
-                                    mapZones.add(polyPoint);
-                                }
+                                Log.d(TAG, "\nZone Object Data (Database) => " + document.getData() + "\n");
+                                List<Object> polyPoint = (List<Object>) document.get("points");
+                                mapZones.add(polyPoint);
                             }
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
