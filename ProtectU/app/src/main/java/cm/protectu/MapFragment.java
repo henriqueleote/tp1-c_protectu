@@ -69,7 +69,7 @@ public class MapFragment extends Fragment {
     private SupportMapFragment supportMapFragment;
 
     //Floating Action Button
-    private FloatingActionButton resetLocation;
+    private FloatingActionButton resetLocation, createPinBtn;
 
     //List with the pins of the map
     private ArrayList<MapPin> mapPins;
@@ -99,6 +99,7 @@ public class MapFragment extends Fragment {
         firebaseFirestore = FirebaseFirestore.getInstance();
         client = LocationServices.getFusedLocationProviderClient(getActivity());
         resetLocation = view.findViewById(R.id.resetLocationBtn);
+        createPinBtn = view.findViewById(R.id.createPinBtn);
 
         mapPins = new ArrayList<>();
         mapZones = new ArrayList<>();
@@ -116,6 +117,16 @@ public class MapFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 getCurrentLocation();
+            }
+        });
+
+        createPinBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getParentFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new MapAddPinFragment())
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 
