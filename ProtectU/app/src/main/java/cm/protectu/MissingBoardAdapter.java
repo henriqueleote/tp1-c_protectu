@@ -32,8 +32,8 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
     private Context mContext;
     private List<MissingCard> mData;
     private FragmentManager parentFragment;
-    FirebaseFirestore firebaseFirestore;
-    FirebaseAuth mAuth;
+    private FirebaseFirestore firebaseFirestore;
+    private FirebaseAuth mAuth;
 
     private static final String TAG = MainActivity.class.getName();
 

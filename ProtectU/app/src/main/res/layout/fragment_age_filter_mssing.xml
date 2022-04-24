@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ageFilterButtonID"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/layout_bg"
+    android:orientation="vertical"
+    android:padding="16dp"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="0dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/designOnly"
+        android:layout_width="160dp"
+        android:layout_height="5dp"
+        app:cardBackgroundColor="@color/black"
+        android:layout_centerHorizontal="true"
+        />
+
+    <ImageView
+        android:id="@+id/closeFilterID"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_close_black_24dp"
+        android:layout_below="@+id/designOnly"/>
+
+
+    <TextView
+        android:id="@+id/titleAgeFilterID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/designOnly"
+        android:fontFamily="@font/lexend_regular"
+        android:text="Age Range"
+        android:textColor="#000000"
+        android:textSize="20sp" />
+
+
+    <ImageView
+        android:id="@+id/clearAllID"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_delete"
+        android:layout_below="@+id/closeFilterID"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="30dp"/>
+
+    <ImageView
+        android:id="@+id/allCheckID"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_allcheck"
+        android:layout_below="@+id/closeFilterID"
+        android:layout_toLeftOf="@+id/clearAllID"
+        android:layout_marginTop="30dp"/>
+
+    <RelativeLayout
+        android:id="@+id/firstFilterID"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_below="@+id/titleAgeFilterID"
+        android:layout_marginTop="20dp"
+        >
+
+        <CheckBox
+            android:id="@+id/childrensFilterID"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="30dp"
+            android:button="@null"
+            android:background="?android:attr/listChoiceIndicatorMultiple"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Childrens"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_toRightOf="@+id/childrensFilterID"
+            android:fontFamily="@font/lexend_regular"
+            android:layout_marginTop="20dp"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/seconFilterID"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_below="@+id/firstFilterID"
+        android:layout_marginTop="20dp"
+        >
+
+        <CheckBox
+            android:id="@+id/adultsFilterID"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="30dp"
+            android:button="@null"
+            android:background="?android:attr/listChoiceIndicatorMultiple"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Adults"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_toRightOf="@+id/adultsFilterID"
+            android:fontFamily="@font/lexend_regular"
+            android:layout_marginTop="20dp"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/finalFilterID"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_below="@+id/seconFilterID"
+        android:layout_marginTop="20dp"
+        >
+
+        <CheckBox
+            android:id="@+id/seniorsFilterID"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginLeft="30dp"
+            android:button="@null"
+            android:background="?android:attr/listChoiceIndicatorMultiple"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Seniors"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_toRightOf="@+id/seniorsFilterID"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/lexend_regular"
+
+            />
+
+    </RelativeLayout>
+
+
+    <Button
+        android:id="@+id/createNewMessageButton"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/finalFilterID"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#313030"
+        android:fontFamily="@font/lexend_regular"
+        android:text="Show Results"
+        android:textColor="#FFFFFF" />
+
+</RelativeLayout>
