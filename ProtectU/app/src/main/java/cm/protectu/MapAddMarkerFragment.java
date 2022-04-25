@@ -2,7 +2,10 @@ package cm.protectu;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -11,6 +14,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +22,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
@@ -25,6 +30,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -39,16 +45,22 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
-public class MapAddPinFragment extends Fragment {
+public class MapAddMarkerFragment extends Fragment {
 
     //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
@@ -65,9 +77,9 @@ public class MapAddPinFragment extends Fragment {
     //Map Fragment
     private SupportMapFragment supportMapFragment;
 
+    private FloatingActionButton resetBtn, confirmPinBtn, cancelPinBtn;
+
     GoogleMap gMap;
-    CheckBox checkBox;
-    Button btDraw, btClear;
 
     Polygon polygon = null;
     List<LatLng> latLngList = new ArrayList<>();
@@ -78,7 +90,7 @@ public class MapAddPinFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         //Link the layout to the Fragment
-        View view = inflater.inflate(R.layout.fragment_map_add_pin, container, false);
+        View view = inflater.inflate(R.layout.fragment_map_add_zone, container, false);
 
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
@@ -98,46 +110,48 @@ public class MapAddPinFragment extends Fragment {
         firebaseFirestore = FirebaseFirestore.getInstance();
         client = LocationServices.getFusedLocationProviderClient(getActivity());
 
-        btDraw = view.findViewById(R.id.bt_draw);
-        btClear = view.findViewById(R.id.bt_clear);
-        checkBox = view.findViewById(R.id.check_box);
+        resetBtn = view.findViewById(R.id.resetBtn);
+        confirmPinBtn = view.findViewById(R.id.confirmPinBtn);
+        cancelPinBtn = view.findViewById(R.id.cancelPinBtn);
 
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        cancelPinBtn.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("NewApi")
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
-                    if(polygon == null) return;
-                    //TODO TRANSPARENT RED
-                    polygon.setFillColor(Color.RED);
+            public void onClick(View view) {
 
-                }else{
-                    polygon.setFillColor(Color.TRANSPARENT);
-                }
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("Do you want to cancel?")
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                clearZone();
+                                getParentFragmentManager().beginTransaction()
+                                        .replace(R.id.fragment_container, new MapFragment())
+                                        .addToBackStack(null)
+                                        .commit();
+                            }
+                        })
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //Doesn't do nothing
+                            }
+                        });
+                // Create the AlertDialog object and return it
+                builder.show();
             }
         });
 
-        btDraw.setOnClickListener(new View.OnClickListener() {
+        confirmPinBtn.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("NewApi")
             @Override
             public void onClick(View view) {
-                if(polygon != null) polygon.remove();
-                PolygonOptions polygonOptions = new PolygonOptions().addAll(latLngList).clickable(true);
-                polygon = gMap.addPolygon(polygonOptions);
-                polygon.setStrokeColor(Color.RED);
-                //TODO PUT THE TRANSPARENT RED FROM THE OTHER
-                //if(checkBox.isChecked()){
-                    //polygon.setFillColor(Color.rgb(red, green, blue));
-                //}
+                insertZone();
             }
         });
 
-        btClear.setOnClickListener(new View.OnClickListener() {
+        resetBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(polygon != null) polygon.remove();
-                for(Marker marker : markerList) marker.remove();
-                latLngList.clear();
-                markerList.clear();
-                checkBox.setChecked(false);
+                clearZone();
             }
         });
 
@@ -192,6 +206,11 @@ public class MapAddPinFragment extends Fragment {
                                     Marker marker = gMap.addMarker(markerOptions);
                                     latLngList.add(latLng);
                                     markerList.add(marker);
+                                    if (polygon != null) polygon.remove();
+                                    PolygonOptions polygonOptions = new PolygonOptions().addAll(latLngList).clickable(true);
+                                    polygon = gMap.addPolygon(polygonOptions);
+                                    polygon.setStrokeColor(Color.RED);
+                                    polygon.setFillColor(0x3Fb0233d);
                                 }
                             });
                         }
@@ -221,5 +240,48 @@ public class MapAddPinFragment extends Fragment {
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
+    public void insertZone() {
+        ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setTitle("Adding marker");
+        progressDialog.setMessage("Loading...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+        progressDialog.show();
+        List<GeoPoint> databaseList = new ArrayList<>();
+        for (int i = 0; i < markerList.size(); i++) {
+            databaseList.add(new GeoPoint(markerList.get(i).getPosition().latitude, markerList.get(i).getPosition().longitude));
+        }
+        Log.d(TAG, databaseList.toString());
+        DocumentReference documentReference = firebaseFirestore.collection("map-zones").document();
+        Map<String, Object> markersData = new HashMap<>();
+        markersData.put("zoneID", documentReference.getId());
+        markersData.put("points", databaseList);
+        documentReference.set(markersData)
+        .addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                progressDialog.dismiss();
+                Log.d(TAG, "DocumentSnapshot with the ID: " + documentReference.getId());
+                getParentFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new MapFragment())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        })
+        .addOnFailureListener(new OnFailureListener() {
+            @Override
+                public void onFailure(@NonNull Exception e) {
+                    progressDialog.dismiss();
+                    Log.w(TAG, "Error writing document", e);
+                }
+            });
+    }
+
+    public void clearZone(){
+        if (polygon != null) polygon.remove();
+        for (Marker marker : markerList) marker.remove();
+        latLngList.clear();
+        markerList.clear();
+    }
 
 }

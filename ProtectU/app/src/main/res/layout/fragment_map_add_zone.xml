@@ -13,7 +13,7 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/resetLocationBtn"
+        android:id="@+id/resetBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -26,10 +26,10 @@
         android:focusable="true"
         app:backgroundTint="@color/white"
         app:pressedTranslationZ="12dp"
-        app:srcCompat="@drawable/ic_gps_fixed_black_24dp" />
+        app:srcCompat="@drawable/ic_delete_black_24dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/createPinBtn"
+        android:id="@+id/confirmPinBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -42,7 +42,22 @@
         android:focusable="true"
         app:backgroundTint="@color/white"
         app:pressedTranslationZ="12dp"
-        app:srcCompat="@drawable/ic_add_black_24dp" />
+        app:srcCompat="@drawable/ic_check_black_24dp" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/cancelPinBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="90dp"
+        android:layout_marginBottom="32dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:elevation="16dp"
+        android:focusable="true"
+        app:backgroundTint="@color/white"
+        app:pressedTranslationZ="12dp"
+        app:srcCompat="@drawable/ic_close_black_24dp" />
 
 </RelativeLayout>

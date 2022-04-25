@@ -35,7 +35,6 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -76,6 +75,8 @@ public class MapFragment extends Fragment {
 
     //List with the zones of the map
     private ArrayList<List<Object>> mapZones;
+
+    private GoogleMap gMap;
 
     @Nullable
     @Override
@@ -124,7 +125,7 @@ public class MapFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 getParentFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new MapAddPinFragment())
+                        .replace(R.id.fragment_container, new MapAddMarkerFragment())
                         .addToBackStack(null)
                         .commit();
             }
@@ -169,8 +170,10 @@ public class MapFragment extends Fragment {
                         @SuppressLint({"NewApi", "MissingPermission"})
                         @Override
                         public void onMapReady(GoogleMap googleMap) {
+                            gMap = googleMap;
                             //TODO CHECK IF IT ROTATES WHEN ON MOBILE
                             googleMap.setMyLocationEnabled(true);
+                            gMap.clear();
                             placeZoneMarker(googleMap);
                             //TODO - FIX THIS
                             //places the pins from the database
@@ -268,11 +271,9 @@ public class MapFragment extends Fragment {
             BitmapDescriptor icon = null;
             LatLng latLng = new LatLng(mapPin.getLocation().getLatitude(), mapPin.getLocation().getLongitude());
             if (mapPin.getType().trim().equals("war")) {
-                Log.d(TAG, "oi 1");
                 icon = bitmapDescriptorFromVector(getActivity(), R.drawable.ic_map_war_pin_45dp);
             }
             if (mapPin.getType().trim().equals("hospital")) {
-                Log.d(TAG, "oi 2");
                 icon = bitmapDescriptorFromVector(getActivity(), R.drawable.ic_map_hospital_pin_45dp);
             }
             MarkerOptions options = new MarkerOptions().position(latLng).title(mapPin.getType()).icon(icon);
