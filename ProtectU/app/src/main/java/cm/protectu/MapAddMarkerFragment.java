@@ -203,6 +203,7 @@ public class MapAddMarkerFragment extends Fragment {
                                 @Override
                                 public void onMapClick(LatLng latLng) {
                                     MarkerOptions markerOptions = new MarkerOptions().position(latLng);
+                                    markerOptions.icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_map_add_pin_45dp));
                                     Marker marker = gMap.addMarker(markerOptions);
                                     latLngList.add(latLng);
                                     markerList.add(marker);
