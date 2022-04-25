@@ -58,10 +58,17 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
 
         getClickedLikeOrDislike(currentUserID,messageID,holder);
 
+        /**
+         * If the message is not verified it makes the symbol invisible
+         */
         if (!listOfCommunityCards.get(pos).isVerified()) {
             holder.verified.setVisibility(View.INVISIBLE);
         }
 
+        /**
+         * will fetch the database the name of the user who created the message through the user id
+         * that is in the message data and then put it in the community fragment
+         */
         firebaseFirestore.collection("users")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -83,7 +90,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                     }
                 });
 
-
+        //if the message does not have an image, just put the text if it does, adjust the text with the image
         if (!listOfCommunityCards.get(pos).getImageURL().equals("")) {
             holder.imageCommunity.setVisibility(View.VISIBLE);
             holder.communityTextWithImage.setVisibility(View.VISIBLE);
@@ -95,10 +102,11 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
             holder.communityText.setText(messageText);
         }
 
-
+        //Put the number of likes and dislikes in the message
         holder.likeCounter.setText(listOfCommunityCards.get(pos).getLikes() + "");
         holder.dislikeCounter.setText(listOfCommunityCards.get(pos).getDislikes() + "");
 
+        //Put the like action
         holder.likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,6 +114,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
             }
         });
 
+        //Put the dislike action
         holder.dislikeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,6 +124,15 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
 
     }
 
+    /**
+     * method that checks if the user already has a like or dislike in the message, if he already has a like or dislike, don't let him put it, if he doesn't,
+     * put a like or a like, increase the number of likes or dislikes, depending on whether it's the like button or of the dislike, and puts the reaction information in the database
+     * @param messageID
+     * @param type
+     * @param textNumber
+     * @param currentUserID
+     * @param holder
+     */
     public void likesAndDislikes(String messageID, String type, TextView textNumber, String currentUserID,MyViewHolder holder) {
         if (!mAuth.getCurrentUser().isAnonymous()) {
             firebaseFirestore.collection("community-chat-reactions")
@@ -161,6 +179,12 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
         }
     }
 
+    /**
+     * 
+     * @param userID
+     * @param messageID
+     * @param holder
+     */
     public void getClickedLikeOrDislike(String userID,String messageID,MyViewHolder holder){
         if (!mAuth.getCurrentUser().isAnonymous()) {
             firebaseFirestore.collection("community-chat-reactions")
