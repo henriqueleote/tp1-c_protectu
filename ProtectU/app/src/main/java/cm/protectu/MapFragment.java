@@ -2,6 +2,7 @@ package cm.protectu;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -230,6 +231,11 @@ public class MapFragment extends Fragment {
                         @SuppressLint({"NewApi", "MissingPermission"})
                         @Override
                         public void onMapReady(GoogleMap googleMap) {
+                            ProgressDialog mDialog = new ProgressDialog(getActivity());
+                            mDialog.setMessage("Loading markers and zones...");
+                            mDialog.setCancelable(false);
+                            mDialog.show();
+
                             currentLocation = location;
                             gMap = googleMap;
 
@@ -286,6 +292,7 @@ public class MapFragment extends Fragment {
                                                     }
                                                     googleMap.addPolygon(poly);
                                                 }
+                                                mDialog.dismiss();
                                             } else {
                                                 Log.d(TAG, "Error getting documents: ", task.getException());
                                             }
@@ -365,6 +372,7 @@ public class MapFragment extends Fragment {
     }
 
 
+    //TODO ERROR WHEN THE APP ITS OPENED AND WE GO DIRECTLY TO THE PROFILE
     //Converts the drawable to a bitmap
     private BitmapDescriptor bitmapDescriptorFromVector(Context context, @DrawableRes int drawableType) {
         Drawable background = ContextCompat.getDrawable(context, drawableType);

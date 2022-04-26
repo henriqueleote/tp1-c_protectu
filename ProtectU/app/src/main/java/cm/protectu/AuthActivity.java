@@ -46,8 +46,11 @@ public class AuthActivity extends AppCompatActivity {
 
         //TODO - Fix this
         //The code is right, but it has some bugs and it says that the mAuth is null
-        //if(mAuth.getCurrentUser().isAnonymous())
-        //    mAuth.signOut();
+        //if(mAuth.getCurrentUser().isAnonymous()){
+        // mAuth.signOut();
+        // mAuth.getCurrentUser().delete()
+        //}
+
 
         //Check if has stored session, if true, redirects to the App
         if(mAuth.getCurrentUser() != null){

@@ -3,11 +3,15 @@ package cm.protectu;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -48,6 +52,8 @@ public class LoginFragment extends BottomSheetDialogFragment {
     //Firebase User
     private FirebaseUser user;
 
+    private CheckBox passwordCheckBox;
+
     //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
 
@@ -65,6 +71,19 @@ public class LoginFragment extends BottomSheetDialogFragment {
         emailText = view.findViewById(R.id.emailText);
         passwordText = view.findViewById(R.id.passwordText);
         forgotPasswordBtn = view.findViewById(R.id.forgotPasswordBtn);
+        passwordCheckBox = view.findViewById(R.id.passwordCheckBox);
+
+        passwordCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    passwordText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    passwordCheckBox.setText("Hide password");
+                } else {
+                    passwordText.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    passwordCheckBox.setText("Show password");
+                }
+            }
+        });
 
         //TODO Close the one in the back
         //If users forgot the password, sends a recover link
@@ -88,7 +107,7 @@ public class LoginFragment extends BottomSheetDialogFragment {
         signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loginUserWithCredentials(emailText.getText().toString().toLowerCase(Locale.ROOT),
+                loginUserWithCredentials(emailText.getText().toString().trim().toLowerCase(Locale.ROOT),
                         passwordText.getText().toString());
             }
         });

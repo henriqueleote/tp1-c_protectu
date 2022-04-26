@@ -64,7 +64,7 @@
         android:layout_below="@id/passwordText"/>
 
     <CheckBox
-        android:id="@+id/showPassword"
+        android:id="@+id/passwordCheckBox"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/forgotPasswordBtn"
@@ -79,7 +79,7 @@
         android:id="@+id/signInButton"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_below="@+id/showPassword"
+        android:layout_below="@+id/passwordCheckBox"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:text="Login"

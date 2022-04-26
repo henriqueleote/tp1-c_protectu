@@ -3,11 +3,15 @@ package cm.protectu;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -55,6 +59,8 @@ public class RegisterFragment extends BottomSheetDialogFragment {
     //Firebase Firestore Database
     private FirebaseFirestore firebaseFirestore;
 
+    private CheckBox passwordCheckBox;
+
     //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
 
@@ -78,6 +84,21 @@ public class RegisterFragment extends BottomSheetDialogFragment {
         emailText = view.findViewById(R.id.emailText);
         passwordText = view.findViewById(R.id.passwordText);
         passwordConfirmText = view.findViewById(R.id.passwordText2);
+        passwordCheckBox = view.findViewById(R.id.passwordCheckBox);
+
+        passwordCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    passwordText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    passwordConfirmText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    passwordCheckBox.setText("Hide password");
+                } else {
+                    passwordText.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    passwordConfirmText.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    passwordCheckBox.setText("Show password");
+                }
+            }
+        });
 
 
         //On click closes the form sheet
@@ -183,6 +204,7 @@ public class RegisterFragment extends BottomSheetDialogFragment {
                                     userData.put("firstName", name);
                                     userData.put("lastName", surname);
                                     userData.put("phoneNumber", contact);
+                                    userData.put("imageURL", "null");
 
                                 //Inserts in Firestore the user data with the correspondent user ID from Authentication
                                 firebaseFirestore.collection("users").document(user.getUid())
