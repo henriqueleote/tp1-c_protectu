@@ -71,8 +71,8 @@
             android:layout_height="match_parent"
             android:layout_centerHorizontal="true"
             android:drawablePadding="10dp"
-            android:hint="Age"
-            android:inputType="number"
+            android:hint="Description"
+            android:inputType="text"
             android:textSize="15sp" />
 
     </androidx.cardview.widget.CardView>

@@ -203,6 +203,7 @@ public class MapAddMarkerFragment extends Fragment {
                                 @Override
                                 public void onMapClick(LatLng latLng) {
                                     MarkerOptions markerOptions = new MarkerOptions().position(latLng);
+                                    markerOptions.icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_map_add_pin_45dp));
                                     Marker marker = gMap.addMarker(markerOptions);
                                     latLngList.add(latLng);
                                     markerList.add(marker);
@@ -241,40 +242,47 @@ public class MapAddMarkerFragment extends Fragment {
     }
 
     public void insertZone() {
-        ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setTitle("Adding marker");
-        progressDialog.setMessage("Loading...");
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        if(markerList.isEmpty()){
+            getParentFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new MapFragment())
+                    .addToBackStack(null)
+                    .commit();
+        }else{
+            ProgressDialog progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setTitle("Adding marker");
+            progressDialog.setMessage("Loading...");
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
-        progressDialog.show();
-        List<GeoPoint> databaseList = new ArrayList<>();
-        for (int i = 0; i < markerList.size(); i++) {
-            databaseList.add(new GeoPoint(markerList.get(i).getPosition().latitude, markerList.get(i).getPosition().longitude));
-        }
-        Log.d(TAG, databaseList.toString());
-        DocumentReference documentReference = firebaseFirestore.collection("map-zones").document();
-        Map<String, Object> markersData = new HashMap<>();
-        markersData.put("zoneID", documentReference.getId());
-        markersData.put("points", databaseList);
-        documentReference.set(markersData)
-        .addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                progressDialog.dismiss();
-                Log.d(TAG, "DocumentSnapshot with the ID: " + documentReference.getId());
-                getParentFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new MapFragment())
-                        .addToBackStack(null)
-                        .commit();
+            progressDialog.show();
+            List<GeoPoint> databaseList = new ArrayList<>();
+            for (int i = 0; i < markerList.size(); i++) {
+                databaseList.add(new GeoPoint(markerList.get(i).getPosition().latitude, markerList.get(i).getPosition().longitude));
             }
-        })
-        .addOnFailureListener(new OnFailureListener() {
-            @Override
-                public void onFailure(@NonNull Exception e) {
-                    progressDialog.dismiss();
-                    Log.w(TAG, "Error writing document", e);
-                }
-            });
+            Log.d(TAG, databaseList.toString());
+            DocumentReference documentReference = firebaseFirestore.collection("map-zones").document();
+            Map<String, Object> markersData = new HashMap<>();
+            markersData.put("zoneID", documentReference.getId());
+            markersData.put("points", databaseList);
+            documentReference.set(markersData)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            progressDialog.dismiss();
+                            Log.d(TAG, "DocumentSnapshot with the ID: " + documentReference.getId());
+                            getParentFragmentManager().beginTransaction()
+                                    .replace(R.id.fragment_container, new MapFragment())
+                                    .addToBackStack(null)
+                                    .commit();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Log.w(TAG, "Error writing document", e);
+                        }
+                    });
+        }
     }
 
     public void clearZone(){

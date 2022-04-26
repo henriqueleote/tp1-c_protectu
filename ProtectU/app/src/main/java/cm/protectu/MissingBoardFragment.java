@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -29,15 +30,18 @@ import java.util.ArrayList;
  */
 public class MissingBoardFragment extends Fragment {
 
-    private ArrayList<MissingCard> missingCards;
+    public  ArrayList<MissingCard> missingCards;
     private RecyclerView myRecycleView;
     private MissingBoardAdapter myAdapter;
     private FirebaseFirestore firebaseFirestore;
     private FloatingActionButton floatingActionButton;
+    private CardView age;
 
 
     //Firebase Authentication
     private FirebaseAuth mAuth;
+
+
 
     @Nullable
     @Override
@@ -49,6 +53,7 @@ public class MissingBoardFragment extends Fragment {
         missingCards = new ArrayList<>();
         myRecycleView = (RecyclerView) view.findViewById(R.id.localCardsID);
         floatingActionButton = view.findViewById(R.id.createMissingBoardButtonID);
+        age = view.findViewById(R.id.ageFilterButtonID);
         myAdapter = new MissingBoardAdapter(getActivity(), missingCards,getParentFragmentManager(),mAuth);
 
         myRecycleView.setLayoutManager(new GridLayoutManager(getActivity(),2));
@@ -71,7 +76,6 @@ public class MissingBoardFragment extends Fragment {
 
         missingCardsData();
 
-
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,7 +86,16 @@ public class MissingBoardFragment extends Fragment {
                     transaction.addToBackStack(null);
                     transaction.commit();
                 }
+            }
+        });
 
+        MissingBoardFragment fragment = this;
+
+        age.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AgeFilterMissingFragment ageFilterMissingFragment = new AgeFilterMissingFragment(fragment);
+                ageFilterMissingFragment.show(getParentFragmentManager(), ageFilterMissingFragment.getTag());
             }
         });
 
@@ -91,10 +104,13 @@ public class MissingBoardFragment extends Fragment {
 
     }
 
+
+
     /**
      * Permite verificar se a tarefa de ir buiscar os dados na colecao é bem sucessido ou n e dps transforma os dados devolvidos na classe pretendida, cria os respetivos cards
      */
     public void missingCardsData() {
+        missingCards.clear();
         firebaseFirestore.collection("missing-board")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -113,5 +129,17 @@ public class MissingBoardFragment extends Fragment {
                         }
                     }
                 });
+    }
+
+    public void missingFilteredCardsData(ArrayList<MissingCard> mCards) {
+        missingCards.clear();
+        missingCards.addAll(mCards);
+        myAdapter = new MissingBoardAdapter(getActivity(), missingCards,getParentFragmentManager(),mAuth);
+        myRecycleView.setAdapter(myAdapter);
+        myAdapter.notifyDataSetChanged();
+    }
+
+
+
 }
-}
+

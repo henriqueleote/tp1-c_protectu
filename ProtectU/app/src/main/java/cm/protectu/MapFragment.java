@@ -68,7 +68,7 @@ public class MapFragment extends Fragment {
     private SupportMapFragment supportMapFragment;
 
     //Floating Action Button
-    private FloatingActionButton resetLocation, createPinBtn;
+    private FloatingActionButton resetLocation, createPinBtn, changeMapTypeBtn;
 
     //List with the pins of the map
     private ArrayList<MapPin> mapPins;
@@ -77,6 +77,8 @@ public class MapFragment extends Fragment {
     private ArrayList<List<Object>> mapZones;
 
     private GoogleMap gMap;
+
+    private Location currentLocation;
 
     @Nullable
     @Override
@@ -101,6 +103,7 @@ public class MapFragment extends Fragment {
         client = LocationServices.getFusedLocationProviderClient(getActivity());
         resetLocation = view.findViewById(R.id.resetLocationBtn);
         createPinBtn = view.findViewById(R.id.createPinBtn);
+        changeMapTypeBtn = view.findViewById(R.id.changeMapTypeBtn);
 
         mapPins = new ArrayList<>();
         mapZones = new ArrayList<>();
@@ -110,13 +113,27 @@ public class MapFragment extends Fragment {
         //mapPins.add(new MapPin("hdklsad", new GeoPoint(37.53871235343273, -122.05999266014223), "hospital"));
         //mapZones.add(new MapZone("jdosad2", new GeoPoint(37.35562280859825, -122.03126224500416),new GeoPoint(37.322159536785755, -122.06340285010553),new GeoPoint(37.30085696557495, -122.09707396021173),new GeoPoint(37.30937871839392, -122.16441618042415)));
 
-        getPinsFromDatabase();
-        getZoneFromDatabase();
+        //getPinsFromDatabase();
+        //getZoneFromDatabase();
 
         //On click resets the location and goes back showing where the user is in the map
+        //Unecessary method
         resetLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), 12));
+            }
+        });
+
+        //TODO Comment
+        changeMapTypeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(gMap.getMapType() == GoogleMap.MAP_TYPE_NORMAL){
+                    gMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                }else{
+                    gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                }
                 getCurrentLocation();
             }
         });
@@ -170,19 +187,78 @@ public class MapFragment extends Fragment {
                         @SuppressLint({"NewApi", "MissingPermission"})
                         @Override
                         public void onMapReady(GoogleMap googleMap) {
+                            currentLocation = location;
                             gMap = googleMap;
-                            //TODO CHECK IF IT ROTATES WHEN ON MOBILE
+
                             googleMap.setMyLocationEnabled(true);
+
                             gMap.clear();
-                            placeZoneMarker(googleMap);
-                            //TODO - FIX THIS
-                            //places the pins from the database
-                            placePins(googleMap);
+
+                            /*  THESE TWO LISTENERS UNDER CAN'T BE IN OUTSIDE METHODS OR THEY WONT BE CALLED  */
+                            //get the pin data on map load
+                            firebaseFirestore.collection("map-pins").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                                    Log.d(TAG, "\nPin Object Data (Database) => " + document.getData() + "\n");
+                                                    GeoPoint location = document.getGeoPoint("location");
+                                                    MapPin pin = new MapPin(document.getId(), location, document.get("type").toString());
+                                                    //Log.d(TAG, "\nPin Object Data (Object) => " + pin + "\n");
+                                                    //mapPins.add(pin);
+
+
+                                                    BitmapDescriptor icon = null;
+                                                    LatLng latLng = new LatLng(pin.getLocation().getLatitude(), pin.getLocation().getLongitude());
+                                                    if (pin.getType().trim().equals("war")) {
+                                                        icon = bitmapDescriptorFromVector(getActivity(), R.drawable.ic_map_war_pin_45dp);
+                                                    }
+                                                    if (pin.getType().trim().equals("hospital")) {
+                                                        icon = bitmapDescriptorFromVector(getActivity(), R.drawable.ic_map_hospital_pin_45dp);
+                                                    }
+                                                    MarkerOptions options = new MarkerOptions().position(latLng).title(pin.getType()).icon(icon);
+                                                    googleMap.addMarker(options);
+                                                }
+                                            } else {
+                                                Log.d(TAG, "Error getting documents: ", task.getException());
+                                            }
+                                        }
+                                    });
+
+                            //get the marker data on map load
+                            firebaseFirestore.collection("map-zones").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                                    Log.d(TAG, "\nZone Object Data (Database) => " + document.getData() + "\n");
+                                                    List<Object> polyPoint = (List<Object>) document.get("points");
+                                                    //mapZones.add(polyPoint);
+                                                    PolygonOptions poly = new PolygonOptions().strokeColor(Color.RED).fillColor(0x3Fb0233d).clickable(true);
+                                                    for (int i = 0; i < polyPoint.size(); i++) {
+                                                        GeoPoint polyGeo = (GeoPoint) polyPoint.get(i);
+                                                        double lat = polyGeo.getLatitude();
+                                                        double lng = polyGeo.getLongitude();
+                                                        LatLng latLng = new LatLng(lat, lng);
+                                                        poly.add(latLng);
+                                                    }
+                                                    googleMap.addPolygon(poly);
+                                                }
+                                            } else {
+                                                Log.d(TAG, "Error getting documents: ", task.getException());
+                                            }
+                                        }
+                                    });
+
+                            /*  THESE TWO LISTENERS ABOVE CAN'T BE IN OUTSIDE METHODS OR THEY WONT BE CALLED  */
+
+                            //TODO CHECK IF IT ROTATES WHEN ON MOBILE
+
                             //TODO It would be nice instead of a marker, put those blue dots from google
                             // and apple maps with the compass sensor telling where it's turned to
-                            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
-                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
+                            //Moves the camera to the device's location in the map
+                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 12));
                         }
                     });
                 }

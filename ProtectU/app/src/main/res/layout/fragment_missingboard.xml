@@ -19,12 +19,13 @@
         android:text="Missing Board"
         android:textColor="@color/black"
         android:textSize="23dp"
-        tools:ignore="MissingConstraints"></TextView>
+        tools:ignore="MissingConstraints"
+        android:fontFamily="@font/lexend_regular"></TextView>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/ageFilterButtonID"
-        android:layout_width="50dp"
-        android:layout_height="20dp"
+        android:layout_width="70dp"
+        android:layout_height="25dp"
         app:cardCornerRadius="10dp"
         app:cardBackgroundColor="@color/white"
         android:layout_below="@+id/titleMissingMainID"
@@ -38,16 +39,60 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/lexend_regular"
                 android:text="Age"
                 android:textColor="@color/black"
-                android:textSize="13dp" />
+                android:textSize="18dp" />
 
         </RelativeLayout>
 
 
-
     </androidx.cardview.widget.CardView>
+
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="120dp"
+            android:layout_height="30dp"
+            app:cardCornerRadius="15dp"
+            android:layout_below="@+id/titleMissingMainID"
+            android:layout_alignRight="@+id/ageFilterButtonID"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="50dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+
+                <ImageView
+                    android:id="@+id/magnifierIconID"
+                    android:layout_width="12dp"
+                    android:layout_height="14dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_magnifier" />
+
+                <EditText
+                    android:id="@+id/missingToFindID"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:hint="Put a Name.."
+                    android:inputType="text"
+                    android:textColorHint="@color/black"
+                    android:textSize="9sp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/magnifierIconID"
+                    android:fontFamily="@font/lexend_regular"
+                    />
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"

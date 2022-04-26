@@ -32,7 +32,6 @@ import java.util.Collections;
 
 public class CommunityFragment extends Fragment {
 
-    //Firebase Authentication
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
     private RecyclerView recyclerView;
@@ -68,24 +67,35 @@ public class CommunityFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         recyclerView.setAdapter(communityAdapter);
 
-        communityCardsData();
-
         CommunityFragment fragment = this;
 
-        floatingActionButton = view.findViewById(R.id.createMessageButton);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!mAuth.getCurrentUser().isAnonymous()) {
-                    NewMessageCommunity newMessageCommunity = new NewMessageCommunity(fragment);
-                    newMessageCommunity.show(getParentFragmentManager(), newMessageCommunity.getTag());
-                }
-            }
-        }
-        );
+        communityCardsData();
 
+        floatingActionButton = view.findViewById(R.id.createMessageButton);
         missingPeopleButton = view.findViewById(R.id.missingPeopleButton);
 
+        /**
+         *if the user is not logged in the add button disappears,
+         * otherwise the button appears and if clicked it opens a bottom sheet that allows the creation of a new message in the community
+         */
+        if (mAuth.getCurrentUser().isAnonymous()) {
+            floatingActionButton.setVisibility(View.GONE);
+        } else {
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!mAuth.getCurrentUser().isAnonymous()) {
+                        NewMessageCommunity newMessageCommunity = new NewMessageCommunity(fragment);
+                        newMessageCommunity.show(getParentFragmentManager(), newMessageCommunity.getTag());
+                    }
+                }
+            }
+            );
+        }
+
+        /**
+         * This button changes to the missing fragment, replacing the community fragment with this one
+         */
         missingPeopleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,6 +112,11 @@ public class CommunityFragment extends Fragment {
 
     }
 
+    /**
+     * This method will fetch the messages from the database and place them in to a array list then sort them by date,
+     * that is, from the newest to the oldest and then place them inside the community adapter,
+     * + if fails sends an error message.
+     */
     public void communityCardsData() {
         listOfCommunityCards.clear();
         firebaseFirestore.collection("community-chat")
@@ -115,7 +130,7 @@ public class CommunityFragment extends Fragment {
                                 listOfCommunityCards.add(communityCard);
                             }
 
-                            Collections.sort(listOfCommunityCards,new SortCommunityCard());
+                            Collections.sort(listOfCommunityCards, new SortCommunityCard());
 
                             communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth);
                             recyclerView.setAdapter(communityAdapter);
@@ -125,7 +140,6 @@ public class CommunityFragment extends Fragment {
                         }
                     }
                 });
-
 
 
     }

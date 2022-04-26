@@ -38,7 +38,7 @@ public class MissingPostFragment extends Fragment {
     private static final String TAG =  AuthActivity.class.getName();
 
 
-    public MissingPostFragment(String userID, String nameMissing , String description, int ageMssing, int phoneNumber, String urlProflie, String urlMissing, Context context) {
+    public MissingPostFragment(String userID, String nameMissing , String description, String ageMssing, String phoneNumber, String urlProflie, String urlMissing, Context context) {
         this.userID = userID;
         this.nameMissing = nameMissing;
         this.description = description;
@@ -120,7 +120,6 @@ public class MissingPostFragment extends Fragment {
         }
 
         firebaseFirestore = FirebaseFirestore.getInstance();
-
 
         getData();
         //Returns the view

@@ -32,29 +32,21 @@ import java.util.Date;
 
 public class NewMessageCommunity extends BottomSheetDialogFragment {
 
-    //EditText
     private EditText message;
-
-    //Button
     private Button createButton;
-
     private ImageView closeButton, upLoadedImage;
-
-    //Firebase Authentication
     private FirebaseAuth mAuth;
-
     private FirebaseFirestore firebaseFirestore;
-
     private String imagePath;
-
     private CommunityFragment communityFragment;
-
-    public NewMessageCommunity(CommunityFragment communityFragment) {
-        this.communityFragment = communityFragment;
-    }
 
     //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
+
+    public NewMessageCommunity(CommunityFragment communityFragment) {
+        this.communityFragment = communityFragment;
+        imagePath = "";
+    }
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
@@ -69,10 +61,12 @@ public class NewMessageCommunity extends BottomSheetDialogFragment {
         message = view.findViewById(R.id.message);
         createButton = view.findViewById(R.id.createNewMessageButton);
         upLoadedImage = view.findViewById(R.id.uploadImage);
-        imagePath = "";
 
         firebaseFirestore = FirebaseFirestore.getInstance();
 
+        /**
+         * When the dialog is canceled it goes back to the community fragment and re-updates the messages
+         */
         getDialog().setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialogInterface) {
@@ -80,7 +74,9 @@ public class NewMessageCommunity extends BottomSheetDialogFragment {
             }
         });
 
-        //On click closes the form sheet
+        /**
+         * On click closes the form sheet
+         */
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,6 +84,9 @@ public class NewMessageCommunity extends BottomSheetDialogFragment {
             }
         });
 
+        /**
+         * Will fetch an image from the user's downloads
+         */
         upLoadedImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -96,7 +95,9 @@ public class NewMessageCommunity extends BottomSheetDialogFragment {
             }
         });
 
-        //On click starts the login process
+        /**
+         * Creates the new message and returns to the fragment
+         */
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,10 +121,16 @@ public class NewMessageCommunity extends BottomSheetDialogFragment {
         }
     }
 
+    /**
+     * This method will create a message with what the user writes and with an image if the user transfers it,
+     * when creating the message sends it to the database
+     * @param messageText text written by the user
+     * @param userID
+     */
     public void createMessage(String messageText,String userID){
         // Message's field check
         if (TextUtils.isEmpty(messageText)) {
-            message.setError(getString(R.string.error_enter_your_mail));
+            message.setError("Please enter a message");
             message.requestFocus();
             return;
         }
