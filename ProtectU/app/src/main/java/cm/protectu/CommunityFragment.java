@@ -1,8 +1,8 @@
 package cm.protectu;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +12,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -39,6 +38,7 @@ public class CommunityFragment extends Fragment {
     private ArrayList<CommunityCard> listOfCommunityCards;
     private FloatingActionButton floatingActionButton;
     private ImageView missingPeopleButton;
+    private SwipeRefreshLayout swipeToRefresh;
 
     @Nullable
     @Override
@@ -63,9 +63,26 @@ public class CommunityFragment extends Fragment {
 
         listOfCommunityCards = new ArrayList<>();
         recyclerView = view.findViewById(R.id.communityRecyclerView);
+        swipeToRefresh = view.findViewById(R.id.swipeToRefresh);
         communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         recyclerView.setAdapter(communityAdapter);
+
+        swipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                communityCardsData();
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (swipeToRefresh.isRefreshing()) {
+                            swipeToRefresh.setRefreshing(false);
+                        }
+                    }
+                }, 500);
+            }
+        });
 
         CommunityFragment fragment = this;
 
