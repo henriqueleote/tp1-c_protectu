@@ -62,9 +62,9 @@
         android:id="@+id/profileImageView"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_marginTop="150dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_bottom_profile_black_24dp"/>
+        android:layout_marginTop="150dp"
+        android:src="@drawable/ic_bottom_profile_black_24dp" />
 
     <ImageView
         android:layout_width="40dp"

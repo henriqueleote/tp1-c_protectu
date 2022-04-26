@@ -5,15 +5,17 @@ public class UserData {
     private String lastName;
     private String userID;
     private String phoneNumber;
+    private String imageURL;
 
     public UserData() {
     }
 
-    public UserData(String firstName, String lastName, String userID, String phoneNumber) {
+    public UserData(String firstName, String lastName, String userID, String phoneNumber, String imageURL) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userID = userID;
         this.phoneNumber = phoneNumber;
+        this.imageURL = imageURL;
     }
 
     public String getFirstName() {
@@ -46,5 +48,13 @@ public class UserData {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 }

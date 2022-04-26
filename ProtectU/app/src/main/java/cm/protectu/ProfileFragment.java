@@ -1,13 +1,13 @@
 package cm.protectu;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +19,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,11 +27,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
+
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 
 public class ProfileFragment extends Fragment {
     //Strings
-    String userName, lastName, phoneNumber;
+    String userName, lastName, phoneNumber, imageURL;
 
     //TextView
     TextView nameTextView, optionBtn, emailTextView, contactTextView;
@@ -57,8 +59,6 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
-
-
 
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
@@ -124,7 +124,7 @@ public class ProfileFragment extends Fragment {
         editImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditProfileFragment fragment = new EditProfileFragment(userName, lastName, phoneNumber);
+                EditProfileFragment fragment = new EditProfileFragment(userName, lastName, phoneNumber, imageURL);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container, fragment);
                 transaction.addToBackStack(null);
@@ -184,6 +184,11 @@ public class ProfileFragment extends Fragment {
     //Method to get profile data from Firestore Database
     public void getData(){
 
+        ProgressDialog mDialog = new ProgressDialog(getActivity());
+        mDialog.setMessage("Loading user data...");
+        mDialog.setCancelable(false);
+        mDialog.show();
+
         //Firebase Authentication function get the data from firebase with certain criteria
         firebaseFirestore.collection("users")
                 //where the userID is the same as the logged in user
@@ -195,15 +200,27 @@ public class ProfileFragment extends Fragment {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 //Prints in debug the data object
-                                Log.d(TAG, "Data :" + document.getId() + " => " + document.getData());
+                                Log.d(TAG, "Data: " + document.getId() + " => " + document.getData());
                                 //Sets the text in the view with the name and surname of the authenticated user
                                 userName = document.getString("firstName");
                                 lastName = document.getString("lastName");
                                 phoneNumber = document.getString("phoneNumber");
+                                imageURL = document.getString("imageURL");
                                 nameTextView.setText(userName + " " + lastName);
                                 emailTextView.setText("E-mail: " + mAuth.getCurrentUser().getEmail());
                                 contactTextView.setText("Contact: " + phoneNumber);
+                                //TODO CHECK IF THIS IS THE LINE, I'VE A NULL SPACE IN THE REGISTER, SO MAYBE .equals("null") after everyone deletes their accounts
+                                if(!imageURL.equals("null")){
+                                    //if(document.getString("imageURL") != null){
+                                    Picasso.get()
+                                            .load(imageURL)
+                                            .centerCrop()
+                                            .fit()
+                                            .transform(new CropCircleTransformation())
+                                            .into(profileImageView);
+                                }
                             }
+                            mDialog.dismiss();
                         } else {
                             //TODO Maybe reload the page or kill the session?
                             //Shows the error
