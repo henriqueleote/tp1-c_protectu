@@ -5,41 +5,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/backgroundColor">
+    android:background="#F1EFEF">
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="ProtectU"
+        android:textSize="48sp"
+        android:textColor="@color/black"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true">
+        android:layout_marginTop="80dp"/>
 
-        <Button
-            android:id="@+id/signInButton"
-            android:layout_width="200dp"
-            android:layout_height="66dp"
-            android:layout_centerHorizontal="true"
-            android:backgroundTint="@color/primary_button"
-            android:text="Sign In" />
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_below="@+id/title"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="40dp"
+        android:src="@mipmap/ic_launcher" />
 
-        <Button
-            android:id="@+id/signUpButton"
-            android:layout_width="200dp"
-            android:layout_height="66dp"
-            android:layout_marginTop="20dp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/signInButton"
-            android:backgroundTint="@color/primary_button"
-            android:text="Sign Up" />
+    <Button
+        android:id="@+id/signInButton"
+        android:layout_width="200dp"
+        android:layout_height="66dp"
+        android:layout_centerHorizontal="true"
+        android:backgroundTint="#2E98F0"
+        android:text="Sign In"
+        android:textSize="20dp"
+        android:layout_below="@+id/logo"
+        android:layout_marginTop="100dp"/>
 
-        <TextView
-            android:id="@+id/anonymousButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/signUpButton"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="20dp"
-            android:text="Login Anonymously"/>
+    <Button
+        android:id="@+id/signUpButton"
+        android:layout_width="200dp"
+        android:layout_height="66dp"
+        android:layout_below="@+id/signInButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#FFFFFF"
+        android:text="Sign Up"
+        android:textColor="#504141"
+        android:textSize="20dp"
+        />
 
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/anonymousButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/signUpButton"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        android:text="Login Anonymously"/>
+
 
 </RelativeLayout>

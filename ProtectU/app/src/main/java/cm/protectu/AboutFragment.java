@@ -18,7 +18,10 @@ public class AboutFragment extends Fragment {
 
     //Firebase Authentication
     private FirebaseAuth mAuth;
+
+    //Image witch we can go to the back fragment(Map Fragment)
     private ImageView arrowBack;
+
 
     @Nullable
     @Override
@@ -30,6 +33,8 @@ public class AboutFragment extends Fragment {
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
         arrowBack = view.findViewById(R.id.backID);
+
+
         //go back to the map frame
         arrowBack.setOnClickListener(new View.OnClickListener() {
             @Override

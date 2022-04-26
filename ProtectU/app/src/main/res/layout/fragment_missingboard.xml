@@ -62,33 +62,16 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="50dp">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
 
-                <ImageView
-                    android:id="@+id/magnifierIconID"
-                    android:layout_width="12dp"
-                    android:layout_height="14dp"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/ic_magnifier" />
-
-                <EditText
-                    android:id="@+id/missingToFindID"
+                <SearchView
+                    android:id="@+id/searchID"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_alignParentEnd="true"
-                    android:hint="Put a Name.."
                     android:inputType="text"
-                    android:textColorHint="@color/black"
-                    android:textSize="9sp"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/magnifierIconID"
-                    android:fontFamily="@font/lexend_regular"
-                    />
 
-            </RelativeLayout>
+                    >
+
+                </SearchView>
 
         </androidx.cardview.widget.CardView>
 

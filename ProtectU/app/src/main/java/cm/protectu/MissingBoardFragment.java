@@ -1,10 +1,12 @@
 package cm.protectu;
 
+import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,6 +38,7 @@ public class MissingBoardFragment extends Fragment {
     private FirebaseFirestore firebaseFirestore;
     private FloatingActionButton floatingActionButton;
     private CardView age;
+    private SearchView searchNames;
 
 
     //Firebase Authentication
@@ -51,11 +54,15 @@ public class MissingBoardFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_missingboard, container, false);
 
         missingCards = new ArrayList<>();
+
         myRecycleView = (RecyclerView) view.findViewById(R.id.localCardsID);
         floatingActionButton = view.findViewById(R.id.createMissingBoardButtonID);
         age = view.findViewById(R.id.ageFilterButtonID);
-        myAdapter = new MissingBoardAdapter(getActivity(), missingCards,getParentFragmentManager(),mAuth);
+        searchNames = view.findViewById(R.id.searchID);
 
+
+        //Link the view objects with the XML
+        myAdapter = new MissingBoardAdapter(getActivity(), missingCards,getParentFragmentManager(),mAuth);
         myRecycleView.setLayoutManager(new GridLayoutManager(getActivity(),2));
         myRecycleView.setAdapter(myAdapter);
 
@@ -76,6 +83,22 @@ public class MissingBoardFragment extends Fragment {
 
         missingCardsData();
 
+        /*
+        searchNames.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+                    String query = intent.getStringExtra(SearchManager.QUERY);
+                    doMySearch(query);
+                }
+            }
+        });
+        }*/
+
+        /**
+         * Permite ir para o fragment de criar novas publicações
+         */
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,6 +114,9 @@ public class MissingBoardFragment extends Fragment {
 
         MissingBoardFragment fragment = this;
 
+        /**
+         * Permite ir para o fragment correspondente às opções de filtro da publicações pelas idades
+         */
         age.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,7 +133,8 @@ public class MissingBoardFragment extends Fragment {
 
 
     /**
-     * Permite verificar se a tarefa de ir buiscar os dados na colecao é bem sucessido ou n e dps transforma os dados devolvidos na classe pretendida, cria os respetivos cards
+     * Permite verificar se a tarefa de ir buscar os dados na colecao é bem sucessida, depois
+     * transforma os dados devolvidos na classe pretendidae e cria as respetivas publicações
      */
     public void missingCardsData() {
         missingCards.clear();
@@ -131,14 +158,32 @@ public class MissingBoardFragment extends Fragment {
                 });
     }
 
+    /**
+     * Permite trocar as publicações existentes no fragment pelas publicações filtradas pelas idades pretendidas
+     * @param mCards
+     */
     public void missingFilteredCardsData(ArrayList<MissingCard> mCards) {
+        refreshCards(mCards);
+    }
+
+    public void namesFiltered(String name){
+        ArrayList<MissingCard> missingCardsFilteredByName;
+        missingCardsFilteredByName = new ArrayList<>();
+        for(MissingCard mCard: missingCards){
+            if(mCard.getMissingName().toString() == name){
+                missingCardsFilteredByName.add(mCard);
+            }
+        }
+        refreshCards(missingCardsFilteredByName);
+    }
+
+    public void refreshCards(ArrayList<MissingCard> missCards){
         missingCards.clear();
-        missingCards.addAll(mCards);
+        missingCards.addAll(missCards);
         myAdapter = new MissingBoardAdapter(getActivity(), missingCards,getParentFragmentManager(),mAuth);
         myRecycleView.setAdapter(myAdapter);
         myAdapter.notifyDataSetChanged();
     }
-
 
 
 }

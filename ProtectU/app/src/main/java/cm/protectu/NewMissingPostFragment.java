@@ -2,6 +2,7 @@ package cm.protectu;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -111,13 +112,19 @@ public class NewMissingPostFragment extends Fragment {
         });
 
         // IN PROGRESS THIS SITUACION
-        /*
+
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createMissingPost(mAuth.getUid(),description.getText().toString().trim(),name.getText().toString().trim(),mAuth.getCurrentUser().getPhoneNumber(),age.getText().toString(),"fff","fff",getActivity());
+                createMissingPost(name.getText().toString().trim(),description.getText().toString().trim(),age.getText().toString(),"929292929","fff",mAuth.getUid(),"kkk","");
+                MissingBoardFragment fragment = new MissingBoardFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+
             }
-        });*/
+        });
 
 
 
@@ -127,9 +134,10 @@ public class NewMissingPostFragment extends Fragment {
     }
 
     // IN PROGRESS THIS SITUACION
-    /*
-    public void createMissingPost(String userID, String description, String missingName, String phoneNumber, String missingAge, String foto, String fotoMissing,Context context){
+
+    public void createMissingPost(String missingName, String description, String missingAge, String phoneNumber, String foto,String userID,String fotoMissing,String missingID){
         // Message's field check
+        /*
         if (TextUtils.isEmpty(missingName) || TextUtils.isEmpty(String.valueOf(missingAge)) || TextUtils.isEmpty(description)) {
             name.setError(getString(R.string.error_enter_your_mail));
             name.requestFocus();
@@ -138,25 +146,32 @@ public class NewMissingPostFragment extends Fragment {
             this.description.setError(getString(R.string.error_enter_your_mail));
             this.description.requestFocus();
             return;
-        }
+        }*/
+        ProgressDialog mDialog = new ProgressDialog(getActivity());
+        mDialog.setMessage("Creating post...");
+        mDialog.setCancelable(false);
+        mDialog.show();
+
 
         firebaseFirestore.collection("missing-board")
-                .add(new MissingPostFragment(userID,missingName,description,missingAge,phoneNumber,foto,fotoMissing,context))
+                .add(new MissingCard(missingName, description,missingAge,phoneNumber,foto,userID,fotoMissing,missingID))
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         firebaseFirestore.collection("missing-board").document(documentReference.getId())
                                 .update("missingID",documentReference.getId());
                         Log.d(TAG, "Document successfully created!");
+                        mDialog.dismiss();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.w(TAG, "Error creating document", e);
+                        mDialog.dismiss();
                     }
                 });
-    }*/
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

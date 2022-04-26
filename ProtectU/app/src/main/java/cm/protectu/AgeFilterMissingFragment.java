@@ -46,6 +46,7 @@ public class AgeFilterMissingFragment extends BottomSheetDialogFragment {
     //Button
     private Button showResults;
 
+    //Images
     private ImageView closeButton, selectAll,clear ;
 
     //Firebase Authentication
@@ -53,10 +54,12 @@ public class AgeFilterMissingFragment extends BottomSheetDialogFragment {
 
     private FirebaseFirestore firebaseFirestore;
 
-    private String imagePath;
-
     private MissingBoardFragment missingBoardFragment;
 
+    /**
+     * Construtor que permite inicializar a lista com todos as publicações provenientes da classe missing board
+     * @param missingBoardFragment classe que contem todos as publicações
+     */
     public AgeFilterMissingFragment(MissingBoardFragment missingBoardFragment) {
         this.missingBoardFragment = missingBoardFragment;
         mcards = new ArrayList<>(missingBoardFragment.missingCards);
@@ -83,7 +86,6 @@ public class AgeFilterMissingFragment extends BottomSheetDialogFragment {
         adults = view.findViewById(R.id.adultsFilterID);
         seniors = view.findViewById(R.id.seniorsFilterID);
 
-        imagePath = "";
 
         firebaseFirestore = FirebaseFirestore.getInstance();
 
@@ -97,6 +99,9 @@ public class AgeFilterMissingFragment extends BottomSheetDialogFragment {
             }
         });
 
+        /**
+         * Permite limpar todas as checkbox que estejam selecionadas
+         */
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,6 +111,9 @@ public class AgeFilterMissingFragment extends BottomSheetDialogFragment {
             }
         });
 
+        /**
+         * Permite selecionar todas as checkbox
+         */
         selectAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,25 +123,31 @@ public class AgeFilterMissingFragment extends BottomSheetDialogFragment {
             }
         });
 
+        /**
+         * Permite filtrar as publicações existentes consoante as checkbox selecionadas
+         */
         showResults.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(childrens.isChecked() && adults.isChecked() && seniors.isChecked()){
+                if(childrens.isChecked() && adults.isChecked() && seniors.isChecked() || !(childrens.isChecked() && adults.isChecked() && seniors.isChecked())){
                     missingBoardFragment.missingCardsData();
                     getDialog().cancel();
                 }
                 else{
+                    //Checkbox correspondente a das criancas
                     for (MissingCard card: mcards){
                         if(childrens.isChecked()){
                             if(Integer.parseInt(card.getMissingAge()) <= 17 && Integer.parseInt(card.getMissingAge()) >= 0){
                                 newCardS.add(card);
                             }
                         }
+                        //Checkbox correspondente ao dos adultos
                         if(adults.isChecked()){
                             if(Integer.parseInt(card.getMissingAge()) <= 59 && Integer.parseInt(card.getMissingAge()) >= 18){
                                 newCardS.add(card);
                             }
                         }
+                        //Checkbox correspondente ao dos seniores
                         if(seniors.isChecked()){
                             if(Integer.parseInt(card.getMissingAge())>=59 && Integer.parseInt(card.getMissingAge())<=120){
                                 newCardS.add(card);
@@ -143,6 +157,7 @@ public class AgeFilterMissingFragment extends BottomSheetDialogFragment {
                     }
                 }
 
+                //adiciona os cartoes filtrados a pagina de visualizacao
                 missingBoardFragment.missingFilteredCardsData(newCardS);
                 getDialog().cancel();
             }

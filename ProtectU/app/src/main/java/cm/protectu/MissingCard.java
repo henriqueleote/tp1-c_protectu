@@ -5,7 +5,6 @@ package cm.protectu;
  */
 public class MissingCard {
 
-    private String profileName;
     private String missingName;
     private String description;
     private String missingAge;
@@ -19,18 +18,20 @@ public class MissingCard {
 
     }
 
-    public MissingCard(String missingName, String description, String missingAge, String phoneNumber, String foto, String profileName,String userID,String fotoMissing,String missingID) {
+
+    public MissingCard(String missingName, String description, String missingAge, String phoneNumber, String foto,String userID,String fotoMissing,String missingID) {
         this.missingName = missingName;
         this.description = description;
         this.missingAge = missingAge;
         this.phoneNumber = phoneNumber;
         this.foto = foto;
-        this.profileName = profileName;
         this.userID = userID;
         this.fotoMissing = fotoMissing;
         this.missingID = missingID;
     }
 
+
+    //Getters and Setters
     public String getMissingID() {
         return missingID;
     }
@@ -70,14 +71,6 @@ public class MissingCard {
         this.missingName = missingName;
     }
 
-    public String getProfileName() {
-        return profileName;
-    }
-
-    public void setProfileName(String profileName) {
-        this.profileName = profileName;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -102,9 +95,3 @@ public class MissingCard {
         this.phoneNumber = phoneNumber;
     }
 }
-/*
-*
-Card Layout: The card layout is an XML file that will represent each individual grid item inside your Recycler view.
-View Holder: View Holder Class is the java class that stores the reference to the UI Elements in the Card Layout and they can be modified dynamically during the execution of the program by the list of data.
-Data Class: Data Class is an object class that holds information to be displayed in each recycler view item that is to be displayed in Recycler View.
-* */

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -60,6 +61,8 @@ public class MissingPostFragment extends Fragment {
 
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
+
+        //Link the view objects with the XML and put the information in the elements
         arrowBack = view.findViewById(R.id.backID);
         descriptionPostID = view.findViewById(R.id.descriptionPostID);
         descriptionPostID.setText(description);
@@ -72,9 +75,16 @@ public class MissingPostFragment extends Fragment {
         share = view.findViewById(R.id.sharePostID);
         profileImage = view.findViewById(R.id.foto);
         MissingImage = view.findViewById(R.id.imageMissingID);
-        Picasso.with(context).load(urlProflie).error(R.drawable.ic_baseline_share_24).into(profileImage);
 
 
+       // Picasso.with(context).load(urlProflie).error(R.drawable.ic_baseline_share_24).into(profileImage);
+
+
+
+
+        /**
+         * Permite partilhar a publicação em outras plataformas
+         */
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,6 +98,10 @@ public class MissingPostFragment extends Fragment {
             }
         });
 
+        /**
+         * Permite colocar o numero associado à conta de perfil do utilizador da respetiva publicação
+         * no telemovel, com o objetivo de realizar chamada para este numero
+         */
         phone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,7 +111,9 @@ public class MissingPostFragment extends Fragment {
             }
         });
 
-        //go back to the map frame
+        /**
+         * go back to the main missing board frag
+         */
         arrowBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
