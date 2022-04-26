@@ -4,14 +4,14 @@
     android:background="@color/white">
 
     <item
-        android:id="@+id/navigation_news"
-        android:icon="@drawable/ic_bottom_home_black_24dp"
-        android:title="News" />
-
-    <item
         android:id="@+id/navigation_map"
         android:icon="@drawable/ic_bottom_map_black_24dp"
         android:title="@string/map" />
+
+    <item
+        android:id="@+id/navigation_news"
+        android:icon="@drawable/ic_bottom_home_black_24dp"
+        android:title="News" />
 
     <item
         android:id="@+id/navigation_panic"

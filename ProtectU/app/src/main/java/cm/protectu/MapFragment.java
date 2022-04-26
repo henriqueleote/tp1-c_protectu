@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
@@ -39,6 +40,7 @@ import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -68,7 +70,12 @@ public class MapFragment extends Fragment {
     private SupportMapFragment supportMapFragment;
 
     //Floating Action Button
-    private FloatingActionButton resetLocation, createPinBtn, changeMapTypeBtn;
+    private FloatingActionButton createBtn, createZoneBtn, createMarkerBtn, changeMapTypeBtn;
+
+    //LinearLayout
+    private LinearLayout containerMarkerBtn, containerZoneBtn;
+
+    boolean areAllButtonVisible;
 
     //List with the pins of the map
     private ArrayList<MapPin> mapPins;
@@ -101,9 +108,35 @@ public class MapFragment extends Fragment {
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         client = LocationServices.getFusedLocationProviderClient(getActivity());
-        resetLocation = view.findViewById(R.id.resetLocationBtn);
-        createPinBtn = view.findViewById(R.id.createPinBtn);
+        //resetLocation = view.findViewById(R.id.resetLocationBtn);
+        createMarkerBtn = view.findViewById(R.id.createMarkerBtn);
+        createZoneBtn = view.findViewById(R.id.createZoneBtn);
+        createBtn = view.findViewById(R.id.createBtn);
         changeMapTypeBtn = view.findViewById(R.id.changeMapTypeBtn);
+        containerZoneBtn = view.findViewById(R.id.containerZoneBtn);
+        containerMarkerBtn = view.findViewById(R.id.containerMarkerBtn);
+
+        containerZoneBtn.setVisibility(View.GONE);
+        containerMarkerBtn.setVisibility(View.GONE);
+
+        areAllButtonVisible = false;
+
+        createBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!areAllButtonVisible) {
+                    containerZoneBtn.setVisibility(View.VISIBLE);
+                    containerMarkerBtn.setVisibility(View.VISIBLE);
+                    createBtn.animate().rotation(45).setDuration(200).start();
+                    areAllButtonVisible = true;
+                }else{
+                    containerZoneBtn.setVisibility(View.GONE);
+                    containerMarkerBtn.setVisibility(View.GONE);
+                    createBtn.animate().rotation(0).setDuration(200).start();
+                    areAllButtonVisible = false;
+                }
+            }
+        });
 
         mapPins = new ArrayList<>();
         mapZones = new ArrayList<>();
@@ -118,12 +151,12 @@ public class MapFragment extends Fragment {
 
         //On click resets the location and goes back showing where the user is in the map
         //Unecessary method
-        resetLocation.setOnClickListener(new View.OnClickListener() {
+        /*resetLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), 12));
             }
-        });
+        });*/
 
         //TODO Comment
         changeMapTypeBtn.setOnClickListener(new View.OnClickListener() {
@@ -138,7 +171,17 @@ public class MapFragment extends Fragment {
             }
         });
 
-        createPinBtn.setOnClickListener(new View.OnClickListener() {
+        createZoneBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getParentFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new MapAddZoneFragment())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        createMarkerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getParentFragmentManager().beginTransaction()
@@ -206,7 +249,6 @@ public class MapFragment extends Fragment {
                                                     MapPin pin = new MapPin(document.getId(), location, document.get("type").toString());
                                                     //Log.d(TAG, "\nPin Object Data (Object) => " + pin + "\n");
                                                     //mapPins.add(pin);
-
 
                                                     BitmapDescriptor icon = null;
                                                     LatLng latLng = new LatLng(pin.getLocation().getLatitude(), pin.getLocation().getLongitude());
