@@ -68,7 +68,7 @@ public class MapFragment extends Fragment {
     private SupportMapFragment supportMapFragment;
 
     //Floating Action Button
-    private FloatingActionButton resetLocation, createPinBtn;
+    private FloatingActionButton resetLocation, createPinBtn, changeMapTypeBtn;
 
     //List with the pins of the map
     private ArrayList<MapPin> mapPins;
@@ -101,6 +101,7 @@ public class MapFragment extends Fragment {
         client = LocationServices.getFusedLocationProviderClient(getActivity());
         resetLocation = view.findViewById(R.id.resetLocationBtn);
         createPinBtn = view.findViewById(R.id.createPinBtn);
+        changeMapTypeBtn = view.findViewById(R.id.changeMapTypeBtn);
 
         mapPins = new ArrayList<>();
         mapZones = new ArrayList<>();
@@ -117,6 +118,19 @@ public class MapFragment extends Fragment {
         resetLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                getCurrentLocation();
+            }
+        });
+
+        //TODO Comment
+        changeMapTypeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(gMap.getMapType() == GoogleMap.MAP_TYPE_NORMAL){
+                    gMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                }else{
+                    gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                }
                 getCurrentLocation();
             }
         });
