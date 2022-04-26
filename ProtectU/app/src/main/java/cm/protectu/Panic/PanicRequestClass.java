@@ -1,19 +1,19 @@
-package cm.protectu;
+package cm.protectu.Panic;
 
-public class SosRequest {
+public class PanicRequestClass {
     private String userID;
     private String requestID;
     private int numberOfPeople;
     private String urgencyLevel;
 
-    public SosRequest(String userID, String requestID, int numberOfPeople, String urgencyLevel) {
+    public PanicRequestClass(String userID, String requestID, int numberOfPeople, String urgencyLevel) {
         this.userID = userID;
         this.requestID = requestID;
         this.numberOfPeople = numberOfPeople;
         this.urgencyLevel = urgencyLevel;
     }
 
-    public SosRequest(){ }
+    public PanicRequestClass(){ }
 
     public String getUrgencyLevel() {
         return urgencyLevel;

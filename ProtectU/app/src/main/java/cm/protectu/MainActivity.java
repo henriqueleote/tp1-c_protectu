@@ -3,7 +3,6 @@ package cm.protectu;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -15,6 +14,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import cm.protectu.Map.MapFragment;
+import cm.protectu.Panic.PanicFragment;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
 

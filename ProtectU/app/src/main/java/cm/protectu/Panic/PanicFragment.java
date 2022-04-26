@@ -1,4 +1,4 @@
-package cm.protectu;
+package cm.protectu.Panic;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -22,6 +22,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import cm.protectu.AuthActivity;
+import cm.protectu.R;
 
 
 public class PanicFragment extends BottomSheetDialogFragment {
@@ -104,7 +106,7 @@ public class PanicFragment extends BottomSheetDialogFragment {
             return;
         }
         firebaseFirestore.collection("sos-requests")
-                .add(new SosRequest(userID,"",Integer.parseInt(numOfPeople),selectedUrgencyLevel))
+                .add(new PanicRequestClass(userID,"",Integer.parseInt(numOfPeople),selectedUrgencyLevel))
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
