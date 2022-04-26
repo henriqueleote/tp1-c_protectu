@@ -4,7 +4,9 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -15,6 +17,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import android.content.pm.PackageManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -51,6 +55,9 @@ public class ProfileFragment extends Fragment {
     //Firebase Firestore
     FirebaseFirestore firebaseFirestore;
 
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    static final int RESULT_OK = 1;
+
     //TAG for debug logs
     private static final String TAG = MainActivity.class.getName();
 
@@ -78,39 +85,6 @@ public class ProfileFragment extends Fragment {
 
         registerForContextMenu(optionBtn);
 
-        if(mAuth.getCurrentUser().isAnonymous()){
-
-            nameTextView.setVisibility(View.GONE);
-            emailTextView.setVisibility(View.GONE);
-            contactTextView.setVisibility(View.GONE);
-            editImageView.setVisibility(View.GONE);
-            optionBtn.setVisibility(View.GONE);
-            removeCommunityBtn.setVisibility(View.GONE);
-            removeMissingBtn.setVisibility(View.GONE);
-            profileImageView.setVisibility(View.GONE);
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage(R.string.want_to_go_to_login)
-                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            mAuth.signOut();
-                            getActivity().finish();
-                            startActivity(new Intent(getActivity(), AuthActivity.class));
-                        }
-                    })
-                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            MapFragment fragment = new MapFragment();
-                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                            transaction.replace(R.id.fragment_container, fragment);
-                            transaction.addToBackStack(null);
-                            transaction.commit();
-                        }
-                    });
-            // Create the AlertDialog object and return it
-            builder.show();
-        }
-
         //On click, opens the menu
         optionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,7 +110,7 @@ public class ProfileFragment extends Fragment {
         removeMissingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                
             }
         });
 
@@ -164,13 +138,6 @@ public class ProfileFragment extends Fragment {
             MainActivity main = new MainActivity();
             main.loadFragment(new MapFragment());
         }*/
-
-        //TODO way to login
-        //If the user is anonymous
-        if(mAuth.getCurrentUser().isAnonymous()){
-
-        }
-
 
         //Gets the data from Firestore
         getData();

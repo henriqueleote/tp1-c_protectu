@@ -199,8 +199,8 @@ public class EditProfileFragment extends Fragment {
 
             ProgressDialog mDialog = new ProgressDialog(getActivity());
             //TODO UPDATE WITH STATUS
-            mDialog.setMax(100);
-            mDialog.setMessage("Loading image (" + mDialog.getProgress() + "%)");
+
+            mDialog.setMessage("Loading image...");
             mDialog.setCancelable(false);
             mDialog.show();
 

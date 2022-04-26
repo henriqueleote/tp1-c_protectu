@@ -3,7 +3,10 @@ package cm.protectu;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -79,7 +82,26 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
 
             case R.id.navigation_profile:
-                fragment = new ProfileFragment();
+                if(mAuth.getCurrentUser().isAnonymous()){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setMessage(R.string.want_to_go_to_login)
+                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    mAuth.signOut();
+                                    startActivity(new Intent(MainActivity.this, AuthActivity.class));
+                                }
+                            })
+                            .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    // Create the AlertDialog object and return it
+                    builder.show();
+                }else{
+                    fragment = new ProfileFragment();
+                }
+
                 break;
 
             case R.id.navigation_news:
