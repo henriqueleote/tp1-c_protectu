@@ -196,9 +196,8 @@ public class MapAddMarkerFragment extends Fragment {
                             gMap = googleMap;
                             //TODO CHECK IF IT ROTATES WHEN ON MOBILE
                             googleMap.setMyLocationEnabled(true);
-
-                            //Loads the map without animation with the device's current location in the map
-                            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 12));
+                            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
 
                             gMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                                 @Override

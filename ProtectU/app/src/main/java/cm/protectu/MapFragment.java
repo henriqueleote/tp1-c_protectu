@@ -180,9 +180,9 @@ public class MapFragment extends Fragment {
                             placePins(googleMap);
                             //TODO It would be nice instead of a marker, put those blue dots from google
                             // and apple maps with the compass sensor telling where it's turned to
+                            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
-                            //Loads the map without animation with the device's current location in the map
-                            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 12));
+                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
                         }
                     });
                 }
