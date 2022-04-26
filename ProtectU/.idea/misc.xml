@@ -23,10 +23,7 @@
         <entry key="..\:/Users/35193/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/menu/navigation.xml" value="0.3625" />
         <entry key="..\:/Users/35193/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/menu/options_menu.xml" value="0.3625" />
         <entry key="..\:/Users/35193/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/menu/side_menu.xml" value="0.3625" />
-        <entry key="..\:/Users/CucasPC/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/drawable/ic_bottom_map_black_24dp.xml" value="0.172" />
         <entry key="..\:/Users/CucasPC/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/drawable/ic_close_black_24dp.xml" value="0.164" />
-        <entry key="..\:/Users/CucasPC/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/drawable/ic_map_add_pin_45dp.xml" value="0.172" />
-        <entry key="..\:/Users/CucasPC/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/drawable/ic_map_hospital_pin_45dp.xml" value="0.172" />
         <entry key="..\:/Users/CucasPC/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/layout/activity_auth.xml" value="0.3625" />
         <entry key="..\:/Users/CucasPC/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/layout/activity_main.xml" value="0.3625" />
         <entry key="..\:/Users/CucasPC/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/layout/cardview_community.xml" value="0.19270833333333334" />
@@ -35,8 +32,6 @@
         <entry key="..\:/Users/CucasPC/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_community.xml" value="0.29375" />
         <entry key="..\:/Users/CucasPC/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_edit_profile.xml" value="0.246875" />
         <entry key="..\:/Users/CucasPC/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_map.xml" value="0.26458333333333334" />
-        <entry key="..\:/Users/CucasPC/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_map_add_pin.xml" value="0.19479166666666667" />
-        <entry key="..\:/Users/CucasPC/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_map_add_zone.xml" value="0.18" />
         <entry key="..\:/Users/CucasPC/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_news.xml" value="0.24583333333333332" />
         <entry key="..\:/Users/CucasPC/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_panic.xml" value="0.24583333333333332" />
         <entry key="..\:/Users/CucasPC/Desktop/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_profile.xml" value="0.24583333333333332" />

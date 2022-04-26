@@ -6,6 +6,7 @@
 
     <color name="backgroundColor">#F1EFEF</color>
     <color name="primary_button">#2E98F0</color>
+    <color name="red_button">#DE2F2F</color>
 
     <!-- dots inactive colors -->
     <color name="dot_dark_screen1">#858585</color>

@@ -91,8 +91,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
 
             case R.id.navigation_panic:
-                Toast.makeText(this, "Change to the panic fragment", Toast.LENGTH_SHORT).show();
-                fragment = new MissingBoardFragment();
+                //Toast.makeText(this, "Change to the panic fragment", Toast.LENGTH_SHORT).show();
+                PanicFragment bottomPanic = new PanicFragment();
+                bottomPanic.show(getSupportFragmentManager(),bottomPanic.getTag());
                 break;
         }
 

@@ -15,6 +15,7 @@
     <string name="error_invalid_email">Email inválido</string>
     <string name="error_invalid_contact">Contacto inválido</string>
     <string name="error_invalid_password">Palavra-passe inválida</string>
+    <string name="error_number_of_people">Insira uma quantidade válida de pessoas</string>
     <string name="options">Opções</string>
     <string name="logout">Terminar sessão</string>
     <string name="forgot_password">Esqueci-me da Password</string>

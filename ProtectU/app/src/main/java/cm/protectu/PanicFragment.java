@@ -1,43 +1,123 @@
 package cm.protectu;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
-public class PanicFragment extends Fragment {
+
+public class PanicFragment extends BottomSheetDialogFragment {
+
+    private EditText numberOfPeople;
+
+    private Spinner urgencyLevel;
+
+    private String selectedUrgencyLevel;
+
+    private Button sosButton;
+
+    private ImageView closeButton;
 
     //Firebase Authentication
     private FirebaseAuth mAuth;
 
+    private FirebaseFirestore firebaseFirestore;
+
+    //TAG for debug logs
+    private static final String TAG = AuthActivity.class.getName();
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         //Link the layout to the Fragment
         View view = inflater.inflate(R.layout.fragment_panic, container, false);
 
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
+        closeButton = view.findViewById(R.id.closePanic);
+        numberOfPeople = view.findViewById(R.id.numberOfPeople);
+        urgencyLevel = view.findViewById(R.id.urgencyLevel);
+        sosButton = view.findViewById(R.id.sosButton);
 
-        //TODO Check the animation
-        //Checks if there is a session, if not, redirects to the Auth page
-        if (mAuth.getCurrentUser() == null) {
-            getActivity().finish();
-            //Swipe animation ?? not sure, consult previous code
-            //getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            startActivity(new Intent(getActivity(), AuthActivity.class));
-        }
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
+
+        //On click closes the form sheet
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getDialog().cancel();
+            }
+        });
+
+        urgencyLevel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+        {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+            {
+                selectedUrgencyLevel = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent)
+            {
+                selectedUrgencyLevel = "Slight";
+            }
+        });
+
+        sosButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createRequest(numberOfPeople.getText().toString().trim()
+                        ,mAuth.getUid());
+                getDialog().cancel();
+            }
+        });
 
         //Returns the view
         return view;
 
+    }
+
+    public void createRequest(String numOfPeople,String userID){
+        if (TextUtils.isEmpty(numOfPeople)) {
+            numberOfPeople.setError(getString(R.string.error_number_of_people));
+            numberOfPeople.requestFocus();
+            return;
+        }
+        firebaseFirestore.collection("sos-requests")
+                .add(new SosRequest(userID,"",Integer.parseInt(numOfPeople),selectedUrgencyLevel))
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        firebaseFirestore.collection("sos-requests").document(documentReference.getId())
+                                .update("requestID",documentReference.getId());
+                        Log.d(TAG, "Document successfully created!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error creating document", e);
+                    }
+                });
     }
 }
