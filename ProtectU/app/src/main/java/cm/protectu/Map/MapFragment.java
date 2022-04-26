@@ -1,4 +1,4 @@
-package cm.protectu;
+package cm.protectu.Map;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -41,7 +41,6 @@ import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -51,6 +50,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cm.protectu.AuthActivity;
+import cm.protectu.R;
 
 
 public class MapFragment extends Fragment {

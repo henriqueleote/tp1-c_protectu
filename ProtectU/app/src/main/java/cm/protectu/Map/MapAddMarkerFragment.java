@@ -1,4 +1,4 @@
-package cm.protectu;
+package cm.protectu.Map;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
@@ -18,11 +17,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.SeekBar;
-import android.widget.Toast;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
@@ -30,7 +24,6 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -43,8 +36,6 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polygon;
-import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -59,8 +50,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cm.protectu.AuthActivity;
+import cm.protectu.R;
 
-public class MapAddZoneFragment extends Fragment {
+
+public class MapAddMarkerFragment extends Fragment {
 
     //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
@@ -81,8 +75,6 @@ public class MapAddZoneFragment extends Fragment {
 
     GoogleMap gMap;
 
-    Polygon polygon = null;
-    List<LatLng> latLngList = new ArrayList<>();
     List<Marker> markerList = new ArrayList<>();
 
     @Nullable
@@ -123,7 +115,7 @@ public class MapAddZoneFragment extends Fragment {
                 builder.setMessage("Do you want to cancel?")
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                clearZone();
+                                clearMarker();
                                 getParentFragmentManager().beginTransaction()
                                         .replace(R.id.fragment_container, new MapFragment())
                                         .addToBackStack(null)
@@ -144,19 +136,14 @@ public class MapAddZoneFragment extends Fragment {
             @SuppressLint("NewApi")
             @Override
             public void onClick(View view) {
-                if(markerList.size() < 3){
-                    Toast.makeText(getActivity(), "It must have at least 3 points to make a zone", Toast.LENGTH_SHORT).show();
-                    return;
-                }else{
-                    insertZone();
-                }
+                insertMarker();
             }
         });
 
         resetBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clearZone();
+                clearMarker();
             }
         });
 
@@ -208,16 +195,20 @@ public class MapAddZoneFragment extends Fragment {
                             gMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                                 @Override
                                 public void onMapClick(LatLng latLng) {
-                                    MarkerOptions markerOptions = new MarkerOptions().position(latLng);
-                                    markerOptions.icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_map_add_pin_45dp));
-                                    Marker marker = gMap.addMarker(markerOptions);
-                                    latLngList.add(latLng);
-                                    markerList.add(marker);
-                                    if (polygon != null) polygon.remove();
-                                    PolygonOptions polygonOptions = new PolygonOptions().addAll(latLngList).clickable(true);
-                                    polygon = gMap.addPolygon(polygonOptions);
-                                    polygon.setStrokeColor(Color.RED);
-                                    polygon.setFillColor(0x3Fb0233d);
+                                    if(markerList.isEmpty()){
+                                        MarkerOptions markerOptions = new MarkerOptions().position(latLng);
+                                        markerOptions.icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_map_add_pin_45dp));
+                                        Marker marker = gMap.addMarker(markerOptions);
+                                        markerList.add(marker);
+                                    }else{
+                                        Marker oldMarker = markerList.get(markerList.size()-1);
+                                        oldMarker.remove();
+                                        markerList.remove(markerList.size()-1);
+                                        MarkerOptions markerOptions = new MarkerOptions().position(latLng);
+                                        markerOptions.icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_map_add_pin_45dp));
+                                        Marker marker = gMap.addMarker(markerOptions);
+                                        markerList.add(marker);
+                                    }
                                 }
                             });
                         }
@@ -247,7 +238,7 @@ public class MapAddZoneFragment extends Fragment {
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
-    public void insertZone() {
+    public void insertMarker() {
         if(markerList.isEmpty()){
             getParentFragmentManager().beginTransaction()
                     .replace(R.id.fragment_container, new MapFragment())
@@ -255,20 +246,16 @@ public class MapAddZoneFragment extends Fragment {
                     .commit();
         }else{
             ProgressDialog progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setTitle("Adding zone");
+            progressDialog.setTitle("Adding marker");
             progressDialog.setMessage("Loading...");
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progressDialog.setCancelable(false);
             progressDialog.show();
-            List<GeoPoint> databaseList = new ArrayList<>();
-            for (int i = 0; i < markerList.size(); i++) {
-                databaseList.add(new GeoPoint(markerList.get(i).getPosition().latitude, markerList.get(i).getPosition().longitude));
-            }
-            Log.d(TAG, databaseList.toString());
-            DocumentReference documentReference = firebaseFirestore.collection("map-zones").document();
+            DocumentReference documentReference = firebaseFirestore.collection("map-pins").document();
             Map<String, Object> markersData = new HashMap<>();
-            markersData.put("zoneID", documentReference.getId());
-            markersData.put("points", databaseList);
+            markersData.put("pinID", documentReference.getId());
+            markersData.put("location", new GeoPoint(markerList.get(markerList.size()-1).getPosition().latitude, markerList.get(markerList.size()-1).getPosition().longitude));
+            markersData.put("type", "hospital");
             documentReference.set(markersData)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -291,10 +278,8 @@ public class MapAddZoneFragment extends Fragment {
         }
     }
 
-    public void clearZone(){
-        if (polygon != null) polygon.remove();
+    public void clearMarker(){
         for (Marker marker : markerList) marker.remove();
-        latLngList.clear();
         markerList.clear();
     }
 

@@ -1,4 +1,4 @@
-package cm.protectu;
+package cm.protectu.Map;
 
 import com.google.firebase.firestore.GeoPoint;
 

@@ -33,6 +33,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
+import cm.protectu.Map.MapFragment;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 
