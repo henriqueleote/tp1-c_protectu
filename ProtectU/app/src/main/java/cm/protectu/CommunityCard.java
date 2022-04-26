@@ -6,7 +6,6 @@ public class CommunityCard {
     private String userID;
     private String messageID;
     private String messageText;
-    private String userImage;
     private String imageURL;
     private Date date;
     private int likes;
@@ -16,10 +15,9 @@ public class CommunityCard {
     public CommunityCard() {
     }
 
-    public CommunityCard(String userID, String messageID, String messageText, String userImage, String imageURL,Date date, int likes, int dislikes, boolean verified) {
+    public CommunityCard(String userID, String messageID, String messageText, String imageURL,Date date, int likes, int dislikes, boolean verified) {
         this.userID = userID;
         this.messageID = messageID;
-        this.userImage = userImage;
         this.likes = likes;
         this.dislikes = dislikes;
         this.verified = verified;
@@ -82,14 +80,6 @@ public class CommunityCard {
 
     public void setVerified(boolean verified) {
         this.verified = verified;
-    }
-
-    public String getUserImage() {
-        return userImage;
-    }
-
-    public void setUserImage(String userImage) {
-        this.userImage = userImage;
     }
 
     public Date getDate() {

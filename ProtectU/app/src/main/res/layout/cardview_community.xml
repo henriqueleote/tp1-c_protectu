@@ -151,14 +151,13 @@
                 android:layout_below="@+id/userDetails"
                 android:layout_centerInParent="true"
                 android:layout_marginHorizontal="8dp"
-                android:layout_marginBottom="140dp"
+                android:layout_marginBottom="160dp"
                 android:padding="5dp"
                 android:text="dfgsdrgsdfgsdfghjfghjfghjfghjfhjfghjfghjg
                 ggggggggggggggggggggggggggggggggggggggggg
                 gggggggggggggsdfgsdfgsdfgsdfgsdfg"
                 android:textAlignment="center"
                 android:visibility="invisible" />
-
 
 
             <ImageView
@@ -168,7 +167,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="8dp"
-                android:layout_marginBottom="30dp"
+                android:layout_marginBottom="50dp"
                 android:visibility="invisible"
                 app:srcCompat="@android:drawable/ic_menu_share" />
 

@@ -2,11 +2,11 @@ package cm.protectu;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,19 +15,26 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.Date;
+
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 
 public class NewMessageCommunity extends BottomSheetDialogFragment {
@@ -37,7 +44,9 @@ public class NewMessageCommunity extends BottomSheetDialogFragment {
     private ImageView closeButton, upLoadedImage;
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
-    private String imagePath;
+    private FirebaseStorage storage;
+    private Uri imguri;
+    private String firebaseUrl;
     private CommunityFragment communityFragment;
 
     //TAG for debug logs
@@ -45,7 +54,6 @@ public class NewMessageCommunity extends BottomSheetDialogFragment {
 
     public NewMessageCommunity(CommunityFragment communityFragment) {
         this.communityFragment = communityFragment;
-        imagePath = "";
     }
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -55,6 +63,7 @@ public class NewMessageCommunity extends BottomSheetDialogFragment {
 
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
+        storage = FirebaseStorage.getInstance();
 
         //Link the view objects with the XML
         closeButton = view.findViewById(R.id.closeMessage);
@@ -90,8 +99,7 @@ public class NewMessageCommunity extends BottomSheetDialogFragment {
         upLoadedImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent,3);
+                imageFileChooser();
             }
         });
 
@@ -111,13 +119,57 @@ public class NewMessageCommunity extends BottomSheetDialogFragment {
         return view;
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void imageFileChooser(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, 1);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK && data!=null){
-            Uri selectedImages = data.getData();
-            imagePath = selectedImages.getPath();
-            upLoadedImage.setImageURI(selectedImages);
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null & data.getData() != null) {
+
+            imguri = data.getData();
+            Picasso.get()
+                    .load(imguri)
+                    .centerCrop()
+                    .fit()
+                    .transform(new CropCircleTransformation())
+                    .into(upLoadedImage);
+
+
+            ProgressDialog mDialog = new ProgressDialog(getActivity());
+            //TODO UPDATE WITH STATUS
+            mDialog.setMessage("Loading image...");
+            mDialog.setCancelable(false);
+            mDialog.show();
+
+            StorageReference storageReference = storage.getInstance().getReference();
+            final StorageReference imageRef = storageReference.child("community-chat/" + mAuth.getCurrentUser().getUid() + "-" + System.currentTimeMillis());
+            UploadTask uploadTask = imageRef.putFile(imguri);
+
+            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    mDialog.dismiss();
+                    Task<Uri> downloadUrl = imageRef.getDownloadUrl();
+                    downloadUrl.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            firebaseUrl = uri.toString();
+                            Log.d(TAG, "Link: " + firebaseUrl);
+                        }
+                    });
+                }
+            })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            mDialog.dismiss();
+                            Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                        }
+                    });
         }
     }
 
@@ -136,7 +188,7 @@ public class NewMessageCommunity extends BottomSheetDialogFragment {
         }
 
         firebaseFirestore.collection("community-chat")
-                .add(new CommunityCard(userID,"",messageText,"",imagePath,new Date(),0,0,false))
+                .add(new CommunityCard(userID,"",messageText, firebaseUrl,new Date(),0,0,false))
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
