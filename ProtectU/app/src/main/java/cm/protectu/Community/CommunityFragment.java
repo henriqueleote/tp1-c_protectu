@@ -43,6 +43,7 @@ public class CommunityFragment extends Fragment {
     private FloatingActionButton floatingActionButton;
     private ImageView missingPeopleButton;
     private SwipeRefreshLayout swipeToRefresh;
+    private CommunityFragment fragment;
 
     @Nullable
     @Override
@@ -65,10 +66,11 @@ public class CommunityFragment extends Fragment {
 
         firebaseFirestore = FirebaseFirestore.getInstance();
 
+        fragment = this;
         listOfCommunityCards = new ArrayList<>();
         recyclerView = view.findViewById(R.id.communityRecyclerView);
         swipeToRefresh = view.findViewById(R.id.swipeToRefresh);
-        communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth);
+        communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth,fragment);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         recyclerView.setAdapter(communityAdapter);
 
@@ -88,7 +90,7 @@ public class CommunityFragment extends Fragment {
             }
         });
 
-        CommunityFragment fragment = this;
+
 
         communityCardsData();
 
@@ -154,9 +156,10 @@ public class CommunityFragment extends Fragment {
 
                             Collections.sort(listOfCommunityCards, new SortCommunityCardClass());
 
-                            communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth);
+                            communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth,fragment);
                             recyclerView.setAdapter(communityAdapter);
                             communityAdapter.notifyDataSetChanged();
+
                         } else {
                             Toast.makeText(getActivity(), "erro", Toast.LENGTH_SHORT).show();
                         }

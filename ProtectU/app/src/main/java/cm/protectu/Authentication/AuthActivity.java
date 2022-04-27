@@ -35,7 +35,7 @@ public class AuthActivity extends AppCompatActivity {
     //Firebase User
     private FirebaseUser user;
 
-    private static final String TAG =  AuthActivity.class.getName();
+    private static final String TAG = AuthActivity.class.getName();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,14 +49,14 @@ public class AuthActivity extends AppCompatActivity {
 
         //TODO - Fix this
         //The code is right, but it has some bugs and it says that the mAuth is null
-        //if(mAuth.getCurrentUser().isAnonymous()){
-        // mAuth.signOut();
-        // mAuth.getCurrentUser().delete()
+        //if (mAuth.getCurrentUser().isAnonymous()) {
+            //mAuth.getCurrentUser().delete();
+            //mAuth.signOut();
         //}
 
 
         //Check if has stored session, if true, redirects to the App
-        if(mAuth.getCurrentUser() != null){
+        if (mAuth.getCurrentUser() != null) {
             startActivity(new Intent(this, MainActivity.class));
         }
 
@@ -92,7 +92,7 @@ public class AuthActivity extends AppCompatActivity {
         });
     }
 
-    public void loginUserAnonymous(){
+    public void loginUserAnonymous() {
         mAuth.signInAnonymously()
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -105,7 +105,7 @@ public class AuthActivity extends AppCompatActivity {
                             //Show success message and redirects to the app
                             Toast.makeText(AuthActivity.this, getString(R.string.registration_sucessful), Toast.LENGTH_LONG).show();
                             startActivity(new Intent(AuthActivity.this, MainActivity.class));
-                            Log.d(TAG,"Data: " + user.getUid() + "\nEmail: " + user.getEmail());
+                            Log.d(TAG, "Data: " + user.getUid() + "\nEmail: " + user.getEmail());
                         } else {
                             Log.w(TAG, "signInAnonymously:failure", task.getException());
                             Toast.makeText(AuthActivity.this, getString(R.string.registration_failed), Toast.LENGTH_SHORT).show();

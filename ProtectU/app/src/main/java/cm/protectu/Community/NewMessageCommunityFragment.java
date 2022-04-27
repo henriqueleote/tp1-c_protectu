@@ -41,8 +41,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import cm.protectu.Authentication.AuthActivity;
-import cm.protectu.Community.CommunityCard;
-import cm.protectu.Community.CommunityFragment;
 import cm.protectu.R;
 
 
@@ -242,20 +240,22 @@ public class NewMessageCommunityFragment extends BottomSheetDialogFragment {
             return;
         }
 
-        firebaseFirestore.collection("community-chat")
-                .add(new CommunityCard(userID,"",messageText, firebaseUrl,new Date(),0,0,false))
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+        if (firebaseUrl == null){
+            firebaseUrl = "";
+        }
+
+        DocumentReference documentReference = firebaseFirestore.collection("community-chat").document();
+        documentReference.set(new CommunityCard(userID,documentReference.getId(),messageText, firebaseUrl,new Date(),0,0,false))
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        firebaseFirestore.collection("community-chat").document(documentReference.getId())
-                                .update("messageID",documentReference.getId());
-                        Log.d(TAG, "Document successfully created!");
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot with the ID: " + documentReference.getId());
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error creating document", e);
+                        Log.w(TAG, "Error writing document", e);
                     }
                 });
     }

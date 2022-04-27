@@ -4,11 +4,14 @@ package cm.protectu.Community;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -38,19 +41,20 @@ import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyViewHolder> {
 
-    Context context;
-    ArrayList<CommunityCard> listOfCommunityCards;
-    FirebaseFirestore firebaseFirestore;
-    FirebaseAuth mAuth;
-    View view;
+    private Context context;
+    private ArrayList<CommunityCard> listOfCommunityCards;
+    private FirebaseFirestore firebaseFirestore;
+    private FirebaseAuth mAuth;
+    private CommunityFragment communityFragment;
 
     private static final String TAG = MainActivity.class.getName();
 
-    public CommunityAdapter(Context ct, ArrayList<CommunityCard> l, FirebaseAuth firebaseAuth) {
+    public CommunityAdapter(Context ct, ArrayList<CommunityCard> l, FirebaseAuth firebaseAuth, CommunityFragment cf) {
         firebaseFirestore = FirebaseFirestore.getInstance();
         context = ct;
         listOfCommunityCards = l;
         mAuth = firebaseAuth;
+        communityFragment = cf;
     }
 
     @NonNull
@@ -61,20 +65,21 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        int pos = position;
-        String userID = listOfCommunityCards.get(pos).getUserID();
+        String userID = listOfCommunityCards.get(position).getUserID();
         String currentUserID = mAuth.getUid();
-        String messageText = listOfCommunityCards.get(pos).getMessageText();
-        String messageID = listOfCommunityCards.get(pos).getMessageID();
+        String messageText = listOfCommunityCards.get(position).getMessageText();
+        String messageID = listOfCommunityCards.get(position).getMessageID();
 
         getClickedLikeOrDislike(currentUserID, messageID, holder);
 
         /**
          * If the message is not verified it makes the symbol invisible
          */
-        if (!listOfCommunityCards.get(pos).isVerified()) {
+        if (!listOfCommunityCards.get(position).isVerified()) {
             holder.verified.setVisibility(View.INVISIBLE);
+            changeMarginForMakeVerified(10, holder);
         }
+
 
         /**
          * will fetch the database the name of the user who created the message through the user id
@@ -110,7 +115,151 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                     }
                 });
 
-        //if the message does not have an image, just put the text if it does, adjust the text with the image
+        holder.dateText.setText(listOfCommunityCards.get(position).getDate() + "");
+
+        textAndMessageAdjuster(holder, position, messageText);
+
+        if (!mAuth.getCurrentUser().isAnonymous()) {
+            if (mAuth.getCurrentUser().getEmail().equals("aa@aa.pt")) {
+                holder.removeMessageCommunity.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        removeMessage(messageID);
+                    }
+                });
+                holder.makeVerified.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        makeVerified(messageID, holder);
+                    }
+                });
+            } else {
+                holder.removeMessageCommunity.setVisibility(View.INVISIBLE);
+            }
+
+            //Put the number of likes and dislikes in the message
+            holder.likeCounter.setText(listOfCommunityCards.get(position).getLikes() + "");
+            holder.dislikeCounter.setText(listOfCommunityCards.get(position).getDislikes() + "");
+
+            //Put the like action
+            holder.likeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    likesAndDislikes(messageID, "likes", holder.likeCounter, currentUserID, holder);
+                }
+            });
+
+            //Put the dislike action
+            holder.dislikeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    likesAndDislikes(messageID, "dislikes", holder.dislikeCounter, currentUserID, holder);
+                }
+            });
+
+            //Put the share action
+            holder.shareButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("text/plain");
+                    String shareBody = "Your Body here";
+                    String shareSub = "Your Subject here";
+                    intent.putExtra(Intent.EXTRA_SUBJECT, shareBody);
+                    intent.putExtra(Intent.EXTRA_TEXT, shareSub);
+                    context.startActivity(Intent.createChooser(intent, "Share this Post"));
+                }
+            });
+
+        }
+
+    }
+
+    /**
+     * This method is responsible for changing the margin with the value given by the value for the MakeVerified
+     *
+     * @param value
+     */
+    public void changeMarginForMakeVerified(int value, MyViewHolder holder) {
+        holder.makeVerified.setVisibility(View.VISIBLE);
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) holder.makeVerified.getLayoutParams();
+        int px = dpToPixels(value);
+        params.setMargins(px, px, px, 0);
+        holder.makeVerified.setLayoutParams(params);
+    }
+
+    public int dpToPixels(int value) {
+        Resources resources = context.getResources();
+        int px = (int) TypedValue.applyDimension(
+                TypedValue.COMPLEX_UNIT_DIP,
+                value,
+                resources.getDisplayMetrics()
+        );
+        return px;
+    }
+
+    //TODO: CHANGE THE METHOD VERIFICATION WHEN HE CREATE THE AUTHORITY USERS
+
+    /**
+     * This method is responsible for making the message from the community verified if the user is an authority
+     *
+     * @param messageID
+     */
+    public void makeVerified(String messageID, MyViewHolder holder) {
+        firebaseFirestore.collection("community-chat")
+                .document(messageID)
+                .update("verified", new Boolean("true"))
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        holder.verified.setVisibility(View.VISIBLE);
+                        holder.makeVerified.setVisibility(View.INVISIBLE);
+                        Log.d(TAG, "Success");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "Insuccess");
+                    }
+                });
+
+
+    }
+
+    /**
+     * This method is responsible for removing a message from the community if the user is an authority
+     *
+     * @param messageID
+     */
+    public void removeMessage(String messageID) {
+        firebaseFirestore.collection("community-chat").document(messageID).delete();
+        firebaseFirestore.collection("community-chat-reactions").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        if (document.get("messageID").equals(messageID)) {
+                            firebaseFirestore.collection("community-chat-reactions").document(document.getId()).delete();
+                        }
+                    }
+                    communityFragment.communityCardsData();
+                } else {
+                    Log.d(TAG, "Insucess");
+                }
+            }
+        });
+
+    }
+
+    /**
+     * This method is responsible for adjusting the text when the message has an image and when it doesn't, use Picasso to place the image in the image view
+     *
+     * @param holder
+     * @param pos
+     * @param messageText
+     */
+    public void textAndMessageAdjuster(MyViewHolder holder, int pos, String messageText) {
         if (!listOfCommunityCards.get(pos).getImageURL().equals("")) {
             holder.imageCommunity.setVisibility(View.VISIBLE);
 
@@ -150,44 +299,8 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
             holder.communityTextWithImage.setVisibility(View.GONE);
             holder.communityText.setText(messageText);
         }
-
-        if (!mAuth.getCurrentUser().isAnonymous()) {
-            //Put the number of likes and dislikes in the message
-            holder.likeCounter.setText(listOfCommunityCards.get(pos).getLikes() + "");
-            holder.dislikeCounter.setText(listOfCommunityCards.get(pos).getDislikes() + "");
-
-            //Put the like action
-            holder.likeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    likesAndDislikes(messageID, "likes", holder.likeCounter, currentUserID, holder);
-                }
-            });
-
-            //Put the dislike action
-            holder.dislikeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    likesAndDislikes(messageID, "dislikes", holder.dislikeCounter, currentUserID, holder);
-                }
-            });
-
-            holder.shareButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-                    intent.setType("text/plain");
-                    String shareBody = "Your Body here";
-                    String shareSub = "Your Subject here";
-                    intent.putExtra(Intent.EXTRA_SUBJECT, shareBody);
-                    intent.putExtra(Intent.EXTRA_TEXT, shareSub);
-                    context.startActivity(Intent.createChooser(intent, "Share this Post"));
-                }
-            });
-
-        }
-
     }
+
 
     //TODO: CHANGE THE METHOD DESC
 
@@ -385,8 +498,9 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView userName, communityText, likeCounter, dislikeCounter, communityTextWithImage;
-        ImageView userImage, verified, likeButton, dislikeButton, imageCommunity, dislikeButtonClicked, likeButtonClicked, shareButton;
+        TextView userName, communityText, likeCounter, dislikeCounter, communityTextWithImage, dateText;
+        ImageView userImage, verified, likeButton, dislikeButton, imageCommunity, dislikeButtonClicked,
+                likeButtonClicked, shareButton, removeMessageCommunity, makeVerified;
         CardView cardCommunity;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -404,6 +518,9 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
             dislikeButtonClicked = itemView.findViewById(R.id.dislikeButtonClicked);
             likeButtonClicked = itemView.findViewById(R.id.likeButtonClicked);
             shareButton = itemView.findViewById(R.id.shareButton);
+            dateText = itemView.findViewById(R.id.dateText);
+            removeMessageCommunity = itemView.findViewById(R.id.removeMessageCommunity);
+            makeVerified = itemView.findViewById(R.id.makeVerified);
             cardCommunity = itemView.findViewById(R.id.cardCommunity);
 
         }
