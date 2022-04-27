@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,9 +35,10 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 
 public class NewMessageCommunity extends BottomSheetDialogFragment {
@@ -45,8 +49,10 @@ public class NewMessageCommunity extends BottomSheetDialogFragment {
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
     private FirebaseStorage storage;
+    private String photoPath;
     private Uri imguri;
     private String firebaseUrl;
+    private File photoFile;
     private CommunityFragment communityFragment;
 
     //TAG for debug logs
@@ -54,6 +60,7 @@ public class NewMessageCommunity extends BottomSheetDialogFragment {
 
     public NewMessageCommunity(CommunityFragment communityFragment) {
         this.communityFragment = communityFragment;
+        this.photoFile = null;
     }
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -93,13 +100,13 @@ public class NewMessageCommunity extends BottomSheetDialogFragment {
             }
         });
 
+        //TODO: VIDEO PLAYER
         /**
          * Will fetch an image from the user's downloads
          */
         upLoadedImage.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                imageFileChooser();
+            public void onClick(View view) {dispatchTakePictureIntent();
             }
         });
 
@@ -119,23 +126,66 @@ public class NewMessageCommunity extends BottomSheetDialogFragment {
         return view;
     }
 
-    public void imageFileChooser(){
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent, 1);
+    /**
+     * This method is responsible for creating aN Intent to take the photograph and if successful transform the image file into Uri
+     */
+    public void dispatchTakePictureIntent(){
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            // Create the File where the photo should go
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                imguri = FileProvider.getUriForFile(getActivity(),
+                        "com.example.android.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imguri);
+                startActivityForResult(takePictureIntent, 1);
+            }
+
+        }
     }
 
+    //TODO: REVIEW THE DOCUMENTATION
+    /**
+     * This method create a file for the photo, with the chosen directory for the file
+     * @return
+     * @throws IOException
+     */
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,
+                ".jpg",
+                storageDir
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        photoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    /**
+     * This method puts the photo inside the image view and sends it to storage, with a dialog while loading the image
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK && data != null & data.getData() != null) {
+        if (requestCode == 1 && resultCode == RESULT_OK) {
 
-            imguri = data.getData();
             Picasso.get()
                     .load(imguri)
-                    .centerCrop()
-                    .fit()
-                    .transform(new CropCircleTransformation())
                     .into(upLoadedImage);
 
 

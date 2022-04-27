@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/swipeToRefresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -30,12 +31,6 @@
             android:layout_margin="20dp"
             android:src="@drawable/ic_missing_people_black_24dp" />
 
-        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/communityText"
-            android:fillViewport="true">
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/communityRecyclerView"
                 android:layout_width="wrap_content"
@@ -44,8 +39,6 @@
                 android:layout_centerHorizontal="true">
 
             </androidx.recyclerview.widget.RecyclerView>
-
-        </ScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/createMessageButton"

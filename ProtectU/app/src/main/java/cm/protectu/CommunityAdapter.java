@@ -3,6 +3,7 @@ package cm.protectu;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -87,7 +88,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                                 if (document.getId().equals(userID)) {
                                     UserData userData = document.toObject(UserData.class);
                                     holder.userName.setText(userData.getFirstName() + " " + userData.getLastName());
-                                    if (!document.get("imageURL").equals("")){
+                                    if (!document.get("imageURL").equals("")) {
                                         Picasso.get()
                                                 .load(document.get("imageURL").toString())
                                                 .centerCrop()
@@ -126,7 +127,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                 @Override
                 public void onClick(View view) {
                     AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
-                    View mView = view.inflate(context,R.layout.fragment_photoview_fullscreen, null);
+                    View mView = view.inflate(context, R.layout.fragment_photoview_fullscreen, null);
                     PhotoView photoView = mView.findViewById(R.id.imageView);
                     Picasso.get()
                             .load(listOfCommunityCards.get(pos).getImageURL())
@@ -148,25 +149,41 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
             holder.communityText.setText(messageText);
         }
 
-        //Put the number of likes and dislikes in the message
-        holder.likeCounter.setText(listOfCommunityCards.get(pos).getLikes() + "");
-        holder.dislikeCounter.setText(listOfCommunityCards.get(pos).getDislikes() + "");
 
-        //Put the like action
-        holder.likeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                likesAndDislikes(messageID, "like", holder.likeCounter, currentUserID, holder);
-            }
-        });
+            //Put the number of likes and dislikes in the message
+            holder.likeCounter.setText(listOfCommunityCards.get(pos).getLikes() + "");
+            holder.dislikeCounter.setText(listOfCommunityCards.get(pos).getDislikes() + "");
 
-        //Put the dislike action
-        holder.dislikeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                likesAndDislikes(messageID, "dislike", holder.dislikeCounter, currentUserID, holder);
-            }
-        });
+            //Put the like action
+            holder.likeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    likesAndDislikes(messageID, "likes", holder.likeCounter, currentUserID, holder);
+                }
+            });
+
+            //Put the dislike action
+            holder.dislikeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    likesAndDislikes(messageID, "dislikes", holder.dislikeCounter, currentUserID, holder);
+                }
+            });
+
+            holder.shareButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+                    intent.setType("text/plain");
+                    String shareBody = "Your Body here";
+                    String shareSub = "Your Subject here";
+                    intent.putExtra(Intent.EXTRA_SUBJECT,shareBody);
+                    intent.putExtra(Intent.EXTRA_TEXT,shareSub);
+                    context.startActivity(Intent.createChooser(intent,"Share this Post"));
+                }
+            });
+
+
 
     }
 
@@ -183,103 +200,114 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
      * @param holder
      */
     public void likesAndDislikes(String messageID, String type, TextView textNumber, String currentUserID, MyViewHolder holder) {
-        if (!mAuth.getCurrentUser().isAnonymous()) {
-            firebaseFirestore.collection("community-chat-reactions")
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                boolean hasReaction = false;
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    if (document.get("userID").equals(currentUserID) && document.get("messageID").equals(messageID)) {
-                                        hasReaction = true;
-                                        if (document.get("type").equals("like")) {
-                                            changeLikeOrDislike(holder.dislikeButton, holder.likeButton, holder.dislikeButtonClicked, holder.likeButtonClicked,
-                                                    currentUserID, holder, "like", "dislike", document.getId(), messageID, holder.dislikeCounter, holder.likeCounter);
-                                        } else {
-                                            changeLikeOrDislike(holder.likeButton, holder.dislikeButton, holder.likeButtonClicked, holder.dislikeButtonClicked,
-                                                    currentUserID, holder, "dislike", "like", document.getId(), messageID, holder.likeCounter, holder.dislikeCounter);
-                                        }
-                                        Log.d(TAG, "User already has a like or dislike in this message");
-                                        break;
+        firebaseFirestore.collection("community-chat-reactions")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            boolean hasReaction = false;
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                if (document.get("userID").equals(currentUserID) && document.get("messageID").equals(messageID)) {
+                                    hasReaction = true;
+                                    if (document.get("type").equals("like")) {
+                                        changeLikeOrDislike(holder.dislikeButton, holder.likeButton, holder.dislikeButtonClicked, holder.likeButtonClicked,
+                                                "likes", "dislikes", document.getId(), messageID, holder.dislikeCounter, holder.likeCounter);
+                                    } else {
+                                        changeLikeOrDislike(holder.likeButton, holder.dislikeButton, holder.likeButtonClicked, holder.dislikeButtonClicked,
+                                                "dislikes", "likes", document.getId(), messageID, holder.likeCounter, holder.dislikeCounter);
                                     }
+                                    Log.d(TAG, "User already has a like or dislike in this message");
+                                    break;
                                 }
-                                if (!hasReaction) {
-                                    int actualNumber = Integer.parseInt(textNumber.getText().toString()) + 1;
-                                    DocumentReference likeRef = firebaseFirestore.collection("community-chat").document(messageID);
-                                    likeRef
-                                            .update(type, actualNumber)
-                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                @Override
-                                                public void onSuccess(Void aVoid) {
-                                                    textNumber.setText(actualNumber + "");
-                                                    UserReactions userReactions = new UserReactions(currentUserID, messageID, type, new Date());
-                                                    firebaseFirestore.collection("community-chat-reactions").add(userReactions);
-                                                    getClickedLikeOrDislike(currentUserID, messageID, holder);
-                                                    Log.d(TAG, "Document successfully updated!");
-                                                }
-                                            })
-                                            .addOnFailureListener(new OnFailureListener() {
-                                                @Override
-                                                public void onFailure(@NonNull Exception e) {
-                                                    Log.w(TAG, "Error updating document", e);
-                                                }
-                                            });
-                                }
-                            } else {
-                                Log.d(TAG, "Insucess");
                             }
+                            if (!hasReaction) {
+                                int actualNumber = Integer.parseInt(textNumber.getText().toString()) + 1;
+                                DocumentReference likeRef = firebaseFirestore.collection("community-chat").document(messageID);
+                                likeRef
+                                        .update(type, actualNumber)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                textNumber.setText(actualNumber + "");
+                                                UserReactions userReactions = new UserReactions(currentUserID, messageID,type.substring(0, type.length()-1) , new Date());
+                                                firebaseFirestore.collection("community-chat-reactions").add(userReactions);
+                                                getClickedLikeOrDislike(currentUserID, messageID, holder);
+                                                Log.d(TAG, "Document successfully updated!");
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w(TAG, "Error updating document", e);
+                                            }
+                                        });
+                            }
+                        } else {
+                            Log.d(TAG, "Insucess");
                         }
-                    });
-        }
+                    }
+                });
+
     }
 
     /**
-     * this method checks if the user has a like, if he has, put the like button in blue and do the same for the dislike
-     *
+     * This method checks if the user has a like, if he has, put the like button in blue and do the same for the dislike
      * @param userID
      * @param messageID
      * @param holder
      */
     public void getClickedLikeOrDislike(String userID, String messageID, MyViewHolder holder) {
-        if (!mAuth.getCurrentUser().isAnonymous()) {
-            firebaseFirestore.collection("community-chat-reactions")
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    if (document.get("userID").equals(userID) && document.get("messageID").equals(messageID)) {
-                                        if (document.get("type").equals("like")) {
-                                            holder.likeButtonClicked.setVisibility(View.VISIBLE);
-                                            holder.likeButton.setVisibility(View.INVISIBLE);
-                                            removeLikeOrDislike(holder.likeButton, holder.likeButtonClicked, "like",
-                                                    document.getId(), messageID, holder.likeCounter);
-                                        } else {
-                                            holder.dislikeButtonClicked.setVisibility(View.VISIBLE);
-                                            holder.dislikeButton.setVisibility(View.INVISIBLE);
-                                            removeLikeOrDislike(holder.dislikeButton, holder.dislikeButtonClicked, "dislike",
-                                                    document.getId(), messageID, holder.dislikeCounter);
-                                        }
+        userIsAnonymous(holder);
+        firebaseFirestore.collection("community-chat-reactions")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                if (document.get("userID").equals(userID) && document.get("messageID").equals(messageID)) {
+                                    if (document.get("type").equals("like")) {
+                                        holder.likeButtonClicked.setVisibility(View.VISIBLE);
+                                        holder.likeButton.setVisibility(View.INVISIBLE);
+                                        removeLikeOrDislike(holder.likeButton, holder.likeButtonClicked, "likes",
+                                                document.getId(), messageID, holder.likeCounter);
+                                    } else {
+                                        holder.dislikeButtonClicked.setVisibility(View.VISIBLE);
+                                        holder.dislikeButton.setVisibility(View.INVISIBLE);
+                                        removeLikeOrDislike(holder.dislikeButton, holder.dislikeButtonClicked, "dislikes",
+                                                document.getId(), messageID, holder.dislikeCounter);
                                     }
                                 }
-                            } else {
-                                Log.d(TAG, "Insucess");
                             }
+                        } else {
+                            Log.d(TAG, "Insucess");
                         }
-                    });
+                    }
+                });
+
+    }
+
+    /**
+     * This method is responsible for checking if the user is a guest and if it is, makes the like, dislike, number of likes, dislikes and the share button invisible
+     * @param holder
+     */
+    public void userIsAnonymous(MyViewHolder holder) {
+        if (mAuth.getCurrentUser().isAnonymous()) {
+            holder.likeButton.setVisibility(View.INVISIBLE);
+            holder.dislikeButton.setVisibility(View.INVISIBLE);
+            holder.likeCounter.setVisibility(View.INVISIBLE);
+            holder.dislikeCounter.setVisibility(View.INVISIBLE);
+            holder.shareButton.setVisibility(View.INVISIBLE);
         }
     }
 
-    public void changeLikeOrDislike(ImageView buttonClicked, ImageView lastButtonClicked, ImageView buttonClickedBlue, ImageView lastButtonClickedBlue, String userID,
-                                    MyViewHolder holder, String type, String newType, String reactionID, String messageID, TextView textNumber, TextView lastTextNumber) {
-
+    public void changeLikeOrDislike(ImageView buttonClicked, ImageView lastButtonClicked, ImageView buttonClickedBlue, ImageView lastButtonClickedBlue,
+                                    String type, String newType, String reactionID, String messageID, TextView textNumber, TextView lastTextNumber) {
         lastButtonClickedBlue.setVisibility(View.INVISIBLE);
         lastButtonClicked.setVisibility(View.VISIBLE);
         firebaseFirestore.collection("community-chat-reactions").document(reactionID)
-                .update("type", newType)
+                .update("type", newType.substring(0, newType.length()-1))
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
@@ -354,7 +382,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView userName, communityText, likeCounter, dislikeCounter, communityTextWithImage;
-        ImageView userImage, verified, likeButton, dislikeButton, imageCommunity, dislikeButtonClicked, likeButtonClicked;
+        ImageView userImage, verified, likeButton, dislikeButton, imageCommunity, dislikeButtonClicked, likeButtonClicked, shareButton;
         CardView cardCommunity;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -371,28 +399,9 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
             imageCommunity = itemView.findViewById(R.id.imageCommunity);
             dislikeButtonClicked = itemView.findViewById(R.id.dislikeButtonClicked);
             likeButtonClicked = itemView.findViewById(R.id.likeButtonClicked);
+            shareButton = itemView.findViewById(R.id.shareButton);
             cardCommunity = itemView.findViewById(R.id.cardCommunity);
 
         }
     }
-
-    /*public String[] getUserData(String id){
-        String[] userData = {};
-
-        DocumentReference docRef = firebaseFirestore.collection("users").document(id);
-        Log.d(TAG, "DocRef -> " + id);
-
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Log.d(TAG, "Data -> " + documentSnapshot.get("firstName").toString());
-                userData[0] = documentSnapshot.get("uid").toString();
-                userData[1] = documentSnapshot.get("firstName").toString();
-                userData[2] = documentSnapshot.get("lastName").toString();
-                //userData[3] = documentSnapshot.get("profilePic").toString();
-            }
-        });
-
-        return userData;
-    }*/
 }

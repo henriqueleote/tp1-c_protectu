@@ -91,6 +91,7 @@ public class CommunityFragment extends Fragment {
         floatingActionButton = view.findViewById(R.id.createMessageButton);
         missingPeopleButton = view.findViewById(R.id.missingPeopleButton);
 
+        //TODO: DISABLE BUTTON
         /**
          *if the user is not logged in the add button disappears,
          * otherwise the button appears and if clicked it opens a bottom sheet that allows the creation of a new message in the community
