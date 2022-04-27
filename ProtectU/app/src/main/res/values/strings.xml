@@ -15,6 +15,10 @@
     <string name="error_invalid_contact">Invalid contact</string>
     <string name="error_invalid_password">Invalid password</string>
     <string name="error_number_of_people">Enter amount of people</string>
+    <string name="error_name_not_valid">Please enter the missing person´s name</string>
+    <string name="error_age_not_valid">Please enter a valid age</string>
+    <string name="error_description_not_valid">Please put a description</string>
+    <string name="error_image_not_valid">Please post a picture of the missing person</string>
     <string name="options">Options</string>
     <string name="logout">Logout</string>
     <string name="forgot_password">Forgot Password</string>
@@ -28,6 +32,7 @@
     <string name="lbl_languague">Language</string>
     <string name="btn_save">Save</string>
     <string name="backarrow">back</string>
+
     <string-array name="panic_values">
         <item>Slight</item>
         <item>Severe</item>

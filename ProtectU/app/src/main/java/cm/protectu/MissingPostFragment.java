@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,6 +24,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
+
 
 public class MissingPostFragment extends Fragment {
 
@@ -32,23 +33,22 @@ public class MissingPostFragment extends Fragment {
     private FirebaseAuth mAuth;
     private ImageView arrowBack, phone, share,profileImage,MissingImage;
     private TextView profileNameID,descriptionPostID,ageMssingPostID,nameMissingPostID;
-    private String userID,description,nameMissing,ageMssing,phoneNumber,urlProflie,urlMissing;
+    private String userID,description,nameMissing,ageMssing,phoneNumber, urlProfile,urlMissing;
     private Context context;
     private FirebaseFirestore firebaseFirestore;
 
     private static final String TAG =  AuthActivity.class.getName();
 
 
-    public MissingPostFragment(String userID, String nameMissing , String description, String ageMssing, String phoneNumber, String urlProflie, String urlMissing, Context context) {
+    public MissingPostFragment(String userID, String nameMissing , String description, String ageMssing, String phoneNumber, String urlProfile, String urlMissing, Context context) {
         this.userID = userID;
         this.nameMissing = nameMissing;
         this.description = description;
         this.ageMssing = "" + ageMssing;
         this.phoneNumber = "" + phoneNumber;
-        this.urlProflie = urlProflie;
+        this.urlProfile = urlProfile;
         this.urlMissing = urlMissing;
         this.context = context;
-
     }
 
     @Nullable
@@ -76,6 +76,20 @@ public class MissingPostFragment extends Fragment {
         profileImage = view.findViewById(R.id.foto);
         MissingImage = view.findViewById(R.id.imageMissingID);
 
+
+        Picasso.get()
+                .load(urlProfile)
+                .centerCrop()
+                .fit()
+                .transform(new CropCircleTransformation())
+                .into(profileImage);
+
+        Picasso.get()
+                .load(urlMissing)
+                .centerCrop()
+                .fit()
+                .transform(new CropCircleTransformation())
+                .into(MissingImage);
 
        // Picasso.with(context).load(urlProflie).error(R.drawable.ic_baseline_share_24).into(profileImage);
 

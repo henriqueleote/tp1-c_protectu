@@ -99,18 +99,22 @@ public class MissingBoardFragment extends Fragment {
         /**
          * Permite ir para o fragment de criar novas publicações
          */
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!mAuth.getCurrentUser().isAnonymous()) {
-                    NewMissingPostFragment fragment = new NewMissingPostFragment();
-                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                    transaction.replace(R.id.fragment_container, fragment);
-                    transaction.addToBackStack(null);
-                    transaction.commit();
+        if (mAuth.getCurrentUser().isAnonymous()) {
+            floatingActionButton.setVisibility(View.GONE);
+        } else {
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!mAuth.getCurrentUser().isAnonymous()) {
+                        NewMissingPostFragment fragment = new NewMissingPostFragment();
+                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        transaction.replace(R.id.fragment_container, fragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                    }
                 }
-            }
-        });
+            });
+        }
 
         MissingBoardFragment fragment = this;
 

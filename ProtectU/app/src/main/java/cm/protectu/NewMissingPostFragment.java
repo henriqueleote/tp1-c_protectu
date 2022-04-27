@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,7 +34,14 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
+
+import java.util.Date;
+
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 
 public class NewMissingPostFragment extends Fragment {
@@ -41,25 +49,21 @@ public class NewMissingPostFragment extends Fragment {
     //Firebase Authentication
     private FirebaseAuth mAuth;
     private CardView cardView;
-    private ImageView arrowBack, imageUploaded, cameraIcon,profileImage,phone;
+    private ImageView arrowBack, imageUploaded, cameraIcon,profileImage;
     private FirebaseFirestore firebaseFirestore;
     private EditText name,age,description;
-    //private TextView phone;
+    private String phone, urlProfile, urlMissing;
     private Button create;
+    private FirebaseStorage storage;
+    private Uri imguri;
+    private String firebaseUrl;
 
     private static final String TAG =  AuthActivity.class.getName();
 
 
-    public NewMissingPostFragment() {
-
-
-
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
 
         //Link the layout to the Fragment
         View view = inflater.inflate(R.layout.fragment_missing_new_post, container, false);
@@ -73,7 +77,6 @@ public class NewMissingPostFragment extends Fragment {
         name = view.findViewById(R.id.nameNewMissingPostID);
         age = view.findViewById(R.id.ageNewMissingPostID);
         description = view.findViewById(R.id.descriptionNewMissingPostID);
-
         profileImage = view.findViewById(R.id.foto);
         create = view.findViewById(R.id.createButtonNewMissingID);
 
@@ -88,12 +91,13 @@ public class NewMissingPostFragment extends Fragment {
         }
 
         firebaseFirestore = FirebaseFirestore.getInstance();
+        storage = FirebaseStorage.getInstance();
 
+        getData();
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent,3);
+                imageFileChooser();
                 cameraIcon.setVisibility(View.INVISIBLE);
             }
         });
@@ -116,7 +120,7 @@ public class NewMissingPostFragment extends Fragment {
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createMissingPost(name.getText().toString().trim(),description.getText().toString().trim(),age.getText().toString(),"929292929","fff",mAuth.getUid(),"kkk","");
+                createMissingPost(name.getText().toString().trim(),description.getText().toString().trim(),age.getText().toString(),phone,urlProfile,mAuth.getUid(),firebaseUrl,"");
                 MissingBoardFragment fragment = new MissingBoardFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container, fragment);
@@ -126,35 +130,37 @@ public class NewMissingPostFragment extends Fragment {
             }
         });
 
-
-
         //Returns the view
         return view;
 
     }
 
-    // IN PROGRESS THIS SITUACION
-
+    // IN PROGRESS THIS SITUATION
     public void createMissingPost(String missingName, String description, String missingAge, String phoneNumber, String foto,String userID,String fotoMissing,String missingID){
-        // Message's field check
-        /*
-        if (TextUtils.isEmpty(missingName) || TextUtils.isEmpty(String.valueOf(missingAge)) || TextUtils.isEmpty(description)) {
-            name.setError(getString(R.string.error_enter_your_mail));
+
+        // Permite verificar se os campos prenchidos estão corretos
+        if (TextUtils.isEmpty(missingName)) {
+            name.setError(getString(R.string.error_name_not_valid));
             name.requestFocus();
-            age.setError(getString(R.string.error_enter_your_mail));
-            age.requestFocus();
-            this.description.setError(getString(R.string.error_enter_your_mail));
-            this.description.requestFocus();
+
             return;
-        }*/
+
+        }
+        if(TextUtils.isEmpty(String.valueOf(missingAge))){
+
+        }
+        if(TextUtils.isEmpty(description)){
+
+        }
+
         ProgressDialog mDialog = new ProgressDialog(getActivity());
         mDialog.setMessage("Creating post...");
         mDialog.setCancelable(false);
         mDialog.show();
 
-
+        //Permite colocar na base de dados, os dados recebidos na criação de uma nova publicação
         firebaseFirestore.collection("missing-board")
-                .add(new MissingCard(missingName, description,missingAge,phoneNumber,foto,userID,fotoMissing,missingID))
+                .add(new MissingCard(missingName, description,missingAge,phoneNumber,foto,userID,fotoMissing,missingID, new Date()))
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
@@ -173,12 +179,87 @@ public class NewMissingPostFragment extends Fragment {
                 });
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void getData(){
+
+        //Firebase Authentication function get the data from firebase with certain criteria
+        firebaseFirestore.collection("users")
+                //where the userID is the same as the logged in user
+                .whereEqualTo("uid", mAuth.getCurrentUser().getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                //Prints in debug the data object
+                                Log.d(TAG, "Data: " + document.getId() + " => " + document.getData());
+                                //Sets the text in the view with the name and surname of the authenticated user
+                                phone = document.getString("phoneNumber");
+                                urlProfile = document.getString("imageURL");
+                                urlMissing = document.getString("fotoMissing");
+                            }
+                        }
+                        else{
+                            //Shows the error
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+    }
+
+
+    public void imageFileChooser(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, 1);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_OK && data!=null){
-            Uri selectedImages = data.getData();
-            imageUploaded.setImageURI(selectedImages);
+        if (requestCode == 1 && resultCode == RESULT_OK && data != null & data.getData() != null) {
+
+            imguri = data.getData();
+            Picasso.get()
+                    .load(imguri)
+                    .centerCrop()
+                    .fit()
+                    .into(imageUploaded);
+
+
+            ProgressDialog mDialog = new ProgressDialog(getActivity());
+            //TODO UPDATE WITH STATUS
+            mDialog.setMessage("Loading image...");
+            mDialog.setCancelable(false);
+            mDialog.show();
+
+            StorageReference storageReference = storage.getInstance().getReference();
+            final StorageReference imageRef = storageReference.child("missing-board/" + mAuth.getCurrentUser().getUid() + "-" + System.currentTimeMillis());
+            UploadTask uploadTask = imageRef.putFile(imguri);
+
+            uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    mDialog.dismiss();
+                    Task<Uri> downloadUrl = imageRef.getDownloadUrl();
+                    downloadUrl.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            firebaseUrl = uri.toString();
+                            Log.d(TAG, "Link: " + firebaseUrl);
+                        }
+                    });
+                }
+            })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            mDialog.dismiss();
+                            Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                        }
+                    });
         }
     }
+
+
 }

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -21,8 +22,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
+
 
 import java.util.List;
+
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
+import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 
 public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapter.MyViewHolder> {
@@ -34,6 +40,8 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
     private FragmentManager parentFragment;
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth mAuth;
+    private String urlProfile;
+    private String urlMissing;
 
     private static final String TAG = MainActivity.class.getName();
 
@@ -50,6 +58,7 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
         this.parentFragment= fragment;
         this.mAuth = firebaseAuth;
         firebaseFirestore = FirebaseFirestore.getInstance();
+
     }
 
     /**
@@ -82,22 +91,13 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
-        //holder.description.setText(mData.get(position).getDescription());
-        //holder.userName.setText(mData.get(position).getProfileName());
         holder.missingName.setText(mData.get(position).getMissingName());
         holder.age.setText(String.valueOf(mData.get(position).getMissingAge()));
 
-
-        //falta buscar imagens
-
         String userID = mData.get(position).getUserID();
-        String url = mData.get(position).getFoto();
-        String url2 = mData.get(position).getFotoMissing();
-        /*
-        Picasso.with(mContext).load(url).fit().centerCrop().placeholder(R.drawable.ic_camera_black_24dp)
-                .error(R.drawable.ic_baseline_share_24).into(holder.userImage);
-        Picasso.with(mContext).load(url2).fit().centerCrop().placeholder(R.drawable.ic_bunker_pin)
-                .error(R.drawable.ic_add_black_24dp).into(holder.missingImage);*/
+
+        getFotoMissing(holder.missingImage);
+
 
 
         /**
@@ -114,6 +114,15 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
                                 if (document.getId().equals(userID)) {
                                     UserData userData = document.toObject(UserData.class);
                                     holder.userName.setText(userData.getFirstName() + " " + userData.getLastName());
+                                    if (!document.get("imageURL").equals("")){
+                                        urlProfile = document.getString("imageURL");
+                                        Picasso.get()
+                                                .load(urlProfile)
+                                                .centerCrop()
+                                                .fit()
+                                                .transform(new CropCircleTransformation())
+                                                .into(holder.userImage);
+                                    }
                                     break;
                                 } else {
                                     holder.userName.setText("Not Found");
@@ -125,14 +134,13 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
                     }
                 });
 
-
         /**
          * Permite ir para a publicação do cartão clicado
          */
         holder.cardMissing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MissingPostFragment fragment = new MissingPostFragment(mData.get(holder.getAdapterPosition()).getUserID(),mData.get(holder.getAdapterPosition()).getMissingName(),mData.get(holder.getAdapterPosition()).getDescription(),mData.get(holder.getAdapterPosition()).getMissingAge(),mData.get(holder.getAdapterPosition()).getPhoneNumber(),mData.get(holder.getAdapterPosition()).getFoto(),mData.get(holder.getAdapterPosition()).getFotoMissing(), mContext);
+                MissingPostFragment fragment = new MissingPostFragment(mData.get(holder.getAdapterPosition()).getUserID(),mData.get(holder.getAdapterPosition()).getMissingName(),mData.get(holder.getAdapterPosition()).getDescription(),mData.get(holder.getAdapterPosition()).getMissingAge(),mData.get(holder.getAdapterPosition()).getPhoneNumber(),urlProfile,urlMissing, mContext);
                 FragmentTransaction transaction = parentFragment.beginTransaction();
                 transaction.replace(R.id.fragment_container, fragment);
                 transaction.addToBackStack(null);
@@ -152,7 +160,7 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
     }
 
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder{
 
         //Declaração dos elementos a serem utilizados
         TextView description, userName, missingName, age;
@@ -175,6 +183,13 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
 
         }
 
+        public ImageView getUserImage() {
+            return userImage;
+        }
+
+        public ImageView getMissingImage() {
+            return missingImage;
+        }
     }
 
     /**
@@ -192,4 +207,32 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
     public void setmData(List<MissingCard> mData) {
         this.mData = mData;
     }
+
+    public void getFotoMissing(ImageView imageView){
+        firebaseFirestore.collection("missing-board")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                MissingCard missingCard = document.toObject(MissingCard.class);
+                                if (!document.get("fotoMissing").equals("")){
+                                    urlMissing = missingCard.getFotoMissing();
+                                    Picasso.get()
+                                            .load(urlMissing)
+                                            .centerCrop()
+                                            .fit()
+                                            .into(imageView);
+                                }
+                            }
+                        }
+                    }
+                });
+
+    }
+
+
 }
+
+

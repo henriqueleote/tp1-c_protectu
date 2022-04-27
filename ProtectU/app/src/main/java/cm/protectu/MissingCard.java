@@ -1,5 +1,7 @@
 package cm.protectu;
 
+import java.util.Date;
+
 /**
  * Card of the missing people, on missing Board
  */
@@ -13,13 +15,14 @@ public class MissingCard {
     private String foto;
     private String fotoMissing;
     private String missingID;
+    private Date date;
 
     public MissingCard(){
 
     }
 
 
-    public MissingCard(String missingName, String description, String missingAge, String phoneNumber, String foto,String userID,String fotoMissing,String missingID) {
+    public MissingCard(String missingName, String description, String missingAge, String phoneNumber, String foto,String userID,String fotoMissing,String missingID,Date date) {
         this.missingName = missingName;
         this.description = description;
         this.missingAge = missingAge;
@@ -28,6 +31,7 @@ public class MissingCard {
         this.userID = userID;
         this.fotoMissing = fotoMissing;
         this.missingID = missingID;
+        this.date = date;
     }
 
 
@@ -38,6 +42,14 @@ public class MissingCard {
 
     public void setMissingID(String missingID) {
         this.missingID = missingID;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getUserID() {
