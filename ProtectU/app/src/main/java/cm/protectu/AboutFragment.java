@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.Map.MapFragment;
 
 

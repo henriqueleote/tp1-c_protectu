@@ -1,7 +1,6 @@
-package cm.protectu;
+package cm.protectu.News;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,28 +13,27 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
+import cm.protectu.MainActivity;
+import cm.protectu.R;
+
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder>{
     Context context;
-    ArrayList<NewsCard> listOfNewsCards;
+    ArrayList<NewsCardClass> listOfNewsCardClasses;
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth mAuth;
     FragmentManager parentFragment;
 
     private static final String TAG = MainActivity.class.getName();
 
-    public NewsAdapter(Context context, ArrayList<NewsCard> listOfNewsCards, FirebaseAuth firebaseAuth, FragmentManager fm) {
+    public NewsAdapter(Context context, ArrayList<NewsCardClass> listOfNewsCardClasses, FirebaseAuth firebaseAuth, FragmentManager fm) {
         firebaseFirestore = FirebaseFirestore.getInstance();
         this.context = context;
-        this.listOfNewsCards = listOfNewsCards;
+        this.listOfNewsCardClasses = listOfNewsCardClasses;
         mAuth = firebaseAuth;
         parentFragment = fm;
     }
@@ -47,12 +45,12 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.newsText.setText(listOfNewsCards.get(position).getNewsText() + "");
-        holder.newsTitle.setText(listOfNewsCards.get(position).getNewsTitle() + "");
+        holder.newsText.setText(listOfNewsCardClasses.get(position).getNewsText() + "");
+        holder.newsTitle.setText(listOfNewsCardClasses.get(position).getNewsTitle() + "");
 
         holder.cardNews.setOnClickListener(new  View.OnClickListener() {
             public void onClick(View v) {
-                NewsDetailsFragment fragment = new NewsDetailsFragment(listOfNewsCards.get(holder.getAdapterPosition()));
+                NewsDetailsFragment fragment = new NewsDetailsFragment(listOfNewsCardClasses.get(holder.getAdapterPosition()));
                 FragmentTransaction transaction = parentFragment.beginTransaction();
                 transaction.replace(R.id.fragment_container, fragment);
                 transaction.addToBackStack(null);
@@ -64,7 +62,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder>{
 
     @Override
     public int getItemCount () {
-        return listOfNewsCards.size();
+        return listOfNewsCardClasses.size();
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

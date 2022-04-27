@@ -1,4 +1,4 @@
-package cm.protectu;
+package cm.protectu.MissingBoard;
 
 import android.content.Context;
 import android.util.Log;
@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -22,13 +21,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
 
 
 import java.util.List;
 
+import cm.protectu.MainActivity;
+import cm.protectu.R;
+import cm.protectu.Community.UserDataClass;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
-import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 
 public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapter.MyViewHolder> {
@@ -36,7 +36,7 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
     //TODO - Change variables names and comment
 
     private Context mContext;
-    private List<MissingCard> mData;
+    private List<MissingCardClass> mData;
     private FragmentManager parentFragment;
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth mAuth;
@@ -52,7 +52,7 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
      * @param fragment
      * @param firebaseAuth
      */
-    public MissingBoardAdapter(Context mContext, List<MissingCard> mData, FragmentManager fragment, FirebaseAuth firebaseAuth) {
+    public MissingBoardAdapter(Context mContext, List<MissingCardClass> mData, FragmentManager fragment, FirebaseAuth firebaseAuth) {
         this.mContext = mContext;
         this.mData = mData;
         this.parentFragment= fragment;
@@ -114,8 +114,8 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 if (document.getId().equals(userID)) {
-                                    UserData userData = document.toObject(UserData.class);
-                                    holder.userName.setText(userData.getFirstName() + " " + userData.getLastName());
+                                    UserDataClass userDataClass = document.toObject(UserDataClass.class);
+                                    holder.userName.setText(userDataClass.getFirstName() + " " + userDataClass.getLastName());
                                     if (!document.get("imageURL").equals("")){
                                         urlProfile = document.getString("imageURL");
                                         Picasso.get()
@@ -198,7 +198,7 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
      *
      * @return A lista com todas as publicações existentes
      */
-    public List<MissingCard> getmData() {
+    public List<MissingCardClass> getmData() {
         return mData;
     }
 
@@ -206,7 +206,7 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
      * Permite trocar a informação da lista de publicações por uma nova lista
      * @param mData nova lista a ser colocada na lista de publicações
      */
-    public void setmData(List<MissingCard> mData) {
+    public void setmData(List<MissingCardClass> mData) {
         this.mData = mData;
     }
 

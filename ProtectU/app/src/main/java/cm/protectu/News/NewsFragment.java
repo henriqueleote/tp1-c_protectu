@@ -1,4 +1,4 @@
-package cm.protectu;
+package cm.protectu.News;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,6 +22,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
+import cm.protectu.Authentication.AuthActivity;
+import cm.protectu.R;
+
 
 public class NewsFragment extends Fragment {
 
@@ -31,7 +33,7 @@ public class NewsFragment extends Fragment {
     private FirebaseFirestore firebaseFirestore;
     private RecyclerView recyclerView;
     private NewsAdapter newsAdapter;
-    private ArrayList<NewsCard> listOfNewsCards;
+    private ArrayList<NewsCardClass> listOfNewsCardClasses;
 
     @Nullable
     @Override
@@ -54,9 +56,9 @@ public class NewsFragment extends Fragment {
 
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        listOfNewsCards = new ArrayList<>();
+        listOfNewsCardClasses = new ArrayList<>();
         recyclerView = view.findViewById(R.id.newsRecyclerView);
-        newsAdapter = new NewsAdapter(getActivity(), listOfNewsCards,mAuth, getParentFragmentManager());
+        newsAdapter = new NewsAdapter(getActivity(), listOfNewsCardClasses,mAuth, getParentFragmentManager());
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         recyclerView.setAdapter(newsAdapter);
 
@@ -76,9 +78,9 @@ public class NewsFragment extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                NewsCard newsCard = document.toObject(NewsCard.class);
-                                listOfNewsCards.add(newsCard);
-                                newsAdapter = new NewsAdapter(getActivity(), listOfNewsCards,mAuth,getParentFragmentManager());
+                                NewsCardClass newsCardClass = document.toObject(NewsCardClass.class);
+                                listOfNewsCardClasses.add(newsCardClass);
+                                newsAdapter = new NewsAdapter(getActivity(), listOfNewsCardClasses,mAuth,getParentFragmentManager());
                                 recyclerView.setAdapter(newsAdapter);
                                 newsAdapter.notifyDataSetChanged();
                             }

@@ -51,7 +51,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-import cm.protectu.AuthActivity;
+import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.R;
 
 
@@ -81,7 +81,7 @@ public class MapFragment extends Fragment {
     boolean areAllButtonVisible;
 
     //List with the pins of the map
-    private ArrayList<MapPin> mapPins;
+    private ArrayList<MapPinClass> mapPinClasses;
 
     //List with the zones of the map
     private ArrayList<List<Object>> mapZones;
@@ -141,7 +141,7 @@ public class MapFragment extends Fragment {
             }
         });
 
-        mapPins = new ArrayList<>();
+        mapPinClasses = new ArrayList<>();
         mapZones = new ArrayList<>();
         //polyPoint = new ArrayList<>();
 
@@ -254,7 +254,7 @@ public class MapFragment extends Fragment {
                                                 for (QueryDocumentSnapshot document : task.getResult()) {
                                                     Log.d(TAG, "\nPin Object Data (Database) => " + document.getData() + "\n");
                                                     GeoPoint location = document.getGeoPoint("location");
-                                                    MapPin pin = new MapPin(document.getId(), location, document.get("type").toString());
+                                                    MapPinClass pin = new MapPinClass(document.getId(), location, document.get("type").toString());
                                                     //Log.d(TAG, "\nPin Object Data (Object) => " + pin + "\n");
                                                     //mapPins.add(pin);
 
@@ -340,9 +340,9 @@ public class MapFragment extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d(TAG, "\nPin Object Data (Database) => " + document.getData() + "\n");
                                 GeoPoint location = document.getGeoPoint("location");
-                                MapPin pin = new MapPin(document.getId(), location, document.get("type").toString());
+                                MapPinClass pin = new MapPinClass(document.getId(), location, document.get("type").toString());
                                 Log.d(TAG, "\nPin Object Data (Object) => " + pin + "\n");
-                                mapPins.add(pin);
+                                mapPinClasses.add(pin);
                             }
                         } else {
                             Log.d(TAG, "Error getting documents: ", task.getException());
@@ -388,23 +388,23 @@ public class MapFragment extends Fragment {
     @SuppressLint("NewApi")
     //Places the pins from the arraylist in the map
     public void placePins(GoogleMap googleMap) {
-        Log.d(TAG, "Numero: " + mapPins.size());
-        Log.d(TAG, "MapPin: " + mapPins.toString());
+        Log.d(TAG, "Numero: " + mapPinClasses.size());
+        Log.d(TAG, "MapPin: " + mapPinClasses.toString());
         //TODO FIX THE INTERNET PROBLEM, IF THATS THE PROBLEM
         //TODO FIX THE ICON PROBLEM, FROM DRAWABLE VECTOR TO BITMAP
         //TODO ADD THE IFS WITH THE TYPE
         //TODO ADD THE DANGER ZONE
         //TODO ADD THE WINDOW ON CLICK
-        mapPins.forEach(mapPin -> {
+        mapPinClasses.forEach(mapPinClass -> {
             BitmapDescriptor icon = null;
-            LatLng latLng = new LatLng(mapPin.getLocation().getLatitude(), mapPin.getLocation().getLongitude());
-            if (mapPin.getType().trim().equals("war")) {
+            LatLng latLng = new LatLng(mapPinClass.getLocation().getLatitude(), mapPinClass.getLocation().getLongitude());
+            if (mapPinClass.getType().trim().equals("war")) {
                 icon = bitmapDescriptorFromVector(getActivity(), R.drawable.ic_map_war_pin_45dp);
             }
-            if (mapPin.getType().trim().equals("hospital")) {
+            if (mapPinClass.getType().trim().equals("hospital")) {
                 icon = bitmapDescriptorFromVector(getActivity(), R.drawable.ic_map_hospital_pin_45dp);
             }
-            MarkerOptions options = new MarkerOptions().position(latLng).title(mapPin.getType()).icon(icon);
+            MarkerOptions options = new MarkerOptions().position(latLng).title(mapPinClass.getType()).icon(icon);
             googleMap.addMarker(options);
         });
     }
@@ -426,7 +426,7 @@ public class MapFragment extends Fragment {
 
     //TODO - Finish this, i dont know if it works because it needs a bottom to see the onclick and the hard part is to refresh the map
     public void removePins(GoogleMap googleMap) {
-        mapPins.clear();
+        mapPinClasses.clear();
         placePins(googleMap);
     }
 }

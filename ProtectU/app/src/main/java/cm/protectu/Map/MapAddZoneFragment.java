@@ -54,7 +54,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cm.protectu.AuthActivity;
+import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.R;
 
 

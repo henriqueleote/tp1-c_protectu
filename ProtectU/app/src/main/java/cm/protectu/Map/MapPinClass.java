@@ -2,7 +2,7 @@ package cm.protectu.Map;
 
 import com.google.firebase.firestore.GeoPoint;
 
-public class MapPin {
+public class MapPinClass {
 
     //String with the Pin ID and the Pin type
     String pinID, type;
@@ -11,7 +11,7 @@ public class MapPin {
     GeoPoint location;
 
     //Constructor
-    public MapPin(String pinID, GeoPoint location, String type) {
+    public MapPinClass(String pinID, GeoPoint location, String type) {
         this.pinID = pinID;
         this.location = location;
         this.type = type;

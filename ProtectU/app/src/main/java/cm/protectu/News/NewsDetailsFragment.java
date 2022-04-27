@@ -1,4 +1,4 @@
-package cm.protectu;
+package cm.protectu.News;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,17 +11,15 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.google.firebase.auth.FirebaseAuth;
-
-import java.util.ArrayList;
+import cm.protectu.R;
 
 public class NewsDetailsFragment extends Fragment {
 
     private ImageView imageBack;
     private TextView newsBigTitle, newsDate, newsBigText, publisherID;
-    private NewsCard card;
+    private NewsCardClass card;
 
-    public NewsDetailsFragment(NewsCard card){
+    public NewsDetailsFragment(NewsCardClass card){
         this.card = card;
     }
 

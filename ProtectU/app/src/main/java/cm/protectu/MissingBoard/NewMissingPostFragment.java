@@ -1,13 +1,11 @@
-package cm.protectu;
+package cm.protectu.MissingBoard;
 
 import static android.app.Activity.RESULT_OK;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -41,7 +38,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.Date;
 
-import jp.wasabeef.picasso.transformations.CropCircleTransformation;
+import cm.protectu.Authentication.AuthActivity;
+import cm.protectu.R;
 
 
 public class NewMissingPostFragment extends Fragment {
@@ -160,7 +158,7 @@ public class NewMissingPostFragment extends Fragment {
 
         //Permite colocar na base de dados, os dados recebidos na criação de uma nova publicação
         firebaseFirestore.collection("missing-board")
-                .add(new MissingCard(missingName, description,missingAge,phoneNumber,foto,userID,fotoMissing,missingID, new Date()))
+                .add(new MissingCardClass(missingName, description,missingAge,phoneNumber,foto,userID,fotoMissing,missingID, new Date()))
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {

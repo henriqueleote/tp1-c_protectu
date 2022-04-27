@@ -1,4 +1,4 @@
-package cm.protectu;
+package cm.protectu.Community;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,6 +27,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import cm.protectu.Authentication.AuthActivity;
+import cm.protectu.MissingBoard.MissingBoardFragment;
+import cm.protectu.R;
 
 
 public class CommunityFragment extends Fragment {
@@ -103,8 +107,8 @@ public class CommunityFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     if (!mAuth.getCurrentUser().isAnonymous()) {
-                        NewMessageCommunity newMessageCommunity = new NewMessageCommunity(fragment);
-                        newMessageCommunity.show(getParentFragmentManager(), newMessageCommunity.getTag());
+                        NewMessageCommunityFragment newMessageCommunityFragment = new NewMessageCommunityFragment(fragment);
+                        newMessageCommunityFragment.show(getParentFragmentManager(), newMessageCommunityFragment.getTag());
                     }
                 }
             }
@@ -148,7 +152,7 @@ public class CommunityFragment extends Fragment {
                                 listOfCommunityCards.add(communityCard);
                             }
 
-                            Collections.sort(listOfCommunityCards, new SortCommunityCard());
+                            Collections.sort(listOfCommunityCards, new SortCommunityCardClass());
 
                             communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth);
                             recyclerView.setAdapter(communityAdapter);

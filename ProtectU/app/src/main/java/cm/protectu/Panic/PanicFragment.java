@@ -22,7 +22,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import cm.protectu.AuthActivity;
+import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.R;
 
 

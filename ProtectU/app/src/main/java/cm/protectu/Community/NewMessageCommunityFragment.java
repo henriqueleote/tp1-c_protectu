@@ -1,4 +1,4 @@
-package cm.protectu;
+package cm.protectu.Community;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -40,8 +40,13 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import cm.protectu.Authentication.AuthActivity;
+import cm.protectu.Community.CommunityCard;
+import cm.protectu.Community.CommunityFragment;
+import cm.protectu.R;
 
-public class NewMessageCommunity extends BottomSheetDialogFragment {
+
+public class NewMessageCommunityFragment extends BottomSheetDialogFragment {
 
     private EditText message;
     private Button createButton;
@@ -58,7 +63,7 @@ public class NewMessageCommunity extends BottomSheetDialogFragment {
     //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
 
-    public NewMessageCommunity(CommunityFragment communityFragment) {
+    public NewMessageCommunityFragment(CommunityFragment communityFragment) {
         this.communityFragment = communityFragment;
         this.photoFile = null;
     }

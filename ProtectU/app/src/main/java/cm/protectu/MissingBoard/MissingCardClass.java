@@ -1,11 +1,11 @@
-package cm.protectu;
+package cm.protectu.MissingBoard;
 
 import java.util.Date;
 
 /**
  * Card of the missing people, on missing Board
  */
-public class MissingCard {
+public class MissingCardClass {
 
     private String missingName;
     private String description;
@@ -17,12 +17,12 @@ public class MissingCard {
     private String missingID;
     private Date date;
 
-    public MissingCard(){
+    public MissingCardClass(){
 
     }
 
 
-    public MissingCard(String missingName, String description, String missingAge, String phoneNumber, String foto,String userID,String fotoMissing,String missingID,Date date) {
+    public MissingCardClass(String missingName, String description, String missingAge, String phoneNumber, String foto, String userID, String fotoMissing, String missingID, Date date) {
         this.missingName = missingName;
         this.description = description;
         this.missingAge = missingAge;

@@ -13,8 +13,12 @@ import android.view.MenuItem;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
+import cm.protectu.Authentication.AuthActivity;
+import cm.protectu.Community.CommunityFragment;
 import cm.protectu.Map.MapFragment;
+import cm.protectu.News.NewsFragment;
 import cm.protectu.Panic.PanicFragment;
+import cm.protectu.Profile.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
 

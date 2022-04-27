@@ -1,6 +1,5 @@
-package cm.protectu;
+package cm.protectu.MissingBoard;
 
-import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -27,12 +26,15 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
+import cm.protectu.Authentication.AuthActivity;
+import cm.protectu.R;
+
 /**
  * calss of missing board
  */
 public class MissingBoardFragment extends Fragment {
 
-    public  ArrayList<MissingCard> missingCards;
+    public  ArrayList<MissingCardClass> missingCardClasses;
     private RecyclerView myRecycleView;
     private MissingBoardAdapter myAdapter;
     private FirebaseFirestore firebaseFirestore;
@@ -53,7 +55,7 @@ public class MissingBoardFragment extends Fragment {
         //Link the layout to the Fragment
         View view = inflater.inflate(R.layout.fragment_missingboard, container, false);
 
-        missingCards = new ArrayList<>();
+        missingCardClasses = new ArrayList<>();
 
         myRecycleView = (RecyclerView) view.findViewById(R.id.localCardsID);
         floatingActionButton = view.findViewById(R.id.createMissingBoardButtonID);
@@ -62,7 +64,7 @@ public class MissingBoardFragment extends Fragment {
 
 
         //Link the view objects with the XML
-        myAdapter = new MissingBoardAdapter(getActivity(), missingCards,getParentFragmentManager(),mAuth);
+        myAdapter = new MissingBoardAdapter(getActivity(), missingCardClasses,getParentFragmentManager(),mAuth);
         myRecycleView.setLayoutManager(new GridLayoutManager(getActivity(),2));
         myRecycleView.setAdapter(myAdapter);
 
@@ -141,7 +143,7 @@ public class MissingBoardFragment extends Fragment {
      * transforma os dados devolvidos na classe pretendidae e cria as respetivas publicações
      */
     public void missingCardsData() {
-        missingCards.clear();
+        missingCardClasses.clear();
         firebaseFirestore.collection("missing-board")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -149,9 +151,9 @@ public class MissingBoardFragment extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                MissingCard missingCard = document.toObject(MissingCard.class);
-                                missingCards.add(missingCard);
-                                myAdapter = new MissingBoardAdapter(getActivity(), missingCards,getParentFragmentManager(),mAuth);
+                                MissingCardClass missingCardClass = document.toObject(MissingCardClass.class);
+                                missingCardClasses.add(missingCardClass);
+                                myAdapter = new MissingBoardAdapter(getActivity(), missingCardClasses,getParentFragmentManager(),mAuth);
                                 myRecycleView.setAdapter(myAdapter);
                                 myAdapter.notifyDataSetChanged();
                             }
@@ -166,25 +168,25 @@ public class MissingBoardFragment extends Fragment {
      * Permite trocar as publicações existentes no fragment pelas publicações filtradas pelas idades pretendidas
      * @param mCards
      */
-    public void missingFilteredCardsData(ArrayList<MissingCard> mCards) {
+    public void missingFilteredCardsData(ArrayList<MissingCardClass> mCards) {
         refreshCards(mCards);
     }
 
     public void namesFiltered(String name){
-        ArrayList<MissingCard> missingCardsFilteredByName;
-        missingCardsFilteredByName = new ArrayList<>();
-        for(MissingCard mCard: missingCards){
+        ArrayList<MissingCardClass> missingCardsFilteredByNameClass;
+        missingCardsFilteredByNameClass = new ArrayList<>();
+        for(MissingCardClass mCard: missingCardClasses){
             if(mCard.getMissingName().toString() == name){
-                missingCardsFilteredByName.add(mCard);
+                missingCardsFilteredByNameClass.add(mCard);
             }
         }
-        refreshCards(missingCardsFilteredByName);
+        refreshCards(missingCardsFilteredByNameClass);
     }
 
-    public void refreshCards(ArrayList<MissingCard> missCards){
-        missingCards.clear();
-        missingCards.addAll(missCards);
-        myAdapter = new MissingBoardAdapter(getActivity(), missingCards,getParentFragmentManager(),mAuth);
+    public void refreshCards(ArrayList<MissingCardClass> missCards){
+        missingCardClasses.clear();
+        missingCardClasses.addAll(missCards);
+        myAdapter = new MissingBoardAdapter(getActivity(), missingCardClasses,getParentFragmentManager(),mAuth);
         myRecycleView.setAdapter(myAdapter);
         myAdapter.notifyDataSetChanged();
     }

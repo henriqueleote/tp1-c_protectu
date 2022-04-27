@@ -1,4 +1,4 @@
-package cm.protectu;
+package cm.protectu.MissingBoard;
 
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +24,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
+import cm.protectu.Authentication.AuthActivity;
+import cm.protectu.R;
+import cm.protectu.Community.UserDataClass;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 
@@ -168,8 +171,8 @@ public class MissingPostFragment extends Fragment {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 if (document.getId().equals(userID)) {
-                                    UserData userData = document.toObject(UserData.class);
-                                    profileNameID.setText(userData.getFirstName() + " " + userData.getLastName());
+                                    UserDataClass userDataClass = document.toObject(UserDataClass.class);
+                                    profileNameID.setText(userDataClass.getFirstName() + " " + userDataClass.getLastName());
                                     break;
                                 } else {
                                     // voltar para tras com mensagem de erro --holder.userName.setText("Not Found");

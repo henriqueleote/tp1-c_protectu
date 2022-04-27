@@ -1,4 +1,4 @@
-package cm.protectu;
+package cm.protectu.Community;
 
 
 import android.app.AlertDialog;
@@ -31,6 +31,8 @@ import com.squareup.picasso.Transformation;
 import java.util.ArrayList;
 import java.util.Date;
 
+import cm.protectu.MainActivity;
+import cm.protectu.R;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
@@ -86,8 +88,8 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 if (document.getId().equals(userID)) {
-                                    UserData userData = document.toObject(UserData.class);
-                                    holder.userName.setText(userData.getFirstName() + " " + userData.getLastName());
+                                    UserDataClass userDataClass = document.toObject(UserDataClass.class);
+                                    holder.userName.setText(userDataClass.getFirstName() + " " + userDataClass.getLastName());
                                     if (!document.get("imageURL").equals("")) {
                                         Picasso.get()
                                                 .load(document.get("imageURL").toString())
@@ -230,8 +232,8 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                                             @Override
                                             public void onSuccess(Void aVoid) {
                                                 textNumber.setText(actualNumber + "");
-                                                UserReactions userReactions = new UserReactions(currentUserID, messageID, type.substring(0, type.length() - 1), new Date());
-                                                firebaseFirestore.collection("community-chat-reactions").add(userReactions);
+                                                UserReactionsClass userReactionsClass = new UserReactionsClass(currentUserID, messageID, type.substring(0, type.length() - 1), new Date());
+                                                firebaseFirestore.collection("community-chat-reactions").add(userReactionsClass);
                                                 getClickedLikeOrDislike(currentUserID, messageID, holder);
                                                 Log.d(TAG, "Document successfully updated!");
                                             }

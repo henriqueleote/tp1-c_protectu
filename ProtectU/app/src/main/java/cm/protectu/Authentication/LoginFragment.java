@@ -1,4 +1,4 @@
-package cm.protectu;
+package cm.protectu.Authentication;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -31,6 +30,9 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Locale;
+
+import cm.protectu.MainActivity;
+import cm.protectu.R;
 
 public class LoginFragment extends BottomSheetDialogFragment {
 

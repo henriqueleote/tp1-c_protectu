@@ -20,6 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import cm.protectu.Authentication.AuthActivity;
+
 public class WelcomeScreenActivity extends AppCompatActivity {
 
     private ViewPager viewPager;

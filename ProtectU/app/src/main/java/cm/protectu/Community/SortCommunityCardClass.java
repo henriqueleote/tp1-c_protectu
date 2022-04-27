@@ -1,8 +1,10 @@
-package cm.protectu;
+package cm.protectu.Community;
 
 import java.util.Comparator;
 
-public class SortCommunityCard implements Comparator<CommunityCard> {
+import cm.protectu.Community.CommunityCard;
+
+public class SortCommunityCardClass implements Comparator<CommunityCard> {
 
     @Override
     public int compare(CommunityCard t1, CommunityCard t2) {

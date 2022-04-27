@@ -1,8 +1,8 @@
-package cm.protectu;
+package cm.protectu.News;
 
 import java.util.Date;
 
-public class NewsCard {
+public class NewsCardClass {
     private String newsTitle;
     private String newsText;
     private String newsID;
@@ -10,11 +10,11 @@ public class NewsCard {
     private String pubImgURL;
     private String pubID;
 
-    public NewsCard(){
+    public NewsCardClass(){
 
     }
 
-    public NewsCard(String newsTitle, String newsText, String newsID, String imgUrl, String pubImgURL, String pubID){
+    public NewsCardClass(String newsTitle, String newsText, String newsID, String imgUrl, String pubImgURL, String pubID){
         this.newsTitle = newsTitle;
         this.newsText = newsText;
         this.newsID = newsID;

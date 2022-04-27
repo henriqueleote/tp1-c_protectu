@@ -2,7 +2,7 @@ package cm.protectu.Map;
 
 import com.google.firebase.firestore.GeoPoint;
 
-public class MapZone {
+public class MapZoneClass {
 
     //String with the Zone ID
     String zoneID;
@@ -11,7 +11,7 @@ public class MapZone {
     GeoPoint topOneLocation, topTwoLocation, bottomOneLocation, bottomTwoLocation;
 
     //Constructor
-    public MapZone(String zoneID, GeoPoint topOneLocation, GeoPoint topTwoLocation, GeoPoint bottomOneLocation, GeoPoint bottomTwoLocation) {
+    public MapZoneClass(String zoneID, GeoPoint topOneLocation, GeoPoint topTwoLocation, GeoPoint bottomOneLocation, GeoPoint bottomTwoLocation) {
         this.zoneID = zoneID;
         this.topOneLocation = topOneLocation;
         this.topTwoLocation = topTwoLocation;

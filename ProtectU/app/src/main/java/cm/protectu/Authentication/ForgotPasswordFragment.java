@@ -1,4 +1,4 @@
-package cm.protectu;
+package cm.protectu.Authentication;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,6 +24,9 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import cm.protectu.MainActivity;
+import cm.protectu.R;
 
 public class ForgotPasswordFragment extends BottomSheetDialogFragment {
 

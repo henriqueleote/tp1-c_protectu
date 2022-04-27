@@ -1,44 +1,28 @@
-package cm.protectu;
+package cm.protectu.MissingBoard;
 
-import static android.app.Activity.RESULT_OK;
-
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+
+import cm.protectu.Authentication.AuthActivity;
+import cm.protectu.R;
 
 
 public class AgeFilterMissingFragment extends BottomSheetDialogFragment {
 
-    ArrayList<MissingCard> mcards, newCardS;
+    ArrayList<MissingCardClass> mcards, newCardS;
 
     //CheckBox
     private CheckBox childrens, adults, seniors;
@@ -62,7 +46,7 @@ public class AgeFilterMissingFragment extends BottomSheetDialogFragment {
      */
     public AgeFilterMissingFragment(MissingBoardFragment missingBoardFragment) {
         this.missingBoardFragment = missingBoardFragment;
-        mcards = new ArrayList<>(missingBoardFragment.missingCards);
+        mcards = new ArrayList<>(missingBoardFragment.missingCardClasses);
         newCardS = new ArrayList<>();
     }
 
@@ -135,7 +119,7 @@ public class AgeFilterMissingFragment extends BottomSheetDialogFragment {
                 }
                 else{
                     //Checkbox correspondente a das criancas
-                    for (MissingCard card: mcards){
+                    for (MissingCardClass card: mcards){
                         if(childrens.isChecked()){
                             if(Integer.parseInt(card.getMissingAge()) <= 17 && Integer.parseInt(card.getMissingAge()) >= 0){
                                 newCardS.add(card);

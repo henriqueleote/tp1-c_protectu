@@ -1,16 +1,16 @@
-package cm.protectu;
+package cm.protectu.Community;
 
-public class UserData {
+public class UserDataClass {
     private String firstName;
     private String lastName;
     private String userID;
     private String phoneNumber;
     private String imageURL;
 
-    public UserData() {
+    public UserDataClass() {
     }
 
-    public UserData(String firstName, String lastName, String userID, String phoneNumber, String imageURL) {
+    public UserDataClass(String firstName, String lastName, String userID, String phoneNumber, String imageURL) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userID = userID;

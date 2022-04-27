@@ -1,4 +1,4 @@
-package cm.protectu;
+package cm.protectu.Authentication;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +17,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import cm.protectu.MainActivity;
+import cm.protectu.R;
 
 public class AuthActivity extends AppCompatActivity {
 

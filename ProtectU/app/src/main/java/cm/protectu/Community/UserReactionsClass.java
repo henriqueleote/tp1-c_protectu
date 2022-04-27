@@ -1,17 +1,17 @@
-package cm.protectu;
+package cm.protectu.Community;
 
 import java.util.Date;
 
-public class UserReactions {
+public class UserReactionsClass {
     private String userID;
     private String messageID;
     private String type;
     private Date date;
 
-    public UserReactions() {
+    public UserReactionsClass() {
     }
 
-    public UserReactions(String userID, String messageID, String type, Date date) {
+    public UserReactionsClass(String userID, String messageID, String type, Date date) {
         this.userID = userID;
         this.messageID = messageID;
         this.type = type;

@@ -1,4 +1,4 @@
-package cm.protectu;
+package cm.protectu.Language;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -9,10 +9,10 @@ import androidx.fragment.app.Fragment;
 
 import java.util.Locale;
 
-public class LanguageManager {
+public class LanguageManagerClass {
     private Fragment ct;
 
-    public LanguageManager(Fragment ct) {
+    public LanguageManagerClass(Fragment ct) {
         this.ct = ct;
     }
 

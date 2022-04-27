@@ -1,4 +1,4 @@
-package cm.protectu;
+package cm.protectu.Profile;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -36,6 +35,9 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 import java.util.Map;
 
+import cm.protectu.Authentication.AuthActivity;
+import cm.protectu.MainActivity;
+import cm.protectu.R;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 
