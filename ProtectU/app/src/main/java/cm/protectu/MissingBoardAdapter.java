@@ -94,12 +94,14 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
         holder.missingName.setText(mData.get(position).getMissingName());
         holder.age.setText(String.valueOf(mData.get(position).getMissingAge()));
 
+        Picasso.get()
+                .load(mData.get(position).getFotoMissing())
+                .centerCrop()
+                .fit()
+                .into(holder.missingImage);
+
         String userID = mData.get(position).getUserID();
-
-        getFotoMissing(holder.missingImage);
-
-
-
+        
         /**
          * will fetch the database the name of the user who created the message through the user id
          * that is in the missing data and then put it in the Missing fragment
@@ -207,31 +209,6 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
     public void setmData(List<MissingCard> mData) {
         this.mData = mData;
     }
-
-    public void getFotoMissing(ImageView imageView){
-        firebaseFirestore.collection("missing-board")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                MissingCard missingCard = document.toObject(MissingCard.class);
-                                if (!document.get("fotoMissing").equals("")){
-                                    urlMissing = missingCard.getFotoMissing();
-                                    Picasso.get()
-                                            .load(urlMissing)
-                                            .centerCrop()
-                                            .fit()
-                                            .into(imageView);
-                                }
-                            }
-                        }
-                    }
-                });
-
-    }
-
 
 }
 
