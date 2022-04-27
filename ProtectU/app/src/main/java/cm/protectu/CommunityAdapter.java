@@ -149,7 +149,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
             holder.communityText.setText(messageText);
         }
 
-
+        if (!mAuth.getCurrentUser().isAnonymous()) {
             //Put the number of likes and dislikes in the message
             holder.likeCounter.setText(listOfCommunityCards.get(pos).getLikes() + "");
             holder.dislikeCounter.setText(listOfCommunityCards.get(pos).getDislikes() + "");
@@ -177,13 +177,13 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                     intent.setType("text/plain");
                     String shareBody = "Your Body here";
                     String shareSub = "Your Subject here";
-                    intent.putExtra(Intent.EXTRA_SUBJECT,shareBody);
-                    intent.putExtra(Intent.EXTRA_TEXT,shareSub);
-                    context.startActivity(Intent.createChooser(intent,"Share this Post"));
+                    intent.putExtra(Intent.EXTRA_SUBJECT, shareBody);
+                    intent.putExtra(Intent.EXTRA_TEXT, shareSub);
+                    context.startActivity(Intent.createChooser(intent, "Share this Post"));
                 }
             });
 
-
+        }
 
     }
 
@@ -230,7 +230,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                                             @Override
                                             public void onSuccess(Void aVoid) {
                                                 textNumber.setText(actualNumber + "");
-                                                UserReactions userReactions = new UserReactions(currentUserID, messageID,type.substring(0, type.length()-1) , new Date());
+                                                UserReactions userReactions = new UserReactions(currentUserID, messageID, type.substring(0, type.length() - 1), new Date());
                                                 firebaseFirestore.collection("community-chat-reactions").add(userReactions);
                                                 getClickedLikeOrDislike(currentUserID, messageID, holder);
                                                 Log.d(TAG, "Document successfully updated!");
@@ -253,6 +253,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
 
     /**
      * This method checks if the user has a like, if he has, put the like button in blue and do the same for the dislike
+     *
      * @param userID
      * @param messageID
      * @param holder
@@ -290,6 +291,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
 
     /**
      * This method is responsible for checking if the user is a guest and if it is, makes the like, dislike, number of likes, dislikes and the share button invisible
+     *
      * @param holder
      */
     public void userIsAnonymous(MyViewHolder holder) {
@@ -307,7 +309,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
         lastButtonClickedBlue.setVisibility(View.INVISIBLE);
         lastButtonClicked.setVisibility(View.VISIBLE);
         firebaseFirestore.collection("community-chat-reactions").document(reactionID)
-                .update("type", newType.substring(0, newType.length()-1))
+                .update("type", newType.substring(0, newType.length() - 1))
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
