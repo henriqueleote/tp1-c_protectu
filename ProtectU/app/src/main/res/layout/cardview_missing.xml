@@ -16,12 +16,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <ImageView
             android:id="@+id/imageMissingID"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@mipmap/ic_launcher"
+            android:layout_marginBottom="20dp"
             />
 
         <ImageView
@@ -31,6 +31,7 @@
             android:src="@drawable/ic_about_menu"
             android:layout_marginLeft="5dp"
             android:layout_marginTop="5dp" />
+
         <TextView
             android:id="@+id/profileNameID"
             android:layout_width="wrap_content"
@@ -42,48 +43,46 @@
             android:layout_marginTop="5dp"
             android:layout_toRightOf="@+id/imageProfileID"/>
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="45dp"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:layout_below="@+id/profileNameID"
             android:layout_alignParentStart="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="98dp"
-            android:alpha="0.7"
-            app:cardCornerRadius="5dp">
+            android:layout_alignParentBottom="true"
+            >
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/nameOfTheMissingID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Luke"
+                android:textColor="@color/black" />
 
-                <TextView
-                    android:id="@+id/nameOfTheMissingID"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Luke"
-                    android:textColor="@color/black" />
+            <TextView
+                android:id="@+id/comma"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=","
+                android:textColor="@color/black"
+                android:layout_toRightOf="@+id/nameOfTheMissingID"
+                />
 
-                <TextView
-                    android:id="@+id/comma"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=","
-                    android:textColor="@color/black"
-                    android:layout_toRightOf="@+id/nameOfTheMissingID"/>
+            <TextView
+                android:id="@+id/ageID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="6"
+                android:textColor="@color/black"
+                android:layout_toRightOf="@+id/comma"
+                />
 
-                <TextView
-                    android:id="@+id/ageID"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="6"
-                    android:textColor="@color/black"
-                    android:layout_toRightOf="@+id/comma"
-                    />
+        </RelativeLayout>
 
-            </RelativeLayout>
-
-        </androidx.cardview.widget.CardView>
 
     </RelativeLayout>
+
+
+
+
 
 </androidx.cardview.widget.CardView>
