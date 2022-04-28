@@ -86,12 +86,8 @@ public class AuthActivity extends AppCompatActivity {
         signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!hasPermissions(AuthActivity.this, PERMISSIONS)) {
-                    ActivityCompat.requestPermissions(AuthActivity.this, PERMISSIONS, 1);
-                }else{
-                    LoginFragment bottomLogin = new LoginFragment();
-                    bottomLogin.show(getSupportFragmentManager(), bottomLogin.getTag());
-                }
+                LoginFragment bottomLogin = new LoginFragment();
+                bottomLogin.show(getSupportFragmentManager(), bottomLogin.getTag());
             }
         });
 
@@ -99,23 +95,15 @@ public class AuthActivity extends AppCompatActivity {
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!hasPermissions(AuthActivity.this, PERMISSIONS)) {
-                    ActivityCompat.requestPermissions(AuthActivity.this, PERMISSIONS, 1);
-                }else{
-                    RegisterFragment bottomRegister = new RegisterFragment();
-                    bottomRegister.show(getSupportFragmentManager(), bottomRegister.getTag());
-                }
+                RegisterFragment bottomRegister = new RegisterFragment();
+                bottomRegister.show(getSupportFragmentManager(), bottomRegister.getTag());
             }
         });
 
         anonymousButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!hasPermissions(AuthActivity.this, PERMISSIONS)) {
-                    ActivityCompat.requestPermissions(AuthActivity.this, PERMISSIONS, 1);
-                }else{
-                    loginUserAnonymous(); //this is the correct code
-                }
+                loginUserAnonymous(); //this is the correct code
             }
         });
     }
