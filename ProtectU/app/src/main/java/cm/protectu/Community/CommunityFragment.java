@@ -143,6 +143,10 @@ public class CommunityFragment extends Fragment {
      * + if fails sends an error message.
      */
     public void communityCardsData() {
+        ProgressDialog cDialog = new ProgressDialog(getActivity());
+        cDialog.setMessage("Loading...");
+        cDialog.setCancelable(false);
+        cDialog.show();
         listOfCommunityCards.clear();
         firebaseFirestore.collection("community-chat")
                 .get()
@@ -161,6 +165,9 @@ public class CommunityFragment extends Fragment {
                             recyclerView.setAdapter(communityAdapter);
                             communityAdapter.notifyDataSetChanged();
 
+
+                            cDialog.dismiss();
+
                         } else {
                             Toast.makeText(getActivity(), "erro", Toast.LENGTH_SHORT).show();
                         }
@@ -169,5 +176,6 @@ public class CommunityFragment extends Fragment {
 
 
     }
+
 }
 

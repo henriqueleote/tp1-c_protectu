@@ -2,6 +2,7 @@ package cm.protectu.Community;
 
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -102,7 +103,6 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                                                 .fit()
                                                 .transform(new CropCircleTransformation())
                                                 .into(holder.userImage);
-
                                     }
                                     break;
                                 } else {
@@ -172,7 +172,6 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
             });
 
         }
-
     }
 
     /**
