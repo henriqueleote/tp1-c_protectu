@@ -1,6 +1,9 @@
 package cm.protectu.Authentication;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -35,6 +39,8 @@ public class AuthActivity extends AppCompatActivity {
     //Firebase User
     private FirebaseUser user;
 
+    private String[] PERMISSIONS;
+
     private static final String TAG = AuthActivity.class.getName();
 
     @Override
@@ -47,11 +53,21 @@ public class AuthActivity extends AppCompatActivity {
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
 
+        PERMISSIONS = new String[]{
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.CAMERA
+        };
+
+        if (!hasPermissions(AuthActivity.this, PERMISSIONS)) {
+            ActivityCompat.requestPermissions(AuthActivity.this, PERMISSIONS, 1);
+        }
+
         //TODO - Fix this
         //The code is right, but it has some bugs and it says that the mAuth is null
         //if (mAuth.getCurrentUser().isAnonymous()) {
-            //mAuth.getCurrentUser().delete();
-            //mAuth.signOut();
+        //mAuth.getCurrentUser().delete();
+        //mAuth.signOut();
         //}
 
 
@@ -112,5 +128,27 @@ public class AuthActivity extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private boolean hasPermissions(Context context, String... PERMISSIONS) {
+
+        if (context != null && PERMISSIONS != null)
+            for (String permission : PERMISSIONS)
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED)
+                    return false;
+
+                return true;
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if(requestCode == 1){
+            for (int i = 0; i < grantResults.length; i++)
+                if(grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                    Toast.makeText(this, "Permission is granted", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(this, "Calling Permission is denied", Toast.LENGTH_SHORT).show();
+        }
     }
 }

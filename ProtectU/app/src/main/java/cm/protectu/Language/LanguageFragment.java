@@ -1,5 +1,8 @@
 package cm.protectu.Language;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import cm.protectu.Authentication.AuthActivity;
+import cm.protectu.MainActivity;
 import cm.protectu.R;
 
 public class LanguageFragment extends Fragment {
@@ -41,46 +46,62 @@ public class LanguageFragment extends Fragment {
         btnSave = view.findViewById(R.id.btnSave);
 
         //Check which language are selected on SO
-        WhichSelected();
+        whichSelected();
 
         //For each option program onClick change value of auxChosen
         for (TableRow row : tableOptions) {
-            row.setOnClickListener(view1 -> ChooseOption(row));
+            row.setOnClickListener(view1 -> chooseOption(row));
         }
 
-        btnSave.setOnClickListener(view12 -> {
-            String code = setLocateLanguage();
-            lang.updateResorce(code);
-            getActivity().recreate();
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("The app is going to restart, are you sure?")
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                String code = setLocateLanguage();
+                                lang.updateResorce(code);
+                                getActivity().recreate();
+                            }
+                        })
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        });
+                // Create the AlertDialog object and return it
+                builder.show();
+            }
         });
 
         return view;
     }
 
-    private void ChooseOption(TableRow row) {
-        ClearBackground();
+    private void chooseOption(TableRow row) {
+        clearBackground();
         row.setBackgroundColor(getResources().getColor(R.color.white));
         auxChosen = row;
     }
 
-    private void ClearBackground() {
+    private void clearBackground() {
         for (TableRow tableOption : tableOptions) {
             tableOption.setBackgroundColor(getResources().getColor(R.color.backgroundColor));
         }
     }
 
-    private void WhichSelected() {
+    private void whichSelected() {
         String language = Locale.getDefault().getDisplayLanguage();
         for (TableRow tableOption : tableOptions) {
             TextView label = (TextView) tableOption.getChildAt(0);
             System.out.println(label.getText());
             if (label.getText().toString().equalsIgnoreCase(language)) {
-                ChooseOption(tableOption);
+                chooseOption(tableOption);
                 return;
             }
         }
         // Can be position 0 because is the english language
-        ChooseOption(tableOptions.get(0));
+        chooseOption(tableOptions.get(0));
     }
 
     private String setLocateLanguage() {
