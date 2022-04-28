@@ -67,8 +67,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 //Switch case to load the fragment based on the side menu option
                 switch (item.getItemId()) {
                     case R.id.navigation_about:
-                        //fragment = new AboutFragment();
-                        Toast.makeText(MainActivity.this, "About", Toast.LENGTH_SHORT).show();
+                        fragment = new AboutFragment();
                         break;
 
                     case R.id.navigation_language:
