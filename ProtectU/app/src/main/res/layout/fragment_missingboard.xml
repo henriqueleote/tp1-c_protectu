@@ -88,31 +88,23 @@
 
         </androidx.cardview.widget.CardView>
 
-
-
-        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/localCardsID"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/ageFilterButtonID"
-            android:fillViewport="true">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/localCardsID"
-                android:layout_width="match_parent"
-                android:layout_height="495dp"
-                android:layout_below="@+id/ageFilterButtonID"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="50dp"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="50dp"
-                android:layout_marginRight="40dp"
-                android:layout_marginBottom="50dp">
+            android:layout_height="495dp"
+            android:layout_below="@+id/ageFilterButtonID"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="50dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="50dp">
 
 
-            </androidx.recyclerview.widget.RecyclerView>
+        </androidx.recyclerview.widget.RecyclerView>
 
-        </ScrollView>
+
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/createMissingBoardButtonID"
