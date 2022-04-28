@@ -21,6 +21,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
+
+import java.util.Date;
 
 import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.R;
@@ -37,6 +40,8 @@ public class PanicFragment extends BottomSheetDialogFragment {
     private Button sosButton;
 
     private ImageView closeButton;
+
+    private GeoPoint curLocation;
 
     //Firebase Authentication
     private FirebaseAuth mAuth;
@@ -58,7 +63,6 @@ public class PanicFragment extends BottomSheetDialogFragment {
         numberOfPeople = view.findViewById(R.id.numberOfPeople);
         urgencyLevel = view.findViewById(R.id.urgencyLevel);
         sosButton = view.findViewById(R.id.sosButton);
-
         firebaseFirestore = FirebaseFirestore.getInstance();
 
 
@@ -88,6 +92,7 @@ public class PanicFragment extends BottomSheetDialogFragment {
         sosButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                curLocation = new GeoPoint(cm.protectu.Map.MapFragment.currentLocation.getLatitude(),cm.protectu.Map.MapFragment.currentLocation.getLongitude());
                 createRequest(numberOfPeople.getText().toString().trim()
                         ,mAuth.getUid());
                 getDialog().cancel();
@@ -98,7 +103,6 @@ public class PanicFragment extends BottomSheetDialogFragment {
         return view;
 
     }
-
     public void createRequest(String numOfPeople,String userID){
         if (TextUtils.isEmpty(numOfPeople)) {
             numberOfPeople.setError(getString(R.string.error_number_of_people));
@@ -106,7 +110,7 @@ public class PanicFragment extends BottomSheetDialogFragment {
             return;
         }
         firebaseFirestore.collection("sos-requests")
-                .add(new PanicRequestClass(userID,"",Integer.parseInt(numOfPeople),selectedUrgencyLevel))
+                .add(new PanicRequestClass(userID,"",Integer.parseInt(numOfPeople),selectedUrgencyLevel, new Date(), curLocation))
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
