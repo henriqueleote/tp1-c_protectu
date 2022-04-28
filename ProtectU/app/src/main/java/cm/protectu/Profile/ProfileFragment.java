@@ -1,5 +1,6 @@
 package cm.protectu.Profile;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -149,7 +150,7 @@ public class ProfileFragment extends Fragment {
     public void getData(){
 
         ProgressDialog mDialog = new ProgressDialog(getActivity());
-        mDialog.setMessage("Loading user data...");
+        mDialog.setMessage(getString(R.string.loading_user_data));
         mDialog.setCancelable(false);
         mDialog.show();
 
@@ -171,8 +172,8 @@ public class ProfileFragment extends Fragment {
                                 phoneNumber = document.getString("phoneNumber");
                                 imageURL = document.getString("imageURL");
                                 nameTextView.setText(userName + " " + lastName);
-                                emailTextView.setText("E-mail: " + mAuth.getCurrentUser().getEmail());
-                                contactTextView.setText("Contact: " + phoneNumber);
+                                emailTextView.setText(getString(R.string.email) + mAuth.getCurrentUser().getEmail());
+                                contactTextView.setText(getString(R.string.contact) + phoneNumber);
                                 //TODO CHECK IF THIS IS THE LINE, I'VE A NULL SPACE IN THE REGISTER, SO MAYBE .equals("null") after everyone deletes their accounts
                                 if(!imageURL.equals("null")){
                                     //if(document.getString("imageURL") != null){

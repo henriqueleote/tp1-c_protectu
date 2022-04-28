@@ -32,6 +32,10 @@
     <string name="lbl_languague">Language</string>
     <string name="btn_save">Save</string>
     <string name="backarrow">back</string>
+    <string name="contact">\"Contact: \"</string>
+    <string name="email">\"E-mail: \"</string>
+    <string name="loading_user_data">Loading user data...</string>
+    <string name="loading_image">Loading image...</string>
 
     <string-array name="panic_values">
         <item>Slight</item>

@@ -1,89 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
 
     <TextView
         android:id="@+id/options"
-        android:paddingRight="10dp"
-        android:paddingTop="10dp"
-        android:drawablePadding="5dp"
-        android:textColor="#000000"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:layout_alignParentRight="true"
+        android:layout_marginTop="5dp"
         android:drawableRight="@drawable/ic_three_dots_menu_black_24dp"
-        android:drawableTint="#000000"/>
+        android:drawablePadding="5dp"
+        android:drawableTint="#000000"
+        android:gravity="center_vertical"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/profileImageView"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/nameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="5dp"
+        android:fontFamily="@font/lexend_regular"
         android:text="Name"
         android:textAlignment="center"
         android:textSize="20dp"
-        android:fontFamily="@font/lexend_regular"/>
+        app:layout_constraintEnd_toEndOf="@id/profileImageView"
+        app:layout_constraintEnd_toStartOf="@+id/editImageView"
+        app:layout_constraintStart_toStartOf="@id/profileImageView"
+        app:layout_constraintTop_toBottomOf="@+id/profileImageView" />
+
+    <ImageView
+        android:id="@+id/editImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="158dp"
+        android:layout_marginBottom="80dp"
+        android:src="@drawable/ic_edit_black_24dp"
+        app:layout_constraintBottom_toTopOf="@+id/emailTextView"
+        app:layout_constraintStart_toEndOf="@+id/nameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/profileImageView" />
+
 
     <Button
         android:id="@+id/removeCommunityButton"
-        android:layout_width="200dp"
-        android:layout_height="66dp"
-        android:layout_below="@+id/contactTextView"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="30dp"
-        android:text="Publications in community"
+        android:layout_width="0dp"
+        android:layout_height="75dp"
+        android:layout_marginBottom="5dp"
         android:backgroundTint="#ff1100"
-        android:fontFamily="@font/lexend_regular"/>
+        android:fontFamily="@font/lexend_regular"
+        android:scaleType="fitXY"
+        android:text="Publications in community"
+        app:layout_constraintBottom_toTopOf="@+id/removeMissingButton"
+        app:layout_constraintEnd_toEndOf="@+id/removeMissingButton"
+        app:layout_constraintStart_toStartOf="@+id/removeMissingButton"
+        app:layout_constraintTop_toBottomOf="@+id/contactTextView" />
 
     <Button
         android:id="@+id/removeMissingButton"
         android:layout_width="200dp"
-        android:layout_height="66dp"
-        android:layout_below="@+id/removeCommunityButton"
+        android:layout_height="75dp"
+        android:layout_marginStart="30dp"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="5dp"
-        android:text="Publications in missing"
+        android:layout_marginBottom="85dp"
         android:backgroundTint="#ff1100"
-        android:fontFamily="@font/lexend_regular"/>
+        android:fontFamily="@font/lexend_regular"
+        android:scaleType="fitXY"
+        android:text="Publications in missing"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/removeCommunityButton" />
 
     <TextView
         android:id="@+id/emailTextView"
-        android:layout_width="200dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="450dp"
+        android:layout_marginBottom="6dp"
+        android:fontFamily="@font/lexend_regular"
         android:text="E-mail: "
-        android:fontFamily="@font/lexend_regular"/>
+        app:layout_constraintBottom_toTopOf="@+id/contactTextView"
+        app:layout_constraintEnd_toEndOf="@+id/contactTextView"
+        app:layout_constraintStart_toStartOf="@+id/contactTextView"
+        app:layout_constraintTop_toBottomOf="@+id/editImageView" />
 
     <TextView
         android:id="@+id/contactTextView"
-        android:layout_width="200dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="475dp"
+        android:layout_marginBottom="15dp"
         android:fontFamily="@font/lexend_regular"
-        android:text="Contact: " />
+        android:text="Contact: "
+        app:layout_constraintBottom_toTopOf="@+id/removeCommunityButton"
+        app:layout_constraintEnd_toEndOf="@+id/removeCommunityButton"
+        app:layout_constraintStart_toStartOf="@+id/removeCommunityButton"
+        app:layout_constraintTop_toBottomOf="@+id/emailTextView" />
 
-    <ImageView
-        android:id="@+id/editImageView"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="350dp"
-        android:src="@drawable/ic_edit_black_24dp"/>
 
     <ImageView
         android:id="@+id/profileImageView"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_above="@+id/nameTextView"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/ic_bottom_profile_black_24dp" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="106dp"
+        android:layout_marginTop="90dp"
+        android:layout_marginEnd="67dp"
+        android:src="@drawable/ic_bottom_profile_black_24dp"
+        app:layout_constraintBottom_toTopOf="@+id/editImageView"
+        app:layout_constraintEnd_toStartOf="@+id/options"
+        app:layout_constraintHorizontal_bias="0.38"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
