@@ -42,4 +42,8 @@
         <item>Severe</item>
         <item>Urgent</item>
     </string-array>
+    <string name="About">About</string>
+    <string name="Language">Language</string>
+    <string name="notifications">Notifications</string>
+    <string name="Customization">Customization</string>
 </resources>
