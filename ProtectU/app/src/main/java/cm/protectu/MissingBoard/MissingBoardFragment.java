@@ -2,6 +2,7 @@ package cm.protectu.MissingBoard;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -42,6 +44,7 @@ public class MissingBoardFragment extends Fragment {
     private FloatingActionButton floatingActionButton;
     private CardView age;
     private SearchView searchNames;
+    private SwipeRefreshLayout swipeToRefresh;
 
 
     //Firebase Authentication
@@ -62,20 +65,10 @@ public class MissingBoardFragment extends Fragment {
         floatingActionButton = view.findViewById(R.id.createMissingBoardButtonID);
         age = view.findViewById(R.id.ageFilterButtonID);
         searchNames = view.findViewById(R.id.searchID);
+        swipeToRefresh = view.findViewById(R.id.swipeToRefreshMissing);
 
         int searchCloseButtonId = searchNames.getContext().getResources().getIdentifier("android:id/search_close_btn", null, null);
         ImageView closeButton = (ImageView) this.searchNames.findViewById(searchCloseButtonId);
-
-        
-        closeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                missingCardsData();
-                searchNames.setQuery("", false);
-                searchNames.setIconified(true);
-            }
-        });
-
 
 
         //Link the view objects with the XML
@@ -100,14 +93,32 @@ public class MissingBoardFragment extends Fragment {
 
         missingCardsData();
 
-        /*
-        searchNames.setOnClickListener(new View.OnClickListener() {
+        swipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                missingCardsData();
+                searchNames.setQuery("", false);
+                searchNames.setIconified(true);
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (swipeToRefresh.isRefreshing()) {
+                            swipeToRefresh.setRefreshing(false);
+                        }
+                    }
+                }, 500);
+            }
+        });
+
+        closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                namesFiltered((String) searchNames.getQuery());
+                missingCardsData();
+                searchNames.setQuery("", false);
+                searchNames.setIconified(true);
             }
-        });*/
-
+        });
 
         /**
          * Permite ir para o fragment de criar novas publicações
