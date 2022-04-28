@@ -8,8 +8,8 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardNews"
-        android:layout_width="350dp"
-        android:layout_height="200dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginHorizontal="30dp"
         android:layout_marginVertical="10dp"
         app:cardCornerRadius="12dp"
@@ -22,7 +22,7 @@
 
             <ImageView
                 android:id="@+id/newsImage"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginStart="8dp"
@@ -43,15 +43,15 @@
                 android:id="@+id/newsTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
-                android:text="Title"
                 android:layout_marginLeft="100dp"
+                android:layout_marginTop="100dp"
                 android:fontFamily="@font/lexend_bold"
-                android:textSize="20dp"/>
+                android:text="Title"
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/newsText"
-                android:layout_width="230dp"
+                android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_below="@+id/newsTitle"
                 android:layout_marginLeft="100dp"

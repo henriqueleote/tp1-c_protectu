@@ -22,13 +22,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <ImageView
         android:id="@+id/profileImageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="100dp"
-        android:layout_marginBottom="50dp"
         android:src="@drawable/ic_bottom_profile_black_24dp"
         app:layout_constraintBottom_toTopOf="@+id/nameAndEditLayout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,7 +52,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginEnd="5dp"
             android:fontFamily="@font/lexend_regular"
-            android:text="@string/Name"
+            android:text="Name"
             android:textAlignment="center"
             android:textSize="20dp"
             app:layout_constraintEnd_toEndOf="@+id/nameAndEditLayout"
@@ -108,7 +106,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="6dp"
         android:fontFamily="@font/lexend_regular"
-        android:text="@string/email"
+        android:text="E-mail: "
         app:layout_constraintBottom_toTopOf="@+id/contactTextView"
         app:layout_constraintEnd_toEndOf="@+id/contactTextView"
         app:layout_constraintStart_toStartOf="@+id/contactTextView"

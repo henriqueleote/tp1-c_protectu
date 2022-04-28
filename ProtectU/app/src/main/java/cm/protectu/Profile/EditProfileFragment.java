@@ -2,11 +2,15 @@ package cm.protectu.Profile;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +22,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -32,6 +37,10 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,6 +70,11 @@ public class EditProfileFragment extends Fragment {
     String firebaseUrl;
 
     Drawable oldDrawable;
+
+    private File photoFile;
+    private String photoPath;
+    private static final String TEMP_IMAGE_NAME = "tempImage";
+    private static final int PICK_IMAGE_ID = 234;
 
 
     private static final String TAG = MainActivity.class.getName();
@@ -98,10 +112,22 @@ public class EditProfileFragment extends Fragment {
         profileImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                imageFileChooser();
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage(R.string.pick_image_intent_text)
+                        .setPositiveButton(R.string.gallery, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                imageFileChooser();
+                            }
+                        })
+                        .setNegativeButton(R.string.camera, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dispatchTakePictureIntent();
+                            }
+                        });
+                // Create the AlertDialog object and return it
+                builder.show();
             }
         });
-
 
         //TODO -- It works but it's gone forever, doesn't restore
         //Hide the bottom bar in this page
@@ -172,11 +198,8 @@ public class EditProfileFragment extends Fragment {
             }
         });
 
-
-
         //Returns the view
         return view;
-
     }
 
     public void imageFileChooser(){
@@ -188,9 +211,8 @@ public class EditProfileFragment extends Fragment {
 
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK && data != null & data.getData() != null) {
+        if (requestCode == 1 && resultCode == RESULT_OK) {
 
-            imguri = data.getData();
             Picasso.get()
                     .load(imguri)
                     .centerCrop()
@@ -233,5 +255,52 @@ public class EditProfileFragment extends Fragment {
                         }
                     });
         }
+    }
+
+    /**
+     * This method is responsible for creating aN Intent to take the photograph and if successful transform the image file into Uri
+     */
+    public void dispatchTakePictureIntent(){
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            // Create the File where the photo should go
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                imguri = FileProvider.getUriForFile(getActivity(),
+                        "com.example.android.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imguri);
+                startActivityForResult(takePictureIntent, 1);
+            }
+        }
+    }
+
+    //TODO: REVIEW THE DOCUMENTATION
+    /**
+     * This method create a file for the photo, with the chosen directory for the file
+     * @return
+     * @throws IOException
+     */
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,
+                ".jpg",
+                storageDir
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        photoPath = image.getAbsolutePath();
+        return image;
     }
 }

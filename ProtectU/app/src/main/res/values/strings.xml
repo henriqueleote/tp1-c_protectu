@@ -63,4 +63,7 @@
     <string name="Create">Create</string>
     <string name="newMessage">New Message</string>
     <string name="message">Message</string>
+    <string name="pick_image_intent_text">Select a photo</string>
+    <string name="gallery">Gallery</string>
+    <string name="camera">Camera</string>
 </resources>
