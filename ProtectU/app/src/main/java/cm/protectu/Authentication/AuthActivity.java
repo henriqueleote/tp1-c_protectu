@@ -86,8 +86,12 @@ public class AuthActivity extends AppCompatActivity {
         signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoginFragment bottomLogin = new LoginFragment();
-                bottomLogin.show(getSupportFragmentManager(), bottomLogin.getTag());
+                if (!hasPermissions(AuthActivity.this, PERMISSIONS)) {
+                    ActivityCompat.requestPermissions(AuthActivity.this, PERMISSIONS, 1);
+                }else{
+                    LoginFragment bottomLogin = new LoginFragment();
+                    bottomLogin.show(getSupportFragmentManager(), bottomLogin.getTag());
+                }
             }
         });
 
@@ -95,15 +99,23 @@ public class AuthActivity extends AppCompatActivity {
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RegisterFragment bottomRegister = new RegisterFragment();
-                bottomRegister.show(getSupportFragmentManager(), bottomRegister.getTag());
+                if (!hasPermissions(AuthActivity.this, PERMISSIONS)) {
+                    ActivityCompat.requestPermissions(AuthActivity.this, PERMISSIONS, 1);
+                }else{
+                    RegisterFragment bottomRegister = new RegisterFragment();
+                    bottomRegister.show(getSupportFragmentManager(), bottomRegister.getTag());
+                }
             }
         });
 
         anonymousButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loginUserAnonymous(); //this is the correct code
+                if (!hasPermissions(AuthActivity.this, PERMISSIONS)) {
+                    ActivityCompat.requestPermissions(AuthActivity.this, PERMISSIONS, 1);
+                }else{
+                    loginUserAnonymous(); //this is the correct code
+                }
             }
         });
     }
@@ -142,13 +154,5 @@ public class AuthActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        if(requestCode == 1){
-            for (int i = 0; i < grantResults.length; i++)
-                if(grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                    Toast.makeText(this, "Permission is granted", Toast.LENGTH_SHORT).show();
-                else
-                    Toast.makeText(this, "Calling Permission is denied", Toast.LENGTH_SHORT).show();
-        }
     }
 }
