@@ -20,36 +20,58 @@
         android:paddingRight="10dp"
         android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/profileImageView"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/nameTextView"
+
+    <ImageView
+        android:id="@+id/profileImageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginBottom="50dp"
+        android:src="@drawable/ic_bottom_profile_black_24dp"
+        app:layout_constraintBottom_toTopOf="@+id/nameAndEditLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_max="200dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_max="200dp" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/nameAndEditLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:layout_marginEnd="5dp"
-        android:fontFamily="@font/lexend_regular"
-        android:text="Name"
-        android:textAlignment="center"
-        android:textSize="20dp"
+        android:layout_marginBottom="70dp"
+        app:layout_constraintBottom_toTopOf="@+id/emailTextView"
         app:layout_constraintEnd_toEndOf="@id/profileImageView"
-        app:layout_constraintEnd_toStartOf="@+id/editImageView"
         app:layout_constraintStart_toStartOf="@id/profileImageView"
-        app:layout_constraintTop_toBottomOf="@+id/profileImageView" />
+        app:layout_constraintTop_toBottomOf="@+id/profileImageView">
+
+        <TextView
+            android:id="@+id/nameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginEnd="5dp"
+            android:fontFamily="@font/lexend_regular"
+            android:text="Name"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="@+id/nameAndEditLayout"
+            app:layout_constraintTop_toTopOf="@+id/nameAndEditLayout" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
         android:id="@+id/editImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:layout_marginEnd="158dp"
-        android:layout_marginBottom="80dp"
         android:src="@drawable/ic_edit_black_24dp"
-        app:layout_constraintBottom_toTopOf="@+id/emailTextView"
-        app:layout_constraintStart_toEndOf="@+id/nameTextView"
-        app:layout_constraintTop_toBottomOf="@+id/profileImageView" />
-
+        app:layout_constraintBottom_toBottomOf="@+id/nameAndEditLayout"
+        app:layout_constraintStart_toEndOf="@+id/nameAndEditLayout"
+        app:layout_constraintTop_toTopOf="@+id/nameAndEditLayout" />
 
     <Button
         android:id="@+id/removeCommunityButton"
@@ -90,7 +112,7 @@
         app:layout_constraintBottom_toTopOf="@+id/contactTextView"
         app:layout_constraintEnd_toEndOf="@+id/contactTextView"
         app:layout_constraintStart_toStartOf="@+id/contactTextView"
-        app:layout_constraintTop_toBottomOf="@+id/editImageView" />
+        app:layout_constraintTop_toBottomOf="@+id/nameAndEditLayout" />
 
     <TextView
         android:id="@+id/contactTextView"
@@ -103,21 +125,6 @@
         app:layout_constraintEnd_toEndOf="@+id/removeCommunityButton"
         app:layout_constraintStart_toStartOf="@+id/removeCommunityButton"
         app:layout_constraintTop_toBottomOf="@+id/emailTextView" />
-
-
-    <ImageView
-        android:id="@+id/profileImageView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="106dp"
-        android:layout_marginTop="90dp"
-        android:layout_marginEnd="67dp"
-        android:src="@drawable/ic_bottom_profile_black_24dp"
-        app:layout_constraintBottom_toTopOf="@+id/editImageView"
-        app:layout_constraintEnd_toStartOf="@+id/options"
-        app:layout_constraintHorizontal_bias="0.38"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

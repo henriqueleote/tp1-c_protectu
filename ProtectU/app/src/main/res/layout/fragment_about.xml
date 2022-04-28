@@ -1,36 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F1EFEF">
+    android:fillViewport="true">
 
-
-    <ImageView
-        android:id="@+id/backID"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
-        android:src="@drawable/ic_arrow_back_black_24dp"
-        app:tint="@color/black" />
-
-    <TextView
-        android:id="@+id/titleAboutID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:paddingTop="15dp"
-        android:text="About"
-        android:textColor="@color/black"
-        android:textSize="24dp" />
-
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/titleAboutID"
-        android:fillViewport="true">
+        android:background="#F1EFEF">
+
+
+        <ImageView
+            android:id="@+id/backID"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/ic_arrow_back_black_24dp"
+            app:tint="@color/black" />
+
+        <TextView
+            android:id="@+id/titleAboutID"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="15dp"
+            android:text="About"
+            android:textColor="@color/black"
+            android:textSize="24dp" />
 
         <TextView
             android:id="@+id/textAboutUsID"
@@ -81,7 +80,7 @@
             android:layout_below="@+id/grupID"
             android:layout_marginLeft="40dp"
             android:paddingTop="5dp"
-            android:text="David Belchior, André Matias, Pedro Peralta, \n Ulyana...,Guilherme Oliveira, Henrrique Leote"
+            android:text="David Belchior, AndrÃ© Matias, Pedro Peralta, \n Ulyana...,Guilherme Oliveira, Henrrique Leote"
             android:textColor="@color/black" />
 
         <TextView
@@ -116,6 +115,5 @@
             android:text="+123456789 \n example@gmail.com"
             android:textColor="@color/black" />
 
-    </ScrollView>
-
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

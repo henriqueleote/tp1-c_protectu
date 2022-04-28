@@ -34,4 +34,10 @@
     <string name="no">NÃO</string>
     <string name="backarrow">voltar</string>
     <string name="About">About</string>
+    <string name="contact">Contacto:</string>
+    <string name="loading_user_data">A Carregar dados do Utilizador…</string>
+    <string name="loading_image">A Carregar Imagem…</string>
+    <string name="Language">Linguagem</string>
+    <string name="notifications">Notificações</string>
+    <string name="Customization">Custumização</string>
 </resources>

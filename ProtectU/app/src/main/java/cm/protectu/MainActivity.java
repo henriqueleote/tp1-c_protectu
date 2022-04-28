@@ -9,24 +9,29 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.Community.CommunityFragment;
+import cm.protectu.Language.LanguageFragment;
 import cm.protectu.Map.MapFragment;
 import cm.protectu.News.NewsFragment;
 import cm.protectu.Panic.PanicFragment;
 import cm.protectu.Profile.ProfileFragment;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, NavigationView.OnNavigationItemSelectedListener {
 
     //Firebase Authentication
     private FirebaseAuth mAuth;
 
     //Bottom navigation bar
     BottomNavigationView bottomBar;
+    NavigationView sideBar;
+    private MenuItem item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +49,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             finish();
             startActivity(new Intent(MainActivity.this, AuthActivity.class));
         }
-        bottomBar = findViewById(R.id.nav_view);
+        bottomBar = findViewById(R.id.bottom_menu);
+        sideBar = findViewById(R.id.side_menu);
 
         /*
         //If the user is anonymous, removes the profile option
@@ -53,6 +59,32 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
         */
         bottomBar.setOnNavigationItemSelectedListener(this);
+        sideBar.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                Fragment fragment = null;
+
+                //Switch case to load the fragment based on the side menu option
+                switch (item.getItemId()) {
+                    case R.id.navigation_about:
+                        fragment = new AboutFragment();
+                        break;
+
+                    case R.id.navigation_language:
+                        fragment = new LanguageFragment();
+                        break;
+
+                    case R.id.navigation_logout:
+                        logout();
+                        break;
+                }
+
+                //loads the fragment
+                if (fragment == null)
+                    return false;
+                return loadFragment(fragment);
+            }
+        });
 
         //Loads the Profile fragment as default when onStart
         loadFragment(new MapFragment());
@@ -119,12 +151,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             case R.id.navigation_panic:
                 //Toast.makeText(this, "Change to the panic fragment", Toast.LENGTH_SHORT).show();
                 PanicFragment bottomPanic = new PanicFragment();
-                bottomPanic.show(getSupportFragmentManager(),bottomPanic.getTag());
+                bottomPanic.show(getSupportFragmentManager(), bottomPanic.getTag());
                 break;
         }
 
         //loads the fragment
         return loadFragment(fragment);
+    }
+
+    public void logout() {
+        mAuth.signOut();
+        Toast.makeText(MainActivity.this, getString(R.string.see_you_next_time), Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(MainActivity.this, AuthActivity.class));
     }
 
 }
