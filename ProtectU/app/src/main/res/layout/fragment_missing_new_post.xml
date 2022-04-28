@@ -64,16 +64,23 @@
         android:layout_marginTop="20dp"
         android:elevation="20dp"
         >
-
-        <EditText
-            android:id="@+id/descriptionNewMissingPostID"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
-            android:drawablePadding="10dp"
-            android:hint="Description"
-            android:inputType="text"
-            android:textSize="15sp" />
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/descriptionNewMissingPostID"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawablePadding="10dp"
+                android:hint="Description"
+                android:inputType="text"
+                android:textSize="15sp"
+                android:maxLength="500"
+                android:layout_gravity="start"
+                android:background="@null"
+                />
+        </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
