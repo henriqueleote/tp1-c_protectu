@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
@@ -36,6 +37,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -49,9 +51,15 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cm.protectu.Authentication.AuthActivity;
+import cm.protectu.Authentication.LoginFragment;
+import cm.protectu.Community.UserDataClass;
+import cm.protectu.Map.Buildings.BuildingClass;
+import cm.protectu.Map.Buildings.MapBuildingFragment;
 import cm.protectu.R;
 
 
@@ -89,6 +97,11 @@ public class MapFragment extends Fragment {
     private GoogleMap gMap;
 
     private Location currentLocation;
+
+    Map<String, String> markers;
+
+    ArrayList<Marker> markersList;
+    ArrayList<BuildingClass> buildingsList;
 
     @Nullable
     @Override
@@ -143,6 +156,9 @@ public class MapFragment extends Fragment {
 
         mapPinClasses = new ArrayList<>();
         mapZones = new ArrayList<>();
+        markersList = new ArrayList<>();
+        buildingsList = new ArrayList<>();
+        markers = new HashMap<String, String>();
         //polyPoint = new ArrayList<>();
 
         //mapPins.add(new MapPin("idsodka", new GeoPoint(37.47370592890489,-122.13161490149692),"war"));
@@ -245,7 +261,7 @@ public class MapFragment extends Fragment {
 
                             gMap.clear();
 
-                            /*  THESE TWO LISTENERS UNDER CAN'T BE IN OUTSIDE METHODS OR THEY WONT BE CALLED  */
+                            /*  THESE THREE LISTENERS UNDER CAN'T BE IN OUTSIDE METHODS OR THEY WONT BE CALLED  */
                             //get the pin data on map load
                             firebaseFirestore.collection("map-pins").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                         @Override
@@ -266,7 +282,7 @@ public class MapFragment extends Fragment {
                                                     if (pin.getType().trim().equals("hospital")) {
                                                         icon = bitmapDescriptorFromVector(getActivity(), R.drawable.ic_map_hospital_pin_45dp);
                                                     }
-                                                    MarkerOptions options = new MarkerOptions().position(latLng).title(pin.getType()).icon(icon);
+                                                    MarkerOptions options = new MarkerOptions().position(latLng).title(pin.getType()).snippet(pin.getPinID()).icon(icon);
                                                     googleMap.addMarker(options);
                                                 }
                                             } else {
@@ -294,14 +310,31 @@ public class MapFragment extends Fragment {
                                                     }
                                                     googleMap.addPolygon(poly);
                                                 }
-                                                mDialog.dismiss();
                                             } else {
                                                 Log.d(TAG, "Error getting documents: ", task.getException());
                                             }
                                         }
                                     });
 
-                            /*  THESE TWO LISTENERS ABOVE CAN'T BE IN OUTSIDE METHODS OR THEY WONT BE CALLED  */
+                            //get the marker data on map load
+                            firebaseFirestore.collection("map-buildings").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                            //Log.d(TAG, "\nBuilding Object Data (Database) => " + document.getData() + "\n");
+                                            ArrayList<String> images = (ArrayList<String>) document.get("images");
+                                            BuildingClass building = new BuildingClass(document.get("buildingID").toString(), document.get("buildingName").toString(), document.get("type").toString(), images);
+                                            buildingsList.add(building);
+                                        }
+                                        mDialog.dismiss();
+                                    } else {
+                                        Log.d(TAG, "Error getting documents: ", task.getException());
+                                    }
+                                }
+                            });
+
+                            /*  THESE THREE LISTENERS ABOVE CAN'T BE IN OUTSIDE METHODS OR THEY WONT BE CALLED  */
 
                             //TODO CHECK IF IT ROTATES WHEN ON MOBILE
 
@@ -310,6 +343,26 @@ public class MapFragment extends Fragment {
 
                             //Loads the map without animation with the device's current location in the map
                             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 12));
+
+                            gMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                                @Override
+                                public boolean onMarkerClick(Marker marker) {
+                                    BuildingClass building = null;
+                                    marker.hideInfoWindow();
+                                    String buildingID = marker.getSnippet();
+                                    for(int i = 0; i < buildingsList.size(); i++)
+                                        if (buildingsList.get(i).getBuildingID().equals(buildingID))
+                                            building = buildingsList.get(i);
+                                    if(building == null)
+                                        Toast.makeText(getActivity(), "Error getting building", Toast.LENGTH_SHORT).show();
+                                    else{
+                                        //Opens the bottom sheet fragment
+                                        MapBuildingFragment bottomBuilding = new MapBuildingFragment(building.getBuildingName(), building.getImages());
+                                        bottomBuilding.show(getActivity().getSupportFragmentManager(), bottomBuilding.getTag());
+                                    }
+                                    return true;
+                                }
+                            });
                         }
                     });
                 }

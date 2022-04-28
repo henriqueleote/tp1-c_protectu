@@ -70,7 +70,7 @@
         android:layout_below="@+id/forgotPasswordBtn"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        android:text="Password"
+        android:text="Show password"
         android:textColor="#000000" />
 
 
