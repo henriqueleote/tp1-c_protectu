@@ -13,7 +13,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
         android:fontFamily="@font/lexend_regular"
-        android:text="News"
+        android:text="@string/news"
         android:textSize="20sp" />
 
     <ScrollView

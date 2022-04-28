@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:fontFamily="@font/lexend_regular"
-        android:text="New Message"
+        android:text="@string/newMessage"
         android:textColor="#000000"
         android:textSize="20sp" />
 
@@ -39,7 +39,7 @@
         android:layout_marginTop="20dp"
         android:drawablePadding="10dp"
         android:fontFamily="@font/lexend_regular"
-        android:hint="Message"
+        android:hint="@string/message"
         android:inputType="text"
         android:textSize="15sp" />
 
@@ -73,7 +73,7 @@
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/primary_button"
         android:fontFamily="@font/lexend_regular"
-        android:text="Create"
+        android:text="@string/Create"
         android:textColor="#FFFFFF" />
 
 </RelativeLayout>

@@ -33,7 +33,7 @@
     <string name="btn_save">Save</string>
     <string name="backarrow">back</string>
     <string name="contact">\Contact:</string>
-    <string name="email">E-mail:</string>
+    <string name="email" translatable="false">E-mail:</string>
     <string name="loading_user_data">Loading user data…</string>
     <string name="loading_image">Loading image…</string>
 
@@ -46,4 +46,21 @@
     <string name="Language">Language</string>
     <string name="notifications">Notifications</string>
     <string name="Customization">Customization</string>
+    <string name="news">News</string>
+    <string name="panic">Panic</string>
+    <string name="Community">Community</string>
+    <string name="missingBoard">Missing Board</string>
+    <string name="Age">Age</string>
+    <string name="searchTheName">Search a name..</string>
+    <string name="Name">Name</string>
+    <string name="publicationsInCommunity">Publications in community</string>
+    <string name="publicationsInMissing">Publications in missing</string>
+    <string name="numberOfPeople">Number of people</string>
+    <string name="requestHelp">Request Help</string>
+    <string name="newPost">New Post</string>
+    <string name="description">Description</string>
+    <string name="addImage1">Add Image(max. 1)</string>
+    <string name="Create">Create</string>
+    <string name="newMessage">New Message</string>
+    <string name="message">Message</string>
 </resources>

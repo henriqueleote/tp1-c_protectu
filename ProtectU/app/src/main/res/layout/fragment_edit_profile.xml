@@ -56,7 +56,7 @@
         android:layout_marginTop="40dp"
         android:backgroundTint="#2E98F0"
         android:fontFamily="@font/lexend_regular"
-        android:text="Save" />
+        android:text="@string/btn_save" />
 
     <ImageView
         android:id="@+id/profileImageView"

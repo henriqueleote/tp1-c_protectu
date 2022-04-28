@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="New Post"
+        android:text="@string/newPost"
         android:textColor="@color/black"
         android:textSize="23dp"
         tools:ignore="MissingConstraints"></TextView>
@@ -38,7 +38,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp"
         android:drawablePadding="10dp"
-        android:hint="Name"
+        android:hint="@string/Name"
         android:inputType="text"
         android:textSize="15sp" />
 
@@ -50,7 +50,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:drawablePadding="10dp"
-        android:hint="Age"
+        android:hint="@string/Age"
         android:inputType="number"
         android:textSize="15sp" />
 
@@ -73,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:drawablePadding="10dp"
-                android:hint="Description"
+                android:hint="@string/description"
                 android:inputType="text"
                 android:textSize="15sp"
                 android:maxLength="500"
@@ -92,7 +92,7 @@
         android:layout_marginLeft="70dp"
         android:layout_marginTop="20dp"
         android:drawablePadding="10dp"
-        android:hint="Add Image(max. 1)"
+        android:hint="@string/addImage1"
         android:inputType="text"
         android:textColor="@color/black"
         android:textSize="15sp" />
@@ -134,7 +134,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/primary_button"
-        android:text="Create"
+        android:text="@string/Create"
         android:textColor="#FFFFFF" />
 
 

@@ -33,11 +33,33 @@
     <string name="yes">SIM</string>
     <string name="no">NÃO</string>
     <string name="backarrow">voltar</string>
-    <string name="About">About</string>
+    <string name="About">Sobre</string>
     <string name="contact">Contacto:</string>
     <string name="loading_user_data">A Carregar dados do Utilizador…</string>
     <string name="loading_image">A Carregar Imagem…</string>
     <string name="Language">Linguagem</string>
     <string name="notifications">Notificações</string>
     <string name="Customization">Custumização</string>
+    <string name="news">Notícias</string>
+    <string name="panic">Panico</string>
+    <string name="Community">Comunidade</string>
+    <string name="missingBoard">Desaparecidos</string>
+    <string name="Age">Idade</string>
+    <string name="searchTheName">Procurar nome..</string>
+    <string name="Name">Nome</string>
+    <string name="publicationsInCommunity">Publicações na Comunidade</string>
+    <string name="publicationsInMissing">Publicações nos Desaparecidos</string>
+    <string name="numberOfPeople">Numero de Pessoas</string>
+    <string name="requestHelp">Pedir Ajuda</string>
+    <string-array name="panic_values">
+        <item>Pouca</item>
+        <item>Grave</item>
+        <item>Urgente</item>
+    </string-array>
+    <string name="newPost">Nova Publicação</string>
+    <string name="description">Descrição</string>
+    <string name="addImage1">Adicionar Imagem(max. 1)</string>
+    <string name="Create">Criar</string>
+    <string name="newMessage">Nova Mensagem</string>
+    <string name="message">Mensagem</string>
 </resources>

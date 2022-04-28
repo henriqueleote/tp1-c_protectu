@@ -19,7 +19,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:fontFamily="@font/lexend_regular"
-            android:text="Community"
+            android:text="@string/Community"
             android:textSize="20sp" />
 
         <ImageView

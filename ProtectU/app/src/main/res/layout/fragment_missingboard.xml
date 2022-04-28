@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:text="Missing Board"
+            android:text="@string/missingBoard"
             android:textColor="@color/black"
             android:textSize="23dp"
             tools:ignore="MissingConstraints"
@@ -47,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:fontFamily="@font/lexend_regular"
-                    android:text="Age"
+                    android:text="@string/Age"
                     android:textColor="@color/black"
                     android:textSize="18dp" />
 
@@ -74,9 +74,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="text"
-                android:queryHint="Search a name.."
-                >
-            </SearchView>
+                android:queryHint="@string/searchTheName"
+
+                ></SearchView>
 
             <ListView
                 android:id="@+id/listToSearchID"

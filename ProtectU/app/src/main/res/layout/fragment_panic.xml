@@ -40,7 +40,7 @@
         android:drawablePadding="10dp"
         android:fontFamily="@font/lexend_regular"
         android:gravity="center"
-        android:hint="Number of people"
+        android:hint="@string/numberOfPeople"
         android:inputType="number"
         android:textSize="15sp" />
 
@@ -67,7 +67,7 @@
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/red_button"
         android:fontFamily="@font/lexend_regular"
-        android:text="Request Help"
+        android:text="@string/requestHelp"
         android:textColor="#FFFFFF" />
 
 </RelativeLayout>

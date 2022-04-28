@@ -11,17 +11,17 @@
     <item
         android:id="@+id/navigation_news"
         android:icon="@drawable/ic_bottom_news_black_24dp"
-        android:title="News" />
+        android:title="@string/news" />
 
     <item
         android:id="@+id/navigation_panic"
         android:icon="@drawable/ic_bottom_panic_red_24dp"
-        android:title="Panic" />
+        android:title="@string/panic" />
 
     <item
         android:id="@+id/navigation_community"
         android:icon="@drawable/ic_bottom_community_black_24dp"
-        android:title="Community" />
+        android:title="@string/Community" />
 
     <item
         android:id="@+id/navigation_profile"
