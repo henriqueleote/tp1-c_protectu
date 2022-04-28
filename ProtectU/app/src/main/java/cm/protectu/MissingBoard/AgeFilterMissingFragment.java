@@ -113,44 +113,42 @@ public class AgeFilterMissingFragment extends BottomSheetDialogFragment {
         showResults.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(childrens.isChecked() && adults.isChecked() && seniors.isChecked() || !(childrens.isChecked() && adults.isChecked() && seniors.isChecked())){
-                    missingBoardFragment.missingCardsData();
-                    getDialog().cancel();
-                }
-                else{
-                    //Checkbox correspondente a das criancas
-                    for (MissingCardClass card: mcards){
-                        if(childrens.isChecked()){
-                            if(Integer.parseInt(card.getMissingAge()) <= 17 && Integer.parseInt(card.getMissingAge()) >= 0){
-                                newCardS.add(card);
-                            }
+                //Checkbox correspondente a das criancas
+                for (MissingCardClass card: mcards){
+                    if(childrens.isChecked()){
+                        if(Integer.parseInt(card.getMissingAge()) <= 17 && Integer.parseInt(card.getMissingAge()) >= 0){
+                            newCardS.add(card);
                         }
-                        //Checkbox correspondente ao dos adultos
-                        if(adults.isChecked()){
-                            if(Integer.parseInt(card.getMissingAge()) <= 59 && Integer.parseInt(card.getMissingAge()) >= 18){
-                                newCardS.add(card);
-                            }
+                    }
+                    //Checkbox correspondente ao dos adultos
+                    if(adults.isChecked()){
+                        if(Integer.parseInt(card.getMissingAge()) <= 59 && Integer.parseInt(card.getMissingAge()) >= 18){
+                            newCardS.add(card);
                         }
-                        //Checkbox correspondente ao dos seniores
-                        if(seniors.isChecked()){
-                            if(Integer.parseInt(card.getMissingAge())>=59 && Integer.parseInt(card.getMissingAge())<=120){
-                                newCardS.add(card);
-
-                            }
+                    }
+                    //Checkbox correspondente ao dos seniores
+                    if(seniors.isChecked()){
+                        if(Integer.parseInt(card.getMissingAge())>=59 && Integer.parseInt(card.getMissingAge())<=120){
+                            newCardS.add(card);
                         }
                     }
                 }
+                if(newCardS.isEmpty() || childrens.isChecked() && adults.isChecked() && seniors.isChecked()){
+                    getDialog().cancel();
+                }else {
 
-                //adiciona os cartoes filtrados a pagina de visualizacao
-                missingBoardFragment.missingFilteredCardsData(newCardS);
-                getDialog().cancel();
+                    //adiciona os cartoes filtrados a pagina de visualizacao
+                    missingBoardFragment.refreshCards(newCardS);
+                    getDialog().cancel();
+                }
+
             }
-        });
 
-
+    });
 
         //Returns the view
         return view;
     }
-
 }
+
+

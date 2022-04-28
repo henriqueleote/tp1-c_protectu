@@ -61,7 +61,18 @@ public class MissingBoardFragment extends Fragment {
         floatingActionButton = view.findViewById(R.id.createMissingBoardButtonID);
         age = view.findViewById(R.id.ageFilterButtonID);
         searchNames = view.findViewById(R.id.searchID);
+        searchNames.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String nameText) {
+                namesFiltered(nameText);
+                return true;
+            }
+        });
 
         //Link the view objects with the XML
         myAdapter = new MissingBoardAdapter(getActivity(), missingCardClasses,getParentFragmentManager(),mAuth);
@@ -89,14 +100,10 @@ public class MissingBoardFragment extends Fragment {
         searchNames.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-                    String query = intent.getStringExtra(SearchManager.QUERY);
-                    doMySearch(query);
-                }
+                namesFiltered((String) searchNames.getQuery());
             }
-        });
-        }*/
+        });*/
+
 
         /**
          * Permite ir para o fragment de criar novas publicações
@@ -164,26 +171,24 @@ public class MissingBoardFragment extends Fragment {
                 });
     }
 
-    /**
-     * Permite trocar as publicações existentes no fragment pelas publicações filtradas pelas idades pretendidas
-     * @param mCards
-     */
-    public void missingFilteredCardsData(ArrayList<MissingCardClass> mCards) {
-        refreshCards(mCards);
-    }
+
 
     public void namesFiltered(String name){
         ArrayList<MissingCardClass> missingCardsFilteredByNameClass;
         missingCardsFilteredByNameClass = new ArrayList<>();
         for(MissingCardClass mCard: missingCardClasses){
-            if(mCard.getMissingName().toString() == name){
+            if(mCard.getMissingName().contains(name)){
                 missingCardsFilteredByNameClass.add(mCard);
             }
         }
         refreshCards(missingCardsFilteredByNameClass);
     }
 
+    //TODO SHOW MESSAGE TO REFRESH OR ERROR CANT FIND
     public void refreshCards(ArrayList<MissingCardClass> missCards){
+       // if(missCards.isEmpty()){
+
+        //}
         missingCardClasses.clear();
         missingCardClasses.addAll(missCards);
         myAdapter = new MissingBoardAdapter(getActivity(), missingCardClasses,getParentFragmentManager(),mAuth);

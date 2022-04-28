@@ -68,10 +68,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="text"
-
+                    android:queryHint="Search a name.."
                     >
-
                 </SearchView>
+
+                <ListView
+                    android:id="@+id/listToSearchID"
+                    android:layout_width="match_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginTop="40dp" />
+
+
 
         </androidx.cardview.widget.CardView>
 

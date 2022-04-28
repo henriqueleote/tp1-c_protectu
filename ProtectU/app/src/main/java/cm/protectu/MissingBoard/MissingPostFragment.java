@@ -34,16 +34,15 @@ public class MissingPostFragment extends Fragment {
 
     //Firebase Authentication
     private FirebaseAuth mAuth;
+    private FirebaseFirestore firebaseFirestore;
     private ImageView arrowBack, phone, share,profileImage,MissingImage;
     private TextView profileNameID,descriptionPostID,ageMssingPostID,nameMissingPostID;
     private String userID,description,nameMissing,ageMssing,phoneNumber, urlProfile,urlMissing;
-    private Context context;
-    private FirebaseFirestore firebaseFirestore;
 
     private static final String TAG =  AuthActivity.class.getName();
 
 
-    public MissingPostFragment(String userID, String nameMissing , String description, String ageMssing, String phoneNumber, String urlProfile, String urlMissing, Context context) {
+    public MissingPostFragment(String userID, String nameMissing , String description, String ageMssing, String phoneNumber, String urlProfile, String urlMissing) {
         this.userID = userID;
         this.nameMissing = nameMissing;
         this.description = description;
@@ -51,7 +50,6 @@ public class MissingPostFragment extends Fragment {
         this.phoneNumber = "" + phoneNumber;
         this.urlProfile = urlProfile;
         this.urlMissing = urlMissing;
-        this.context = context;
     }
 
     @Nullable
@@ -91,13 +89,7 @@ public class MissingPostFragment extends Fragment {
                 .load(urlMissing)
                 .centerCrop()
                 .fit()
-                .transform(new CropCircleTransformation())
                 .into(MissingImage);
-
-       // Picasso.with(context).load(urlProflie).error(R.drawable.ic_baseline_share_24).into(profileImage);
-
-
-
 
         /**
          * Permite partilhar a publicação em outras plataformas

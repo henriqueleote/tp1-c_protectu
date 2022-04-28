@@ -90,7 +90,7 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
      */
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-
+        int pos = position;
         holder.missingName.setText(mData.get(position).getMissingName());
         holder.age.setText(String.valueOf(mData.get(position).getMissingAge()));
 
@@ -142,7 +142,7 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
         holder.cardMissing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MissingPostFragment fragment = new MissingPostFragment(mData.get(holder.getAdapterPosition()).getUserID(),mData.get(holder.getAdapterPosition()).getMissingName(),mData.get(holder.getAdapterPosition()).getDescription(),mData.get(holder.getAdapterPosition()).getMissingAge(),mData.get(holder.getAdapterPosition()).getPhoneNumber(),urlProfile,urlMissing, mContext);
+                MissingPostFragment fragment = new MissingPostFragment(mData.get(holder.getAdapterPosition()).getUserID(),mData.get(holder.getAdapterPosition()).getMissingName(),mData.get(holder.getAdapterPosition()).getDescription(),mData.get(holder.getAdapterPosition()).getMissingAge(),mData.get(holder.getAdapterPosition()).getPhoneNumber(),urlProfile,mData.get(pos).getFotoMissing());
                 FragmentTransaction transaction = parentFragment.beginTransaction();
                 transaction.replace(R.id.fragment_container, fragment);
                 transaction.addToBackStack(null);
