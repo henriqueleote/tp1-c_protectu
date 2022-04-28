@@ -96,11 +96,12 @@ public class MapFragment extends Fragment {
 
     private GoogleMap gMap;
 
-    private Location currentLocation;
+    public static Location currentLocation;
 
     Map<String, String> markers;
 
     ArrayList<Marker> markersList;
+
     ArrayList<BuildingClass> buildingsList;
 
     @Nullable
@@ -255,6 +256,7 @@ public class MapFragment extends Fragment {
                             mDialog.show();
 
                             currentLocation = location;
+
                             gMap = googleMap;
 
                             googleMap.setMyLocationEnabled(true);
