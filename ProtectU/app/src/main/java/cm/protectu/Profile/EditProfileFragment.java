@@ -89,7 +89,7 @@ public class EditProfileFragment extends Fragment {
         contactEditText = view.findViewById(R.id.contactEditText);
         backButton = view.findViewById(R.id.backButton);
         profileImageView = view.findViewById(R.id.profileImageView);
-        BottomNavigationView bottomBar = getActivity().findViewById(R.id.nav_view);
+        BottomNavigationView bottomBar = getActivity().findViewById(R.id.bottom_menu);
 
 
         oldDrawable = profileImageView.getDrawable();

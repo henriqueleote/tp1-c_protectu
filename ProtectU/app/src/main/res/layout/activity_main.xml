@@ -57,12 +57,12 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:layout_above="@id/nav_view"
+            android:layout_above="@id/bottom_menu"
             android:background="@drawable/shadow"
-            app:layout_constraintBottom_toTopOf="@+id/nav_view" />
+            app:layout_constraintBottom_toTopOf="@+id/bottom_menu" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/nav_view"
+            android:id="@+id/bottom_menu"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="#FFFFFF"
@@ -76,6 +76,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.navigation.NavigationView
+        android:id="@+id/side_menu"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         app:menu="@menu/side_menu"
