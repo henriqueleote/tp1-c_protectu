@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -61,18 +62,21 @@ public class MissingBoardFragment extends Fragment {
         floatingActionButton = view.findViewById(R.id.createMissingBoardButtonID);
         age = view.findViewById(R.id.ageFilterButtonID);
         searchNames = view.findViewById(R.id.searchID);
-        searchNames.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
 
+        int searchCloseButtonId = searchNames.getContext().getResources().getIdentifier("android:id/search_close_btn", null, null);
+        ImageView closeButton = (ImageView) this.searchNames.findViewById(searchCloseButtonId);
+
+        
+        closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onQueryTextChange(String nameText) {
-                namesFiltered(nameText);
-                return true;
+            public void onClick(View view) {
+                missingCardsData();
+                searchNames.setQuery("", false);
+                searchNames.setIconified(true);
             }
         });
+
+
 
         //Link the view objects with the XML
         myAdapter = new MissingBoardAdapter(getActivity(), missingCardClasses,getParentFragmentManager(),mAuth);
@@ -135,6 +139,19 @@ public class MissingBoardFragment extends Fragment {
             public void onClick(View view) {
                 AgeFilterMissingFragment ageFilterMissingFragment = new AgeFilterMissingFragment(fragment);
                 ageFilterMissingFragment.show(getParentFragmentManager(), ageFilterMissingFragment.getTag());
+            }
+        });
+
+        searchNames.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String nameText) {
+                namesFiltered(nameText);
+                return true;
             }
         });
 
