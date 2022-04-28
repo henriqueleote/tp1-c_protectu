@@ -1,5 +1,6 @@
 package cm.protectu.Map.Buildings;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import cm.protectu.Authentication.AuthActivity;
+import cm.protectu.Map.MapAddZoneFragment;
 import cm.protectu.R;
 
 public class MapBuildingFragment extends BottomSheetDialogFragment {
@@ -30,7 +32,7 @@ public class MapBuildingFragment extends BottomSheetDialogFragment {
     //Button
     private Button seeMoreButton;
 
-    String buildingName;
+    String buildingID, buildingName;
     ArrayList<String> images;
 
     //Firebase Authentication
@@ -39,7 +41,8 @@ public class MapBuildingFragment extends BottomSheetDialogFragment {
     //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
 
-    public MapBuildingFragment(String buildingName, ArrayList<String> images){
+    public MapBuildingFragment(String buildingID, String buildingName, ArrayList<String> images){
+        this.buildingID = buildingID;
         this.buildingName = buildingName;
         this.images = images;
     }
@@ -72,7 +75,11 @@ public class MapBuildingFragment extends BottomSheetDialogFragment {
         seeMoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                getDialog().cancel();
+                getParentFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new BuildingFragment(buildingID))
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 
@@ -85,7 +92,6 @@ public class MapBuildingFragment extends BottomSheetDialogFragment {
     public void putData(){
         buildingNameTextView.setText(buildingName);
         Picasso.get().load(images.get(0)).into(buildingImage);
-
     }
 
 }

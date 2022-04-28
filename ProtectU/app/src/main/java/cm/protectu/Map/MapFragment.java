@@ -357,7 +357,7 @@ public class MapFragment extends Fragment {
                                         Toast.makeText(getActivity(), "Error getting building", Toast.LENGTH_SHORT).show();
                                     else{
                                         //Opens the bottom sheet fragment
-                                        MapBuildingFragment bottomBuilding = new MapBuildingFragment(building.getBuildingName(), building.getImages());
+                                        MapBuildingFragment bottomBuilding = new MapBuildingFragment(building.getBuildingID(), building.getBuildingName(), building.getImages());
                                         bottomBuilding.show(getActivity().getSupportFragmentManager(), bottomBuilding.getTag());
                                     }
                                     return true;
@@ -428,6 +428,8 @@ public class MapFragment extends Fragment {
 
 
     //TODO ERROR WHEN THE APP ITS OPENED AND WE GO DIRECTLY TO THE PROFILE
+    //TODO FIX THIS ERROR
+    //    java.lang.NullPointerException: Attempt to invoke virtual method 'android.graphics.drawable.Drawable android.content.Context.getDrawable(int)' on a null object reference
     //Converts the drawable to a bitmap
     private BitmapDescriptor bitmapDescriptorFromVector(Context context, @DrawableRes int drawableType) {
         Drawable background = ContextCompat.getDrawable(context, drawableType);

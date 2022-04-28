@@ -1,5 +1,6 @@
 package cm.protectu.Authentication;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -135,6 +136,11 @@ public class LoginFragment extends BottomSheetDialogFragment {
             return;
         }
 
+        ProgressDialog mDialog = new ProgressDialog(getActivity());
+        mDialog.setMessage("Logging in...");
+        mDialog.setCancelable(false);
+        mDialog.show();
+
         //Firebase Authentication function to login the user via email and password, with success listeners
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -145,10 +151,12 @@ public class LoginFragment extends BottomSheetDialogFragment {
                             //Set the Firebase User to the just logged in one
                             user = mAuth.getCurrentUser();
 
+                            mDialog.dismiss();
                             //Show success message and redirects to the app
                             Toast.makeText(getActivity(), getString(R.string.registration_sucessful), Toast.LENGTH_LONG).show();
                             startActivity(new Intent(getActivity(), MainActivity.class));
                         } else {
+                            mDialog.dismiss();
                             try {
                                 throw task.getException();
                             } catch(FirebaseAuthInvalidCredentialsException e) { //Error if password doesnt match the account //TODO error appears when email is wrong

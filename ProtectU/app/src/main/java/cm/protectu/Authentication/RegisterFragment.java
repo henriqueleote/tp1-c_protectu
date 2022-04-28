@@ -1,5 +1,6 @@
 package cm.protectu.Authentication;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -185,7 +186,11 @@ public class RegisterFragment extends BottomSheetDialogFragment {
             emailText.setError(getResources().getString(R.string.error_email_in_use));
             emailText.requestFocus();
             return;
-        } else
+        } else{
+            ProgressDialog mDialog = new ProgressDialog(getActivity());
+            mDialog.setMessage("Registering...");
+            mDialog.setCancelable(false);
+            mDialog.show();
             //TODO Test with an existing email to see the error, and in Login, test with one that doesnt exist
             //Firebase Authentication function to register the user via email and password, with success listeners
             mAuth.createUserWithEmailAndPassword(email, password)
@@ -200,12 +205,12 @@ public class RegisterFragment extends BottomSheetDialogFragment {
                                 // TODO - Add date of register
 
                                 //Create HashMap object with the user's profile data
-                                    Map<String, Object> userData = new HashMap<>();
-                                    userData.put("uid", user.getUid());
-                                    userData.put("firstName", name);
-                                    userData.put("lastName", surname);
-                                    userData.put("phoneNumber", contact);
-                                    userData.put("imageURL", "null");
+                                Map<String, Object> userData = new HashMap<>();
+                                userData.put("uid", user.getUid());
+                                userData.put("firstName", name);
+                                userData.put("lastName", surname);
+                                userData.put("phoneNumber", contact);
+                                userData.put("imageURL", "null");
 
                                 //Inserts in Firestore the user data with the correspondent user ID from Authentication
                                 firebaseFirestore.collection("users").document(user.getUid())
@@ -224,9 +229,11 @@ public class RegisterFragment extends BottomSheetDialogFragment {
                                         });
 
                                 //Show success message and redirects to the app
+                                mDialog.dismiss();
                                 Toast.makeText(getActivity(), getString(R.string.registration_sucessful), Toast.LENGTH_LONG).show();
                                 startActivity(new Intent(getActivity(), MainActivity.class));
                             } else {
+                                mDialog.dismiss();
                                 try {
                                     throw task.getException();
                                 } catch(FirebaseAuthWeakPasswordException e) {
@@ -241,6 +248,8 @@ public class RegisterFragment extends BottomSheetDialogFragment {
                             }
                         }
                     });
+        }
+
     }
 
     //Method that checks if the email's string is valid within a certain pattern
