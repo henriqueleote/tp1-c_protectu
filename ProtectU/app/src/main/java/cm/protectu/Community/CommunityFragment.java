@@ -13,7 +13,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -75,6 +74,8 @@ public class CommunityFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         recyclerView.setAdapter(communityAdapter);
 
+
+
         swipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -87,7 +88,7 @@ public class CommunityFragment extends Fragment {
                             swipeToRefresh.setRefreshing(false);
                         }
                     }
-                }, 500);
+                }, 800);
             }
         });
 
@@ -97,6 +98,7 @@ public class CommunityFragment extends Fragment {
 
         floatingActionButton = view.findViewById(R.id.createMessageButton);
         missingPeopleButton = view.findViewById(R.id.missingPeopleButton);
+
 
         //TODO: DISABLE BUTTON
         /**
@@ -124,11 +126,23 @@ public class CommunityFragment extends Fragment {
         missingPeopleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Fragment fragmentToChange = new MissingBoardFragment();
+                getFragmentManager().beginTransaction()
+                        .setCustomAnimations(
+                                R.anim.slide_in,  // enter
+                                R.anim.fade_out,  // exit
+                                R.anim.fade_in,   // popEnter
+                                R.anim.slide_out  // popExit
+                        )
+                        .replace(R.id.fragment_container, fragmentToChange)
+                        .addToBackStack(null)
+                        .commit();
+                /**
                 MissingBoardFragment fragment = new MissingBoardFragment();
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container, fragment);
                 transaction.addToBackStack(null);
-                transaction.commit();
+                transaction.commit();**/
             }
         });
 

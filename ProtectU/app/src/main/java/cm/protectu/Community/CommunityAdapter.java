@@ -2,7 +2,6 @@ package cm.protectu.Community;
 
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -71,17 +70,6 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
         String messageText = listOfCommunityCards.get(position).getMessageText();
         String messageID = listOfCommunityCards.get(position).getMessageID();
 
-        getClickedLikeOrDislike(currentUserID, messageID, holder);
-
-        /**
-         * If the message is not verified it makes the symbol invisible
-         */
-        if (!listOfCommunityCards.get(position).isVerified()) {
-            holder.verified.setVisibility(View.INVISIBLE);
-            changeMarginForMakeVerified(10, holder);
-        }
-
-
         /**
          * will fetch the database the name of the user who created the message through the user id
          * that is in the message data and then put it in the community fragment
@@ -115,27 +103,41 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                     }
                 });
 
+        getClickedLikeOrDislike(currentUserID, messageID, holder);
+
+        /**
+         * If the message is not verified it makes the symbol invisible
+         */
+        if (!listOfCommunityCards.get(position).isVerified()) {
+            holder.verified.setVisibility(View.INVISIBLE);
+            changeMarginForMakeVerified(10, holder);
+        }
+
         holder.dateText.setText(listOfCommunityCards.get(position).getDate() + "");
 
         textAndMessageAdjuster(holder, position, messageText);
 
         if (!mAuth.getCurrentUser().isAnonymous()) {
-            if (mAuth.getCurrentUser().getEmail().equals("aa@aa.pt")) {
+            if (mAuth.getCurrentUser().getEmail().equals("aa@aa.pt") || mAuth.getCurrentUser().getEmail().equals(userID)) {
                 holder.removeMessageCommunity.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         removeMessage(messageID);
                     }
                 });
+            } else {
+                holder.removeMessageCommunity.setVisibility(View.INVISIBLE);
+            }
+
+            if (mAuth.getCurrentUser().getEmail().equals("aa@aa.pt")){
                 holder.makeVerified.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         makeVerified(messageID, holder);
                     }
                 });
-            } else {
-                holder.removeMessageCommunity.setVisibility(View.INVISIBLE);
             }
+
 
             //Put the number of likes and dislikes in the message
             holder.likeCounter.setText(listOfCommunityCards.get(position).getLikes() + "");
