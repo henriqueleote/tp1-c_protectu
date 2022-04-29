@@ -91,9 +91,6 @@ public class CommunityFragment extends Fragment {
                 }, 800);
             }
         });
-
-
-
         communityCardsData();
 
         floatingActionButton = view.findViewById(R.id.createMessageButton);
@@ -176,6 +173,7 @@ public class CommunityFragment extends Fragment {
                             Collections.sort(listOfCommunityCards, new SortCommunityCardClass());
 
                             communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth,fragment);
+                            recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
                             recyclerView.setAdapter(communityAdapter);
                             communityAdapter.notifyDataSetChanged();
 

@@ -25,15 +25,14 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
-
 import java.util.ArrayList;
 import java.util.Date;
-
 import cm.protectu.MainActivity;
 import cm.protectu.R;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
@@ -52,7 +51,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
     public CommunityAdapter(Context ct, ArrayList<CommunityCard> l, FirebaseAuth firebaseAuth, CommunityFragment cf) {
         firebaseFirestore = FirebaseFirestore.getInstance();
         context = ct;
-        listOfCommunityCards = l;
+        listOfCommunityCards = new ArrayList<>(l);
         mAuth = firebaseAuth;
         communityFragment = cf;
     }
@@ -75,33 +74,24 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
          * that is in the message data and then put it in the community fragment
          */
         firebaseFirestore.collection("users")
+                .document(userID)
                 .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                if (document.getId().equals(userID)) {
-                                    UserDataClass userDataClass = document.toObject(UserDataClass.class);
-                                    holder.userName.setText(userDataClass.getFirstName() + " " + userDataClass.getLastName());
-                                    if (!document.get("imageURL").equals("")) {
-                                        Picasso.get()
-                                                .load(document.get("imageURL").toString())
-                                                .centerCrop()
-                                                .fit()
-                                                .transform(new CropCircleTransformation())
-                                                .into(holder.userImage);
-                                    }
-                                    break;
-                                } else {
-                                    holder.userName.setText("Not Found");
-                                }
-                            }
-                        } else {
-                            Log.d(TAG, "Insucess");
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        UserDataClass userDataClass = documentSnapshot.toObject(UserDataClass.class);
+                        holder.userName.setText(userDataClass.getFirstName() + " " + userDataClass.getLastName());
+                        if (!userDataClass.getImageURL().equals("")) {
+                            Picasso.get()
+                                    .load(userDataClass.getImageURL())
+                                    .centerCrop()
+                                    .fit()
+                                    .transform(new CropCircleTransformation())
+                                    .into(holder.userImage);
                         }
                     }
                 });
+
 
         getClickedLikeOrDislike(currentUserID, messageID, holder);
 
@@ -129,7 +119,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                 holder.removeMessageCommunity.setVisibility(View.INVISIBLE);
             }
 
-            if (mAuth.getCurrentUser().getEmail().equals("aa@aa.pt")){
+            if (mAuth.getCurrentUser().getEmail().equals("aa@aa.pt")) {
                 holder.makeVerified.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
