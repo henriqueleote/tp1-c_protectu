@@ -71,6 +71,7 @@ public class NewsFragment extends Fragment {
     }
 
     public void newsCardsData() {
+        listOfNewsCardClasses.clear();
         firebaseFirestore.collection("news")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -80,10 +81,10 @@ public class NewsFragment extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 NewsCardClass newsCardClass = document.toObject(NewsCardClass.class);
                                 listOfNewsCardClasses.add(newsCardClass);
-                                newsAdapter = new NewsAdapter(getActivity(), listOfNewsCardClasses,mAuth,getParentFragmentManager());
-                                recyclerView.setAdapter(newsAdapter);
-                                newsAdapter.notifyDataSetChanged();
                             }
+                            newsAdapter = new NewsAdapter(getActivity(), listOfNewsCardClasses,mAuth,getParentFragmentManager());
+                            recyclerView.setAdapter(newsAdapter);
+                            newsAdapter.notifyDataSetChanged();
                         } else {
                             Toast.makeText(getActivity(), "erro", Toast.LENGTH_SHORT).show();
                         }

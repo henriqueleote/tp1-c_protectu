@@ -10,7 +10,7 @@
         android:id="@+id/cardNews"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="30dp"
+        android:layout_marginHorizontal="15dp"
         android:layout_marginVertical="10dp"
         app:cardCornerRadius="12dp"
         app:cardElevation="6dp">
@@ -23,20 +23,21 @@
             <ImageView
                 android:id="@+id/newsImage"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="200dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
+                android:scaleType="centerCrop"
                 app:srcCompat="@drawable/ic_camera_black_24dp" />
 
             <ImageView
                 android:id="@+id/newsPublisherImage"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
+                android:layout_below="@+id/newsImage"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="110dp"
                 app:srcCompat="@drawable/ic_bottom_profile_black_24dp" />
 
             <TextView
@@ -44,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="100dp"
-                android:layout_marginTop="100dp"
+                android:layout_below="@+id/newsImage"
                 android:fontFamily="@font/lexend_bold"
                 android:text="Title"
                 android:textSize="20dp" />
@@ -55,6 +56,8 @@
                 android:layout_height="50dp"
                 android:layout_below="@+id/newsTitle"
                 android:layout_marginLeft="100dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="20dp"
                 android:fontFamily="@font/lexend_regular"
                 android:text="text" />
 

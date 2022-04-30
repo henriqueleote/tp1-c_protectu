@@ -13,13 +13,18 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import cm.protectu.Community.UserDataClass;
 import cm.protectu.MainActivity;
 import cm.protectu.R;
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder>{
     Context context;
@@ -27,6 +32,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder>{
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth mAuth;
     FragmentManager parentFragment;
+    String imgURL1, imgURL2;
 
     private static final String TAG = MainActivity.class.getName();
 
@@ -47,7 +53,21 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder>{
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.newsText.setText(listOfNewsCardClasses.get(position).getNewsText() + "");
         holder.newsTitle.setText(listOfNewsCardClasses.get(position).getNewsTitle() + "");
-
+        imgURL1 = listOfNewsCardClasses.get(position).getImageURL();
+        if(imgURL1 != null){
+            Picasso.get()
+                    .load(imgURL1)
+                    .into(holder.newsImage);
+        }
+        imgURL2 = listOfNewsCardClasses.get(position).getPubImgURL();
+        if(imgURL2 != null){
+            Picasso.get()
+                    .load(imgURL2)
+                    .centerCrop()
+                    .fit()
+                    .transform(new CropCircleTransformation())
+                    .into(holder.newsPublisherImage);
+        }
         holder.cardNews.setOnClickListener(new  View.OnClickListener() {
             public void onClick(View v) {
                 NewsDetailsFragment fragment = new NewsDetailsFragment(listOfNewsCardClasses.get(holder.getAdapterPosition()));

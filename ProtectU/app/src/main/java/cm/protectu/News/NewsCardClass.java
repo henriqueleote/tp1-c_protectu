@@ -6,7 +6,7 @@ public class NewsCardClass {
     private String newsTitle;
     private String newsText;
     private String newsID;
-    private String imgUrl;
+    private String imageURL;
     private String pubImgURL;
     private String pubID;
 
@@ -18,7 +18,7 @@ public class NewsCardClass {
         this.newsTitle = newsTitle;
         this.newsText = newsText;
         this.newsID = newsID;
-        this.imgUrl = imgUrl;
+        this.imageURL = imgUrl;
         this.pubImgURL = pubImgURL;
         this.pubID = pubID;
     }
@@ -47,12 +47,12 @@ public class NewsCardClass {
         this.newsID = newsID;
     }
 
-    public String getImgUrl() {
-        return imgUrl;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public String getPubImgURL() {
