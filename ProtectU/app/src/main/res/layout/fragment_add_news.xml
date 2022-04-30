@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/add_message_bottom"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/layout_bg"
+    android:orientation="vertical"
+    android:padding="16dp"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="0dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <ImageView
+        android:id="@+id/closeMessage"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_close_black_24dp" />
+
+    <TextView
+        android:id="@+id/newPost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/lexend_regular"
+        android:text="New Post"
+        android:textColor="#000000"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/title"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/newPost"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/lexend_regular"
+        android:gravity="top"
+        android:hint="Title"
+        android:inputType="text"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/message"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:layout_below="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/lexend_regular"
+        android:gravity="top"
+        android:hint="@string/message"
+        android:inputType="text|textMultiLine"
+        android:textSize="15sp" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/uploadImageCard"
+        android:layout_width="150dp"
+        android:layout_height="130dp"
+        android:layout_below="@+id/message"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:elevation="20dp"
+        app:cardCornerRadius="15dp">
+
+        <ImageView
+            android:id="@+id/uploadImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_camera_black_24dp"
+            android:scaleType="fitXY"/>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/createNewMessageButton"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/uploadImageCard"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/primary_button"
+        android:fontFamily="@font/lexend_regular"
+        android:text="@string/Create"
+        android:textColor="#FFFFFF" />
+
+</RelativeLayout>

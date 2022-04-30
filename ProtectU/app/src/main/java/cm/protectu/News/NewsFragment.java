@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -23,6 +24,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 import cm.protectu.Authentication.AuthActivity;
+import cm.protectu.Community.CommunityFragment;
+import cm.protectu.Community.NewMessageCommunityFragment;
 import cm.protectu.R;
 
 
@@ -34,6 +37,8 @@ public class NewsFragment extends Fragment {
     private RecyclerView recyclerView;
     private NewsAdapter newsAdapter;
     private ArrayList<NewsCardClass> listOfNewsCardClasses;
+    private FloatingActionButton floatingActionButton;
+    private NewsFragment fragment;
 
     @Nullable
     @Override
@@ -64,6 +69,28 @@ public class NewsFragment extends Fragment {
 
         newsCardsData();
 
+        floatingActionButton = view.findViewById(R.id.createMessageButton);
+        fragment = this;
+
+        //TODO: DISABLE BUTTON
+        /**
+         *if the user is not logged in the add button disappears,
+         * otherwise the button appears and if clicked it opens a bottom sheet that allows the creation of a new message in the community
+         */
+        if (mAuth.getCurrentUser().isAnonymous()) {
+            floatingActionButton.setVisibility(View.GONE);
+        } else {
+            floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View view) {
+                                                            if (!mAuth.getCurrentUser().isAnonymous()) {
+                                                                NewPostNewsFragment newPostNewsFragment = new NewPostNewsFragment(fragment);
+                                                                newPostNewsFragment.show(getParentFragmentManager(), newPostNewsFragment.getTag());
+                                                            }
+                                                        }
+                                                    }
+            );
+        }
 
         //Returns the view
         return view;

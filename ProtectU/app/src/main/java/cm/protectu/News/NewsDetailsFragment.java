@@ -13,6 +13,12 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.squareup.picasso.Picasso;
 
+import java.security.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 import cm.protectu.R;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
@@ -41,6 +47,7 @@ public class NewsDetailsFragment extends Fragment {
         newsBigText.setText(card.getNewsText());
         publisherID.setText(card.getPubID());
 
+        newsDate.setText(new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date()));
         //go back to the news frame
         imageBack.setOnClickListener(new View.OnClickListener() {
             @Override

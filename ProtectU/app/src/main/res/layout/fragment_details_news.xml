@@ -88,7 +88,8 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/publisherImg"
             android:fontFamily="@font/lexend_regular"
-            android:text="GNR"
+            android:layout_marginLeft="10dp"
+            android:text="dsfsdf"
             android:textSize="15dp" />
 
 
