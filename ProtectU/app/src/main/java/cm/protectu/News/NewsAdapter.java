@@ -51,7 +51,13 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        holder.newsText.setText(listOfNewsCardClasses.get(position).getNewsText() + "");
+        if(listOfNewsCardClasses.get(position).getNewsText().length() >= 60){
+            String substr = listOfNewsCardClasses.get(position).getNewsText().substring(0,57);
+            holder.newsText.setText(substr + "...");
+        }else {
+            holder.newsText.setText(listOfNewsCardClasses.get(position).getNewsText() + "");
+        }
+
         holder.newsTitle.setText(listOfNewsCardClasses.get(position).getNewsTitle() + "");
         imgURL1 = listOfNewsCardClasses.get(position).getImageURL();
         if(imgURL1 != null){

@@ -25,10 +25,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/ic_camera_black_24dp" />
 
@@ -38,14 +34,16 @@
                 android:layout_height="75dp"
                 android:layout_below="@+id/newsImage"
                 android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
                 app:srcCompat="@drawable/ic_bottom_profile_black_24dp" />
 
             <TextView
                 android:id="@+id/newsTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="100dp"
                 android:layout_below="@+id/newsImage"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="5dp"
                 android:fontFamily="@font/lexend_bold"
                 android:text="Title"
                 android:textSize="20dp" />
@@ -53,23 +51,25 @@
             <TextView
                 android:id="@+id/newsText"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="35dp"
                 android:layout_below="@+id/newsTitle"
-                android:layout_marginLeft="100dp"
-                android:layout_marginRight="30dp"
+                android:layout_marginStart="100dp"
+                android:layout_marginEnd="23dp"
                 android:layout_marginBottom="20dp"
                 android:fontFamily="@font/lexend_regular"
                 android:text="text" />
 
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="20dp"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/newsText"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="17dp"
-                android:background="#ffffff"
-                android:src="@drawable/ic_more_horiz_black_24dp" />
+                android:layout_marginRight="23dp"
+                android:layout_marginBottom="26dp"
+                android:fontFamily="@font/lexend_regular"
+                android:text="@string/see_more" />
+
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
