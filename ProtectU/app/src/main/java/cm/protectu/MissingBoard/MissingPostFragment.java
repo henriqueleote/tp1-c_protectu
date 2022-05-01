@@ -77,7 +77,7 @@ public class MissingPostFragment extends Fragment {
         profileImage = view.findViewById(R.id.foto);
         MissingImage = view.findViewById(R.id.imageMissingID);
 
-
+        //coloca a imagem do utilizador
         Picasso.get()
                 .load(urlProfile)
                 .centerCrop()
@@ -85,6 +85,7 @@ public class MissingPostFragment extends Fragment {
                 .transform(new CropCircleTransformation())
                 .into(profileImage);
 
+        //coloca a imagem da pessoa desaparecida
         Picasso.get()
                 .load(urlMissing)
                 .centerCrop()
@@ -153,7 +154,9 @@ public class MissingPostFragment extends Fragment {
     }
 
 
-
+    /**
+     * Permite ir buscar o nome do utilizador da base de dados
+     */
     public void getData(){
         firebaseFirestore.collection("users")
                 .get()

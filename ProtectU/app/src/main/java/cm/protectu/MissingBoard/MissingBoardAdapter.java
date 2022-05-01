@@ -33,7 +33,7 @@ import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapter.MyViewHolder> {
 
-    //TODO - Change variables names and comment
+
 
     private Context mContext;
     private List<MissingCardClass> mData;

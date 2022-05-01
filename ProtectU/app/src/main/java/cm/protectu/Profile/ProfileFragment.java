@@ -184,6 +184,14 @@ public class ProfileFragment extends Fragment {
                                             .transform(new CropCircleTransformation())
                                             .into(profileImageView);
                                 }
+                                else{
+                                    Picasso.get()
+                                            .load(imageURL)
+                                            .centerCrop()
+                                            .fit()
+                                            .transform(new CropCircleTransformation())
+                                            .into(profileImageView);
+                                }
                             }
                             mDialog.dismiss();
                         } else {

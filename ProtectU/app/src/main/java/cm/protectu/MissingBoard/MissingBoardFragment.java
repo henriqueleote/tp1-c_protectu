@@ -93,6 +93,9 @@ public class MissingBoardFragment extends Fragment {
 
         missingCardsData();
 
+        /**
+         * Permite dar refresh da página carregando de volta os dados para a página
+         */
         swipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -111,6 +114,9 @@ public class MissingBoardFragment extends Fragment {
             }
         });
 
+        /**
+         * Permite sair do filtro dos nomes e volta a colocar todas as publicações de volta
+         */
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -200,7 +206,10 @@ public class MissingBoardFragment extends Fragment {
     }
 
 
-
+    /**
+     * Permite guardr as publicações que tenham o nome da pessoa a procurar
+     * @param name
+     */
     public void namesFiltered(String name){
         ArrayList<MissingCardClass> missingCardsFilteredByNameClass;
         missingCardsFilteredByNameClass = new ArrayList<>();

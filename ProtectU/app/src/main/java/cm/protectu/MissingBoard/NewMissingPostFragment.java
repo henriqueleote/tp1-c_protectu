@@ -92,6 +92,8 @@ public class NewMissingPostFragment extends Fragment {
         storage = FirebaseStorage.getInstance();
 
         getData();
+
+
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,8 +115,7 @@ public class NewMissingPostFragment extends Fragment {
             }
         });
 
-        // IN PROGRESS THIS SITUACION
-
+        // cria a nova publicação e volta para a pagina das publicações
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,7 +134,7 @@ public class NewMissingPostFragment extends Fragment {
 
     }
 
-    // IN PROGRESS THIS SITUATION
+    // Permite criar uma nova publicação com os dados recebido
     public void createMissingPost(String missingName, String description, String missingAge, String phoneNumber, String foto,String userID,String fotoMissing,String missingID){
 
         // Permite verificar se os campos prenchidos estão corretos
@@ -177,8 +178,10 @@ public class NewMissingPostFragment extends Fragment {
                 });
     }
 
+    /**
+     * Permite buscar as informações do utilizador da base de dados
+     */
     public void getData(){
-
         //Firebase Authentication function get the data from firebase with certain criteria
         firebaseFirestore.collection("users")
                 //where the userID is the same as the logged in user
@@ -205,7 +208,9 @@ public class NewMissingPostFragment extends Fragment {
                 });
     }
 
-
+    /**
+     * Permite ir aos ficheiros do utilizador
+     */
     public void imageFileChooser(){
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -213,6 +218,12 @@ public class NewMissingPostFragment extends Fragment {
         startActivityForResult(intent, 1);
     }
 
+    /**
+     * Permite colocar uma imagem proveniente da galeria do utilizador
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK && data != null & data.getData() != null) {
