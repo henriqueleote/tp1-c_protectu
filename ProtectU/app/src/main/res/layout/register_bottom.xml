@@ -124,11 +124,23 @@
         android:inputType="textPassword"
         android:textSize="15sp" />
 
+    <EditText
+        android:id="@+id/securityCodeText"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/passwordText2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:drawablePadding="10dp"
+        android:hint="Security pin"
+        android:inputType="numberPassword"
+        android:textSize="15sp" />
+
     <CheckBox
         android:id="@+id/passwordCheckBox"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/passwordText2"
+        android:layout_below="@+id/securityCodeText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
         android:text="Password"
