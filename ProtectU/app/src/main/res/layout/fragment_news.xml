@@ -22,11 +22,6 @@
             android:text="@string/news"
             android:textSize="20sp" />
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/newsText">
-
             <androidx.recyclerview.widget.RecyclerView
 
                 android:id="@+id/newsRecyclerView"
@@ -37,7 +32,7 @@
 
             </androidx.recyclerview.widget.RecyclerView>
 
-        </ScrollView>
+
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/createMessageButton"

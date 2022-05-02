@@ -1,6 +1,7 @@
 package cm.protectu.News;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,13 +58,15 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder>{
         }else {
             holder.newsText.setText(listOfNewsCardClasses.get(position).getNewsText() + "");
         }
-
         holder.newsTitle.setText(listOfNewsCardClasses.get(position).getNewsTitle() + "");
         imgURL1 = listOfNewsCardClasses.get(position).getImageURL();
-        if(imgURL1 != null){
+        Log.d(TAG,"DATA ->" + listOfNewsCardClasses.get(position).getImageURL());
+        if(!imgURL1.equals("")){
             Picasso.get()
                     .load(imgURL1)
                     .into(holder.newsImage);
+        }else{
+            holder.newsImage.setVisibility(View.GONE);
         }
         imgURL2 = listOfNewsCardClasses.get(position).getPubImgURL();
         if(imgURL2 != null){
@@ -92,7 +95,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder>{
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView newsTitle, newsText;
+        TextView newsTitle, newsText, dateText;
         ImageView newsImage, newsPublisherImage;
         CardView cardNews;
 

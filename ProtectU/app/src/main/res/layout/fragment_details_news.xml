@@ -2,101 +2,119 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <ImageView
-        android:id="@+id/back_id"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="15dp"
-        android:src="@drawable/ic_arrow_back_black_24dp"
-        app:tint="@color/black" />
 
-    <ImageView
-        android:id="@+id/newsBigImage"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_camera_black_24dp"
-        android:layout_below="@+id/back_id"/>
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/newsBigTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/newsBigImage"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:fontFamily="@font/lexend_bold"
-        android:text="Titulo"
-        android:textSize="30dp" />
-
-    <RelativeLayout
-        android:id="@+id/date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/newsBigTitle"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="50dp">
-
-        <ImageView
-            android:id="@+id/calendar"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_calendar_month_black_24dp" />
-
-        <TextView
-            android:id="@+id/newsDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/calendar"
-            android:fontFamily="@font/lexend_regular"
-            android:text="20 August, 2021"
-            android:textSize="15dp" />
-    </RelativeLayout>
-
-    <TextView
-        android:id="@+id/newsBigText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/date"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="50dp"
-        android:fontFamily="@font/lexend_regular"
-        android:text="alsdkmçldfmlfafksldfsd"
-        android:textSize="20dp" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/newsBigText"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginTop="20dp">
-
-        <ImageView
-            android:id="@+id/publisherImg"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_bottom_profile_black_24dp" />
-
-        <TextView
-            android:id="@+id/publisherID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/publisherImg"
-            android:fontFamily="@font/lexend_regular"
-            android:text="dsfsdf"
-            android:textSize="15dp" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
 
-    </RelativeLayout>
+            <ImageView
+                android:id="@+id/newsBigImage"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_camera_black_24dp" />
+
+            <ImageView
+                android:id="@+id/back_id"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/ic_arrow_back_black_24dp"
+                app:tint="@color/black" />
+
+            <TextView
+                android:id="@+id/newsBigTitle"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/newsBigImage"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginRight="50dp"
+                android:fontFamily="@font/lexend_bold"
+                android:text="Titulo"
+                app:autoSizeMaxTextSize="40sp"
+                app:autoSizeMinTextSize="12sp"
+                app:autoSizeStepGranularity="2sp"
+                app:autoSizeTextType="uniform" />
+
+            <RelativeLayout
+                android:id="@+id/date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/newsBigTitle"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="50dp">
+
+                <ImageView
+                    android:id="@+id/calendar"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_calendar_month_black_24dp" />
+
+                <TextView
+                    android:id="@+id/newsDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/calendar"
+                    android:fontFamily="@font/lexend_regular"
+                    android:text="20 August, 2021"
+                    android:textSize="15dp" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/newsBigText"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@+id/date"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="50dp"
+                android:fontFamily="@font/lexend_regular"
+                android:text="alsdkmçldfmlfafksldfsd"
+                app:autoSizeMaxTextSize="30sp"
+                app:autoSizeMinTextSize="12sp"
+                app:autoSizeStepGranularity="2sp"
+                app:autoSizeTextType="uniform" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/newsBigText"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginBottom="20dp">
+
+                <ImageView
+                    android:id="@+id/publisherImg"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/ic_bottom_profile_black_24dp" />
+
+                <TextView
+                    android:id="@+id/publisherID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/publisherImg"
+                    android:fontFamily="@font/lexend_regular"
+                    android:text="dsfsdf"
+                    android:textSize="15dp" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>

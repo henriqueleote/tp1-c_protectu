@@ -266,7 +266,7 @@ public class NewPostNewsFragment extends BottomSheetDialogFragment {
         }
 
         DocumentReference documentReference = firebaseFirestore.collection("news").document();
-        documentReference.set(new NewsCardClass(newsTitle,newsText,documentReference.getId(),firebaseUrl,pubURL,pubID))
+        documentReference.set(new NewsCardClass(newsTitle,newsText,documentReference.getId(),firebaseUrl,pubURL,pubID, new Date()))
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

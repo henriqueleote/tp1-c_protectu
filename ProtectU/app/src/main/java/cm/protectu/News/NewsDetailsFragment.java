@@ -47,7 +47,7 @@ public class NewsDetailsFragment extends Fragment {
         newsBigText.setText(card.getNewsText());
         publisherID.setText(card.getPubID());
 
-        newsDate.setText(new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date()));
+        newsDate.setText(new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(card.getDate()));
         //go back to the news frame
         imageBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,10 +61,12 @@ public class NewsDetailsFragment extends Fragment {
             }
         });
         imgURL1 = card.getImageURL();
-        if(imgURL1 != null){
+        if(!imgURL1.equals("")){
             Picasso.get()
                     .load(imgURL1)
                     .into(newsBigImage);
+        }else{
+            newsBigImage.setVisibility(View.GONE);
         }
         imgURL2 = card.getPubImgURL();
         if(imgURL2 != null){
