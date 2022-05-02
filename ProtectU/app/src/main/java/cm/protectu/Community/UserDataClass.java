@@ -1,31 +1,30 @@
 package cm.protectu.Community;
 
 public class UserDataClass {
+    private String uid;
     private String firstName;
     private String lastName;
-    private String uid;
+    private String email;
+    private String userType;
     private String phoneNumber;
     private String imageURL;
-    private String type;
 
-    public UserDataClass() {
-    }
-
-    public UserDataClass(String firstName, String lastName, String userID, String phoneNumber, String imageURL,String type) {
+    public UserDataClass(String uid, String firstName, String lastName, String email, String userType, String phoneNumber, String imageURL) {
+        this.uid = uid;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.uid = userID;
+        this.email = email;
+        this.userType = userType;
         this.phoneNumber = phoneNumber;
         this.imageURL = imageURL;
-        this.type = type;
     }
 
-    public String getType() {
-        return type;
+    public String getUid() {
+        return uid;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getFirstName() {
@@ -44,12 +43,20 @@ public class UserDataClass {
         this.lastName = lastName;
     }
 
-    public String getUid() {
-        return uid;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 
     public String getPhoneNumber() {
