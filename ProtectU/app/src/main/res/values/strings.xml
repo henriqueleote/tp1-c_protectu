@@ -66,4 +66,5 @@
     <string name="pick_image_intent_text">Select a photo</string>
     <string name="gallery">Gallery</string>
     <string name="camera">Camera</string>
+    <string name="see_more">see more</string>
 </resources>

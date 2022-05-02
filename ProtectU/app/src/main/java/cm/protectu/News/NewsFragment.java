@@ -2,6 +2,7 @@ package cm.protectu.News;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -38,6 +40,7 @@ public class NewsFragment extends Fragment {
     private NewsAdapter newsAdapter;
     private ArrayList<NewsCardClass> listOfNewsCardClasses;
     private FloatingActionButton floatingActionButton;
+    private SwipeRefreshLayout swipeToRefresh;
     private NewsFragment fragment;
 
     @Nullable
@@ -63,10 +66,27 @@ public class NewsFragment extends Fragment {
 
         listOfNewsCardClasses = new ArrayList<>();
         recyclerView = view.findViewById(R.id.newsRecyclerView);
+        swipeToRefresh = view.findViewById(R.id.swipeToRefresh);
         newsAdapter = new NewsAdapter(getActivity(), listOfNewsCardClasses,mAuth, getParentFragmentManager());
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         recyclerView.setAdapter(newsAdapter);
 
+
+        swipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                newsCardsData();
+                final Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (swipeToRefresh.isRefreshing()) {
+                            swipeToRefresh.setRefreshing(false);
+                        }
+                    }
+                }, 800);
+            }
+        });
         newsCardsData();
 
         floatingActionButton = view.findViewById(R.id.createMessageButton);
