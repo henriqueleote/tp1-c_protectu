@@ -1,5 +1,6 @@
 package cm.protectu.Authentication;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,15 +32,24 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.auth.User;
+import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import cm.protectu.Community.CommunityCard;
 import cm.protectu.MainActivity;
 import cm.protectu.R;
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class RegisterFragment extends BottomSheetDialogFragment {
 
@@ -50,7 +60,7 @@ public class RegisterFragment extends BottomSheetDialogFragment {
     private Button signUpBtn;
 
     //EditText
-    private EditText nameText, surnameText,contactText, emailText, passwordText, passwordConfirmText;
+    private EditText nameText, surnameText,contactText, emailText, passwordText, passwordConfirmText, securityCodeText;
 
     //Firebase Authentication
     private FirebaseAuth mAuth;
@@ -62,6 +72,10 @@ public class RegisterFragment extends BottomSheetDialogFragment {
     private FirebaseFirestore firebaseFirestore;
 
     private CheckBox passwordCheckBox;
+
+    List<UserType> users;
+
+    String userType;
 
     //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
@@ -86,7 +100,10 @@ public class RegisterFragment extends BottomSheetDialogFragment {
         emailText = view.findViewById(R.id.emailText);
         passwordText = view.findViewById(R.id.passwordText);
         passwordConfirmText = view.findViewById(R.id.passwordText2);
+        securityCodeText = view.findViewById(R.id.securityCodeText);
         passwordCheckBox = view.findViewById(R.id.passwordCheckBox);
+
+        users = new ArrayList<>();
 
         passwordCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -101,6 +118,8 @@ public class RegisterFragment extends BottomSheetDialogFragment {
                 }
             }
         });
+
+        getAccountPin();
 
 
         //On click closes the form sheet
@@ -119,7 +138,7 @@ public class RegisterFragment extends BottomSheetDialogFragment {
                         surnameText.getText().toString().trim(),
                         contactText.getText().toString().trim(),
                         emailText.getText().toString().trim().toLowerCase(Locale.ROOT),
-                        passwordText.getText().toString(), passwordConfirmText.getText().toString());
+                        passwordText.getText().toString(), passwordConfirmText.getText().toString(), securityCodeText.getText().toString().trim());
             }
         });
 
@@ -127,8 +146,51 @@ public class RegisterFragment extends BottomSheetDialogFragment {
         return view;
     }
 
+    public void getAccountPin(){
+        firebaseFirestore.collection("authorities")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @SuppressLint("NewApi")
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                //TODO FINISH THIS
+                                users = new ArrayList<>();
+                                List<Map<String, String>> usersData = (List<Map<String, String>>) document.get("users");
+                                usersData.forEach(user -> {
+                                    //array de mapas
+                                    Log.d(TAG, "each -> " +user.get("code") + " " + user.get("logo") + " " + user.get("type"));
+                                    users.add(new UserType(user.get("code"), user.get("logo"), user.get("type")));
+                                });
+                            }
+                            checkPin("oi");
+                        } else {
+                            //Shows the error
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+    }
+
+    @SuppressLint("NewApi")
+    public String checkPin(String securityPin){
+        String type = "";
+        for(int i = 0 ; i < users.size(); i++){
+            Log.d(TAG, "Code: " + securityPin);
+            Log.d(TAG, "User: " + users.get(i).getCode());
+            if (users.get(i).getCode().equals(securityPin)){
+                type = users.get(i).getType();
+                break;
+            }
+            else
+                type = "user";
+        }
+        return type;
+    }
+
     //User register
-    public void registerUser(String name, String surname,String contact, String email, String password, String confirmPassword) {
+    public void registerUser(String name, String surname,String contact, String email, String password, String confirmPassword, String securityPin) {
 
         // First name field check
         if (TextUtils.isEmpty(name)) {
@@ -181,6 +243,13 @@ public class RegisterFragment extends BottomSheetDialogFragment {
             return;
         }
 
+        if(!TextUtils.isEmpty(securityPin)){
+            userType = checkPin(securityPin);
+        }else{
+            userType = "user";
+        }
+        //TODO CHECK IF THE LIST OR THE STRING IS NOT EMPTY, WHICH MEANS THAT THE USER CONFIG WAS DONE
+
         //Check if the email is already registered in any other authentication  provider
         if (mAuth.fetchSignInMethodsForEmail(email).isSuccessful()) {
             emailText.setError(getResources().getString(R.string.error_email_in_use));
@@ -211,6 +280,7 @@ public class RegisterFragment extends BottomSheetDialogFragment {
                                 userData.put("lastName", surname);
                                 userData.put("phoneNumber", contact);
                                 userData.put("imageURL", "null");
+                                userData.put("userType", userType);
 
                                 //Inserts in Firestore the user data with the correspondent user ID from Authentication
                                 firebaseFirestore.collection("users").document(user.getUid())

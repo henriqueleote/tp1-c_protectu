@@ -141,7 +141,6 @@ public class MapFragment extends Fragment {
 
         //Only shows the button if its a admin or authority
         if(!MainActivity.sessionUser.getUserType().equals("user")){
-            Log.d(TAG, "Tua cota: " + MainActivity.sessionUser.getUserType());
             createBtn.setVisibility(View.VISIBLE);
         }
 
