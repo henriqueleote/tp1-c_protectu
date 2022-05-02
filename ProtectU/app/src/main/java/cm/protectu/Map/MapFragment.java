@@ -58,6 +58,7 @@ import java.util.Map;
 import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.Authentication.LoginFragment;
 import cm.protectu.Community.UserDataClass;
+import cm.protectu.MainActivity;
 import cm.protectu.Map.Buildings.BuildingClass;
 import cm.protectu.Map.Buildings.MapBuildingFragment;
 import cm.protectu.R;
@@ -138,6 +139,13 @@ public class MapFragment extends Fragment {
 
         areAllButtonVisible = false;
 
+        //Only shows the button if its a admin or authority
+        if(!MainActivity.sessionUser.getUserType().equals("user")){
+            Log.d(TAG, "Tua cota: " + MainActivity.sessionUser.getUserType());
+            createBtn.setVisibility(View.VISIBLE);
+        }
+
+
         createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -160,23 +168,6 @@ public class MapFragment extends Fragment {
         markersList = new ArrayList<>();
         buildingsList = new ArrayList<>();
         markers = new HashMap<String, String>();
-        //polyPoint = new ArrayList<>();
-
-        //mapPins.add(new MapPin("idsodka", new GeoPoint(37.47370592890489,-122.13161490149692),"war"));
-        //mapPins.add(new MapPin("hdklsad", new GeoPoint(37.53871235343273, -122.05999266014223), "hospital"));
-        //mapZones.add(new MapZone("jdosad2", new GeoPoint(37.35562280859825, -122.03126224500416),new GeoPoint(37.322159536785755, -122.06340285010553),new GeoPoint(37.30085696557495, -122.09707396021173),new GeoPoint(37.30937871839392, -122.16441618042415)));
-
-        //getPinsFromDatabase();
-        //getZoneFromDatabase();
-
-        //On click resets the location and goes back showing where the user is in the map
-        //Unecessary method
-        /*resetLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), 12));
-            }
-        });*/
 
         //TODO Comment
         changeMapTypeBtn.setOnClickListener(new View.OnClickListener() {
@@ -211,17 +202,17 @@ public class MapFragment extends Fragment {
             }
         });
 
+        //Initialize the map fragment
+        supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.google_map);
+
         //Check map permissions
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            //When permission granted, calls the method
+            //If the app has permission
             getCurrentLocation();
         } else {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
 
-
-        //Initialize the map fragment
-        supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.google_map);
 
         //Returns the view
         return view;
@@ -231,17 +222,7 @@ public class MapFragment extends Fragment {
     //TODO - Check if the users location is enabled
     //Gets the user current location and displays in the map
     private void getCurrentLocation() {
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        Task<Location> task = client.getLastLocation();
+        @SuppressLint("MissingPermission") Task<Location> task = client.getLastLocation();
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
@@ -266,57 +247,55 @@ public class MapFragment extends Fragment {
                             /*  THESE THREE LISTENERS UNDER CAN'T BE IN OUTSIDE METHODS OR THEY WONT BE CALLED  */
                             //get the pin data on map load
                             firebaseFirestore.collection("map-pins").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                            if (task.isSuccessful()) {
-                                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                                    Log.d(TAG, "\nPin Object Data (Database) => " + document.getData() + "\n");
-                                                    GeoPoint location = document.getGeoPoint("location");
-                                                    MapPinClass pin = new MapPinClass(document.getId(), location, document.get("type").toString());
-                                                    //Log.d(TAG, "\nPin Object Data (Object) => " + pin + "\n");
-                                                    //mapPins.add(pin);
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                            Log.d(TAG, "\nPin Object Data (Database) => " + document.getData() + "\n");
+                                            GeoPoint location = document.getGeoPoint("location");
+                                            MapPinClass pin = new MapPinClass(document.getId(), location, document.get("type").toString());
 
-                                                    BitmapDescriptor icon = null;
-                                                    LatLng latLng = new LatLng(pin.getLocation().getLatitude(), pin.getLocation().getLongitude());
-                                                    if (pin.getType().trim().equals("war")) {
-                                                        icon = bitmapDescriptorFromVector(getActivity(), R.drawable.ic_map_war_pin_45dp);
-                                                    }
-                                                    if (pin.getType().trim().equals("hospital")) {
-                                                        icon = bitmapDescriptorFromVector(getActivity(), R.drawable.ic_map_hospital_pin_45dp);
-                                                    }
-                                                    MarkerOptions options = new MarkerOptions().position(latLng).title(pin.getType()).snippet(pin.getPinID()).icon(icon);
-                                                    googleMap.addMarker(options);
-                                                }
-                                            } else {
-                                                Log.d(TAG, "Error getting documents: ", task.getException());
+                                            BitmapDescriptor icon = null;
+                                            LatLng latLng = new LatLng(pin.getLocation().getLatitude(), pin.getLocation().getLongitude());
+                                            if (pin.getType().trim().equals("war")) {
+                                                icon = bitmapDescriptorFromVector(getActivity(), R.drawable.ic_map_war_pin_45dp);
                                             }
+                                            if (pin.getType().trim().equals("hospital")) {
+                                                icon = bitmapDescriptorFromVector(getActivity(), R.drawable.ic_map_hospital_pin_45dp);
+                                            }
+                                            MarkerOptions options = new MarkerOptions().position(latLng).title(pin.getType()).snippet(pin.getPinID()).icon(icon);
+                                            googleMap.addMarker(options);
                                         }
-                                    });
+                                    } else {
+                                        Log.d(TAG, "Error getting documents: ", task.getException());
+                                    }
+                                }
+                            });
 
                             //get the marker data on map load
                             firebaseFirestore.collection("map-zones").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                            if (task.isSuccessful()) {
-                                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                                    Log.d(TAG, "\nZone Object Data (Database) => " + document.getData() + "\n");
-                                                    List<Object> polyPoint = (List<Object>) document.get("points");
-                                                    //mapZones.add(polyPoint);
-                                                    PolygonOptions poly = new PolygonOptions().strokeColor(Color.RED).fillColor(0x3Fb0233d).clickable(true);
-                                                    for (int i = 0; i < polyPoint.size(); i++) {
-                                                        GeoPoint polyGeo = (GeoPoint) polyPoint.get(i);
-                                                        double lat = polyGeo.getLatitude();
-                                                        double lng = polyGeo.getLongitude();
-                                                        LatLng latLng = new LatLng(lat, lng);
-                                                        poly.add(latLng);
-                                                    }
-                                                    googleMap.addPolygon(poly);
-                                                }
-                                            } else {
-                                                Log.d(TAG, "Error getting documents: ", task.getException());
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        for (QueryDocumentSnapshot document : task.getResult()) {
+                                            Log.d(TAG, "\nZone Object Data (Database) => " + document.getData() + "\n");
+                                            List<Object> polyPoint = (List<Object>) document.get("points");
+                                            //mapZones.add(polyPoint);
+                                            PolygonOptions poly = new PolygonOptions().strokeColor(Color.RED).fillColor(0x3Fb0233d).clickable(true);
+                                            for (int i = 0; i < polyPoint.size(); i++) {
+                                                GeoPoint polyGeo = (GeoPoint) polyPoint.get(i);
+                                                double lat = polyGeo.getLatitude();
+                                                double lng = polyGeo.getLongitude();
+                                                LatLng latLng = new LatLng(lat, lng);
+                                                poly.add(latLng);
                                             }
+                                            googleMap.addPolygon(poly);
                                         }
-                                    });
+                                    } else {
+                                        Log.d(TAG, "Error getting documents: ", task.getException());
+                                    }
+                                }
+                            });
 
                             //get the marker data on map load
                             firebaseFirestore.collection("map-buildings").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -370,16 +349,6 @@ public class MapFragment extends Fragment {
                 }
             }
         });
-    }
-
-    //TODO - COMMENT
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permission, @NonNull int[] grantResults) {
-        if (requestCode == 44) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getCurrentLocation();
-            }
-        }
     }
 
     //TODO - Add the filter with the method where equals before the get, would be nice if it was possible to do without duplicate code.
@@ -479,11 +448,5 @@ public class MapFragment extends Fragment {
             }
             googleMap.addPolygon(poly);
         });
-    }
-
-    //TODO - Finish this, i dont know if it works because it needs a bottom to see the onclick and the hard part is to refresh the map
-    public void removePins(GoogleMap googleMap) {
-        mapPinClasses.clear();
-        placePins(googleMap);
     }
 }

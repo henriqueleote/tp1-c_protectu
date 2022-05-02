@@ -6,6 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+
+
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -16,33 +19,12 @@
         tools:context=".MainActivity"
         tools:openDrawer="start">
 
-        <!--
+        <ImageView
+            android:id="@+id/splash"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/splash"/>
 
-
-            <com.google.android.material.navigation.NavigationView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/nav_view_2"
-                app:headerLayout="@layout/header"
-                app:menu="@menu/side_menu"
-                android:layout_gravity="start"
-                android:fitsSystemWindows="true"
-                >
-
-            </com.google.android.material.navigation.NavigationView>
-
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </ScrollView>
-
-        -->
 
         <FrameLayout
             android:id="@+id/fragment_container"
@@ -55,6 +37,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
+            android:id="@+id/bottom"
             android:layout_width="match_parent"
             android:layout_height="5dp"
             android:layout_above="@id/bottom_menu"
