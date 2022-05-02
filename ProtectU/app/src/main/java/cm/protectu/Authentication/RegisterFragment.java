@@ -32,6 +32,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.hbb20.CountryCodePicker;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.auth.User;
@@ -61,6 +62,9 @@ public class RegisterFragment extends BottomSheetDialogFragment {
 
     //EditText
     private EditText nameText, surnameText,contactText, emailText, passwordText, passwordConfirmText, securityCodeText;
+
+    //CountryCodePicker
+    private CountryCodePicker countryCodePicker;
 
     //Firebase Authentication
     private FirebaseAuth mAuth;
@@ -102,6 +106,7 @@ public class RegisterFragment extends BottomSheetDialogFragment {
         passwordConfirmText = view.findViewById(R.id.passwordText2);
         securityCodeText = view.findViewById(R.id.securityCodeText);
         passwordCheckBox = view.findViewById(R.id.passwordCheckBox);
+        countryCodePicker = view.findViewById(R.id.contactPicker);
 
         users = new ArrayList<>();
 
@@ -278,7 +283,7 @@ public class RegisterFragment extends BottomSheetDialogFragment {
                                 userData.put("uid", user.getUid());
                                 userData.put("firstName", name);
                                 userData.put("lastName", surname);
-                                userData.put("phoneNumber", contact);
+                                userData.put("phoneNumber", countryCodePicker.getSelectedCountryCodeWithPlus() +" "+ contact);
                                 userData.put("imageURL", "null");
                                 userData.put("userType", userType);
 

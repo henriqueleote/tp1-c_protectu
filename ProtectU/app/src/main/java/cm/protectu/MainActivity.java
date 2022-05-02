@@ -1,21 +1,18 @@
 package cm.protectu;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.service.autofill.UserData;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,17 +22,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.squareup.picasso.Picasso;
 
 import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.Community.CommunityFragment;
-import cm.protectu.Community.UserDataClass;
 import cm.protectu.Language.LanguageFragment;
 import cm.protectu.Map.MapFragment;
 import cm.protectu.News.NewsFragment;
 import cm.protectu.Panic.PanicFragment;
 import cm.protectu.Profile.ProfileFragment;
-import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, NavigationView.OnNavigationItemSelectedListener {
 
@@ -173,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
 
             case R.id.navigation_community:
-                fragment = new CommunityFragment();
+                fragment = new CommunityFragment(null);
                 break;
 
             case R.id.navigation_panic:

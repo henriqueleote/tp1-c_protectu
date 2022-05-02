@@ -1,6 +1,5 @@
 package cm.protectu.MissingBoard;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -26,7 +25,7 @@ import com.squareup.picasso.Picasso;
 
 import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.R;
-import cm.protectu.Community.UserDataClass;
+import cm.protectu.UserDataClass;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 

@@ -56,8 +56,6 @@ import java.util.List;
 import java.util.Map;
 
 import cm.protectu.Authentication.AuthActivity;
-import cm.protectu.Authentication.LoginFragment;
-import cm.protectu.Community.UserDataClass;
 import cm.protectu.MainActivity;
 import cm.protectu.Map.Buildings.BuildingClass;
 import cm.protectu.Map.Buildings.MapBuildingFragment;

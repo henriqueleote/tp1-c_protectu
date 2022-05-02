@@ -27,7 +27,7 @@ import java.util.List;
 
 import cm.protectu.MainActivity;
 import cm.protectu.R;
-import cm.protectu.Community.UserDataClass;
+import cm.protectu.UserDataClass;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 
