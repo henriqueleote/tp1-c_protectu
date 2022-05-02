@@ -8,30 +8,46 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.service.autofill.UserData;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.picasso.Picasso;
 
 import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.Community.CommunityFragment;
+import cm.protectu.Community.UserDataClass;
 import cm.protectu.Language.LanguageFragment;
 import cm.protectu.Map.MapFragment;
 import cm.protectu.News.NewsFragment;
 import cm.protectu.Panic.PanicFragment;
 import cm.protectu.Profile.ProfileFragment;
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, NavigationView.OnNavigationItemSelectedListener {
 
     //Firebase Authentication
     private FirebaseAuth mAuth;
 
+    //Firebase Firestore
+    private FirebaseFirestore firebaseFirestore;
+
     //Bottom navigation bar
     BottomNavigationView bottomBar;
     NavigationView sideBar;
-    private MenuItem item;
+
+    public static UserDataClass sessionUser;
+
+    private static final String TAG = MainActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
 
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
         //Checks if there is a session, if not, redirects to the Auth page
         if (mAuth.getCurrentUser() == null) {
@@ -51,6 +68,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
         bottomBar = findViewById(R.id.bottom_menu);
         sideBar = findViewById(R.id.side_menu);
+
+        getUserData();
 
         /*
         //If the user is anonymous, removes the profile option
@@ -163,6 +182,28 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         mAuth.signOut();
         Toast.makeText(MainActivity.this, getString(R.string.see_you_next_time), Toast.LENGTH_SHORT).show();
         startActivity(new Intent(MainActivity.this, AuthActivity.class));
+    }
+
+    public void getUserData(){
+        //Firebase Authentication function get the data from firebase with certain criteria
+        firebaseFirestore.collection("users")
+                //where the userID is the same as the logged in user
+                .whereEqualTo("uid", mAuth.getCurrentUser().getUid())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                sessionUser = new UserDataClass(mAuth.getCurrentUser().toString(),document.getString("firstName"),document.getString("lastName"),document.getString("email"),document.getString("userType"), document.getString("phoneNumber"), document.getString("imageURL"));
+                            }
+                        } else {
+                            //TODO Maybe reload the page or kill the session?
+                            //Shows the error
+                            Log.w(TAG, "Error getting documents.", task.getException());
+                        }
+                    }
+                });
     }
 
 }

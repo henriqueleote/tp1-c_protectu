@@ -154,53 +154,19 @@ public class ProfileFragment extends Fragment {
         mDialog.setCancelable(false);
         mDialog.show();
 
-        //Firebase Authentication function get the data from firebase with certain criteria
-        firebaseFirestore.collection("users")
-                //where the userID is the same as the logged in user
-                .whereEqualTo("uid", mAuth.getCurrentUser().getUid())
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                //Prints in debug the data object
-                                Log.d(TAG, "Data: " + document.getId() + " => " + document.getData());
-                                //Sets the text in the view with the name and surname of the authenticated user
-                                userName = document.getString("firstName");
-                                lastName = document.getString("lastName");
-                                phoneNumber = document.getString("phoneNumber");
-                                imageURL = document.getString("imageURL");
-                                nameTextView.setText(userName + " " + lastName);
-                                emailTextView.setText(getString(R.string.email) + mAuth.getCurrentUser().getEmail());
-                                contactTextView.setText(getString(R.string.contact) + phoneNumber);
-                                //TODO CHECK IF THIS IS THE LINE, I'VE A NULL SPACE IN THE REGISTER, SO MAYBE .equals("null") after everyone deletes their accounts
-                                if(!imageURL.equals("null")){
-                                    //if(document.getString("imageURL") != null){
-                                    Picasso.get()
-                                            .load(imageURL)
-                                            .centerCrop()
-                                            .fit()
-                                            .transform(new CropCircleTransformation())
-                                            .into(profileImageView);
-                                }
-                                else{
-                                    Picasso.get()
-                                            .load(imageURL)
-                                            .centerCrop()
-                                            .fit()
-                                            .transform(new CropCircleTransformation())
-                                            .into(profileImageView);
-                                }
-                            }
-                            mDialog.dismiss();
-                        } else {
-                            //TODO Maybe reload the page or kill the session?
-                            //Shows the error
-                            Log.w(TAG, "Error getting documents.", task.getException());
-                        }
-                    }
-                });
+        nameTextView.setText(MainActivity.sessionUser.getFirstName() + " " + MainActivity.sessionUser.getLastName());
+        emailTextView.setText(getString(R.string.email) + MainActivity.sessionUser.getEmail());
+        contactTextView.setText(getString(R.string.contact) + MainActivity.sessionUser.getPhoneNumber());
+        if(!MainActivity.sessionUser.getImageURL().equals("null")){
+            Picasso.get()
+                    .load(MainActivity.sessionUser.getImageURL())
+                    .centerCrop()
+                    .fit()
+                    .transform(new CropCircleTransformation())
+                    .into(profileImageView);
+        }
+
+        mDialog.dismiss();
     }
 
     @Override
