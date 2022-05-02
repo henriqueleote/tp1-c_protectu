@@ -89,7 +89,7 @@ public class NewMessageCommunityFragment extends BottomSheetDialogFragment {
         getDialog().setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialogInterface) {
-                communityFragment.communityCardsData();
+                communityFragment.communityCardsData(null);
             }
         });
 

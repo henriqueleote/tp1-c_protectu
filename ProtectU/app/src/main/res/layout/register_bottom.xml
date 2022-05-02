@@ -53,24 +53,45 @@
         android:inputType="text"
         android:textSize="15sp" />
 
-    <EditText
-        android:id="@+id/contactText"
+
+    <LinearLayout
+        android:id="@+id/contactRel"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/surnameText"
+        android:orientation="horizontal"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:drawablePadding="10dp"
-        android:hint="Contact"
-        android:inputType="text"
-        android:textSize="15sp" />
+        android:layout_marginTop="20dp">
+
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/contactPicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:ellipsize="end"
+            android:maxLines="1"/>
+
+        <EditText
+            android:id="@+id/contactText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:drawablePadding="10dp"
+            android:hint="Contact"
+            android:inputType="text"
+            android:textSize="15sp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1" />
+
+    </LinearLayout>
 
 
     <EditText
         android:id="@+id/emailText"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/contactText"
+        android:layout_below="@+id/contactRel"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:drawablePadding="10dp"

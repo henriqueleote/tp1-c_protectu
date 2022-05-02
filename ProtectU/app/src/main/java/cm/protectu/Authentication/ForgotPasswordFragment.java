@@ -67,6 +67,13 @@ public class ForgotPasswordFragment extends BottomSheetDialogFragment {
         sendEmailBtn = view.findViewById(R.id.sendEmailBtn);
         emailText = view.findViewById(R.id.emailText);
 
+        closeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getDialog().cancel();
+            }
+        });
+
         sendEmailBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

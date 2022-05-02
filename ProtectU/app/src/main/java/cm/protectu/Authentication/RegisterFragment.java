@@ -31,6 +31,7 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.hbb20.CountryCodePicker;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -51,6 +52,9 @@ public class RegisterFragment extends BottomSheetDialogFragment {
 
     //EditText
     private EditText nameText, surnameText,contactText, emailText, passwordText, passwordConfirmText;
+
+    //CountryCodePicker
+    private CountryCodePicker countryCodePicker;
 
     //Firebase Authentication
     private FirebaseAuth mAuth;
@@ -87,6 +91,7 @@ public class RegisterFragment extends BottomSheetDialogFragment {
         passwordText = view.findViewById(R.id.passwordText);
         passwordConfirmText = view.findViewById(R.id.passwordText2);
         passwordCheckBox = view.findViewById(R.id.passwordCheckBox);
+        countryCodePicker = view.findViewById(R.id.contactPicker);
 
         passwordCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -209,7 +214,7 @@ public class RegisterFragment extends BottomSheetDialogFragment {
                                 userData.put("uid", user.getUid());
                                 userData.put("firstName", name);
                                 userData.put("lastName", surname);
-                                userData.put("phoneNumber", contact);
+                                userData.put("phoneNumber", countryCodePicker.getSelectedCountryCodeWithPlus() +" "+ contact);
                                 userData.put("imageURL", "null");
 
                                 //Inserts in Firestore the user data with the correspondent user ID from Authentication

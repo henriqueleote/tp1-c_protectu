@@ -1,10 +1,8 @@
 package cm.protectu.Profile;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -15,20 +13,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 
 import cm.protectu.Authentication.AuthActivity;
+import cm.protectu.Community.CommunityFragment;
 import cm.protectu.MainActivity;
 import cm.protectu.R;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
@@ -81,6 +75,7 @@ public class ProfileFragment extends Fragment {
         removeMissingBtn = view.findViewById(R.id.removeMissingButton);
         profileImageView = view.findViewById(R.id.profileImageView);
 
+
         registerForContextMenu(optionBtn);
 
         //On click, opens the menu
@@ -116,7 +111,11 @@ public class ProfileFragment extends Fragment {
         removeCommunityBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                CommunityFragment fragment = new CommunityFragment(mAuth.getCurrentUser().getUid());
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
 

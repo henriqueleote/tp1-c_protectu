@@ -44,6 +44,11 @@ public class CommunityFragment extends Fragment {
     private ImageView missingPeopleButton;
     private SwipeRefreshLayout swipeToRefresh;
     private CommunityFragment fragment;
+    private String userID;
+
+    public CommunityFragment(String userID) {
+        this.userID = userID;
+    }
 
     @Nullable
     @Override
@@ -79,7 +84,7 @@ public class CommunityFragment extends Fragment {
         swipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                communityCardsData();
+                communityCardsData(userID);
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -91,7 +96,7 @@ public class CommunityFragment extends Fragment {
                 }, 800);
             }
         });
-        communityCardsData();
+        communityCardsData(userID);
 
         floatingActionButton = view.findViewById(R.id.createMessageButton);
         missingPeopleButton = view.findViewById(R.id.missingPeopleButton);
@@ -153,7 +158,7 @@ public class CommunityFragment extends Fragment {
      * that is, from the newest to the oldest and then place them inside the community adapter,
      * + if fails sends an error message.
      */
-    public void communityCardsData() {
+    public void communityCardsData(String userId) {
         ProgressDialog cDialog = new ProgressDialog(getActivity());
         cDialog.setMessage("Loading...");
         cDialog.setCancelable(false);
@@ -167,7 +172,14 @@ public class CommunityFragment extends Fragment {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 CommunityCard communityCard = document.toObject(CommunityCard.class);
-                                listOfCommunityCards.add(communityCard);
+                                if (userId == null){
+                                    listOfCommunityCards.add(communityCard);
+                                }
+                                else{
+                                    if (communityCard.getUserID().equals(userId)){
+                                        listOfCommunityCards.add(communityCard);
+                                    }
+                                }
                             }
 
                             Collections.sort(listOfCommunityCards, new SortCommunityCardClass());

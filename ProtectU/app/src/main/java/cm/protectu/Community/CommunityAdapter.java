@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import cm.protectu.MainActivity;
 import cm.protectu.R;
+import cm.protectu.UserDataClass;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
@@ -80,14 +81,17 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         UserDataClass userDataClass = documentSnapshot.toObject(UserDataClass.class);
-                        holder.userName.setText(userDataClass.getFirstName() + " " + userDataClass.getLastName());
-                        if (!userDataClass.getImageURL().equals("")) {
-                            Picasso.get()
-                                    .load(userDataClass.getImageURL())
-                                    .centerCrop()
-                                    .fit()
-                                    .transform(new CropCircleTransformation())
-                                    .into(holder.userImage);
+                        if (userDataClass != null && userDataClass.getFirstName() != null){
+                            holder.userName.setText(userDataClass.getFirstName() + " " + userDataClass.getLastName());
+
+                            if (!userDataClass.getImageURL().equals("null")) {
+                                Picasso.get()
+                                        .load(userDataClass.getImageURL())
+                                        .centerCrop()
+                                        .fit()
+                                        .transform(new CropCircleTransformation())
+                                        .into(holder.userImage);
+                            }
                         }
                     }
                 });
@@ -108,7 +112,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
         textAndMessageAdjuster(holder, position, messageText);
 
         if (!mAuth.getCurrentUser().isAnonymous()) {
-            if (mAuth.getCurrentUser().getEmail().equals("aa@aa.pt") || mAuth.getCurrentUser().getEmail().equals(userID)) {
+            if (mAuth.getCurrentUser().getEmail().equals("aa@aa.pt") || mAuth.getCurrentUser().getUid().equals(userID)) {
                 holder.removeMessageCommunity.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -234,7 +238,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                             firebaseFirestore.collection("community-chat-reactions").document(document.getId()).delete();
                         }
                     }
-                    communityFragment.communityCardsData();
+                    communityFragment.communityCardsData(null);
                 } else {
                     Log.d(TAG, "Insucess");
                 }
@@ -288,6 +292,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
 
         } else {
             holder.communityTextWithImage.setVisibility(View.GONE);
+            holder.imageCommunity.setVisibility(View.GONE);
             holder.communityText.setText(messageText);
         }
     }
