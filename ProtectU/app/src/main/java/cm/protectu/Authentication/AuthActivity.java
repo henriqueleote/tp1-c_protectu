@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.splashscreen.SplashScreen;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -45,6 +46,7 @@ public class AuthActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        setTheme(R.style.Theme_App_SplashScreen);
         super.onCreate(savedInstanceState);
 
         //Link the layout to the activity
@@ -63,17 +65,16 @@ public class AuthActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(AuthActivity.this, PERMISSIONS, 1);
         }
 
-        //TODO - Fix this
-        //The code is right, but it has some bugs and it says that the mAuth is null
-        //if (mAuth.getCurrentUser().isAnonymous()) {
-        //mAuth.getCurrentUser().delete();
-        //mAuth.signOut();
-        //}
 
-
-        //Check if has stored session, if true, redirects to the App
+        //Check if has stored session, if true, redirects to the App if not, kills the prior session
         if (mAuth.getCurrentUser() != null) {
-            startActivity(new Intent(this, MainActivity.class));
+            if (mAuth.getCurrentUser().isAnonymous()) {
+                mAuth.getCurrentUser().delete();
+                mAuth.signOut();
+            }else{
+                this.finish();
+                startActivity(new Intent(this, MainActivity.class));
+            }
         }
 
 

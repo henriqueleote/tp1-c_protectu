@@ -44,13 +44,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private BottomNavigationView bottomBar;
     private NavigationView sideBar;
     private ImageView splash;
-    private View bottom;
 
     public static UserDataClass sessionUser;
 
     private static final String TAG = MainActivity.class.getName();
-
-    boolean progress = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,13 +68,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
         bottomBar = findViewById(R.id.bottom_menu);
         sideBar = findViewById(R.id.side_menu);
-        splash = findViewById(R.id.splash);
-        bottom = findViewById(R.id.bottom);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        //TODO WORK ON THIS SPLASH SCREEN, ITS NOT PERFECT
-        bottomBar.setVisibility(View.INVISIBLE);
-        bottom.setVisibility(View.INVISIBLE);
         getUserData();
 
         /*
@@ -208,10 +200,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                                 sessionUser = document.toObject(UserDataClass.class);
                                 //sessionUser = new UserDataClass(mAuth.getCurrentUser().toString(),document.getString("firstName"),document.getString("lastName"),document.getString("email"),document.getString("userType"), document.getString("phoneNumber"), document.getString("imageURL"));
                             }
-                            //TODO WORK ON THIS SPLASH SCREEN, ITS NOT PERFECT
-                            splash.setVisibility(View.INVISIBLE);
-                            bottomBar.setVisibility(View.VISIBLE);
-                            bottom.setVisibility(View.VISIBLE);
                             loadFragment(new MapFragment());
                         } else {
                             //TODO Maybe reload the page or kill the session?

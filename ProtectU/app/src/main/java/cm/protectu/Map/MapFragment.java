@@ -138,9 +138,12 @@ public class MapFragment extends Fragment {
         areAllButtonVisible = false;
 
         //Only shows the button if its a admin or authority
-        if(!MainActivity.sessionUser.getUserType().equals("user")){
-            createBtn.setVisibility(View.VISIBLE);
-        }
+        if(!mAuth.getCurrentUser().isAnonymous())
+            if(!MainActivity.sessionUser.getUserType().equals("user"))
+                createBtn.setVisibility(View.VISIBLE);
+
+
+
 
 
         createBtn.setOnClickListener(new View.OnClickListener() {
