@@ -56,6 +56,11 @@
         <item>Grave</item>
         <item>Urgente</item>
     </string-array>
+    <string-array name="theme_values">
+        <item>escuro</item>
+        <item>azul</item>
+        <item>vermelho</item>
+    </string-array>
     <string name="newPost">Nova Publicação</string>
     <string name="description">Descrição</string>
     <string name="addImage1">Adicionar Imagem(max. 1)</string>

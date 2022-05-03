@@ -100,6 +100,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                         fragment = new LanguageFragment();
                         break;
 
+                    case R.id.navigation_customize:
+                        fragment = new CostumizationFragment();
+                        break;
+
                     case R.id.navigation_logout:
                         logout();
                         break;
