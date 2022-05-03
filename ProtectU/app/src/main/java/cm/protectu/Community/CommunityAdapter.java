@@ -111,8 +111,8 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
 
         textAndMessageAdjuster(holder, position, messageText);
 
-        if (!mAuth.getCurrentUser().isAnonymous()) {
-            if (mAuth.getCurrentUser().getEmail().equals("aa@aa.pt") || mAuth.getCurrentUser().getUid().equals(userID)) {
+        if (MainActivity.sessionUser != null) {
+            if (MainActivity.sessionUser.getUid().equals(userID)) {
                 holder.removeMessageCommunity.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -123,7 +123,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                 holder.removeMessageCommunity.setVisibility(View.INVISIBLE);
             }
 
-            if (mAuth.getCurrentUser().getEmail().equals("aa@aa.pt")) {
+            if (MainActivity.sessionUser.getUserType() != null &&  !MainActivity.sessionUser.getUserType().equals("user")) {
                 holder.makeVerified.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -131,7 +131,6 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                     }
                 });
             }
-
 
             //Put the number of likes and dislikes in the message
             holder.likeCounter.setText(listOfCommunityCards.get(position).getLikes() + "");
@@ -406,7 +405,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
      * @param holder
      */
     public void userIsAnonymous(MyViewHolder holder) {
-        if (mAuth.getCurrentUser().isAnonymous()) {
+        if (MainActivity.sessionUser == null) {
             holder.likeButton.setVisibility(View.INVISIBLE);
             holder.dislikeButton.setVisibility(View.INVISIBLE);
             holder.likeCounter.setVisibility(View.INVISIBLE);

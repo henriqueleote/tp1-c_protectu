@@ -198,7 +198,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                sessionUser = new UserDataClass(mAuth.getCurrentUser().toString(),document.getString("firstName"),document.getString("lastName"),document.getString("email"),document.getString("userType"), document.getString("phoneNumber"), document.getString("imageURL"));
+                                sessionUser = document.toObject(UserDataClass.class);
+                                //sessionUser = new UserDataClass(mAuth.getCurrentUser().toString(),document.getString("firstName"),document.getString("lastName"),document.getString("email"),document.getString("userType"), document.getString("phoneNumber"), document.getString("imageURL"));
                             }
                             //TODO WORK ON THIS SPLASH SCREEN, ITS NOT PERFECT
                             splash.setVisibility(View.INVISIBLE);
