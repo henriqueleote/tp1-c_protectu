@@ -93,7 +93,10 @@ public class NewMissingPostFragment extends Fragment {
 
         getData();
 
-
+        /**
+         *
+         * put the present icon on the invisible card
+         */
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,7 +105,9 @@ public class NewMissingPostFragment extends Fragment {
             }
         });
 
-        //go back to the map frame
+        /**
+         * go back to the map frame
+         */
         arrowBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,7 +120,10 @@ public class NewMissingPostFragment extends Fragment {
             }
         });
 
-        // cria a nova publicação e volta para a pagina das publicações
+        /**
+         *
+         * creates the new publication and returns to the publications page
+         */
         create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -134,22 +142,27 @@ public class NewMissingPostFragment extends Fragment {
 
     }
 
-    // Permite criar uma nova publicação com os dados recebido
+    /**
+     * Allows you to create a new publication with the data received
+     */
     public void createMissingPost(String missingName, String description, String missingAge, String phoneNumber, String foto,String userID,String fotoMissing,String missingID){
 
         // Permite verificar se os campos prenchidos estão corretos
         if (TextUtils.isEmpty(missingName)) {
             name.setError(getString(R.string.error_name_not_valid));
             name.requestFocus();
-
             return;
 
         }
         if(TextUtils.isEmpty(String.valueOf(missingAge))){
-
+            age.setError(getString(R.string.error_age_not_valid));
+            age.requestFocus();
+            return;
         }
         if(TextUtils.isEmpty(description)){
-
+            this.description.setError(getString(R.string.error_description_not_valid));
+            this.description.requestFocus();
+            return;
         }
 
         ProgressDialog mDialog = new ProgressDialog(getActivity());
@@ -157,7 +170,7 @@ public class NewMissingPostFragment extends Fragment {
         mDialog.setCancelable(false);
         mDialog.show();
 
-        //Permite colocar na base de dados, os dados recebidos na criação de uma nova publicação
+        //Allows placing in the database the data received when creating a new publication
         firebaseFirestore.collection("missing-board")
                 .add(new MissingCardClass(missingName, description,missingAge,phoneNumber,foto,userID,fotoMissing,missingID, new Date()))
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -209,7 +222,8 @@ public class NewMissingPostFragment extends Fragment {
     }
 
     /**
-     * Permite ir aos ficheiros do utilizador
+     *
+     * Allows you to go to user files
      */
     public void imageFileChooser(){
         Intent intent = new Intent();
@@ -219,7 +233,8 @@ public class NewMissingPostFragment extends Fragment {
     }
 
     /**
-     * Permite colocar uma imagem proveniente da galeria do utilizador
+     *
+     * Allows you to place an image from the user's gallery
      * @param requestCode
      * @param resultCode
      * @param data

@@ -94,7 +94,8 @@ public class MissingBoardFragment extends Fragment {
         missingCardsData();
 
         /**
-         * Permite dar refresh da página carregando de volta os dados para a página
+         *
+         * Allows you to refresh the page by loading data back to the page
          */
         swipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -115,7 +116,8 @@ public class MissingBoardFragment extends Fragment {
         });
 
         /**
-         * Permite sair do filtro dos nomes e volta a colocar todas as publicações de volta
+         *
+         * Allows you to exit the name filter and put all posts back
          */
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,7 +129,8 @@ public class MissingBoardFragment extends Fragment {
         });
 
         /**
-         * Permite ir para o fragment de criar novas publicações
+         *
+         * Lets you go to the fragment to create new posts
          */
         if (mAuth.getCurrentUser().isAnonymous()) {
             floatingActionButton.setVisibility(View.GONE);
@@ -149,7 +152,7 @@ public class MissingBoardFragment extends Fragment {
         MissingBoardFragment fragment = this;
 
         /**
-         * Permite ir para o fragment correspondente às opções de filtro da publicações pelas idades
+         * Allows you to go to the fragment corresponding to the filter options of publications by age
          */
         age.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -180,8 +183,8 @@ public class MissingBoardFragment extends Fragment {
 
 
     /**
-     * Permite verificar se a tarefa de ir buscar os dados na colecao é bem sucessida, depois
-     * transforma os dados devolvidos na classe pretendidae e cria as respetivas publicações
+     * Allows you to check if the task of fetching the data in the collection is successful, then
+     * transforms the returned data into the desired class and creates the respective publications
      */
     public void missingCardsData() {
         missingCardClasses.clear();
@@ -207,7 +210,8 @@ public class MissingBoardFragment extends Fragment {
 
 
     /**
-     * Permite guardr as publicações que tenham o nome da pessoa a procurar
+     *
+     * Allows you to save publications that have the name of the person to be searched for
      * @param name
      */
     public void namesFiltered(String name){

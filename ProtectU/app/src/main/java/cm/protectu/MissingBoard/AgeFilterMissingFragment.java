@@ -41,8 +41,9 @@ public class AgeFilterMissingFragment extends BottomSheetDialogFragment {
     private MissingBoardFragment missingBoardFragment;
 
     /**
-     * Construtor que permite inicializar a lista com todos as publicações provenientes da classe missing board
-     * @param missingBoardFragment classe que contem todos as publicações
+     * Constructor that allows initializing the list with all publications coming from the missing board class
+     * @param missingBoardFragment
+     * class that contains all publications
      */
     public AgeFilterMissingFragment(MissingBoardFragment missingBoardFragment) {
         this.missingBoardFragment = missingBoardFragment;
@@ -70,10 +71,7 @@ public class AgeFilterMissingFragment extends BottomSheetDialogFragment {
         adults = view.findViewById(R.id.adultsFilterID);
         seniors = view.findViewById(R.id.seniorsFilterID);
 
-
         firebaseFirestore = FirebaseFirestore.getInstance();
-
-
 
         //On click closes the form sheet
         closeButton.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +82,7 @@ public class AgeFilterMissingFragment extends BottomSheetDialogFragment {
         });
 
         /**
-         * Permite limpar todas as checkbox que estejam selecionadas
+         * Allows you to clear all checkboxes that are selected
          */
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +94,8 @@ public class AgeFilterMissingFragment extends BottomSheetDialogFragment {
         });
 
         /**
-         * Permite selecionar todas as checkbox
+         *
+         * Allows you to select all checkboxes
          */
         selectAll.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,7 +107,7 @@ public class AgeFilterMissingFragment extends BottomSheetDialogFragment {
         });
 
         /**
-         * Permite filtrar as publicações existentes consoante as checkbox selecionadas
+         * Allows you to filter existing publications depending on the selected checkboxes
          */
         showResults.setOnClickListener(new View.OnClickListener() {
             @Override

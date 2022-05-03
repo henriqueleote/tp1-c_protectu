@@ -92,7 +92,8 @@ public class MissingPostFragment extends Fragment {
                 .into(MissingImage);
 
         /**
-         * Permite partilhar a publicação em outras plataformas
+         *
+         * Allows you to share your post on other platforms
          */
         share.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,8 +109,9 @@ public class MissingPostFragment extends Fragment {
         });
 
         /**
-         * Permite colocar o numero associado à conta de perfil do utilizador da respetiva publicação
-         * no telemovel, com o objetivo de realizar chamada para este numero
+         *
+         * Allows placing the number associated with the user profile account of the respective publication
+         * on the cell phone, in order to make a call to this number
          */
         phone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,7 +156,8 @@ public class MissingPostFragment extends Fragment {
 
 
     /**
-     * Permite ir buscar o nome do utilizador da base de dados
+     *
+     * Allows you to fetch the username from the database
      */
     public void getData(){
         firebaseFirestore.collection("users")

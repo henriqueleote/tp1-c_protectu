@@ -41,14 +41,14 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth mAuth;
     private String urlProfile;
-    private String urlMissing;
+
 
     private static final String TAG = MainActivity.class.getName();
 
     /**
-     * Construtor que permite inicializar os objetos
+     * Constructor that lets you initialize objects
      * @param mContext
-     * @param mData lista que contem as publicações existentes
+     * @param mData
      * @param fragment
      * @param firebaseAuth
      */
@@ -62,9 +62,9 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
     }
 
     /**
-     * chama esse método sempre que precisa criar um novo ViewHolder. O método cria e
-     * inicializa o ViewHolder e a View associada, mas não preenche o conteúdo da visualização.
-     * O ViewHolder ainda não foi vinculado a dados específicos.
+     * calls this method whenever it needs to create a new ViewHolder. The method creates and
+     * initializes the ViewHolder and the associated View, but does not populate the contents of the view.
+     * The ViewHolder has not yet been linked to specific data.
      * @param parent
      * @param viewType
      * @return
@@ -81,10 +81,10 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
     }
 
     /**
-     * chama esse método para associar um ViewHolder aos dados.
-     * O método busca os dados apropriados e usa esses dados para preencher o layout do fixador de visualização.
-     * Por exemplo, se a RecyclerView exibir uma lista de nomes,
-     * o método poderá encontrar o nome apropriado na lista e preencher o widget TextView do fixador de visualização.
+     * calls this method to bind a ViewHolder to the data.
+     * The method fetches the appropriate data and uses that data to populate the view pin layout.
+     * For example, if the RecyclerView displays a list of names,
+     * the method will be able to find the appropriate name in the list and populate the TextView widget from the view pin.
      * @param holder
      * @param position
      */
@@ -100,44 +100,10 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
                 .fit()
                 .into(holder.missingImage);
 
-        String userID = mData.get(position).getUserID();
-        
-        /**
-         * will fetch the database the name of the user who created the message through the user id
-         * that is in the missing data and then put it in the Missing fragment
-         */
-        firebaseFirestore.collection("users")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                if (document.getId().equals(userID)) {
-                                    UserDataClass userDataClass = document.toObject(UserDataClass.class);
-                                    holder.userName.setText(userDataClass.getFirstName() + " " + userDataClass.getLastName());
-                                    if (!document.get("imageURL").equals("")){
-                                        urlProfile = document.getString("imageURL");
-                                        Picasso.get()
-                                                .load(urlProfile)
-                                                .centerCrop()
-                                                .fit()
-                                                .transform(new CropCircleTransformation())
-                                                .into(holder.userImage);
-                                    }
-                                    break;
-                                } else {
-                                    holder.userName.setText("Not Found");
-                                }
-                            }
-                        } else {
-                            Log.d(TAG, "Insucess");
-                        }
-                    }
-                });
 
         /**
-         * Permite ir para a publicação do cartão clicado
+         *
+         * Lets you go to the clicked card post
          */
         holder.cardMissing.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,7 +120,7 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
 
     /**
      *
-     * @return O tamanho da lista de cartões existentes na lista
+     * @return The size of the list of cards in the list
      */
     @Override
     public int getItemCount() {
@@ -196,15 +162,15 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
 
     /**
      *
-     * @return A lista com todas as publicações existentes
+     * @return The list of all existing publications
      */
     public List<MissingCardClass> getmData() {
         return mData;
     }
 
     /**
-     * Permite trocar a informação da lista de publicações por uma nova lista
-     * @param mData nova lista a ser colocada na lista de publicações
+     * Allows you to exchange the information from the list of publications for a new list
+     * @param mData new list to be placed in the list of publications
      */
     public void setmData(List<MissingCardClass> mData) {
         this.mData = mData;
