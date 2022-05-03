@@ -1,7 +1,6 @@
 package cm.protectu.Community;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,13 +12,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -35,10 +31,9 @@ import java.util.Collections;
 import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.MissingBoard.MissingBoardFragment;
 import cm.protectu.R;
-import cm.protectu.WelcomeScreenActivity;
 
 
-public class CommunityFragment extends Fragment{
+public class CommunityFragment extends Fragment {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
@@ -49,23 +44,18 @@ public class CommunityFragment extends Fragment{
     private ImageView missingPeopleButton;
     private SwipeRefreshLayout swipeToRefresh;
     private CommunityFragment fragment;
-    private int[] layouts;
     private String userID;
-    private ViewPager viewPager;
-    private MyViewPagerAdapter myViewPagerAdapter;
-    private MissingBoardFragment board;
 
     public CommunityFragment(String userID) {
         this.userID = userID;
-        board = new MissingBoardFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         //Link the layout to the Fragment
         View view = inflater.inflate(R.layout.fragment_community, container, false);
+
 
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
@@ -88,12 +78,7 @@ public class CommunityFragment extends Fragment{
         recyclerView = view.findViewById(R.id.communityRecyclerView);
         swipeToRefresh = view.findViewById(R.id.swipeToRefresh);
 
-        viewPager = view.findViewById(R.id.view_pagerCommunity);
-        myViewPagerAdapter = new MyViewPagerAdapter(view);
-        viewPager.setAdapter(myViewPagerAdapter);
-        viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener());
-
-        communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth,fragment);
+        communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth, fragment);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         recyclerView.setAdapter(communityAdapter);
 
@@ -123,47 +108,51 @@ public class CommunityFragment extends Fragment{
          *if the user is not logged in the add button disappears,
          * otherwise the button appears and if clicked it opens a bottom sheet that allows the creation of a new message in the community
          */
-        if (mAuth.getCurrentUser().isAnonymous()) {
+        if (mAuth.getCurrentUser().isAnonymous() || userID != null) {
             floatingActionButton.setVisibility(View.GONE);
         } else {
             floatingActionButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (!mAuth.getCurrentUser().isAnonymous()) {
-                        NewMessageCommunityFragment newMessageCommunityFragment = new NewMessageCommunityFragment(fragment);
-                        newMessageCommunityFragment.show(getParentFragmentManager(), newMessageCommunityFragment.getTag());
-                    }
-                }
-            }
+                                                        @Override
+                                                        public void onClick(View view) {
+                                                            if (!mAuth.getCurrentUser().isAnonymous()) {
+                                                                NewMessageCommunityFragment newMessageCommunityFragment = new NewMessageCommunityFragment(fragment);
+                                                                newMessageCommunityFragment.show(getParentFragmentManager(), newMessageCommunityFragment.getTag());
+                                                            }
+                                                        }
+                                                    }
             );
         }
 
         /**
          * This button changes to the missing fragment, replacing the community fragment with this one
          */
-        missingPeopleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Fragment fragmentToChange = new MissingBoardFragment();
-                getFragmentManager().beginTransaction()
-                        .setCustomAnimations(
-                                R.anim.slide_in,  // enter
-                                R.anim.fade_out,  // exit
-                                R.anim.fade_in,   // popEnter
-                                R.anim.slide_out  // popExit
-                        )
-                        .replace(R.id.fragment_container, fragmentToChange)
-                        .addToBackStack(null)
-                        .commit();
-                /**
-                MissingBoardFragment fragment = new MissingBoardFragment();
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();**/
-            }
-        });
-
+        if (userID == null) {
+            missingPeopleButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Fragment fragmentToChange = new MissingBoardFragment();
+                    getFragmentManager().beginTransaction()
+                            .setCustomAnimations(
+                                    R.anim.slide_in,  // enter
+                                    R.anim.fade_out,  // exit
+                                    R.anim.fade_in,   // popEnter
+                                    R.anim.slide_out  // popExit
+                            )
+                            .replace(R.id.fragment_container, fragmentToChange)
+                            .addToBackStack(null)
+                            .commit();
+                    /**
+                     MissingBoardFragment fragment = new MissingBoardFragment();
+                     FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                     transaction.replace(R.id.fragment_container, fragment);
+                     transaction.addToBackStack(null);
+                     transaction.commit();**/
+                }
+            });
+        }
+        else{
+            missingPeopleButton.setVisibility(View.GONE);
+        }
 
 
         //Returns the view
@@ -190,11 +179,10 @@ public class CommunityFragment extends Fragment{
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 CommunityCard communityCard = document.toObject(CommunityCard.class);
-                                if (userId == null){
+                                if (userId == null) {
                                     listOfCommunityCards.add(communityCard);
-                                }
-                                else{
-                                    if (communityCard.getUserID().equals(userId)){
+                                } else {
+                                    if (communityCard.getUserID().equals(userId)) {
                                         listOfCommunityCards.add(communityCard);
                                     }
                                 }
@@ -202,7 +190,7 @@ public class CommunityFragment extends Fragment{
 
                             Collections.sort(listOfCommunityCards, new SortCommunityCardClass());
 
-                            communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth,fragment);
+                            communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth, fragment);
                             recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
                             recyclerView.setAdapter(communityAdapter);
                             communityAdapter.notifyDataSetChanged();
@@ -217,45 +205,6 @@ public class CommunityFragment extends Fragment{
                 });
 
 
-    }
-
-    public class MyViewPagerAdapter extends PagerAdapter {
-        private LayoutInflater layoutInflater;
-        private View view;
-
-        public MyViewPagerAdapter(View view) {
-            this.view = view;
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-            //View view = layoutInflater.inflate(layouts[position], container, false);
-            if(position != 0){
-                view = board.getView();
-            }
-
-            container.addView(view);
-
-            return view;
-        }
-
-        @Override
-        public int getCount() {
-            return 2;
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object obj) {
-            return view == obj;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            View view = (View) object;
-            container.removeView(view);
-        }
     }
 
 }

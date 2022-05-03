@@ -24,7 +24,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import cm.protectu.Authentication.AuthActivity;
-import cm.protectu.Community.CommunityFragment;
 import cm.protectu.Language.LanguageFragment;
 import cm.protectu.Map.MapFragment;
 import cm.protectu.News.NewsFragment;
@@ -171,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
 
             case R.id.navigation_community:
-                fragment = new CommunityFragment(null);
+                fragment = new ViewPagerFragment();
                 break;
 
             case R.id.navigation_panic:

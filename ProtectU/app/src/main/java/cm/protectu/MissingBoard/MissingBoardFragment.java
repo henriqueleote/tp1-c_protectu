@@ -45,7 +45,6 @@ public class MissingBoardFragment extends Fragment {
     private CardView age;
     private SearchView searchNames;
     private SwipeRefreshLayout swipeToRefresh;
-    private View view;
 
 
     //Firebase Authentication
@@ -58,7 +57,7 @@ public class MissingBoardFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         //Link the layout to the Fragment
-        view = inflater.inflate(R.layout.fragment_missingboard, container, false);
+        View view = inflater.inflate(R.layout.fragment_missingboard, container, false);
 
         missingCardClasses = new ArrayList<>();
 
@@ -238,10 +237,5 @@ public class MissingBoardFragment extends Fragment {
         myAdapter.notifyDataSetChanged();
     }
 
-    @Nullable
-    @Override
-    public View getView() {
-        return view;
-    }
 }
 
