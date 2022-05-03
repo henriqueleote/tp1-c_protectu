@@ -1,6 +1,7 @@
 package cm.protectu.Community;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,10 +13,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -31,9 +35,10 @@ import java.util.Collections;
 import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.MissingBoard.MissingBoardFragment;
 import cm.protectu.R;
+import cm.protectu.WelcomeScreenActivity;
 
 
-public class CommunityFragment extends Fragment {
+public class CommunityFragment extends Fragment{
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
@@ -44,10 +49,15 @@ public class CommunityFragment extends Fragment {
     private ImageView missingPeopleButton;
     private SwipeRefreshLayout swipeToRefresh;
     private CommunityFragment fragment;
+    private int[] layouts;
     private String userID;
+    private ViewPager viewPager;
+    private MyViewPagerAdapter myViewPagerAdapter;
+    private MissingBoardFragment board;
 
     public CommunityFragment(String userID) {
         this.userID = userID;
+        board = new MissingBoardFragment();
     }
 
     @Nullable
@@ -72,14 +82,20 @@ public class CommunityFragment extends Fragment {
         firebaseFirestore = FirebaseFirestore.getInstance();
 
         fragment = this;
+
         listOfCommunityCards = new ArrayList<>();
+
         recyclerView = view.findViewById(R.id.communityRecyclerView);
         swipeToRefresh = view.findViewById(R.id.swipeToRefresh);
+
+        viewPager = view.findViewById(R.id.view_pagerCommunity);
+        myViewPagerAdapter = new MyViewPagerAdapter(view);
+        viewPager.setAdapter(myViewPagerAdapter);
+        viewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener());
+
         communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth,fragment);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         recyclerView.setAdapter(communityAdapter);
-
-
 
         swipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -148,6 +164,8 @@ public class CommunityFragment extends Fragment {
             }
         });
 
+
+
         //Returns the view
         return view;
 
@@ -199,6 +217,45 @@ public class CommunityFragment extends Fragment {
                 });
 
 
+    }
+
+    public class MyViewPagerAdapter extends PagerAdapter {
+        private LayoutInflater layoutInflater;
+        private View view;
+
+        public MyViewPagerAdapter(View view) {
+            this.view = view;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            layoutInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            //View view = layoutInflater.inflate(layouts[position], container, false);
+            if(position != 0){
+                view = board.getView();
+            }
+
+            container.addView(view);
+
+            return view;
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object obj) {
+            return view == obj;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            View view = (View) object;
+            container.removeView(view);
+        }
     }
 
 }
