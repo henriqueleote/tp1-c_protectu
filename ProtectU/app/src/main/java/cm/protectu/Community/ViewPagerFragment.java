@@ -1,4 +1,4 @@
-package cm.protectu;
+package cm.protectu.Community;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,8 +11,8 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import java.util.ArrayList;
 
-import cm.protectu.Community.CommunityFragment;
 import cm.protectu.MissingBoard.MissingBoardFragment;
+import cm.protectu.R;
 
 public class ViewPagerFragment extends Fragment {
 

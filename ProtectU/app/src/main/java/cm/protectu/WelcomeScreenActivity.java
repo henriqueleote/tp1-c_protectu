@@ -78,16 +78,6 @@ public class WelcomeScreenActivity extends AppCompatActivity {
             finish();
         }
 
-        //firebaseAuth = FirebaseAuth.getInstance();
-
-        /*
-        if (firebaseAuth.getCurrentUser() != null) {
-            //Ativação do perfil
-            finish();
-            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-            startActivity(new Intent(WelcomeScreenActivity.this, AuthActivity.class));
-        }*/
-
         // Making notification bar transparent
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);

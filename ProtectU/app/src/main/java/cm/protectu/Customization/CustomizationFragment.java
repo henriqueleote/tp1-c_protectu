@@ -1,4 +1,4 @@
-package cm.protectu;
+package cm.protectu.Customization;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,9 +15,10 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.Map.MapFragment;
+import cm.protectu.R;
 
 
-public class AboutFragment extends Fragment {
+public class CustomizationFragment extends Fragment {
 
     //Firebase Authentication
     private FirebaseAuth mAuth;
@@ -26,16 +27,24 @@ public class AboutFragment extends Fragment {
     private ImageView arrowBack;
 
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         //Link the layout to the Fragment
-        View view = inflater.inflate(R.layout.fragment_about, container, false);
+        View view = inflater.inflate(R.layout.fragment_customization, container, false);
 
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
         arrowBack = view.findViewById(R.id.backID);
+    /*
+         themes = getResources().getStringArray(R.array.theme_values);
+         arrayAdapter = ArrayAdapter(requireContext(),R.layout.dropdown_item,themes);
+        bid
+*/
+
+
 
 
         //go back to the map frame
@@ -65,5 +74,6 @@ public class AboutFragment extends Fragment {
         return view;
 
     }
+
 
 }

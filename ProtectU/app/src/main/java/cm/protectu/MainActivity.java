@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,7 +27,10 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import cm.protectu.About.AboutFragment;
 import cm.protectu.Authentication.AuthActivity;
+import cm.protectu.Community.ViewPagerFragment;
+import cm.protectu.Customization.CustomizationFragment;
 import cm.protectu.Language.LanguageFragment;
 import cm.protectu.Map.MapFragment;
 import cm.protectu.News.NewsFragment;
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                         break;
 
                     case R.id.navigation_customize:
-                        fragment = new CostumizationFragment();
+                        fragment = new CustomizationFragment();
                         break;
 
                     case R.id.navigation_logout:
@@ -217,7 +218,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 sessionUser = document.toObject(UserDataClass.class);
-                                //sessionUser = new UserDataClass(mAuth.getCurrentUser().toString(),document.getString("firstName"),document.getString("lastName"),document.getString("email"),document.getString("userType"), document.getString("phoneNumber"), document.getString("imageURL"));
                             }
                             if(code == 1)
                                 loadFragment(new MapFragment());

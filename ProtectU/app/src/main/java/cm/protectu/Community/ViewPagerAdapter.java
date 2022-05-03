@@ -1,4 +1,4 @@
-package cm.protectu;
+package cm.protectu.Community;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
