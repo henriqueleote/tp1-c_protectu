@@ -112,7 +112,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
         textAndMessageAdjuster(holder, position, messageText);
 
         if(!mAuth.getCurrentUser().isAnonymous()){
-            if (MainActivity.sessionUser.getUid().equals(userID) && !MainActivity.sessionUser.getUserType().equals("user")) {
+            if (MainActivity.sessionUser.getUid().equals(userID) || !MainActivity.sessionUser.getUserType().equals("user")) {
                 holder.removeMessageCommunity.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -130,6 +130,13 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                         makeVerified(messageID, holder);
                     }
                 });
+            }else {
+                holder.makeVerified.setVisibility(View.INVISIBLE);
+                if (!listOfCommunityCards.get(position).isVerified()){
+                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) holder.removeMessageCommunity.getLayoutParams();
+                int px = dpToPixels(10);
+                params.setMargins(px, px, px, 0);
+                holder.removeMessageCommunity.setLayoutParams(params);}
             }
 
             //Put the number of likes and dislikes in the message
@@ -166,6 +173,9 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                 }
             });
 
+        }else {
+            holder.removeMessageCommunity.setVisibility(View.INVISIBLE);
+            holder.makeVerified.setVisibility(View.INVISIBLE);
         }
     }
 

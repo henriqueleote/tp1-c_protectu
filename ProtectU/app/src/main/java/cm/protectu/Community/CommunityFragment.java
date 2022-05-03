@@ -30,6 +30,7 @@ import java.util.Collections;
 
 import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.MissingBoard.MissingBoardFragment;
+import cm.protectu.Profile.ProfileFragment;
 import cm.protectu.R;
 
 
@@ -153,6 +154,16 @@ public class CommunityFragment extends Fragment {
         else{
             missingPeopleButton.setVisibility(View.GONE);
             backProfile.setVisibility(View.VISIBLE);
+            missingPeopleButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Fragment fragmentToChange = new ProfileFragment();
+                    getFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, fragmentToChange)
+                            .addToBackStack(null)
+                            .commit();
+                }
+            });
         }
 
 
