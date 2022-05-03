@@ -2,6 +2,8 @@ package cm.protectu.News;
 
 import java.util.Date;
 
+import javax.annotation.Nullable;
+
 public class NewsCardClass {
     private String newsTitle;
     private String newsText;
@@ -9,18 +11,20 @@ public class NewsCardClass {
     private String imageURL;
     private String pubImgURL;
     private String pubID;
+    private Date date;
 
     public NewsCardClass(){
 
     }
 
-    public NewsCardClass(String newsTitle, String newsText, String newsID, String imgUrl, String pubImgURL, String pubID){
+    public NewsCardClass(String newsTitle, String newsText, String newsID, @Nullable String imgUrl, String pubImgURL, String pubID, Date date){
         this.newsTitle = newsTitle;
         this.newsText = newsText;
         this.newsID = newsID;
         this.imageURL = imgUrl;
         this.pubImgURL = pubImgURL;
         this.pubID = pubID;
+        this.date = date;
     }
 
     public String getNewsTitle() {
@@ -69,5 +73,13 @@ public class NewsCardClass {
 
     public void setPubID(String pubID) {
         this.pubID = pubID;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
