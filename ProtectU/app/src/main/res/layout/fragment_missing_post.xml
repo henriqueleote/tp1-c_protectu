@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--XMl Layout for RecyclerView-->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainPostID"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".MainActivity"
     android:background="#F1EFEF"
-    android:id="@+id/mainPostID">
+    tools:context=".MainActivity">
 
     <ImageView
         android:id="@+id/backID"
@@ -16,149 +16,155 @@
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
         android:src="@drawable/ic_arrow_back_black_24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/black" />
 
     <TextView
         android:id="@+id/titlePageMissingPostID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:text="@string/missingBoard"
         android:textColor="@color/black"
         android:textSize="23dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints"></TextView>
 
 
     <androidx.cardview.widget.CardView
         android:id="@+id/postCardID"
         android:layout_width="match_parent"
-        android:layout_height="570dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/titlePageMissingPostID"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        app:cardCornerRadius="15dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="20dp"
         android:background="@color/white"
-        >
-        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        app:cardCornerRadius="15dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titlePageMissingPostID">
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/titlePageMissingPostID"
             android:fillViewport="true">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-
-            <ImageView
-                android:id="@+id/foto"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_bottom_profile_black_24dp" />
-
-            <TextView
-                android:id="@+id/profileNamePostID"
+            <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/foto"
-                android:text="David Ferreira"
-                android:textSize="16dp" />
+                android:layout_height="wrap_content">
 
 
-            <ImageView
-                android:id="@+id/imageMissingID"
-                android:layout_width="match_parent"
-                android:layout_height="220dp"
-                android:layout_below="@+id/profileNamePostID"
-                android:layout_marginTop="10dp"
-                android:background="@color/black"
-                android:scaleType="fitXY" />
-
-            <TextView
-                android:id="@+id/nameMissingPostID"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_below="@+id/imageMissingID"
-                android:background="#879CA6"
-                android:text="Luke Xavier"
-                android:textSize="20dp"
-                android:textColor="@color/white"
-                android:paddingLeft="12dp"
-                android:paddingTop="8dp"/>
-
-            <RelativeLayout
-                android:id="@+id/ageLabelID"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/nameMissingPostID"
-                android:background="#879CA6"
-                android:paddingBottom="20dp">
+                <ImageView
+                    android:id="@+id/foto"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_bottom_profile_black_24dp" />
 
                 <TextView
-                    android:id="@+id/labelAID"
-                    android:layout_width="45dp"
-                    android:layout_height="20dp"
-                    android:paddingLeft="12dp"
-                    android:text="@string/Age"
-                    android:textColor="@color/white" />
-
-                <TextView
-                    android:id="@+id/ageMissingPostID"
+                    android:id="@+id/profileNamePostID"
                     android:layout_width="wrap_content"
-                    android:layout_height="20dp"
-                    android:layout_toRightOf="@+id/labelAID"
-                    android:text="12"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@+id/foto"
+                    android:text="David Ferreira"
+                    android:textSize="16dp" />
+
+
+                <ImageView
+                    android:id="@+id/imageMissingID"
+                    android:layout_width="match_parent"
+                    android:layout_height="220dp"
+                    android:layout_below="@+id/profileNamePostID"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/black"
+                    android:scaleType="fitXY" />
+
+                <TextView
+                    android:id="@+id/nameMissingPostID"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/imageMissingID"
+                    android:background="#879CA6"
+                    android:paddingLeft="12dp"
+                    android:paddingTop="8dp"
+                    android:text="Luke Xavier"
+                    android:textColor="@color/white"
+                    android:textSize="20dp" />
+
+                <RelativeLayout
+                    android:id="@+id/ageLabelID"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/nameMissingPostID"
+                    android:background="#879CA6"
+                    android:paddingBottom="20dp">
+
+                    <TextView
+                        android:id="@+id/labelAID"
+                        android:layout_width="45dp"
+                        android:layout_height="20dp"
+                        android:paddingLeft="12dp"
+                        android:text="@string/Age"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/ageMissingPostID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_toRightOf="@+id/labelAID"
+                        android:text="12"
+                        android:textColor="@color/white" />
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/descriptionPostID"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/ageLabelID"
+                    android:background="#879CA6"
+                    android:paddingLeft="12dp"
+                    android:text="fddsffdsadasd"
                     android:textColor="@color/white" />
-            </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/phoneShareID"
+                    android:layout_width="90dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="11dp">
+
+                    <ImageView
+                        android:id="@+id/phoneNumberIconID"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginTop="12dp"
+                        android:src="@drawable/ic_phone_black_24dp" />
 
 
-            <TextView
-                android:id="@+id/descriptionPostID"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/ageLabelID"
-                android:background="#879CA6"
-                android:text="fddsffdsadasd"
-                android:textColor="@color/white"
-                android:paddingLeft="12dp"/>
+                    <ImageView
+                        android:id="@+id/sharePostID"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_toRightOf="@+id/phoneNumberIconID"
+                        android:src="@drawable/ic_share_black_24dp" />
 
-            <RelativeLayout
-                android:id="@+id/phoneShareID"
-                android:layout_width="90dp"
-                android:layout_height="60dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginRight="11dp">
-
-                <ImageView
-                    android:id="@+id/phoneNumberIconID"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="3dp"
-                    android:layout_marginTop="12dp"
-                    android:src="@drawable/ic_phone_black_24dp" />
-
-
-                <ImageView
-                    android:id="@+id/sharePostID"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_toRightOf="@+id/phoneNumberIconID"
-                    android:src="@drawable/ic_share_black_24dp" />
+                </RelativeLayout>
 
             </RelativeLayout>
-
-        </RelativeLayout>
         </ScrollView>
     </androidx.cardview.widget.CardView>
 
@@ -203,4 +209,4 @@
 
      </androidx.core.widget.NestedScrollView> -->
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

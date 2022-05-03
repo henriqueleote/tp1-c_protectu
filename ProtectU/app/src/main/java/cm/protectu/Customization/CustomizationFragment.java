@@ -33,7 +33,7 @@ public class CustomizationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         //Link the layout to the Fragment
-        View view = inflater.inflate(R.layout.fragment_customization, container, false);
+        View view = inflater.inflate(R.layout.fragment_costumization, container, false);
 
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
