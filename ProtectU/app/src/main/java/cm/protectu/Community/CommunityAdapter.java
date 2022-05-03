@@ -111,8 +111,8 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
 
         textAndMessageAdjuster(holder, position, messageText);
 
-        if (MainActivity.sessionUser != null) {
-            if (MainActivity.sessionUser.getUid().equals(userID)) {
+        if(!mAuth.getCurrentUser().isAnonymous()){
+            if (MainActivity.sessionUser.getUid().equals(userID) && !MainActivity.sessionUser.getUserType().equals("user")) {
                 holder.removeMessageCommunity.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -123,7 +123,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                 holder.removeMessageCommunity.setVisibility(View.INVISIBLE);
             }
 
-            if (MainActivity.sessionUser.getUserType() != null &&  !MainActivity.sessionUser.getUserType().equals("user")) {
+            if (!MainActivity.sessionUser.getUserType().equals("user")) {
                 holder.makeVerified.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

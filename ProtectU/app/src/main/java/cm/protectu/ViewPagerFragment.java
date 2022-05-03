@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import java.util.ArrayList;
 
@@ -23,9 +23,9 @@ public class ViewPagerFragment extends Fragment {
         list.add(new CommunityFragment(null));
         list.add(new MissingBoardFragment());
 
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getParentFragmentManager(),list);
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getParentFragmentManager(),getLifecycle(),list);
 
-        ViewPager viewPager = view.findViewById(R.id.view_pagerCommunity);
+        ViewPager2 viewPager = view.findViewById(R.id.view_pagerCommunity);
         viewPager.setAdapter(viewPagerAdapter);
 
         return view;

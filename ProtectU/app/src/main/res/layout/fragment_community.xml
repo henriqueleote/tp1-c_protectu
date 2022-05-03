@@ -11,7 +11,15 @@
         android:layout_height="match_parent"
         android:background="@color/white">
 
-
+        <ImageView
+            android:id="@+id/back_id"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:src="@drawable/ic_arrow_back_black_24dp"
+            app:tint="@color/black"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/communityText"

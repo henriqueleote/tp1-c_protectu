@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,10 +40,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private FirebaseFirestore firebaseFirestore;
 
     //Bottom navigation bar
-    BottomNavigationView bottomBar;
-    NavigationView sideBar;
-    ImageView splash;
-    View bottom;
+    private DrawerLayout drawerLayout;
+    private BottomNavigationView bottomBar;
+    private NavigationView sideBar;
+    private ImageView splash;
+    private View bottom;
 
     public static UserDataClass sessionUser;
 
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         sideBar = findViewById(R.id.side_menu);
         splash = findViewById(R.id.splash);
         bottom = findViewById(R.id.bottom);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         //TODO WORK ON THIS SPLASH SCREEN, ITS NOT PERFECT
         bottomBar.setVisibility(View.INVISIBLE);
@@ -111,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 //loads the fragment
                 if (fragment == null)
                     return false;
+                drawerLayout.closeDrawers();
                 return loadFragment(fragment);
             }
         });

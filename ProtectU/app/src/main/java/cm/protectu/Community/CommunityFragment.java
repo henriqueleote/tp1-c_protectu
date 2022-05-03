@@ -41,7 +41,7 @@ public class CommunityFragment extends Fragment {
     private CommunityAdapter communityAdapter;
     private ArrayList<CommunityCard> listOfCommunityCards;
     private FloatingActionButton floatingActionButton;
-    private ImageView missingPeopleButton;
+    private ImageView missingPeopleButton,backProfile;
     private SwipeRefreshLayout swipeToRefresh;
     private CommunityFragment fragment;
     private String userID;
@@ -55,7 +55,6 @@ public class CommunityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //Link the layout to the Fragment
         View view = inflater.inflate(R.layout.fragment_community, container, false);
-
 
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
@@ -77,6 +76,7 @@ public class CommunityFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.communityRecyclerView);
         swipeToRefresh = view.findViewById(R.id.swipeToRefresh);
+        backProfile = view.findViewById(R.id.back_id);
 
         communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth, fragment);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
@@ -152,6 +152,7 @@ public class CommunityFragment extends Fragment {
         }
         else{
             missingPeopleButton.setVisibility(View.GONE);
+            backProfile.setVisibility(View.VISIBLE);
         }
 
 
