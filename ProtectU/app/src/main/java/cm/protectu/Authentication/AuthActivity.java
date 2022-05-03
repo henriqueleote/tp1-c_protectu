@@ -15,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.splashscreen.SplashScreen;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -72,7 +71,6 @@ public class AuthActivity extends AppCompatActivity {
                 mAuth.getCurrentUser().delete();
                 mAuth.signOut();
             }else{
-                this.finish();
                 startActivity(new Intent(this, MainActivity.class));
             }
         }

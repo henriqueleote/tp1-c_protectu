@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -20,7 +21,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -43,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private DrawerLayout drawerLayout;
     private BottomNavigationView bottomBar;
     private NavigationView sideBar;
-    private ImageView splash;
 
     public static UserDataClass sessionUser;
 
@@ -70,14 +74,28 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         sideBar = findViewById(R.id.side_menu);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        getUserData();
+        getUserData(1);
 
-        /*
-        //If the user is anonymous, removes the profile option
-        if(mAuth.getCurrentUser().isAnonymous()){
-            navigation.getMenu().removeItem(R.id.navigation_profile);
-        }
-        */
+        final DocumentReference docRef = firebaseFirestore.collection("users").document(mAuth.getCurrentUser().getUid().toString());
+        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+
+                if (snapshot != null && snapshot.exists()) {
+                    Log.d(TAG, "Current data: " + snapshot.getData());
+                    sessionUser = snapshot.toObject(UserDataClass.class);
+                } else {
+                    Log.d(TAG, "Current data: null");
+                }
+            }
+        });
+
+
         bottomBar.setOnNavigationItemSelectedListener(this);
         sideBar.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -156,6 +174,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     // Create the AlertDialog object and return it
                     builder.show();
                 }else{
+                    getUserData(-1);
                     fragment = new ProfileFragment();
                 }
 
@@ -186,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         startActivity(new Intent(MainActivity.this, AuthActivity.class));
     }
 
-    public void getUserData(){
+    public void getUserData(int code){
         //Firebase Authentication function get the data from firebase with certain criteria
         firebaseFirestore.collection("users")
                 //where the userID is the same as the logged in user
@@ -200,7 +219,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                                 sessionUser = document.toObject(UserDataClass.class);
                                 //sessionUser = new UserDataClass(mAuth.getCurrentUser().toString(),document.getString("firstName"),document.getString("lastName"),document.getString("email"),document.getString("userType"), document.getString("phoneNumber"), document.getString("imageURL"));
                             }
-                            loadFragment(new MapFragment());
+                            if(code == 1)
+                                loadFragment(new MapFragment());
                         } else {
                             //TODO Maybe reload the page or kill the session?
                             //Shows the error

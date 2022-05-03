@@ -137,15 +137,6 @@ public class MapFragment extends Fragment {
 
         areAllButtonVisible = false;
 
-        //Only shows the button if its a admin or authority
-        if(!mAuth.getCurrentUser().isAnonymous())
-            if(!MainActivity.sessionUser.getUserType().equals("user"))
-                createBtn.setVisibility(View.VISIBLE);
-
-
-
-
-
         createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -235,6 +226,11 @@ public class MapFragment extends Fragment {
                             mDialog.setMessage("Loading markers and zones...");
                             mDialog.setCancelable(false);
                             mDialog.show();
+
+                            //Only shows the button if its a admin or authority
+                            if(!mAuth.getCurrentUser().isAnonymous())
+                                if(!MainActivity.sessionUser.getUserType().equals("user"))
+                                    createBtn.setVisibility(View.VISIBLE);
 
                             currentLocation = location;
 
