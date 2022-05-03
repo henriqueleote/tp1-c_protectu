@@ -93,6 +93,7 @@ public class LoginFragment extends BottomSheetDialogFragment {
         forgotPasswordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                getDialog().dismiss();
                 ForgotPasswordFragment bottomForgot = new ForgotPasswordFragment();
                 bottomForgot.show(getParentFragmentManager(), bottomForgot.getTag());
             }

@@ -75,10 +75,9 @@
             android:id="@+id/contactText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:drawablePadding="10dp"
-            android:hint="Contact"
-            android:inputType="text"
+            android:hint="Phone number"
+            android:inputType="number"
             android:textSize="15sp"
             android:layout_weight="1"
             android:ellipsize="end"

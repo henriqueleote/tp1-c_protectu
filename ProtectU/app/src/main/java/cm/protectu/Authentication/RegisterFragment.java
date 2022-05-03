@@ -283,6 +283,7 @@ public class RegisterFragment extends BottomSheetDialogFragment {
                                 userData.put("uid", user.getUid());
                                 userData.put("firstName", name);
                                 userData.put("lastName", surname);
+                                userData.put("email", email);
                                 userData.put("phoneNumber", countryCodePicker.getSelectedCountryCodeWithPlus() +" "+ contact);
                                 userData.put("imageURL", "null");
                                 userData.put("userType", userType);
