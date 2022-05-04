@@ -18,6 +18,7 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -26,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
-                app:layout_constraintEnd_toStartOf="@+id/verified"
+                app:layout_constraintEnd_toEndOf="@+id/verified"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="10dp"
                 app:srcCompat="@drawable/ic_delete_black_24dp" />
@@ -60,8 +61,8 @@
                 <ImageView
                     android:id="@+id/userImage"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="10dp"
                     app:srcCompat="@drawable/ic_bottom_profile_black_24dp" />
 
                 <TextView
@@ -81,11 +82,11 @@
             <RelativeLayout
                 android:id="@+id/buttonsCommunity"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
                 >
 
                 <ImageView
@@ -158,14 +159,14 @@
 
             <TextView
                 android:id="@+id/dateText"
-                android:layout_width="100dp"
-                android:layout_height="25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_margin="8dp"
                 android:padding="3dp"
                 android:textAlignment="center"
-                android:textSize="13sp"
+                android:textSize="11sp"
                 android:text="date"/>
 
 
@@ -175,6 +176,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/userDetails"
                 app:layout_constraintBottom_toTopOf="@id/buttonsCommunity"
+                android:layout_marginBottom="10dp"
                 android:layout_marginHorizontal="8dp"
                 android:padding="5dp"
                 android:text="TextNoImage"/>
@@ -197,9 +199,8 @@
                 app:layout_constraintBottom_toTopOf="@id/buttonsCommunity"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginStart="8dp"
-                android:visibility="invisible"
-                app:srcCompat="@android:drawable/ic_menu_share" />
+                android:layout_marginVertical="10dp"
+                android:visibility="invisible" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

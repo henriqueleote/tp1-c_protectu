@@ -1,12 +1,12 @@
 package cm.protectu.Community;
 
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
+import android.icu.text.DateFormat;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.chrisbanes.photoview.PhotoView;
@@ -72,8 +73,9 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
         super.onAttachedToRecyclerView(recyclerView);
     }
 
+    @SuppressLint("NewApi")
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         if(position < 2 && getLastPosition() < 2 && getLastPosition() >= 1){
             communityFragment.communityCardsData(null);
         }
@@ -110,18 +112,11 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                     }
                 });
 
+        adaptConstrains(holder,position);
 
         getClickedLikeOrDislike(currentUserID, messageID, holder);
 
-        /**
-         * If the message is not verified it makes the symbol invisible
-         */
-        if (!listOfCommunityCards.get(position).isVerified()) {
-            holder.verified.setVisibility(View.INVISIBLE);
-            changeMarginForMakeVerified(10, holder);
-        }
-
-        holder.dateText.setText(listOfCommunityCards.get(position).getDate() + "");
+        holder.dateText.setText(DateFormat.getDateInstance(DateFormat.FULL).format(listOfCommunityCards.get(position).getDate()));
 
         textAndMessageAdjuster(holder, position, messageText);
 
@@ -141,16 +136,11 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                 holder.makeVerified.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        makeVerified(messageID, holder);
+                        makeVerified(messageID, holder,position);
                     }
                 });
             }else {
                 holder.makeVerified.setVisibility(View.INVISIBLE);
-                if (!listOfCommunityCards.get(position).isVerified()){
-                ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) holder.removeMessageCommunity.getLayoutParams();
-                int px = dpToPixels(10);
-                params.setMargins(px, px, px, 0);
-                holder.removeMessageCommunity.setLayoutParams(params);}
             }
 
             //Put the number of likes and dislikes in the message
@@ -193,45 +183,47 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
         }
     }
 
-    /**
-     * This method is responsible for changing the margin with the value given by the value for the MakeVerified
-     *
-     * @param value
-     */
-    public void changeMarginForMakeVerified(int value, MyViewHolder holder) {
-        holder.makeVerified.setVisibility(View.VISIBLE);
-        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) holder.makeVerified.getLayoutParams();
-        int px = dpToPixels(value);
-        params.setMargins(px, px, px, 0);
-        holder.makeVerified.setLayoutParams(params);
-    }
-
-    public int dpToPixels(int value) {
-        Resources resources = context.getResources();
-        int px = (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_DIP,
-                value,
-                resources.getDisplayMetrics()
-        );
-        return px;
-    }
-
     //TODO: CHANGE THE METHOD VERIFICATION WHEN HE CREATE THE AUTHORITY USERS
 
+
+    public void adaptConstrains(MyViewHolder holder,int position){
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(holder.constraintLayout);
+        int margin = 5;
+
+        if (!listOfCommunityCards.get(position).isVerified()){
+            if (!MainActivity.sessionUser.getUserType().equals("user")){
+                constraintSet.connect(holder.makeVerified.getId(),ConstraintSet.END,holder.verified.getId(),ConstraintSet.END,margin);
+                constraintSet.applyTo(holder.constraintLayout);
+
+                constraintSet.connect(holder.removeMessageCommunity.getId(),ConstraintSet.END,holder.makeVerified.getId(),ConstraintSet.START,margin);
+
+            }else{
+                constraintSet.connect(holder.removeMessageCommunity.getId(),ConstraintSet.END,holder.makeVerified.getId(),ConstraintSet.END,margin);
+            }
+            constraintSet.applyTo(holder.constraintLayout);
+            holder.verified.setVisibility(View.INVISIBLE);
+        }
+        else {
+            constraintSet.clear(holder.removeMessageCommunity.getId(),ConstraintSet.END);
+
+            constraintSet.connect(holder.removeMessageCommunity.getId(),ConstraintSet.END,holder.verified.getId(),ConstraintSet.START,margin);
+            constraintSet.applyTo(holder.constraintLayout);
+        }
+    }
     /**
      * This method is responsible for making the message from the community verified if the user is an authority
      *
      * @param messageID
      */
-    public void makeVerified(String messageID, MyViewHolder holder) {
+    public void makeVerified(String messageID, MyViewHolder holder, int position) {
         firebaseFirestore.collection("community-chat")
                 .document(messageID)
                 .update("verified", new Boolean("true"))
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        holder.verified.setVisibility(View.VISIBLE);
-                        holder.makeVerified.setVisibility(View.INVISIBLE);
+                        adaptConstrains(holder,position);
                         Log.d(TAG, "Success");
                     }
                 })
@@ -529,6 +521,8 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
         ImageView userImage, verified, likeButton, dislikeButton, imageCommunity, dislikeButtonClicked,
                 likeButtonClicked, shareButton, removeMessageCommunity, makeVerified;
         CardView cardCommunity;
+        ConstraintLayout constraintLayout;
+
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -549,7 +543,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
             removeMessageCommunity = itemView.findViewById(R.id.removeMessageCommunity);
             makeVerified = itemView.findViewById(R.id.makeVerified);
             cardCommunity = itemView.findViewById(R.id.cardCommunity);
-
+            constraintLayout = itemView.findViewById(R.id.constraintLayout);
         }
     }
 }
