@@ -17,9 +17,9 @@
         android:hint="First name"
         android:inputType="textAutoComplete"
         android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/profileImageView"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/profileImageView"
         app:layout_constraintTop_toBottomOf="@+id/profileImageView" />
 
     <EditText
@@ -32,8 +32,8 @@
         android:hint="Last name"
         android:inputType="textAutoComplete"
         android:textSize="15sp"
-        app:layout_constraintLeft_toLeftOf="@+id/firstNameEditText"
-        app:layout_constraintRight_toRightOf="@+id/firstNameEditText"
+        app:layout_constraintStart_toStartOf="@+id/firstNameEditText"
+        app:layout_constraintEnd_toEndOf="@+id/firstNameEditText"
         app:layout_constraintTop_toBottomOf="@+id/firstNameEditText" />
 
     <!-- TODO - Verify input number fields -->
@@ -48,8 +48,8 @@
         android:hint="Phone number"
         android:inputType="phone"
         android:textSize="15sp"
-        app:layout_constraintLeft_toLeftOf="@+id/lastNameEditText"
-        app:layout_constraintRight_toRightOf="@+id/lastNameEditText"
+        app:layout_constraintStart_toStartOf="@+id/lastNameEditText"
+        app:layout_constraintEnd_toEndOf="@+id/lastNameEditText"
         app:layout_constraintTop_toBottomOf="@+id/lastNameEditText" />
 
     <Button
@@ -60,14 +60,14 @@
         android:backgroundTint="#2E98F0"
         android:fontFamily="@font/lexend_regular"
         android:text="@string/btn_save"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/contactEditText"
+        app:layout_constraintEnd_toEndOf="@+id/contactEditText"
         app:layout_constraintTop_toBottomOf="@+id/contactEditText" />
 
     <ImageView
         android:id="@+id/profileImageView"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
         android:src="@drawable/ic_bottom_profile_black_24dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -79,12 +79,9 @@
         android:id="@+id/imageView3"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginLeft="250dp"
-        android:layout_marginTop="300dp"
         android:src="@drawable/ic_camera_black_24dp"
         app:layout_constraintBottom_toBottomOf="@+id/profileImageView"
-        app:layout_constraintEnd_toEndOf="@+id/profileImageView"
-        app:tint="@color/black" />
+        app:layout_constraintEnd_toEndOf="@+id/profileImageView" />
 
     <ImageView
         android:id="@+id/backButton"
@@ -94,7 +91,6 @@
         android:layout_marginTop="15dp"
         android:src="@drawable/ic_arrow_back_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/black" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
