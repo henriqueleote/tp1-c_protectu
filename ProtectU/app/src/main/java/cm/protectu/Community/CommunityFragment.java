@@ -76,10 +76,11 @@ public class CommunityFragment extends Fragment {
         listOfCommunityCards = new ArrayList<>();
 
         recyclerView = view.findViewById(R.id.communityRecyclerView);
+
         swipeToRefresh = view.findViewById(R.id.swipeToRefresh);
         backProfile = view.findViewById(R.id.back_id);
 
-        communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth, fragment);
+        communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth, fragment,-1);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         recyclerView.setAdapter(communityAdapter);
 
@@ -154,7 +155,7 @@ public class CommunityFragment extends Fragment {
         else{
             missingPeopleButton.setVisibility(View.GONE);
             backProfile.setVisibility(View.VISIBLE);
-            missingPeopleButton.setOnClickListener(new View.OnClickListener() {
+            backProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Fragment fragmentToChange = new ProfileFragment();
@@ -165,7 +166,6 @@ public class CommunityFragment extends Fragment {
                 }
             });
         }
-
 
         //Returns the view
         return view;
@@ -202,7 +202,7 @@ public class CommunityFragment extends Fragment {
 
                             Collections.sort(listOfCommunityCards, new SortCommunityCardClass());
 
-                            communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth, fragment);
+                            communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth, fragment,communityAdapter.getLastPosition());
                             recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
                             recyclerView.setAdapter(communityAdapter);
                             communityAdapter.notifyDataSetChanged();

@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -32,8 +31,10 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
+
 import java.util.ArrayList;
 import java.util.Date;
+
 import cm.protectu.MainActivity;
 import cm.protectu.R;
 import cm.protectu.UserDataClass;
@@ -47,15 +48,17 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth mAuth;
     private CommunityFragment communityFragment;
+    private int lastPosition;
 
     private static final String TAG = MainActivity.class.getName();
 
-    public CommunityAdapter(Context ct, ArrayList<CommunityCard> l, FirebaseAuth firebaseAuth, CommunityFragment cf) {
+    public CommunityAdapter(Context ct, ArrayList<CommunityCard> l, FirebaseAuth firebaseAuth, CommunityFragment cf,int lastPos) {
         firebaseFirestore = FirebaseFirestore.getInstance();
         context = ct;
         listOfCommunityCards = new ArrayList<>(l);
         mAuth = firebaseAuth;
         communityFragment = cf;
+        lastPosition = lastPos;
     }
 
     @NonNull
@@ -65,7 +68,17 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
     }
 
     @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
+    }
+
+    @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        if(position < 2 && getLastPosition() < 2 && getLastPosition() >= 1){
+            communityFragment.communityCardsData(null);
+        }
+        setLastPosition(position);
+
         String userID = listOfCommunityCards.get(position).getUserID();
         String currentUserID = mAuth.getUid();
         String messageText = listOfCommunityCards.get(position).getMessageText();
@@ -501,6 +514,14 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
     @Override
     public int getItemCount() {
         return listOfCommunityCards.size();
+    }
+
+    public int getLastPosition() {
+        return lastPosition;
+    }
+
+    public void setLastPosition(int position) {
+        this.lastPosition = position;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {

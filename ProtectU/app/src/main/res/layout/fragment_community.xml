@@ -45,10 +45,12 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/communityRecyclerView"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/communityText"
                 android:layout_centerHorizontal="true"
+                android:orientation="vertical"
                 android:fillViewport="true">
 
 
