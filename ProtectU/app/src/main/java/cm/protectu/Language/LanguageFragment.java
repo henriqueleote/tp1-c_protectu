@@ -2,7 +2,6 @@ package cm.protectu.Language;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,8 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import cm.protectu.Authentication.AuthActivity;
-import cm.protectu.MainActivity;
 import cm.protectu.R;
 
 public class LanguageFragment extends Fragment {
@@ -57,11 +54,11 @@ public class LanguageFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage("The app is going to restart, are you sure?")
+                builder.setMessage(R.string.question_app_will_restart)
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 String code = setLocateLanguage();
-                                lang.updateResorce(code);
+                                lang.updateResource(code);
                                 getActivity().recreate();
                             }
                         })
@@ -94,7 +91,6 @@ public class LanguageFragment extends Fragment {
         String language = Locale.getDefault().getDisplayLanguage();
         for (TableRow tableOption : tableOptions) {
             TextView label = (TextView) tableOption.getChildAt(0);
-            System.out.println(label.getText());
             if (label.getText().toString().equalsIgnoreCase(language)) {
                 chooseOption(tableOption);
                 return;
