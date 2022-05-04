@@ -91,7 +91,7 @@ public class ProfileFragment extends Fragment {
         editImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditProfileFragment fragment = new EditProfileFragment(userName, lastName, phoneNumber, imageURL);
+                EditProfileFragment fragment = new EditProfileFragment();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container, fragment);
                 transaction.addToBackStack(null);

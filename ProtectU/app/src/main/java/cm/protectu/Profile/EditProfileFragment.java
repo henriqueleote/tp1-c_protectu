@@ -26,6 +26,7 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -79,13 +80,6 @@ public class EditProfileFragment extends Fragment {
 
     private static final String TAG = MainActivity.class.getName();
 
-    public EditProfileFragment(String name, String surname, String phoneNumber, String imageURL){
-        this.name = name;
-        this.surname = surname;
-        this.phoneNumber = phoneNumber;
-        this.imageURL = imageURL;
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -105,9 +99,7 @@ public class EditProfileFragment extends Fragment {
         profileImageView = view.findViewById(R.id.profileImageView);
         BottomNavigationView bottomBar = getActivity().findViewById(R.id.bottom_menu);
 
-
         oldDrawable = profileImageView.getDrawable();
-
 
         profileImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,22 +125,21 @@ public class EditProfileFragment extends Fragment {
         //Hide the bottom bar in this page
         //bottomBar.setVisibility(View.INVISIBLE);
 
-        firstNameEditText.setText(name);
-        lastNameEditText.setText(surname);
-        contactEditText.setText(phoneNumber);
-        //TODO CHECK IF THIS IS THE LINE, I'VE A NULL SPACE IN THE REGISTER, SO MAYBE .equals("null") after everyone deletes their accounts
-        if(!imageURL.equals("null")){
-            //if(document.getString("imageURL") != null){
+        //Initialize Firebase Firestore Database
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
+        firebaseUrl = MainActivity.sessionUser.getImageURL();
+        firstNameEditText.setText(MainActivity.sessionUser.getFirstName());
+        lastNameEditText.setText(MainActivity.sessionUser.getLastName());
+        contactEditText.setText(MainActivity.sessionUser.getPhoneNumber());
+        if(!MainActivity.sessionUser.getImageURL().equals("null")){
             Picasso.get()
-                    .load(imageURL)
+                    .load(MainActivity.sessionUser.getImageURL())
                     .centerCrop()
                     .fit()
                     .transform(new CropCircleTransformation())
                     .into(profileImageView);
         }
-
-        //Initialize Firebase Firestore Database
-        firebaseFirestore = FirebaseFirestore.getInstance();
 
         //TODO Check the animation
         //Checks if there is a session, if not, redirects to the Auth page
@@ -176,14 +167,23 @@ public class EditProfileFragment extends Fragment {
                 userData.put("phoneNumber", phoneNumber);
                 //TODO Check if he changed the image, with the field from the database
                 userData.put("imageURL", firebaseUrl);
+                userData.put("email", MainActivity.sessionUser.getEmail());
+                userData.put("userType", MainActivity.sessionUser.getUserType());
                 Log.d(TAG,userData.toString());
-                firebaseFirestore.collection("users").document(mAuth.getCurrentUser().getUid()).set(userData);
-
-                ProfileFragment fragment = new ProfileFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                firebaseFirestore.collection("users").document(mAuth.getCurrentUser().getUid()).set(userData).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if(task.isSuccessful()){
+                            ProfileFragment fragment = new ProfileFragment();
+                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                            transaction.replace(R.id.fragment_container, fragment);
+                            transaction.addToBackStack(null);
+                            transaction.commit();
+                        }else{
+                            Toast.makeText(getActivity(), "Error, please try again", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
         });
 
