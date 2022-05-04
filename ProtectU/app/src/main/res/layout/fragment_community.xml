@@ -41,14 +41,20 @@
             android:layout_margin="20dp"
             android:src="@drawable/ic_missing_people_black_24dp" />
 
+
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/communityRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_below="@+id/communityText"
-                android:layout_centerHorizontal="true">
+                android:layout_centerHorizontal="true"
+                android:fillViewport="true">
+
 
             </androidx.recyclerview.widget.RecyclerView>
+
+
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/createMessageButton"

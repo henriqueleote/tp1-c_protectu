@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -172,29 +172,28 @@
                 android:id="@+id/communityText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/userDetails"
-                android:layout_marginBottom="40dp"
+                android:layout_below="@+id/userDetails"
+                android:layout_centerInParent="true"
                 android:layout_marginHorizontal="8dp"
+                android:layout_marginBottom="40dp"
                 android:padding="5dp"
-                android:text="texto1"
-                android:textSize="15sp" />
-
+                android:text="dfgsdrgsdfgsdfghjfghjfghjfghjfhjfghjfghjg
+                ggggggggggggggggggggggggggggggggggggggggg
+                gggggggggggggsdfgsdfgsdfgsdfgsdfg"/>
 
             <TextView
                 android:id="@+id/communityTextWithImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/userDetails"
-                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
                 android:layout_marginHorizontal="8dp"
                 android:layout_marginBottom="160dp"
                 android:padding="5dp"
                 android:text="dfgsdrgsdfgsdfghjfghjfghjfghjfhjfghjfghjg
                 ggggggggggggggggggggggggggggggggggggggggg
                 gggggggggggggsdfgsdfgsdfgsdfgsdfg"
-                android:textSize="15sp"
                 android:visibility="invisible" />
-
 
             <ImageView
                 android:id="@+id/imageCommunity"
@@ -202,8 +201,8 @@
                 android:layout_height="100dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerInParent="true"
-                android:layout_marginTop="20dp"
                 android:layout_marginLeft="8dp"
+                android:layout_marginBottom="50dp"
                 android:visibility="invisible"
                 app:srcCompat="@android:drawable/ic_menu_share" />
 
@@ -212,4 +211,4 @@
 
     </androidx.cardview.widget.CardView>
 
-</RelativeLayout>
+</LinearLayout>
