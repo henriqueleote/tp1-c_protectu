@@ -277,7 +277,7 @@ public class RegisterFragment extends BottomSheetDialogFragment {
                                 user = mAuth.getCurrentUser();
 
                                 // TODO - Add date of register
-
+                                String url = "null";
                                 //Create HashMap object with the user's profile data
                                 Map<String, Object> userData = new HashMap<>();
                                 userData.put("uid", user.getUid());
@@ -285,7 +285,7 @@ public class RegisterFragment extends BottomSheetDialogFragment {
                                 userData.put("lastName", surname);
                                 userData.put("email", email);
                                 userData.put("phoneNumber", countryCodePicker.getSelectedCountryCodeWithPlus() +" "+ contact);
-                                userData.put("imageURL", "null");
+                                userData.put("imageURL", url);
                                 userData.put("userType", userType);
 
                                 //Inserts in Firestore the user data with the correspondent user ID from Authentication
