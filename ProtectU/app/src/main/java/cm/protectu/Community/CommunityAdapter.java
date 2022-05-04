@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.chrisbanes.photoview.PhotoView;
@@ -133,7 +134,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
             }else {
                 holder.makeVerified.setVisibility(View.INVISIBLE);
                 if (!listOfCommunityCards.get(position).isVerified()){
-                RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) holder.removeMessageCommunity.getLayoutParams();
+                ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) holder.removeMessageCommunity.getLayoutParams();
                 int px = dpToPixels(10);
                 params.setMargins(px, px, px, 0);
                 holder.removeMessageCommunity.setLayoutParams(params);}
@@ -186,7 +187,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
      */
     public void changeMarginForMakeVerified(int value, MyViewHolder holder) {
         holder.makeVerified.setVisibility(View.VISIBLE);
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) holder.makeVerified.getLayoutParams();
+        ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) holder.makeVerified.getLayoutParams();
         int px = dpToPixels(value);
         params.setMargins(px, px, px, 0);
         holder.makeVerified.setLayoutParams(params);
