@@ -11,34 +11,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/txtLanguage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp">
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/lexend_bold"
+            android:text="@string/lbl_languague"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="24sp" />
 
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="70dp"
-                android:layout_weight="1"
-                android:contentDescription="@string/backarrow"
-                app:srcCompat="@drawable/ic_arrow_back_black_24dp" />
-
-            <TextView
-                android:id="@+id/txtLanguage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/lexend_bold"
-                android:text="@string/lbl_languague"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="24sp" />
-
-        </LinearLayout>
 
         <TableLayout
             android:id="@+id/tableLayout"
@@ -54,7 +38,7 @@
                 android:id="@+id/tbOpEnglish"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="70dp"
                 android:background="#F8F8F8">
 
 
@@ -67,7 +51,7 @@
                     android:fontFamily="@font/lexend_regular"
                     android:text="English"
                     android:textColor="@color/black"
-                    android:textSize="22sp" />
+                    android:textSize="18sp" />
 
             </TableRow>
 
@@ -85,7 +69,7 @@
                     android:fontFamily="@font/lexend_regular"
                     android:text="Português"
                     android:textColor="@color/black"
-                    android:textSize="22sp" />
+                    android:textSize="18sp" />
             </TableRow>
 
             <TableRow
@@ -102,7 +86,7 @@
                     android:fontFamily="@font/lexend_regular"
                     android:text="Français"
                     android:textColor="@color/black"
-                    android:textSize="22sp" />
+                    android:textSize="18sp" />
             </TableRow>
 
             <TableRow android:id="@+id/tbOpGerman">
@@ -116,7 +100,7 @@
                     android:fontFamily="@font/lexend_regular"
                     android:text="Deutsch"
                     android:textColor="@color/black"
-                    android:textSize="22sp" />
+                    android:textSize="18sp" />
             </TableRow>
 
             <TableRow android:id="@+id/tbOpUkraine">
@@ -130,7 +114,7 @@
                     android:fontFamily="@font/lexend_regular"
                     android:text="Українська"
                     android:textColor="@color/black"
-                    android:textSize="22sp" />
+                    android:textSize="18sp" />
             </TableRow>
 
         </TableLayout>
@@ -140,9 +124,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tableLayout"
-            android:layout_marginStart="150dp"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="-200dp"
-            android:background="@color/primary_button"
+            android:backgroundTint="@color/primary_button"
             android:text="@string/btn_save"
             tools:ignore="TextContrastCheck" />
 

@@ -7,7 +7,12 @@ import android.content.res.Resources;
 
 import androidx.fragment.app.Fragment;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Locale;
+import java.util.Scanner;
 
 public class LanguageManagerClass {
     private Fragment ct;
@@ -16,7 +21,7 @@ public class LanguageManagerClass {
         this.ct = ct;
     }
 
-    public void updateResorce(String code) {
+    public void updateResource(String code) {
         Locale locale = new Locale(code);
         Locale.setDefault(locale);
         Resources resources = ct.getResources();
@@ -24,4 +29,6 @@ public class LanguageManagerClass {
         configuration.locale = locale;
         resources.updateConfiguration(configuration, resources.getDisplayMetrics());
     }
+
+
 }

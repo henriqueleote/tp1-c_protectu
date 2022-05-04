@@ -67,4 +67,9 @@
     <string name="Create">Criar</string>
     <string name="newMessage">Nova Mensagem</string>
     <string name="message">Mensagem</string>
+    <string name="pick_image_intent_text">Selecione uma Fotografia</string>
+    <string name="gallery">Galeria</string>
+    <string name="camera">Camera</string>
+    <string name="see_more">ver mais</string>
+    <string name="question_app_will_restart">A app vai reiniciar, tem a certeza?</string>
 </resources>
