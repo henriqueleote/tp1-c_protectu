@@ -24,6 +24,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -51,6 +52,8 @@ import java.util.List;
 import java.util.Map;
 
 import cm.protectu.Authentication.AuthActivity;
+import cm.protectu.Authentication.LoginFragment;
+import cm.protectu.News.NewsDetailsFragment;
 import cm.protectu.R;
 
 
@@ -245,36 +248,8 @@ public class MapAddMarkerFragment extends Fragment {
                     .addToBackStack(null)
                     .commit();
         }else{
-            ProgressDialog progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setTitle("Adding marker");
-            progressDialog.setMessage("Loading...");
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-            progressDialog.setCancelable(false);
-            progressDialog.show();
-            DocumentReference documentReference = firebaseFirestore.collection("map-pins").document();
-            Map<String, Object> markersData = new HashMap<>();
-            markersData.put("pinID", documentReference.getId());
-            markersData.put("location", new GeoPoint(markerList.get(markerList.size()-1).getPosition().latitude, markerList.get(markerList.size()-1).getPosition().longitude));
-            markersData.put("type", "hospital");
-            documentReference.set(markersData)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            progressDialog.dismiss();
-                            Log.d(TAG, "DocumentSnapshot with the ID: " + documentReference.getId());
-                            getParentFragmentManager().beginTransaction()
-                                    .replace(R.id.fragment_container, new MapFragment())
-                                    .addToBackStack(null)
-                                    .commit();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            Log.w(TAG, "Error writing document", e);
-                        }
-                    });
+            MarkerChooseFragment bottomLogin = new MarkerChooseFragment(markerList);
+            bottomLogin.show(getActivity().getSupportFragmentManager(), bottomLogin.getTag());
         }
     }
 
