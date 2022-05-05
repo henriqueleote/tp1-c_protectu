@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.ListView;
 
 import androidx.annotation.Nullable;
 
@@ -18,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 
 import cm.protectu.Authentication.AuthActivity;
+import cm.protectu.Map.Buildings.MapPinTypeClass;
 import cm.protectu.R;
 
 public class FilterMapFragment extends BottomSheetDialogFragment {
@@ -35,7 +37,7 @@ public class FilterMapFragment extends BottomSheetDialogFragment {
     FirebaseAuth mAuth;
 
     //List with the pins of the map
-    public static ArrayList<MapPinClass> mapPinClasses;
+    public static ArrayList<MapPinTypeClass> mapPinTypes;
 
     public static ArrayList<MapPinClass> filteredMapPinClasses;
 
@@ -48,6 +50,7 @@ public class FilterMapFragment extends BottomSheetDialogFragment {
         this.fragment = fragment;
     }
 
+    @SuppressLint("NewApi")
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         //Link the layout to the Fragment
@@ -57,17 +60,21 @@ public class FilterMapFragment extends BottomSheetDialogFragment {
         mAuth = FirebaseAuth.getInstance();
 
         //Link the view objects with the XML
-        closeBtn = view.findViewById(R.id.close);
+        closeBtn = view.findViewById(R.id.closeBtn);
         filterBtn = view.findViewById(R.id.filterBtn);
-        checkBoxHospital = view.findViewById(R.id.checkBoxHospital);
-        checkBoxWar = view.findViewById(R.id.checkBoxWar);
+        //checkBoxHospital = view.findViewById(R.id.checkBoxHospital);
+        //checkBoxWar = view.findViewById(R.id.checkBoxWar);
+        mapPinTypes = MapFragment.mapPinTypes;
 
-        checkBoxHospital.setChecked(false);
-        checkBoxWar.setChecked(false);
+        //checkBoxHospital.setChecked(false);
+        //checkBoxWar.setChecked(false);
 
-        filteredMapPinClasses = new ArrayList<>();
-        mapPinClasses = MapFragment.mapPinClasses;
+        Log.d(TAG, "Array in filter: -> " + mapPinTypes.size());
+        FilterMapAdapter adapter = new FilterMapAdapter(getActivity(), mapPinTypes);
+        ListView listView = (ListView) view.findViewById(R.id.checkBoxListView);
+        listView.setAdapter(adapter);
 
+        //TODO IF ALREADY IN FILTER, TRUE IN THE CHECKBOX
 
         //On click closes the form sheet
         closeBtn.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +89,7 @@ public class FilterMapFragment extends BottomSheetDialogFragment {
         filterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                filterMap();
+                filter();
             }
         });
 
@@ -90,8 +97,10 @@ public class FilterMapFragment extends BottomSheetDialogFragment {
         return view;
     }
 
+    /*
     @SuppressLint("NewApi")
     public void filterMap(){
+        filteredMapPinClasses = new ArrayList<>();
         mapPinClasses.forEach(mapPinClass -> {
             if (checkBoxWar.isChecked()) {
                 if(mapPinClass.getType().equals("war"))
@@ -102,6 +111,24 @@ public class FilterMapFragment extends BottomSheetDialogFragment {
                     filteredMapPinClasses.add(mapPinClass);
             }
         });
+        getDialog().cancel();
+        fragment.refreshMap();
+    }*/
+
+    @SuppressLint("NewApi")
+    public void filter(){
+        fragment.clearMap();
+        filteredMapPinClasses = new ArrayList<>();
+        MapFragment.mapPinClasses.forEach(mapPinClass -> {
+            FilterMapAdapter.checkedPositions.forEach(checked -> {
+                if(checked.equalsIgnoreCase(mapPinClass.getType()))
+                    filteredMapPinClasses.add(mapPinClass);
+            });
+        });
+        if(FilterMapAdapter.checkedPositions.size() == 0)
+            filteredMapPinClasses.clear();
+        if(FilterMapAdapter.checkedPositions.size() == mapPinTypes.size())
+            filteredMapPinClasses.clear();
         getDialog().cancel();
         fragment.refreshMap();
     }

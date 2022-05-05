@@ -11,20 +11,17 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -51,15 +48,15 @@ import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 import cm.protectu.Authentication.AuthActivity;
-import cm.protectu.Authentication.ForgotPasswordFragment;
 import cm.protectu.MainActivity;
 import cm.protectu.Map.Buildings.BuildingClass;
 import cm.protectu.Map.Buildings.MapBuildingFragment;
-import cm.protectu.MissingBoard.MissingBoardFragment;
+import cm.protectu.Map.Buildings.MapPinTypeClass;
 import cm.protectu.R;
 
 
@@ -98,10 +95,14 @@ public class MapFragment extends Fragment {
     //List with the zones of the map
     public static ArrayList<List<Object>> mapZoneClasses;
 
+    public static ArrayList<MapPinTypeClass> mapPinTypes;
+
     //List with the buildings of the map
     public static ArrayList<BuildingClass> buildingsList;
 
     MapFragment fragment = this;
+
+    BitmapDescriptor pinIcon;
 
     @Nullable
     @Override
@@ -139,7 +140,10 @@ public class MapFragment extends Fragment {
 
         mapPinClasses = new ArrayList<>();
         mapZoneClasses = new ArrayList<>();
+        mapPinTypes = new ArrayList<>();
         buildingsList = new ArrayList<>();
+
+        getLoadData();
 
         createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,7 +171,7 @@ public class MapFragment extends Fragment {
                 }else{
                     gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                 }
-                getCurrentLocation();
+                loadMap();
             }
         });
 
@@ -205,7 +209,7 @@ public class MapFragment extends Fragment {
         //Check map permissions
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             //If the app has permission
-            getCurrentLocation();
+            loadMap();
         } else {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
@@ -215,9 +219,37 @@ public class MapFragment extends Fragment {
 
     }
 
+    private void getLoadData() {
+        firebaseFirestore.collection("map-pin-types").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Log.d(TAG, "\nType Object Data (Maddie) => " + document.getData() + "\n");
+                        //mapPinTypes.add(document.toObject(MapPinTypeClass.class)); //doesnt work
+                        mapPinTypes.add(new MapPinTypeClass(document.get("type").toString(),document.get("logo").toString(),document.get("name").toString()));
+                    }
+                } else {
+                    Log.d(TAG, "Error getting documents: ", task.getException());
+                }
+            }
+        });
+    }
+
+    public static int getResId(String resName, Class<?> c) {
+
+        try {
+            Field idField = c.getDeclaredField(resName);
+            return idField.getInt(idField);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
     //TODO - Check if the users location is enabled
     //Gets the user current location and displays in the map
-    private void getCurrentLocation() {
+    private void loadMap() {
         @SuppressLint("MissingPermission") Task<Location> task = client.getLastLocation();
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
@@ -240,7 +272,6 @@ public class MapFragment extends Fragment {
 
                             gMap.clear();
 
-
                             if(FilterMapFragment.filteredMapPinClasses == null || FilterMapFragment.filteredMapPinClasses.isEmpty()){
                                 ProgressDialog mDialog = new ProgressDialog(getActivity());
                                 mDialog.setMessage("Loading markers and zones...");
@@ -248,26 +279,24 @@ public class MapFragment extends Fragment {
                                 mDialog.show();
 
                                 /*  THESE THREE LISTENERS UNDER CAN'T BE IN OUTSIDE METHODS OR THEY WONT BE CALLED  */
+
                                 //get the pin data on map load
                                 firebaseFirestore.collection("map-pins").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                         if (task.isSuccessful()) {
                                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                                Log.d(TAG, "\nPin Object Data (Database) => " + document.getData() + "\n");
                                                 GeoPoint location = document.getGeoPoint("location");
                                                 MapPinClass mapPin = new MapPinClass(document.getId(), location, document.get("type").toString());
                                                 mapPinClasses.add(mapPin);
 
-                                                BitmapDescriptor icon = null;
                                                 LatLng latLng = new LatLng(mapPin.getLocation().getLatitude(), mapPin.getLocation().getLongitude());
-                                                if (mapPin.getType().trim().equals("war")) {
-                                                    icon = bitmapDescriptorFromVector(getActivity(), R.drawable.ic_map_war_pin_45dp);
-                                                }
-                                                if (mapPin.getType().trim().equals("hospital")) {
-                                                    icon = bitmapDescriptorFromVector(getActivity(), R.drawable.ic_map_hospital_pin_45dp);
-                                                }
-                                                MarkerOptions options = new MarkerOptions().position(latLng).title(mapPin.getType()).snippet(mapPin.getPinID()).icon(icon);
+                                                mapPinTypes.forEach(mapPinType -> {
+                                                    if(mapPin.getType().equals(mapPinType.getType())){
+                                                        pinIcon = bitmapDescriptorFromVector(getActivity(), getContext().getResources().getIdentifier(mapPinType.getLogo(), "drawable", getContext().getPackageName()));
+                                                    }
+                                                });
+                                                MarkerOptions options = new MarkerOptions().position(latLng).title(mapPin.getType()).snippet(mapPin.getPinID()).icon(pinIcon);
                                                 googleMap.addMarker(options);
                                             }
                                         } else {
@@ -478,8 +507,14 @@ public class MapFragment extends Fragment {
 
     @SuppressLint("NewApi")
     public void refreshMap(){
-        gMap.clear();
         placeZoneMarker(gMap);
-        loadFilteredPins();
+        if(FilterMapFragment.filteredMapPinClasses.isEmpty())
+            loadMap();
+        else
+            loadFilteredPins();
+    }
+
+    public void clearMap(){
+        gMap.clear();
     }
 }

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/checkBoxIcon"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/icon_24dp" />
+
+        <TextView
+            android:id="@+id/checkBoxName"
+            android:layout_alignBaseline="@+id/checkBoxIcon"
+            android:layout_toRightOf="@+id/checkBoxIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="6dp"
+            android:text="Teste"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <CheckBox
+            android:id="@+id/checkBoxCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/checkBoxName"
+            android:paddingRight="6dp"
+            android:layout_alignParentEnd="true"/>
+
+</RelativeLayout>

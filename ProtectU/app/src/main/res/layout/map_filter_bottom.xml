@@ -12,7 +12,7 @@
     android:background="@drawable/layout_bg">
 
     <ImageView
-        android:id="@+id/close"
+        android:id="@+id/closeBtn"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_alignParentRight="true"
@@ -26,6 +26,8 @@
         android:text="Filter map"
         android:textColor="#000000"
         android:textSize="20sp" />
+
+    <!--
 
     <LinearLayout
         android:id="@+id/containerCheckBoxWar"
@@ -91,7 +93,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-    </LinearLayout>
+    </LinearLayout> -->
+
+    <ListView
+        android:id="@+id/checkBoxListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"/>
 
     <Button
         android:id="@+id/filterBtn"
@@ -99,7 +107,7 @@
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:layout_below="@+id/containerCheckBoxHospital"
+        android:layout_below="@+id/checkBoxListView"
         android:text="Filter"
         android:textColor="#FFFFFF"
         android:backgroundTint="@color/primary_button"/>
