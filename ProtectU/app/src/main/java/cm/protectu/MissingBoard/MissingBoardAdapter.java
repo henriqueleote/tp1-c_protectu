@@ -92,7 +92,7 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         int pos = position;
         holder.missingName.setText(mData.get(position).getMissingName());
-        holder.age.setText(String.valueOf(mData.get(position).getMissingAge()));
+        //holder.age.setText(String.valueOf(mData.get(position).getMissingAge()));
 
         Picasso.get()
                 .load(mData.get(position).getFotoMissing())
@@ -143,7 +143,7 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
             description = itemView.findViewById(R.id.descriptionPostID);
             userName = itemView.findViewById(R.id.profileNameID);
             missingName = itemView.findViewById(R.id.nameOfTheMissingID);
-            age = itemView.findViewById(R.id.ageID);
+            //age = itemView.findViewById(R.id.ageID);
             userImage = itemView.findViewById(R.id.imageProfileID);
             missingImage = itemView.findViewById(R.id.imageMissingID);
             cardMissing = itemView.findViewById(R.id.cardMissingID);

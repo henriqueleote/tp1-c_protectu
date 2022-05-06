@@ -128,12 +128,6 @@ public class NewMissingPostFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 createMissingPost(name.getText().toString().trim(),description.getText().toString().trim(),age.getText().toString(),phone,urlProfile,mAuth.getUid(),firebaseUrl,"");
-                MissingBoardFragment fragment = new MissingBoardFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-
             }
         });
 
@@ -180,6 +174,8 @@ public class NewMissingPostFragment extends Fragment {
                                 .update("missingID",documentReference.getId());
                         Log.d(TAG, "Document successfully created!");
                         mDialog.dismiss();
+                        getFragmentManager().beginTransaction().replace(R.id.fragment_container, new MissingBoardFragment()).addToBackStack(null).commit();
+                        Toast.makeText(getActivity(), "Publicação criada", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

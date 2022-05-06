@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -134,11 +135,12 @@ public class AgeFilterMissingFragment extends BottomSheetDialogFragment {
                 }
                 if(newCardS.isEmpty() || childrens.isChecked() && adults.isChecked() && seniors.isChecked()){
                     getDialog().cancel();
+                    Toast.makeText(getActivity(), "Publicações filtradas", Toast.LENGTH_SHORT).show();
                 }else {
-
                     //adiciona os cartoes filtrados a pagina de visualizacao
                     missingBoardFragment.refreshCards(newCardS);
                     getDialog().cancel();
+                    Toast.makeText(getActivity(), "Publicações filtradas", Toast.LENGTH_SHORT).show();
                 }
 
             }

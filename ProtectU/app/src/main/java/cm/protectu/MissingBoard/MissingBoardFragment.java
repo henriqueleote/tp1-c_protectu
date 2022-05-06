@@ -227,15 +227,15 @@ public class MissingBoardFragment extends Fragment {
 
     //TODO SHOW MESSAGE TO REFRESH OR ERROR CANT FIND
     public void refreshCards(ArrayList<MissingCardClass> missCards){
-       // if(missCards.isEmpty()){
-
-        //}
-        missingCardClasses.clear();
-        missingCardClasses.addAll(missCards);
-        myAdapter = new MissingBoardAdapter(getActivity(), missingCardClasses,getParentFragmentManager(),mAuth);
-        myRecycleView.setAdapter(myAdapter);
-        myAdapter.notifyDataSetChanged();
+        if(missCards.isEmpty()){
+            Toast.makeText(getActivity(), "Não existem publicações", Toast.LENGTH_SHORT).show();
+        }else{
+            missingCardClasses.clear();
+            missingCardClasses.addAll(missCards);
+            myAdapter = new MissingBoardAdapter(getActivity(), missingCardClasses,getParentFragmentManager(),mAuth);
+            myRecycleView.setAdapter(myAdapter);
+            myAdapter.notifyDataSetChanged();
+        }
     }
-
 }
 
