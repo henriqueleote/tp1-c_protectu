@@ -13,7 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -81,7 +81,7 @@ public class CommunityFragment extends Fragment {
         backProfile = view.findViewById(R.id.back_id);
 
         communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth, fragment,-1);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(communityAdapter);
 
         swipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -202,8 +202,8 @@ public class CommunityFragment extends Fragment {
 
                             Collections.sort(listOfCommunityCards, new SortCommunityCardClass());
 
+                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                             communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth, fragment,communityAdapter.getLastPosition());
-                            recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
                             recyclerView.setAdapter(communityAdapter);
                             communityAdapter.notifyDataSetChanged();
 

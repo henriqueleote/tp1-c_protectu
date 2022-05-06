@@ -53,7 +53,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
 
     private static final String TAG = MainActivity.class.getName();
 
-    public CommunityAdapter(Context ct, ArrayList<CommunityCard> l, FirebaseAuth firebaseAuth, CommunityFragment cf,int lastPos) {
+    public CommunityAdapter(Context ct, ArrayList<CommunityCard> l, FirebaseAuth firebaseAuth, CommunityFragment cf, int lastPos) {
         firebaseFirestore = FirebaseFirestore.getInstance();
         context = ct;
         listOfCommunityCards = new ArrayList<>(l);
@@ -76,9 +76,9 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
     @SuppressLint("NewApi")
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        if(position < 2 && getLastPosition() < 2 && getLastPosition() >= 1){
-            communityFragment.communityCardsData(null);
-        }
+        //if(position < 2 && getLastPosition() < 2 && getLastPosition() >= 1){
+        //   communityFragment.communityCardsData(null);
+        //}
         setLastPosition(position);
 
         String userID = listOfCommunityCards.get(position).getUserID();
@@ -97,7 +97,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         UserDataClass userDataClass = documentSnapshot.toObject(UserDataClass.class);
-                        if (userDataClass != null && userDataClass.getFirstName() != null){
+                        if (userDataClass != null && userDataClass.getFirstName() != null) {
                             holder.userName.setText(userDataClass.getFirstName() + " " + userDataClass.getLastName());
 
                             if (!userDataClass.getImageURL().equals("null")) {
@@ -112,7 +112,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                     }
                 });
 
-        adaptConstrains(holder,position);
+        adaptConstrains(holder, position);
 
         getClickedLikeOrDislike(currentUserID, messageID, holder);
 
@@ -120,7 +120,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
 
         textAndMessageAdjuster(holder, position, messageText);
 
-        if(!mAuth.getCurrentUser().isAnonymous()){
+        if (!mAuth.getCurrentUser().isAnonymous()) {
             if (MainActivity.sessionUser.getUid().equals(userID) || !MainActivity.sessionUser.getUserType().equals("user")) {
                 holder.removeMessageCommunity.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -136,10 +136,10 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                 holder.makeVerified.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        makeVerified(messageID, holder,position);
+                        makeVerified(messageID, holder, position);
                     }
                 });
-            }else {
+            } else {
                 holder.makeVerified.setVisibility(View.INVISIBLE);
             }
 
@@ -151,7 +151,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
             holder.likeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    likesAndDislikes(messageID, "likes", holder.likeCounter, currentUserID, holder);
+                    likesAndDislikes(messageID, "likes", holder.likeCounter, currentUserID, holder, "R.drawable.ic_thumb_up_blue_24dp");
                 }
             });
 
@@ -159,7 +159,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
             holder.dislikeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    likesAndDislikes(messageID, "dislikes", holder.dislikeCounter, currentUserID, holder);
+                    likesAndDislikes(messageID, "dislikes", holder.dislikeCounter, currentUserID, holder, "R.drawable.ic_thumb_down_blue_24dp");
                 }
             });
 
@@ -177,7 +177,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                 }
             });
 
-        }else {
+        } else {
             holder.removeMessageCommunity.setVisibility(View.INVISIBLE);
             holder.makeVerified.setVisibility(View.INVISIBLE);
         }
@@ -186,31 +186,31 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
     //TODO: CHANGE THE METHOD VERIFICATION WHEN HE CREATE THE AUTHORITY USERS
 
 
-    public void adaptConstrains(MyViewHolder holder,int position){
+    public void adaptConstrains(MyViewHolder holder, int position) {
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(holder.constraintLayout);
         int margin = 5;
 
-        if (!listOfCommunityCards.get(position).isVerified()){
-            if (!MainActivity.sessionUser.getUserType().equals("user")){
-                constraintSet.connect(holder.makeVerified.getId(),ConstraintSet.END,holder.verified.getId(),ConstraintSet.END,margin);
+        if (!listOfCommunityCards.get(position).isVerified()) {
+            if (!MainActivity.sessionUser.getUserType().equals("user")) {
+                constraintSet.connect(holder.makeVerified.getId(), ConstraintSet.END, holder.verified.getId(), ConstraintSet.END, margin);
                 constraintSet.applyTo(holder.constraintLayout);
 
-                constraintSet.connect(holder.removeMessageCommunity.getId(),ConstraintSet.END,holder.makeVerified.getId(),ConstraintSet.START,margin);
+                constraintSet.connect(holder.removeMessageCommunity.getId(), ConstraintSet.END, holder.makeVerified.getId(), ConstraintSet.START, margin);
 
-            }else{
-                constraintSet.connect(holder.removeMessageCommunity.getId(),ConstraintSet.END,holder.makeVerified.getId(),ConstraintSet.END,margin);
+            } else {
+                constraintSet.connect(holder.removeMessageCommunity.getId(), ConstraintSet.END, holder.makeVerified.getId(), ConstraintSet.END, margin);
             }
             constraintSet.applyTo(holder.constraintLayout);
             holder.verified.setVisibility(View.INVISIBLE);
-        }
-        else {
-            constraintSet.clear(holder.removeMessageCommunity.getId(),ConstraintSet.END);
+        } else {
+            constraintSet.clear(holder.removeMessageCommunity.getId(), ConstraintSet.END);
 
-            constraintSet.connect(holder.removeMessageCommunity.getId(),ConstraintSet.END,holder.verified.getId(),ConstraintSet.START,margin);
+            constraintSet.connect(holder.removeMessageCommunity.getId(), ConstraintSet.END, holder.verified.getId(), ConstraintSet.START, margin);
             constraintSet.applyTo(holder.constraintLayout);
         }
     }
+
     /**
      * This method is responsible for making the message from the community verified if the user is an authority
      *
@@ -223,7 +223,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        adaptConstrains(holder,position);
+                        adaptConstrains(holder, position);
                         Log.d(TAG, "Success");
                     }
                 })
@@ -325,7 +325,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
      * @param currentUserID
      * @param holder
      */
-    public void likesAndDislikes(String messageID, String type, TextView textNumber, String currentUserID, MyViewHolder holder) {
+    public void likesAndDislikes(String messageID, String type, TextView textNumber, String currentUserID, MyViewHolder holder, String image) {
         firebaseFirestore.collection("community-chat-reactions")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -337,11 +337,11 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                                 if (document.get("userID").equals(currentUserID) && document.get("messageID").equals(messageID)) {
                                     hasReaction = true;
                                     if (document.get("type").equals("like")) {
-                                        changeLikeOrDislike(holder.dislikeButton, holder.likeButton, holder.dislikeButtonClicked, holder.likeButtonClicked,
-                                                "likes", "dislikes", document.getId(), messageID, holder.dislikeCounter, holder.likeCounter);
+                                        changeLikeOrDislike(holder.likeButton, holder.dislikeButton,type,
+                                                "likes", "dislikes", document.getId(), messageID, holder.dislikeCounter, holder.likeCounter,currentUserID,holder);
                                     } else {
-                                        changeLikeOrDislike(holder.likeButton, holder.dislikeButton, holder.likeButtonClicked, holder.dislikeButtonClicked,
-                                                "dislikes", "likes", document.getId(), messageID, holder.likeCounter, holder.dislikeCounter);
+                                        changeLikeOrDislike(holder.dislikeButton, holder.dislikeButton,type,
+                                                "dislikes", "likes", document.getId(), messageID, holder.likeCounter, holder.dislikeCounter,currentUserID,holder);
                                     }
                                     Log.d(TAG, "User already has a like or dislike in this message");
                                     break;
@@ -356,7 +356,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                                             @Override
                                             public void onSuccess(Void aVoid) {
                                                 textNumber.setText(actualNumber + "");
-                                                UserReactionsClass userReactionsClass = new UserReactionsClass(currentUserID, messageID, type.substring(0, type.length() - 1), new Date());
+                                                UserReactionsClass userReactionsClass = new UserReactionsClass(currentUserID, messageID, type.substring(0, type.length() - 1), new Date(), image);
                                                 firebaseFirestore.collection("community-chat-reactions").add(userReactionsClass);
                                                 getClickedLikeOrDislike(currentUserID, messageID, holder);
                                                 Log.d(TAG, "Document successfully updated!");
@@ -395,15 +395,11 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 if (document.get("userID").equals(userID) && document.get("messageID").equals(messageID)) {
                                     if (document.get("type").equals("like")) {
-                                        holder.likeButtonClicked.setVisibility(View.VISIBLE);
-                                        holder.likeButton.setVisibility(View.INVISIBLE);
-                                        removeLikeOrDislike(holder.likeButton, holder.likeButtonClicked, "likes",
-                                                document.getId(), messageID, holder.likeCounter);
+                                        holder.likeButton.setImageResource(R.drawable.ic_thumb_up_blue_24dp);
+                                        //removeLikeOrDislike(holder.likeButton, "likes", document.getId(), messageID, holder.likeCounter);
                                     } else {
-                                        holder.dislikeButtonClicked.setVisibility(View.VISIBLE);
-                                        holder.dislikeButton.setVisibility(View.INVISIBLE);
-                                        removeLikeOrDislike(holder.dislikeButton, holder.dislikeButtonClicked, "dislikes",
-                                                document.getId(), messageID, holder.dislikeCounter);
+                                        holder.dislikeButton.setImageResource(R.drawable.ic_thumb_down_blue_24dp);
+                                        //removeLikeOrDislike(holder.dislikeButton, "dislikes",document.getId(), messageID, holder.dislikeCounter);
                                     }
                                 }
                             }
@@ -430,77 +426,91 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
         }
     }
 
-    public void changeLikeOrDislike(ImageView buttonClicked, ImageView lastButtonClicked, ImageView buttonClickedBlue, ImageView lastButtonClickedBlue,
-                                    String type, String newType, String reactionID, String messageID, TextView textNumber, TextView lastTextNumber) {
-        lastButtonClickedBlue.setVisibility(View.INVISIBLE);
-        lastButtonClicked.setVisibility(View.VISIBLE);
+    public void changeLikeOrDislike(ImageView buttonBlue, ImageView lastButtonClicked, String typeOfButton,String type,
+                                    String newType, String reactionID, String messageID, TextView textNumber, TextView lastTextNumber, String userID , MyViewHolder holder) {
+        String newTypeXs = newType.substring(0, newType.length() - 1);
+        String typeOfButtonXs = typeOfButton.substring(0, typeOfButton.length() - 1);
         firebaseFirestore.collection("community-chat-reactions").document(reactionID)
-                .update("type", newType.substring(0, newType.length() - 1))
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
-                    public void onSuccess(Void unused) {
-                        buttonClicked.setVisibility(View.INVISIBLE);
-                        buttonClickedBlue.setVisibility(View.VISIBLE);
-                        int numberLastUpdated = Integer.parseInt(lastTextNumber.getText().toString().trim()) - 1;
-                        lastTextNumber.setText(numberLastUpdated + "");
-                        int numberNewUpdated = Integer.parseInt(textNumber.getText().toString().trim()) + 1;
-                        textNumber.setText(numberNewUpdated + "");
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.get("type").equals(typeOfButtonXs)) {
+                            removeLikeOrDislike(buttonBlue, typeOfButton, reactionID, messageID, lastTextNumber);
+                        } else {
+                            firebaseFirestore.collection("community-chat-reactions").document(reactionID)
+                                    .update("type", newTypeXs)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void unused) {
+                                            Log.d(TAG, "here");
+                                            if (newTypeXs.equals("like")) {
+                                                buttonBlue.setImageResource(R.drawable.ic_thumb_down_black_24dp);
+                                            } else {
+                                                buttonBlue.setImageResource(R.drawable.ic_thumb_up_black_24dp);
+                                            }
+                                            getClickedLikeOrDislike(userID,  messageID, holder);
+                                            int numberLastUpdated = Integer.parseInt(lastTextNumber.getText().toString().trim()) - 1;
+                                            lastTextNumber.setText(numberLastUpdated + "");
+                                            int numberNewUpdated = Integer.parseInt(textNumber.getText().toString().trim()) + 1;
+                                            textNumber.setText(numberNewUpdated + "");
 
-                        DocumentReference likeRef = firebaseFirestore.collection("community-chat").document(messageID);
-                        likeRef.update(type, numberLastUpdated);
-                        likeRef = firebaseFirestore.collection("community-chat").document(messageID);
-                        likeRef.update(newType, numberNewUpdated);
 
-                        removeLikeOrDislike(buttonClicked, buttonClickedBlue, newType,
-                                reactionID, messageID, textNumber);
+                                            DocumentReference likeRef = firebaseFirestore.collection("community-chat").document(messageID);
+                                            likeRef.update(type, numberLastUpdated);
+                                            likeRef = firebaseFirestore.collection("community-chat").document(messageID);
+                                            likeRef.update(newType, numberNewUpdated);
+
+                                            //removeLikeOrDislike(lastButtonClicked, newType,reactionID, messageID, textNumber);
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d(TAG, "Fail");
+                                }
+                            });
+                        }
                     }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "Fail");
-            }
-        });
+                });
     }
 
-    public void removeLikeOrDislike(ImageView button, ImageView buttonClicked, String type, String reactionID, String messageID, TextView textNumber) {
-        buttonClicked.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                buttonClicked.setVisibility(View.INVISIBLE);
-                firebaseFirestore.collection("community-chat-reactions").document(reactionID)
-                        .delete()
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                button.setVisibility(View.VISIBLE);
-                                int numberOfLikes = Integer.parseInt(textNumber.getText().toString()) - 1;
-                                DocumentReference likeRef = firebaseFirestore.collection("community-chat").document(messageID);
-                                likeRef
-                                        .update(type, numberOfLikes)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                textNumber.setText(numberOfLikes + "");
-                                                Log.d(TAG, "Document successfully updated!");
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Log.w(TAG, "Error updating document", e);
-                                            }
-                                        });
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error deleting document", e);
-                            }
-                        });
+    public void removeLikeOrDislike(ImageView buttonClicked, String type, String reactionID, String messageID, TextView textNumber) {
+        firebaseFirestore.collection("community-chat-reactions").document(reactionID)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        int number = Integer.parseInt(textNumber.getText().toString()) - 1;
+                        DocumentReference likeRef = firebaseFirestore.collection("community-chat").document(messageID);
+                        likeRef
+                                .update(type, number)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        textNumber.setText(number + "");
+                                        if (type.equals("likes")) {
+                                            buttonClicked.setImageResource(R.drawable.ic_thumb_up_black_24dp);
+                                        } else {
+                                            buttonClicked.setImageResource(R.drawable.ic_thumb_down_black_24dp);
+                                        }
+                                        Log.d(TAG, "Document successfully updated!");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w(TAG, "Error updating document", e);
+                                    }
+                                });
+                    }
 
-            }
-        });
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
+                    }
+                });
     }
 
     @Override
@@ -518,8 +528,9 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView userName, communityText, likeCounter, dislikeCounter, communityTextWithImage, dateText;
-        ImageView userImage, verified, likeButton, dislikeButton, imageCommunity, dislikeButtonClicked,
-                likeButtonClicked, shareButton, removeMessageCommunity, makeVerified;
+        ImageView userImage, verified, likeButton, dislikeButton, imageCommunity, /*dislikeButtonClicked,
+                likeButtonClicked,*/
+                shareButton, removeMessageCommunity, makeVerified;
         CardView cardCommunity;
         ConstraintLayout constraintLayout;
 
@@ -536,8 +547,8 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
             verified = itemView.findViewById(R.id.verified);
             communityTextWithImage = itemView.findViewById(R.id.communityTextWithImage);
             imageCommunity = itemView.findViewById(R.id.imageCommunity);
-            dislikeButtonClicked = itemView.findViewById(R.id.dislikeButtonClicked);
-            likeButtonClicked = itemView.findViewById(R.id.likeButtonClicked);
+            //dislikeButtonClicked = itemView.findViewById(R.id.dislikeButtonClicked);
+            //likeButtonClicked = itemView.findViewById(R.id.likeButtonClicked);
             shareButton = itemView.findViewById(R.id.shareButton);
             dateText = itemView.findViewById(R.id.dateText);
             removeMessageCommunity = itemView.findViewById(R.id.removeMessageCommunity);

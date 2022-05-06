@@ -6,16 +6,19 @@ public class UserReactionsClass {
     private String userID;
     private String messageID;
     private String type;
+    private String image;
     private Date date;
+
 
     public UserReactionsClass() {
     }
 
-    public UserReactionsClass(String userID, String messageID, String type, Date date) {
+    public UserReactionsClass(String userID, String messageID, String type, Date date,String image) {
         this.userID = userID;
         this.messageID = messageID;
         this.type = type;
         this.date = date;
+        this.image = image;
     }
 
     public String getUserID() {
@@ -32,6 +35,14 @@ public class UserReactionsClass {
 
     public void setMessageID(String messageID) {
         this.messageID = messageID;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public String getType() {

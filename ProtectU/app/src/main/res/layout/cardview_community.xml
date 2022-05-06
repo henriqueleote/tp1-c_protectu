@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:weightSum="1">
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardCommunity"
@@ -14,87 +12,95 @@
         android:layout_marginHorizontal="15dp"
         android:layout_marginVertical="10dp"
         app:cardCornerRadius="12dp"
-        app:cardElevation="6dp">
-
+        app:cardElevation="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/removeMessageCommunity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="@+id/verified"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="10dp"
                 app:srcCompat="@drawable/ic_delete_black_24dp" />
 
             <ImageView
                 android:id="@+id/makeVerified"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 android:layout_margin="10dp"
                 android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_add_verified_black_24dp" />
 
             <ImageView
                 android:id="@+id/verified"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_margin="10dp"
                 app:srcCompat="@drawable/ic_check_fill_blue_24dp" />
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/userDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" >
 
                 <ImageView
                     android:id="@+id/userImage"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:layout_margin="10dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:srcCompat="@drawable/ic_bottom_profile_black_24dp" />
 
                 <TextView
                     android:id="@+id/userName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/userImage"
+                    android:layout_margin="10dp"
                     android:fontFamily="@font/lexend_regular"
                     android:text="Not Found"
                     android:textAlignment="center"
-                    android:textSize="13sp" />
+                    android:textSize="13sp"
+                    app:layout_constraintStart_toEndOf="@+id/userImage"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/buttonsCommunity"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
-                >
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
                 <ImageView
                     android:id="@+id/shareButton"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/likeButton"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@android:drawable/ic_menu_share"
-                    />
+                    android:layout_marginEnd="10dp"/>
 
                 <ImageView
                     android:id="@+id/likeButton"
@@ -102,109 +108,103 @@
                     android:layout_height="match_parent"
                     android:layout_toEndOf="@+id/shareButton"
                     app:srcCompat="@drawable/ic_thumb_up_black_24dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/numberOfLikes"
+                    app:layout_constraintStart_toEndOf="@+id/shareButton"
                     />
 
-                <ImageView
-                    android:id="@+id/likeButtonClicked"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_toEndOf="@+id/shareButton"
-                    app:srcCompat="@drawable/ic_thumb_up_blue_24dp"
-                    android:layout_marginStart="10dp"
-                    android:visibility="invisible"/>
+
 
                 <TextView
                     android:id="@+id/numberOfLikes"
-                    android:layout_toEndOf="@id/likeButton"
-                    android:layout_centerVertical="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/lexend_regular"
                     android:text="1"
                     android:textAlignment="center"
                     android:textSize="15sp"
-                    android:layout_marginStart="10dp"/>
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/dislikeButton"
+                    android:layout_marginRight="10dp"/>
 
                 <ImageView
                     android:id="@+id/dislikeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_toEndOf="@id/numberOfLikes"
                     app:srcCompat="@drawable/ic_thumb_down_black_24dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_toEndOf="@id/numberOfLikes"
-                    android:layout_marginStart="10dp"/>
-
-                <ImageView
-                    android:id="@+id/dislikeButtonClicked"
-                    app:srcCompat="@drawable/ic_thumb_down_blue_24dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_toEndOf="@id/numberOfLikes"
-                    android:layout_marginStart="10dp"
-                    android:visibility="invisible"/>
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/numberOfDislikes"
+                    android:layout_marginEnd="10dp"/>
 
                 <TextView
                     android:id="@+id/numberOfDislikes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
                     android:layout_toEndOf="@id/dislikeButton"
                     android:fontFamily="@font/lexend_regular"
                     android:text="1"
                     android:textAlignment="center"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
 
-            </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/dateText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_margin="8dp"
                 android:padding="3dp"
+                android:text="date"
                 android:textAlignment="center"
                 android:textSize="11sp"
-                android:text="date"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
 
             <TextView
                 android:id="@+id/communityText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/userDetails"
-                app:layout_constraintBottom_toTopOf="@id/buttonsCommunity"
-                android:layout_marginBottom="10dp"
                 android:layout_marginHorizontal="8dp"
+                android:layout_marginBottom="10dp"
+                android:background="#37AEE4"
                 android:padding="5dp"
-                android:text="TextNoImage"/>
+                android:text="TextNoImage"
+                app:layout_constraintBottom_toTopOf="@id/buttonsCommunity"
+                app:layout_constraintTop_toBottomOf="@id/userDetails" />
 
             <TextView
                 android:id="@+id/communityTextWithImage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/userDetails"
                 android:layout_marginHorizontal="8dp"
                 android:padding="5dp"
                 android:text="TextImage"
-                android:visibility="invisible" />
+                android:visibility="invisible"
+                app:layout_constraintTop_toBottomOf="@id/userDetails" />
 
             <ImageView
                 android:id="@+id/imageCommunity"
                 android:layout_width="200dp"
                 android:layout_height="100dp"
-                app:layout_constraintTop_toBottomOf="@id/communityTextWithImage"
-                app:layout_constraintBottom_toTopOf="@id/buttonsCommunity"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginVertical="10dp"
-                android:visibility="invisible" />
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@id/buttonsCommunity"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/communityTextWithImage" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
