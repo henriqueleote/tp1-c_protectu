@@ -55,6 +55,8 @@ public class CustomizationManager {
 
 
         selectedTheme = new String(bytes);
+        if (selectedTheme.isEmpty())
+            selectedTheme= "light";
     }
 
     private void loadTheme() {
