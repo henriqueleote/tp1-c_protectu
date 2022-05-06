@@ -75,6 +75,8 @@ public class LanguageManagerClass {
 
 
         String code = new String(bytes);
+        if (code.isEmpty())
+            code = "en";
         return code;
     }
 
