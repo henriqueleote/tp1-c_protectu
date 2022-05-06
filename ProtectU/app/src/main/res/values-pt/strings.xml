@@ -39,7 +39,7 @@
     <string name="loading_image">A Carregar Imagem…</string>
     <string name="Language">Linguagem</string>
     <string name="notifications">Notificações</string>
-    <string name="Customization">Custumização</string>
+    <string name="Customization">Customização</string>
     <string name="news">Notícias</string>
     <string name="panic">Panico</string>
     <string name="Community">Comunidade</string>
@@ -57,9 +57,10 @@
         <item>Urgente</item>
     </string-array>
     <string-array name="theme_values">
-        <item>escuro</item>
-        <item>azul</item>
-        <item>vermelho</item>
+        <item>Escolher Tema</item>
+        <item>Claro</item>
+        <item>Escuro</item>
+        <item>Azul</item>
     </string-array>
     <string name="newPost">Nova Publicação</string>
     <string name="description">Descrição</string>

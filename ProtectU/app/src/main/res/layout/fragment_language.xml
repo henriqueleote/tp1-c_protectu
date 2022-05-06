@@ -2,134 +2,117 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout5"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F1EFEF">
+    android:background="?attr/backgroundColor">
 
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/txtLanguage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/lexend_bold"
+        android:text="@string/lbl_languague"
+        android:textAlignment="center"
+        android:textColor="?attr/textColor"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/txtEnglish"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TextView
-            android:id="@+id/txtLanguage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
-            android:fontFamily="@font/lexend_bold"
-            android:text="@string/lbl_languague"
-            android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="24sp" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:fontFamily="@font/lexend_regular"
+        android:paddingVertical="6dp"
+        android:paddingStart="25dp"
+        android:text="English"
+        android:textColor="?attr/textColor"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtLanguage" />
 
 
-        <TableLayout
-            android:id="@+id/tableLayout"
-            android:layout_width="409dp"
-            android:layout_height="729dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginBottom="200dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TableRow
-                android:id="@+id/tbOpEnglish"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="70dp"
-                android:background="#F8F8F8">
+    <TextView
+        android:id="@+id/txtPortuguese"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/lexend_regular"
+        android:paddingVertical="8dp"
+        android:paddingStart="25dp"
+        android:text="Português"
+        android:textColor="?attr/textColor"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/txtFrench"
+        app:layout_constraintStart_toStartOf="@+id/txtFrench"
+        app:layout_constraintTop_toBottomOf="@+id/txtEnglish" />
 
 
-                <TextView
-                    android:id="@+id/txtEnglish"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="8dp"
-                    android:layout_marginStart="25dp"
-                    android:fontFamily="@font/lexend_regular"
-                    android:text="English"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
+    <TextView
+        android:id="@+id/txtFrench"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/lexend_regular"
+        android:paddingVertical="8dp"
+        android:paddingStart="25dp"
+        android:text="Français"
+        android:textColor="?attr/textColor"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/txtGerman"
+        app:layout_constraintStart_toStartOf="@+id/txtGerman"
+        app:layout_constraintTop_toBottomOf="@+id/txtPortuguese" />
 
-            </TableRow>
 
-            <TableRow
-                android:id="@+id/tbOpPortuguese"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/txtGerman"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/lexend_regular"
+        android:paddingVertical="8dp"
+        android:paddingStart="25dp"
+        android:text="Deutsch"
+        android:textColor="?attr/textColor"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/txtUkrainian"
+        app:layout_constraintStart_toStartOf="@+id/txtUkrainian"
+        app:layout_constraintTop_toBottomOf="@+id/txtFrench" />
 
-                <TextView
-                    android:id="@+id/txtPortuguese"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="8dp"
-                    android:layout_marginStart="25dp"
-                    android:fontFamily="@font/lexend_regular"
-                    android:text="Português"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
-            </TableRow>
 
-            <TableRow
-                android:id="@+id/tbOpFrench"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/txtUkrainian"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/lexend_regular"
+        android:paddingVertical="8dp"
+        android:paddingStart="25dp"
+        android:text="Українська"
+        android:textColor="?attr/textColor"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtGerman" />
 
-                <TextView
-                    android:id="@+id/txtFrench"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="8dp"
-                    android:layout_marginStart="25dp"
-                    android:fontFamily="@font/lexend_regular"
-                    android:text="Français"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
-            </TableRow>
 
-            <TableRow android:id="@+id/tbOpGerman">
-
-                <TextView
-                    android:id="@+id/txtGerman"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="8dp"
-                    android:layout_marginStart="25dp"
-                    android:fontFamily="@font/lexend_regular"
-                    android:text="Deutsch"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
-            </TableRow>
-
-            <TableRow android:id="@+id/tbOpUkraine">
-
-                <TextView
-                    android:id="@+id/txtUkrainian"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="8dp"
-                    android:layout_marginStart="25dp"
-                    android:fontFamily="@font/lexend_regular"
-                    android:text="Українська"
-                    android:textColor="@color/black"
-                    android:textSize="18sp" />
-            </TableRow>
-
-        </TableLayout>
-
-        <Button
-            android:id="@+id/btnSave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tableLayout"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="-200dp"
-            android:backgroundTint="@color/primary_button"
-            android:text="@string/btn_save"
-            tools:ignore="TextContrastCheck" />
-
-    </RelativeLayout>
+    <Button
+        android:id="@+id/btnSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="151dp"
+        android:backgroundTint="?attr/primaryButton"
+        android:text="@string/btn_save"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="TextContrastCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

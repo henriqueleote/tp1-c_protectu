@@ -5,96 +5,85 @@
     android:id="@+id/scrollView3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:fillViewport="true"
+    android:background="?attr/backgroundColor">
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout4"
+
+    <ImageView
+        android:id="@+id/backID"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="73dp"
+        android:src="@drawable/ic_arrow_back_black_24dp"
+        app:tint="?attr/textColor"
+        app:layout_constraintEnd_toStartOf="@+id/titleCostumizationID"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/titleCostumizationID"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:background="#F1EFEF"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="123dp"
+        android:layout_marginRight="123dp"
+        android:fontFamily="@font/lexend_regular"
+        android:paddingTop="15dp"
+        android:text="@string/Customization"
+        android:textColor="?attr/textColor"
+        android:textSize="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/backID"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="115dp"
+        android:background="?attr/backgroundColorSelected"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
         <ImageView
-            android:id="@+id/backID"
+            android:id="@+id/themeIconID"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
-            android:src="@drawable/ic_arrow_back_black_24dp"
-            app:tint="@color/black" />
+            android:src="@drawable/ic_theme_brush_24dp"
+            app:tint="?attr/textColor" />
+
 
         <TextView
-            android:id="@+id/titleCostumizationID"
+            android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:paddingTop="15dp"
-            android:text="Costumization"
-            android:textColor="@color/black"
-            android:textSize="24dp" />
+            android:layout_marginStart="15dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/lexend_regular"
+            android:text="@string/theme"
+            android:textColor="?attr/textColor"
+            android:textSize="15dp" />
+
+        <Spinner
+            android:id="@+id/spinner_theme"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="15dp"
+            android:drawablePadding="10dp"
+            android:entries="@array/theme_values"
+            android:fontFamily="@font/lexend_regular"
+            android:gravity="center"
+             />
 
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_below="@id/titleCostumizationID"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginRight="30dp"
-            android:background="@color/white">
+    </LinearLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:layout_centerVertical="true"
-                android:hint="Themes"
-                app:startIconDrawable="@drawable/ic_customization_menu">
-
-                <AutoCompleteTextView
-                    android:id="@+id/autoCompleteTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:inputType="none"
-                    android:text="Themes" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <!--
-        <ImageView
-            android:id="@+id/pencilIconID"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_customization_menu"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="30dp"
-            />
-
-        <TextView
-            android:id="@+id/themeSectionID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Theme"
-            android:textSize="22dp"
-            android:textColor="@color/black"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@+id/pencilIconID"/>
-
-      <Spinner
-          android:id="@+id/spinerThemeID"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_alignParentEnd="true"
-          android:layout_centerVertical="true"
-          android:layout_marginRight="20dp"
-          android:spinnerMode="dropdown"
-          />-->
-
-        </RelativeLayout>
-
-    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

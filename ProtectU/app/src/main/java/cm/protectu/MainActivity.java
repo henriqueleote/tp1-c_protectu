@@ -1,8 +1,10 @@
 package cm.protectu;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
@@ -29,13 +32,17 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.Locale;
+
 import cm.protectu.About.AboutFragment;
 import cm.protectu.Alarm.AlarmClass;
 import cm.protectu.Alarm.AlarmFragment;
 import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.Community.ViewPagerFragment;
 import cm.protectu.Customization.CustomizationFragment;
+import cm.protectu.Customization.CustomizationManager;
 import cm.protectu.Language.LanguageFragment;
+import cm.protectu.Language.LanguageManagerClass;
 import cm.protectu.Map.MapFragment;
 import cm.protectu.News.NewsFragment;
 import cm.protectu.Panic.PanicFragment;
@@ -58,9 +65,31 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     private static final String TAG = MainActivity.class.getName();
 
+    private static Context context;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //Read and Load Themes
+        CustomizationManager.getInstance(this);
+//        if (AppCompatDelegate.getDefaultNightMode()== AppCompatDelegate.MODE_NIGHT_YES){
+//            setTheme(R.style.Theme_Dark);
+//        }else
+//            setTheme(R.style.Theme_Light);
+
         super.onCreate(savedInstanceState);
+
+        MainActivity.context = getApplicationContext();
+
+
+        String languageToLoad = LanguageManagerClass.getInstance().readLocale(getResources());
+        Locale locale;
+        locale = new Locale(languageToLoad);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        this.getBaseContext().getResources().updateConfiguration(config,
+                this.getBaseContext().getResources().getDisplayMetrics());
 
         //Link the layout to the activity
         setContentView(R.layout.activity_main);
@@ -255,6 +284,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                         }
                     }
                 });
+    }
+
+    public static Context getAppContext() {
+        return MainActivity.context;
     }
 
 }

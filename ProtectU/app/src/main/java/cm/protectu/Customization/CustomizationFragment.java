@@ -1,24 +1,45 @@
 package cm.protectu.Customization;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Locale;
+
 import cm.protectu.Authentication.AuthActivity;
+import cm.protectu.Language.LanguageManagerClass;
+import cm.protectu.MainActivity;
 import cm.protectu.Map.MapFragment;
 import cm.protectu.R;
 
 
-public class CustomizationFragment extends Fragment {
+public class CustomizationFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     //Firebase Authentication
     private FirebaseAuth mAuth;
@@ -26,6 +47,7 @@ public class CustomizationFragment extends Fragment {
     //Image witch we can go to the back fragment(Map Fragment)
     private ImageView arrowBack;
 
+    private Spinner spinner;
 
 
     @Nullable
@@ -38,14 +60,15 @@ public class CustomizationFragment extends Fragment {
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
         arrowBack = view.findViewById(R.id.backID);
-    /*
-         themes = getResources().getStringArray(R.array.theme_values);
-         arrayAdapter = ArrayAdapter(requireContext(),R.layout.dropdown_item,themes);
-        bid
-*/
 
 
+        spinner = view.findViewById(R.id.spinner_theme);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(), R.array.theme_values, R.layout.color_spinner_layout);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_layout);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(this);
 
+//        whichSelected();
 
         //go back to the map frame
         arrowBack.setOnClickListener(new View.OnClickListener() {
@@ -75,5 +98,67 @@ public class CustomizationFragment extends Fragment {
 
     }
 
+    public void whichSelected() {
+        String selectedTheme = CustomizationManager.getInstance(getActivity()).getSelectedTheme();
 
+        switch (selectedTheme.toLowerCase(Locale.ROOT)) {
+            case "dark":
+                spinner.setSelection(2); //Position in String-array
+                break;
+            case "light":
+                spinner.setSelection(1); //Position in String-array
+                break;
+            default:
+                spinner.setSelection(0); //Position in String-array
+                break;
+        }
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+        if (position != 0) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage(R.string.question_app_will_restart)
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            switch (position) {
+                                case 1: //Light Mode
+//                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                                    getActivity().setTheme(R.style.Theme_Light);
+                                    CustomizationManager.getInstance(getActivity()).saveTheme("light");
+                                    getActivity().recreate();
+                                    break;
+                                case 2: // Dark Mode
+//                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                                    getActivity().setTheme(R.style.Theme_Dark);
+                                    CustomizationManager.getInstance(getActivity()).saveTheme("dark");
+                                    getActivity().recreate();
+                                    break;
+                                case 3: // Blue Mode
+                                    break;
+                                default: // System Default
+//                getActivity().setTheme(R.style.Theme_Light);
+                            }
+                        }
+                    })
+                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                            return;
+                        }
+                    });
+            // Create the AlertDialog object and return it
+            builder.show();
+        }
+
+
+    }
+
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
 }

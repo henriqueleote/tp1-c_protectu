@@ -8,6 +8,11 @@
     <color name="primary_button">#2E98F0</color>
     <color name="red_button">#DE2F2F</color>
 
+    <color name="backgroundColorSelected">#FFFFFFFF</color>
+
+    <color name="backgroundColor_dark">#1D1D1F</color>
+    <color name="backgroundColorSelected_dark">#262629</color>
+
     <!-- dots inactive colors -->
     <color name="dot_dark_screen1">#858585</color>
     <color name="dot_dark_screen2">#858585</color>
