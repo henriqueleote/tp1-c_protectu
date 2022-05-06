@@ -73,4 +73,5 @@
     <string name="camera">Camera</string>
     <string name="see_more">see more</string>
     <string name="question_app_will_restart">The app is going to restart, are you sure?</string>
+    <string name="map_of_shelters">Map of shelters</string>
 </resources>

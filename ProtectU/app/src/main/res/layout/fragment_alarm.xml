@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="26dp"
+    >
+
+    <ImageView
+        android:id="@+id/imageAlarm"
+        android:layout_marginTop="3dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp">
+
+    </ImageView>
+
+    <TextView
+        android:id="@+id/alarmMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="3dp"
+        android:fontFamily="@font/lexend_regular"
+        android:textSize="16sp"
+        android:textColor="#000000" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/alarmSubMessage"
+        android:layout_below="@+id/alarmMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:fontFamily="@font/lexend_regular"
+        android:paddingTop="5dp"
+        android:text="Please proceed to the shelters immediately!"
+        android:textColor="#858585"
+        android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/mapButton"
+        android:layout_below="@+id/alarmSubMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:drawableLeft="@drawable/folder_map"
+        android:textColor="#000000"
+        android:text="@string/map_of_shelters"
+        android:fontFamily="@font/lexend_regular"
+        android:textAllCaps="false"
+        android:backgroundTint="@color/white"
+        android:textSize="12sp"
+        android:layout_centerHorizontal="true"
+        android:shadowRadius="5"
+        android:background="@drawable/rounded_button"
+        app:backgroundTint="@null">
+    </Button>
+
+</RelativeLayout>

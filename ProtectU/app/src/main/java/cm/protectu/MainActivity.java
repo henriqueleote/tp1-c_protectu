@@ -3,6 +3,7 @@ package cm.protectu;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -10,6 +11,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -19,15 +21,17 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import cm.protectu.About.AboutFragment;
+import cm.protectu.Alarm.AlarmClass;
+import cm.protectu.Alarm.AlarmFragment;
 import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.Community.ViewPagerFragment;
 import cm.protectu.Customization.CustomizationFragment;
@@ -77,8 +81,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         getUserData(1);
 
-        final DocumentReference docRef = firebaseFirestore.collection("users").document(mAuth.getCurrentUser().getUid().toString());
-        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        firebaseFirestore.collection("users").document(mAuth.getCurrentUser().getUid().toString()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot snapshot,
                                 @Nullable FirebaseFirestoreException e) {
@@ -95,7 +98,31 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 }
             }
         });
-
+        firebaseFirestore.collection("air-alarm")
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value,
+                                        @Nullable FirebaseFirestoreException e) {
+                        if (e != null) {
+                            Log.w(TAG, "Listen failed.", e);
+                            return;
+                        }
+                        Query q = firebaseFirestore.collection("air-alarm").limit(1);
+                        q.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult().getDocuments().get(0);
+                                    AlarmClass alarmClass = document.toObject(AlarmClass.class);
+                                    AlarmFragment g = new AlarmFragment(MainActivity.this, alarmClass);
+                                    //g.show();
+                                } else {
+                                    Log.d(TAG, "Error");
+                                }
+                            }
+                        });
+                    }
+                });
 
         bottomBar.setOnNavigationItemSelectedListener(this);
         sideBar.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -145,6 +172,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     //Method
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
@@ -190,7 +218,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
 
             case R.id.navigation_panic:
-                //Toast.makeText(this, "Change to the panic fragment", Toast.LENGTH_SHORT).show();
                 PanicFragment bottomPanic = new PanicFragment();
                 bottomPanic.show(getSupportFragmentManager(), bottomPanic.getTag());
                 break;
