@@ -171,15 +171,17 @@
 
             <TextView
                 android:id="@+id/communityText"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
                 android:layout_marginBottom="10dp"
-                android:background="#37AEE4"
                 android:padding="5dp"
                 android:text="TextNoImage"
                 app:layout_constraintBottom_toTopOf="@id/buttonsCommunity"
-                app:layout_constraintTop_toBottomOf="@id/userDetails" />
+                app:layout_constraintTop_toBottomOf="@id/userDetails"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                />
 
             <TextView
                 android:id="@+id/communityTextWithImage"

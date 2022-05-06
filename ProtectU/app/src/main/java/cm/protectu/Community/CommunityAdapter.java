@@ -49,17 +49,15 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth mAuth;
     private CommunityFragment communityFragment;
-    private int lastPosition;
 
     private static final String TAG = MainActivity.class.getName();
 
-    public CommunityAdapter(Context ct, ArrayList<CommunityCard> l, FirebaseAuth firebaseAuth, CommunityFragment cf, int lastPos) {
+    public CommunityAdapter(Context ct, ArrayList<CommunityCard> l, FirebaseAuth firebaseAuth, CommunityFragment cf) {
         firebaseFirestore = FirebaseFirestore.getInstance();
         context = ct;
         listOfCommunityCards = new ArrayList<>(l);
         mAuth = firebaseAuth;
         communityFragment = cf;
-        lastPosition = lastPos;
     }
 
     @NonNull
@@ -75,16 +73,24 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
 
     @SuppressLint("NewApi")
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        //if(position < 2 && getLastPosition() < 2 && getLastPosition() >= 1){
-        //   communityFragment.communityCardsData(null);
-        //}
-        setLastPosition(position);
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        String messageID = listOfCommunityCards.get(position).getMessageID();
+        String currentUserID = mAuth.getUid();
+
+        getClickedLikeOrDislike(currentUserID, messageID, holder);
+
+        String messageText = listOfCommunityCards.get(position).getMessageText();
+
+        textAndMessageAdjuster(holder, position, messageText);
 
         String userID = listOfCommunityCards.get(position).getUserID();
-        String currentUserID = mAuth.getUid();
-        String messageText = listOfCommunityCards.get(position).getMessageText();
-        String messageID = listOfCommunityCards.get(position).getMessageID();
+        boolean isVerified = listOfCommunityCards.get(position).isVerified();
+
+        adaptConstrains(holder, isVerified);
+
+        holder.dateText.setText(DateFormat.getDateInstance(DateFormat.FULL).format(listOfCommunityCards.get(position).getDate()));
+
+
 
         /**
          * will fetch the database the name of the user who created the message through the user id
@@ -112,14 +118,6 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                     }
                 });
 
-        adaptConstrains(holder, position);
-
-        getClickedLikeOrDislike(currentUserID, messageID, holder);
-
-        holder.dateText.setText(DateFormat.getDateInstance(DateFormat.FULL).format(listOfCommunityCards.get(position).getDate()));
-
-        textAndMessageAdjuster(holder, position, messageText);
-
         if (!mAuth.getCurrentUser().isAnonymous()) {
             if (MainActivity.sessionUser.getUid().equals(userID) || !MainActivity.sessionUser.getUserType().equals("user")) {
                 holder.removeMessageCommunity.setOnClickListener(new View.OnClickListener() {
@@ -136,7 +134,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                 holder.makeVerified.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        makeVerified(messageID, holder, position);
+                        makeVerified(messageID, holder, isVerified);
                     }
                 });
             } else {
@@ -186,12 +184,12 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
     //TODO: CHANGE THE METHOD VERIFICATION WHEN HE CREATE THE AUTHORITY USERS
 
 
-    public void adaptConstrains(MyViewHolder holder, int position) {
+    public void adaptConstrains(MyViewHolder holder, boolean isVerified) {
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(holder.constraintLayout);
         int margin = 5;
 
-        if (!listOfCommunityCards.get(position).isVerified()) {
+        if (!isVerified) {
             if (!MainActivity.sessionUser.getUserType().equals("user")) {
                 constraintSet.connect(holder.makeVerified.getId(), ConstraintSet.END, holder.verified.getId(), ConstraintSet.END, margin);
                 constraintSet.applyTo(holder.constraintLayout);
@@ -216,14 +214,14 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
      *
      * @param messageID
      */
-    public void makeVerified(String messageID, MyViewHolder holder, int position) {
+    public void makeVerified(String messageID, MyViewHolder holder, boolean isVerified) {
         firebaseFirestore.collection("community-chat")
                 .document(messageID)
                 .update("verified", new Boolean("true"))
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        adaptConstrains(holder, position);
+                        adaptConstrains(holder, isVerified);
                         Log.d(TAG, "Success");
                     }
                 })
@@ -306,7 +304,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
             holder.communityTextWithImage.setText(messageText);
 
         } else {
-            holder.communityTextWithImage.setVisibility(View.GONE);
+            holder.communityTextWithImage.setVisibility(View.INVISIBLE);
             holder.imageCommunity.setVisibility(View.GONE);
             holder.communityText.setText(messageText);
         }
@@ -396,11 +394,10 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                                 if (document.get("userID").equals(userID) && document.get("messageID").equals(messageID)) {
                                     if (document.get("type").equals("like")) {
                                         holder.likeButton.setImageResource(R.drawable.ic_thumb_up_blue_24dp);
-                                        //removeLikeOrDislike(holder.likeButton, "likes", document.getId(), messageID, holder.likeCounter);
                                     } else {
                                         holder.dislikeButton.setImageResource(R.drawable.ic_thumb_down_blue_24dp);
-                                        //removeLikeOrDislike(holder.dislikeButton, "dislikes",document.getId(), messageID, holder.dislikeCounter);
                                     }
+                                    break;
                                 }
                             }
                         } else {
@@ -518,22 +515,11 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
         return listOfCommunityCards.size();
     }
 
-    public int getLastPosition() {
-        return lastPosition;
-    }
-
-    public void setLastPosition(int position) {
-        this.lastPosition = position;
-    }
-
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView userName, communityText, likeCounter, dislikeCounter, communityTextWithImage, dateText;
-        ImageView userImage, verified, likeButton, dislikeButton, imageCommunity, /*dislikeButtonClicked,
-                likeButtonClicked,*/
-                shareButton, removeMessageCommunity, makeVerified;
+        ImageView userImage, verified, likeButton, dislikeButton, imageCommunity, shareButton, removeMessageCommunity, makeVerified;
         CardView cardCommunity;
         ConstraintLayout constraintLayout;
-
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -547,8 +533,6 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
             verified = itemView.findViewById(R.id.verified);
             communityTextWithImage = itemView.findViewById(R.id.communityTextWithImage);
             imageCommunity = itemView.findViewById(R.id.imageCommunity);
-            //dislikeButtonClicked = itemView.findViewById(R.id.dislikeButtonClicked);
-            //likeButtonClicked = itemView.findViewById(R.id.likeButtonClicked);
             shareButton = itemView.findViewById(R.id.shareButton);
             dateText = itemView.findViewById(R.id.dateText);
             removeMessageCommunity = itemView.findViewById(R.id.removeMessageCommunity);

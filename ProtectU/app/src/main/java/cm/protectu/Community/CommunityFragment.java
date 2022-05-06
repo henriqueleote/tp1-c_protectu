@@ -80,7 +80,7 @@ public class CommunityFragment extends Fragment {
         swipeToRefresh = view.findViewById(R.id.swipeToRefresh);
         backProfile = view.findViewById(R.id.back_id);
 
-        communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth, fragment,-1);
+        communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth, fragment);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(communityAdapter);
 
@@ -203,7 +203,7 @@ public class CommunityFragment extends Fragment {
                             Collections.sort(listOfCommunityCards, new SortCommunityCardClass());
 
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                            communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth, fragment,communityAdapter.getLastPosition());
+                            communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth, fragment);
                             recyclerView.setAdapter(communityAdapter);
                             communityAdapter.notifyDataSetChanged();
 

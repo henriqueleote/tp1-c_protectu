@@ -42,16 +42,17 @@
             android:src="@drawable/ic_missing_people_black_24dp" />
 
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/communityRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/communityText">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/communityRecyclerView"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/communityText">
 
-
-            </androidx.recyclerview.widget.RecyclerView>
+        </androidx.recyclerview.widget.RecyclerView>
 
 
 

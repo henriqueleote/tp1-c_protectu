@@ -109,7 +109,8 @@ public class NewMessageCommunityFragment extends BottomSheetDialogFragment {
          */
         upLoadedImage.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {dispatchTakePictureIntent();
+            public void onClick(View view) {
+                dispatchTakePictureIntent();
             }
         });
 
