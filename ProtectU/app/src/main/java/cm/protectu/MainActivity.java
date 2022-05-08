@@ -5,6 +5,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +23,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -61,6 +66,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private BottomNavigationView bottomBar;
     private NavigationView sideBar;
 
+    //for brightness sensor
+    private float floatThreshold = 1;
+    private SensorManager sensorManager;
+    private Sensor sensorLight;
+
     public static UserDataClass sessionUser;
 
     private static final String TAG = MainActivity.class.getName();
@@ -76,6 +86,30 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 //            setTheme(R.style.Theme_Dark);
 //        }else
 //            setTheme(R.style.Theme_Light);
+
+        //brightness sensor
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        sensorLight = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+
+        SensorEventListener sensorEventListenerLight = new SensorEventListener() {
+            @Override
+            public void onSensorChanged(SensorEvent event) {
+                float floatSensorValue = event.values[0]; // brightness
+
+                if (floatSensorValue < floatThreshold){
+                    //g.setMapStyle(MapStyleOptions.loadRawResourceStyle(getActivity(), R.raw.style_dark_map));
+                }
+                else {
+                    //This code is when the room is light
+                }
+            }
+
+            @Override
+            public void onAccuracyChanged(Sensor sensor, int accuracy) {
+            }
+        };
+
+        sensorManager.registerListener(sensorEventListenerLight, sensorLight, SensorManager.SENSOR_DELAY_NORMAL);
 
         super.onCreate(savedInstanceState);
 
