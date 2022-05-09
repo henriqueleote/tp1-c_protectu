@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/layout_bg"
+    android:backgroundTint="?attr/backgroundColor"
     android:orientation="vertical"
     android:padding="16dp"
     app:behavior_hideable="false"
@@ -13,12 +14,14 @@
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
 
-<ImageView
+    <ImageView
         android:id="@+id/closePanic"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_alignParentRight="true"
-        android:src="@drawable/ic_close_black_24dp" />
+        android:src="@drawable/ic_close_black_24dp"
+        app:tint="?attr/textColor"
+        />
 
     <TextView
         android:id="@+id/sos"
@@ -27,8 +30,8 @@
         android:layout_centerHorizontal="true"
         android:fontFamily="@font/lexend_regular"
         android:text="SOS"
-        android:textColor="#000000"
-        android:textSize="20sp"/>
+        android:textColor="?attr/textColor"
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/numberOfPeople"
@@ -42,6 +45,7 @@
         android:gravity="center"
         android:hint="@string/numberOfPeople"
         android:inputType="number"
+        android:textColor="?attr/textColor"
         android:textSize="15sp" />
 
     <Spinner
@@ -53,9 +57,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
         android:drawablePadding="10dp"
+        android:entries="@array/panic_values"
         android:fontFamily="@font/lexend_regular"
         android:gravity="center"
-        android:entries="@array/panic_values"
         android:textSize="15sp" />
 
     <Button

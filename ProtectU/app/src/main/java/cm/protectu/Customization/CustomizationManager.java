@@ -1,6 +1,7 @@
 package cm.protectu.Customization;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
@@ -24,13 +25,13 @@ public class CustomizationManager {
         this.ct = ct;
         selectedTheme = "";
         readTheme();
-        loadTheme();
     }
 
     public static CustomizationManager getInstance(Context ct) {
         if (instance == null) {
             instance = new CustomizationManager(ct);
         }
+
 
         return instance;
     }
@@ -55,15 +56,15 @@ public class CustomizationManager {
 
 
         selectedTheme = new String(bytes);
-        if (selectedTheme.isEmpty())
-            selectedTheme= "light";
-    }
 
-    private void loadTheme() {
+//        Se for utilizar o AppCompatDelegate, ver como guardar as coisas em SharedPreferences
+//        SharedPreferences sharedPreferences = ct.getSharedPreferences("night", 0);
+//        String string = sharedPreferences.getString("nightMode", "light");
+//        boolean nightMode = sharedPreferences.getBoolean("nightMode", false);
         if (selectedTheme.equalsIgnoreCase("dark")) {
             ct.setTheme(R.style.Theme_Dark);
-//                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else if (selectedTheme.equalsIgnoreCase("light")){
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else if (selectedTheme.equalsIgnoreCase("light")) {
             ct.setTheme(R.style.Theme_Light);
 //            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
@@ -87,5 +88,15 @@ public class CustomizationManager {
 
     public String getSelectedTheme() {
         return selectedTheme;
+    }
+
+    public void updateTheme(){
+        if (selectedTheme.equalsIgnoreCase("dark")) {
+            ct.setTheme(R.style.Theme_Dark);
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else if (selectedTheme.equalsIgnoreCase("light")) {
+            ct.setTheme(R.style.Theme_Light);
+//            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
     }
 }

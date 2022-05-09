@@ -5,11 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white">
+        android:background="?attr/backgroundColor">
 
         <ImageView
             android:id="@+id/back_id"
@@ -18,7 +17,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:src="@drawable/ic_arrow_back_black_24dp"
-            app:tint="@color/black"
+            app:tint="?attr/textColor"
             android:visibility="gone"/>
 
         <TextView
@@ -29,6 +28,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
             android:fontFamily="@font/lexend_regular"
+            android:textColor="?attr/textColor"
             android:text="@string/Community"
             android:textSize="20sp" />
 
@@ -38,9 +38,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
-            android:layout_margin="20dp"
-            android:src="@drawable/ic_missing_people_black_24dp" />
-
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/ic_missing_people_black_24dp"
+            app:tint="?attr/textColor" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/communityRecyclerView"
@@ -52,8 +55,8 @@
             android:layout_below="@+id/communityText">
 
 
-        </androidx.recyclerview.widget.RecyclerView>
 
+        </androidx.recyclerview.widget.RecyclerView>
 
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -68,9 +71,11 @@
             android:clickable="true"
             android:elevation="16dp"
             android:focusable="true"
-            app:backgroundTint="@color/white"
+            app:backgroundTint="?attr/floatButton"
             app:pressedTranslationZ="12dp"
-            app:srcCompat="@drawable/ic_add_black_24dp" />
+            app:srcCompat="@drawable/ic_add_black_24dp"
+            app:tint="?attr/floatButtonText"
+            />
 
     </RelativeLayout>
 

@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -35,6 +36,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolygonOptions;
@@ -51,8 +53,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import cm.protectu.Authentication.AuthActivity;
+import cm.protectu.Customization.CustomizationManager;
 import cm.protectu.MainActivity;
 import cm.protectu.Map.Buildings.BuildingClass;
 import cm.protectu.Map.Buildings.MapBuildingFragment;
@@ -259,6 +263,24 @@ public class MapFragment extends Fragment {
                         @SuppressLint({"NewApi", "MissingPermission"})
                         @Override
                         public void onMapReady(GoogleMap googleMap) {
+                            //Change theme of the Map
+                            try {
+                                switch (CustomizationManager.getInstance(getActivity()).getSelectedTheme().toLowerCase(Locale.ROOT)){
+                                    case "dark":
+                                        googleMap.setMapStyle(
+                                                MapStyleOptions.loadRawResourceStyle(
+                                                        getActivity(), R.raw.style_dark_map));
+                                        break;
+                                    default:
+                                        googleMap.setMapStyle(
+                                                MapStyleOptions.loadRawResourceStyle(
+                                                        getActivity(), GoogleMap.MAP_TYPE_NORMAL));
+                                }
+                            }catch (Resources.NotFoundException e){
+                                Log.e(TAG, "Resource not Found!");
+                            }
+
+
                             //Only shows the button if its a admin or authority
                             if(!mAuth.getCurrentUser().isAnonymous())
                                 if(!MainActivity.sessionUser.getUserType().equals("user"))

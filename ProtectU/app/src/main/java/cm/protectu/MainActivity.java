@@ -1,6 +1,7 @@
 package cm.protectu;
 
 import android.app.AlertDialog;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private NavigationView sideBar;
 
     //for brightness sensor
-    private float floatThreshold = 1;
+    private float floatThreshold = 2;
     private SensorManager sensorManager;
     private Sensor sensorLight;
 
@@ -81,6 +82,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Read and Load Themes
+//        setTheme(R.style.Theme_Light);
+
         CustomizationManager.getInstance(this);
 //        if (AppCompatDelegate.getDefaultNightMode()== AppCompatDelegate.MODE_NIGHT_YES){
 //            setTheme(R.style.Theme_Dark);
@@ -96,12 +99,34 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             public void onSensorChanged(SensorEvent event) {
                 float floatSensorValue = event.values[0]; // brightness
 
-                if (floatSensorValue < floatThreshold){
+                if (floatSensorValue < floatThreshold) {
                     //g.setMapStyle(MapStyleOptions.loadRawResourceStyle(getActivity(), R.raw.style_dark_map));
-                }
-                else {
+//                    System.out.println("Tema: Escuro");
+                    context.setTheme(R.style.Theme_Dark);
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container, new CustomizationFragment(bottomBar))
+                            .commit();
+                    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_NO) {
+//                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+//                        bottomBar.setBackgroundColor(R.attr.backgroundColorSelected);
+//                        recreate();
+                    }
+                } else {
                     //This code is when the room is light
+//                    System.out.println("Tema: Claro");
+                    context.setTheme(R.style.Theme_Light);
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_container, new CustomizationFragment(bottomBar))
+                            .commit();
+                    if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+//                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+//                        bottomBar.setBackgroundColor(R.attr.backgroundColorSelected);
+//                        recreate();
+                    }
                 }
+//                System.out.println("Tema: "+ CustomizationManager.getInstance(context).getSelectedTheme());
             }
 
             @Override
@@ -112,6 +137,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         sensorManager.registerListener(sensorEventListenerLight, sensorLight, SensorManager.SENSOR_DELAY_NORMAL);
 
         super.onCreate(savedInstanceState);
+
 
         MainActivity.context = getApplicationContext();
 
@@ -204,7 +230,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                         break;
 
                     case R.id.navigation_customize:
-                        fragment = new CustomizationFragment();
+                        fragment = new CustomizationFragment(bottomBar);
                         break;
 
                     case R.id.navigation_logout:
@@ -249,7 +275,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
 
             case R.id.navigation_profile:
-                if(mAuth.getCurrentUser().isAnonymous()){
+                if (mAuth.getCurrentUser().isAnonymous()) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setMessage(R.string.want_to_go_to_login)
                             .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
@@ -265,7 +291,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                             });
                     // Create the AlertDialog object and return it
                     builder.show();
-                }else{
+                } else {
                     getUserData(-1);
                     fragment = new ProfileFragment();
                 }
@@ -296,7 +322,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         startActivity(new Intent(MainActivity.this, AuthActivity.class));
     }
 
-    public void getUserData(int code){
+    public void getUserData(int code) {
         //Firebase Authentication function get the data from firebase with certain criteria
         firebaseFirestore.collection("users")
                 //where the userID is the same as the logged in user
@@ -309,7 +335,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 sessionUser = document.toObject(UserDataClass.class);
                             }
-                            if(code == 1)
+                            if (code == 1)
                                 loadFragment(new MapFragment());
                         } else {
                             //TODO Maybe reload the page or kill the session?
@@ -319,6 +345,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     }
                 });
     }
+
 
     public static Context getAppContext() {
         return MainActivity.context;

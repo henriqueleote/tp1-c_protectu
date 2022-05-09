@@ -1,9 +1,12 @@
 package cm.protectu.Customization;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,9 +21,11 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.File;
@@ -49,6 +54,13 @@ public class CustomizationFragment extends Fragment implements AdapterView.OnIte
 
     private Spinner spinner;
 
+    private CustomizationFragment thisFragment;
+
+    private BottomNavigationView bottomBar;
+
+    public CustomizationFragment(BottomNavigationView bottomBar) {
+        this.bottomBar = bottomBar;
+    }
 
     @Nullable
     @Override
@@ -67,6 +79,8 @@ public class CustomizationFragment extends Fragment implements AdapterView.OnIte
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_layout);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
+
+        thisFragment = this;
 
 //        whichSelected();
 
@@ -115,43 +129,48 @@ public class CustomizationFragment extends Fragment implements AdapterView.OnIte
     }
 
 
+    @SuppressLint("ResourceAsColor")
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
         if (position != 0) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage(R.string.question_app_will_restart)
-                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
+//            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//            builder.setMessage(R.string.question_app_will_restart)
+//                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
                             switch (position) {
                                 case 1: //Light Mode
 //                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                                     getActivity().setTheme(R.style.Theme_Light);
                                     CustomizationManager.getInstance(getActivity()).saveTheme("light");
-                                    getActivity().recreate();
+//                                    bottomBar.setBackgroundColor(R.color.backgroundColorSelected);
+//                                    getActivity().recreate();
                                     break;
                                 case 2: // Dark Mode
 //                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                                     getActivity().setTheme(R.style.Theme_Dark);
                                     CustomizationManager.getInstance(getActivity()).saveTheme("dark");
-                                    getActivity().recreate();
+
+//                                    getActivity().recreate();
                                     break;
                                 case 3: // Blue Mode
                                     break;
                                 default: // System Default
 //                getActivity().setTheme(R.style.Theme_Light);
                             }
+//                            getActivity().recreate();
+                            updateFragmentColor();
                         }
-                    })
-                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.dismiss();
-                            return;
-                        }
-                    });
+//                    })
+//                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int id) {
+//                            dialog.dismiss();
+//                            return;
+//                        }
+//                    });
             // Create the AlertDialog object and return it
-            builder.show();
-        }
+//            builder.show();
+//        }
 
 
     }
@@ -160,5 +179,16 @@ public class CustomizationFragment extends Fragment implements AdapterView.OnIte
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+    @SuppressLint("ResourceAsColor")
+    private void updateFragmentColor(){
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, new CustomizationFragment(bottomBar))
+                .commit();
+        System.out.println("Color: "+ R.attr.backgroundColorSelected);
+        getActivity().findViewById(R.id.side_menu).setBackgroundColor(R.attr.backgroundColorSelected);
+        bottomBar.setBackgroundColor(R.color.black);
     }
 }
