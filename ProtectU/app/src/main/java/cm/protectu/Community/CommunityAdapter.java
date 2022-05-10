@@ -149,7 +149,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
             holder.likeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    likesAndDislikes(messageID, "likes", holder.likeCounter, currentUserID, holder, "R.drawable.ic_thumb_up_blue_24dp");
+                    likesAndDislikes(messageID, "likes", holder.likeCounter, currentUserID, holder);
                 }
             });
 
@@ -157,7 +157,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
             holder.dislikeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    likesAndDislikes(messageID, "dislikes", holder.dislikeCounter, currentUserID, holder, "R.drawable.ic_thumb_down_blue_24dp");
+                    likesAndDislikes(messageID, "dislikes", holder.dislikeCounter, currentUserID, holder);
                 }
             });
 
@@ -298,16 +298,23 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                 }
             });
 
-            holder.communityTextWithImage.setVisibility(View.VISIBLE);
-            holder.communityText.setVisibility(View.GONE);
+            ConstraintSet constraintSet = new ConstraintSet();
+            constraintSet.clone(holder.constraintLayout);
 
-            holder.communityTextWithImage.setText(messageText);
+            constraintSet.connect(holder.communityTextWithImage.getId(), ConstraintSet.BOTTOM, holder.imageCommunity.getId(), ConstraintSet.TOP, 8);
+            constraintSet.applyTo(holder.constraintLayout);
 
         } else {
-            holder.communityTextWithImage.setVisibility(View.INVISIBLE);
             holder.imageCommunity.setVisibility(View.GONE);
-            holder.communityText.setText(messageText);
+
+            ConstraintSet constraintSet = new ConstraintSet();
+            constraintSet.clone(holder.constraintLayout);
+
+            constraintSet.connect(holder.communityTextWithImage.getId(), ConstraintSet.BOTTOM, holder.constraintLayoutDetails.getId(), ConstraintSet.TOP, 8);
+            constraintSet.applyTo(holder.constraintLayout);
+
         }
+        holder.communityTextWithImage.setText(messageText);
     }
 
 
@@ -323,7 +330,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
      * @param currentUserID
      * @param holder
      */
-    public void likesAndDislikes(String messageID, String type, TextView textNumber, String currentUserID, MyViewHolder holder, String image) {
+    public void likesAndDislikes(String messageID, String type, TextView textNumber, String currentUserID, MyViewHolder holder) {
         firebaseFirestore.collection("community-chat-reactions")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -354,7 +361,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                                             @Override
                                             public void onSuccess(Void aVoid) {
                                                 textNumber.setText(actualNumber + "");
-                                                UserReactionsClass userReactionsClass = new UserReactionsClass(currentUserID, messageID, type.substring(0, type.length() - 1), new Date(), image);
+                                                UserReactionsClass userReactionsClass = new UserReactionsClass(currentUserID, messageID, type.substring(0, type.length() - 1), new Date());
                                                 firebaseFirestore.collection("community-chat-reactions").add(userReactionsClass);
                                                 getClickedLikeOrDislike(currentUserID, messageID, holder);
                                                 Log.d(TAG, "Document successfully updated!");
@@ -516,15 +523,14 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView userName, communityText, likeCounter, dislikeCounter, communityTextWithImage, dateText;
+        TextView userName, likeCounter, dislikeCounter, communityTextWithImage, dateText;
         ImageView userImage, verified, likeButton, dislikeButton, imageCommunity, shareButton, removeMessageCommunity, makeVerified;
         CardView cardCommunity;
-        ConstraintLayout constraintLayout;
+        ConstraintLayout constraintLayout,constraintLayoutDetails;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             userName = itemView.findViewById(R.id.userName);
-            communityText = itemView.findViewById(R.id.communityText);
             userImage = itemView.findViewById(R.id.userImage);
             likeCounter = itemView.findViewById(R.id.numberOfLikes);
             dislikeCounter = itemView.findViewById(R.id.numberOfDislikes);
@@ -539,6 +545,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
             makeVerified = itemView.findViewById(R.id.makeVerified);
             cardCommunity = itemView.findViewById(R.id.cardCommunity);
             constraintLayout = itemView.findViewById(R.id.constraintLayout);
+            constraintLayoutDetails = itemView.findViewById(R.id.buttonsCommunity);
         }
     }
 }
