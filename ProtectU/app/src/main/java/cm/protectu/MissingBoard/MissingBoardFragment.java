@@ -28,8 +28,10 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import cm.protectu.Authentication.AuthActivity;
+import cm.protectu.Community.SortCommunityCardClass;
 import cm.protectu.R;
 
 /**
@@ -197,6 +199,7 @@ public class MissingBoardFragment extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 MissingCardClass missingCardClass = document.toObject(MissingCardClass.class);
                                 missingCardClasses.add(missingCardClass);
+                                Collections.sort(missingCardClasses, new SortMissingBoardCardClass());
                                 myAdapter = new MissingBoardAdapter(getActivity(), missingCardClasses,getParentFragmentManager(),mAuth);
                                 myRecycleView.setAdapter(myAdapter);
                                 myAdapter.notifyDataSetChanged();
