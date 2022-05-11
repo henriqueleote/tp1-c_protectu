@@ -296,8 +296,7 @@ public class MapFragment extends Fragment {
                                                         pinIcon = bitmapDescriptorFromVector(getActivity(), getContext().getResources().getIdentifier(mapPinType.getLogo(), "drawable", getContext().getPackageName()));
                                                     }
                                                 });
-                                                MarkerOptions options = new MarkerOptions().position(latLng).title(mapPin.getType()).snippet(mapPin.getPinID()).icon(pinIcon);
-                                                googleMap.addMarker(options);
+                                                googleMap.addMarker(new MarkerOptions().position(latLng).title(mapPin.getType()).snippet(mapPin.getPinID()).icon(pinIcon));
                                             }
                                         } else {
                                             Log.d(TAG, "Error getting documents: ", task.getException());
@@ -492,16 +491,13 @@ public class MapFragment extends Fragment {
     @SuppressLint("NewApi")
     public void loadFilteredPins(){
         FilterMapFragment.filteredMapPinClasses.forEach(mapPin -> {
-            BitmapDescriptor icon = null;
             LatLng latLng = new LatLng(mapPin.getLocation().getLatitude(), mapPin.getLocation().getLongitude());
-            if (mapPin.getType().trim().equals("war")) {
-                icon = bitmapDescriptorFromVector(getActivity(), R.drawable.ic_map_war_pin_45dp);
-            }
-            if (mapPin.getType().trim().equals("hospital")) {
-                icon = bitmapDescriptorFromVector(getActivity(), R.drawable.ic_map_hospital_pin_45dp);
-            }
-            MarkerOptions options = new MarkerOptions().position(latLng).title(mapPin.getType()).snippet(mapPin.getPinID()).icon(icon);
-            gMap.addMarker(options);
+            mapPinTypes.forEach(mapPinType -> {
+                if(mapPin.getType().equals(mapPinType.getType())){
+                    pinIcon = bitmapDescriptorFromVector(getActivity(), getContext().getResources().getIdentifier(mapPinType.getLogo(), "drawable", getContext().getPackageName()));
+                }
+            });
+            gMap.addMarker(new MarkerOptions().position(latLng).title(mapPin.getType()).snippet(mapPin.getPinID()).icon(pinIcon));
         });
     }
 

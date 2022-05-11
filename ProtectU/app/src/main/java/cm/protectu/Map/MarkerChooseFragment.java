@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -104,36 +105,41 @@ public class MarkerChooseFragment extends BottomSheetDialogFragment {
     }
 
     public void insertMarker() {
-        ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setTitle("Adding marker");
-        progressDialog.setMessage("Loading...");
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-        DocumentReference documentReference = firebaseFirestore.collection("map-pins").document();
-        Map<String, Object> markersData = new HashMap<>();
-        markersData.put("pinID", documentReference.getId());
-        markersData.put("location", new GeoPoint(markerList.get(markerList.size()-1).getPosition().latitude, markerList.get(markerList.size()-1).getPosition().longitude));
-        markersData.put("type", MarkerChooseAdapter.checkedButton.get(MarkerChooseAdapter.checkedButton.size()-1));
-        documentReference.set(markersData)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        progressDialog.dismiss();
-                        getDialog().dismiss();
-                        Log.d(TAG, "DocumentSnapshot with the ID: " + documentReference.getId());
-                        getParentFragmentManager().beginTransaction()
-                                .replace(R.id.fragment_container, new MapFragment())
-                                .addToBackStack(null)
-                                .commit();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        progressDialog.dismiss();
-                        Log.w(TAG, "Error writing document", e);
-                    }
-                });
+        if(MarkerChooseAdapter.checkedButton.get(MarkerChooseAdapter.checkedButton.size()-1).equalsIgnoreCase("bunker")) {
+            Toast.makeText(getActivity(), "maddie", Toast.LENGTH_SHORT).show();
+        }else{
+            ProgressDialog progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setTitle("Adding marker");
+            progressDialog.setMessage("Loading...");
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+            DocumentReference documentReference = firebaseFirestore.collection("map-pins").document();
+            Map<String, Object> markersData = new HashMap<>();
+            markersData.put("pinID", documentReference.getId());
+            markersData.put("location", new GeoPoint(markerList.get(markerList.size()-1).getPosition().latitude, markerList.get(markerList.size()-1).getPosition().longitude));
+            markersData.put("type", MarkerChooseAdapter.checkedButton.get(MarkerChooseAdapter.checkedButton.size()-1));
+            documentReference.set(markersData)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            progressDialog.dismiss();
+                            getDialog().dismiss();
+                            Log.d(TAG, "DocumentSnapshot with the ID: " + documentReference.getId());
+                            getParentFragmentManager().beginTransaction()
+                                    .replace(R.id.fragment_container, new MapFragment())
+                                    .addToBackStack(null)
+                                    .commit();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Log.w(TAG, "Error writing document", e);
+                        }
+                    });
+        }
+
     }
 }
