@@ -79,7 +79,7 @@ public class MapAddMarkerFragment extends Fragment {
 
     GoogleMap gMap;
 
-    List<Marker> markerList = new ArrayList<>();
+    List<Marker> markerList;
 
     @Nullable
     @Override
@@ -105,6 +105,7 @@ public class MapAddMarkerFragment extends Fragment {
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         client = LocationServices.getFusedLocationProviderClient(getActivity());
+        markerList = new ArrayList<>();
 
         resetBtn = view.findViewById(R.id.resetBtn);
         confirmPinBtn = view.findViewById(R.id.confirmPinBtn);
@@ -246,7 +247,7 @@ public class MapAddMarkerFragment extends Fragment {
         if(markerList.isEmpty()){
             Toast.makeText(getActivity(), "You have to choose a location", Toast.LENGTH_SHORT).show();
         }else{
-            MarkerChooseFragment bottomLogin = new MarkerChooseFragment(markerList);
+            MarkerChooseFragment bottomLogin = new MarkerChooseFragment(getActivity(), markerList);
             bottomLogin.show(getActivity().getSupportFragmentManager(), bottomLogin.getTag());
         }
     }

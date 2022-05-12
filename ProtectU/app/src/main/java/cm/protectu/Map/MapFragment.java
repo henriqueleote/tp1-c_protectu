@@ -336,7 +336,7 @@ public class MapFragment extends Fragment {
                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                         if (task.isSuccessful()) {
                                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                                //Log.d(TAG, "\nBuilding Object Data (Database) => " + document.getData() + "\n");
+                                                Log.d(TAG, "\nBuilding Object Data (Database) => " + document.getData() + "\n");
                                                 ArrayList<String> images = (ArrayList<String>) document.get("images");
                                                 BuildingClass building = new BuildingClass(document.get("buildingID").toString(), document.get("buildingName").toString(), document.get("type").toString(), images);
                                                 buildingsList.add(building);
@@ -369,6 +369,7 @@ public class MapFragment extends Fragment {
                                     BuildingClass building = null;
                                     marker.hideInfoWindow();
                                     String buildingID = marker.getSnippet();
+                                    Log.d(TAG, "Building Clicked: " + buildingID);
                                     for(int i = 0; i < buildingsList.size(); i++)
                                         if (buildingsList.get(i).getBuildingID().equals(buildingID))
                                             building = buildingsList.get(i);

@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -33,6 +35,7 @@ import java.util.Map;
 
 import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.Map.Buildings.MapPinTypeClass;
+import cm.protectu.Map.Buildings.NewBunkerFragment;
 import cm.protectu.R;
 
 public class MarkerChooseFragment extends BottomSheetDialogFragment {
@@ -56,8 +59,11 @@ public class MarkerChooseFragment extends BottomSheetDialogFragment {
     //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
 
-    public MarkerChooseFragment(List<Marker> markerList){
+    private FragmentActivity fragment;
+
+    public MarkerChooseFragment(FragmentActivity fragment, List<Marker> markerList){
         this.markerList = markerList;
+        this.fragment = fragment;
     }
 
     @SuppressLint("NewApi")
@@ -104,16 +110,21 @@ public class MarkerChooseFragment extends BottomSheetDialogFragment {
         return view;
     }
 
+
     public void insertMarker() {
         if(MarkerChooseAdapter.checkedButton.get(MarkerChooseAdapter.checkedButton.size()-1).equalsIgnoreCase("bunker")) {
-            Toast.makeText(getActivity(), "maddie", Toast.LENGTH_SHORT).show();
+            getDialog().dismiss();
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new NewBunkerFragment(new GeoPoint(markerList.get(markerList.size()-1).getPosition().latitude, markerList.get(markerList.size()-1).getPosition().longitude)))
+                    .addToBackStack(null)
+                    .commit();
         }else{
             ProgressDialog progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("Adding marker");
             progressDialog.setMessage("Loading...");
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progressDialog.setCancelable(false);
             progressDialog.show();
+
             DocumentReference documentReference = firebaseFirestore.collection("map-pins").document();
             Map<String, Object> markersData = new HashMap<>();
             markersData.put("pinID", documentReference.getId());
@@ -124,13 +135,12 @@ public class MarkerChooseFragment extends BottomSheetDialogFragment {
                         @Override
                         public void onSuccess(Void aVoid) {
                             progressDialog.dismiss();
-                            getDialog().dismiss();
                             Log.d(TAG, "DocumentSnapshot with the ID: " + documentReference.getId());
-                            getParentFragmentManager().beginTransaction()
+                            getDialog().dismiss();
+                            getFragmentManager().beginTransaction()
                                     .replace(R.id.fragment_container, new MapFragment())
                                     .addToBackStack(null)
-                                    .commit();
-                        }
+                                    .commit();}
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
