@@ -1,4 +1,4 @@
-package cm.protectu.Map.Buildings;
+package cm.protectu.Buildings;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -9,7 +9,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -26,15 +25,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.gms.common.internal.Constants;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -52,17 +46,12 @@ import java.util.Locale;
 import java.util.Map;
 
 import cm.protectu.Authentication.AuthActivity;
-import cm.protectu.MainActivity;
 import cm.protectu.Map.MapFragment;
-import cm.protectu.Map.MarkerChooseAdapter;
 import cm.protectu.R;
-import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class NewBunkerFragment extends Fragment {
 
     private static final int PICK_IMAGE = 1;
-    private static final int IMAGE_CODE = 1;
-    private static final int REQUEST_CODE = 1;
 
     //ImageView
     private ImageView backButton, imagesImageView;
@@ -131,6 +120,7 @@ public class NewBunkerFragment extends Fragment {
 
         getLocation();
 
+        //TODO AT LEAST ONE PHOTO
         //On click closes the form sheet
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -311,6 +301,7 @@ public class NewBunkerFragment extends Fragment {
         bunkerData.put("buildingName", bunkerName);
         bunkerData.put("buildingDescription", bunkerDescription);
         bunkerData.put("images", imagesLinks);
+        bunkerData.put("location", new GeoPoint(location.getLatitude(), location.getLongitude()));
         bunkerData.put("type", "bunker");
 
         buildingRef.set(bunkerData)

@@ -1,6 +1,7 @@
 package cm.protectu.Authentication;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -108,17 +109,17 @@ public class AuthActivity extends AppCompatActivity {
     }
 
     public void loginUserAnonymous() {
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
+        progressDialog.setMessage("Logging in...");
+        progressDialog.show();
         mAuth.signInAnonymously()
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
-                            //Set the Firebase User to the just logged in one
                             user = mAuth.getCurrentUser();
-
-                            //Show success message and redirects to the app
-                            Toast.makeText(AuthActivity.this, getString(R.string.registration_sucessful), Toast.LENGTH_LONG).show();
+                            progressDialog.dismiss();
                             startActivity(new Intent(AuthActivity.this, MainActivity.class));
                             Log.d(TAG, "Data: " + user.getUid() + "\nEmail: " + user.getEmail());
                         } else {

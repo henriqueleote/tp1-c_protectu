@@ -1,4 +1,4 @@
-package cm.protectu.Map.Buildings;
+package cm.protectu.Buildings;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -42,6 +42,7 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
         Picasso.get()
                 .load(sliderItem)
                 .fit()
+                .centerCrop()
                 .into(viewHolder.imageViewBackground);
     }
 
