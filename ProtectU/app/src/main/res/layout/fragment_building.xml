@@ -76,52 +76,60 @@
                 android:textColor="@color/black" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/recyclerTitle"
+        <RelativeLayout
+            android:id="@+id/buildingExtrasContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/locationContainer"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="15dp"
-            android:text="What it has?"
-            android:fontFamily="@font/lexend_regular"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
+            android:layout_marginTop="15dp">
 
-        <TextView
-            android:id="@+id/recyclerSubtitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/recyclerTitle"
-            android:layout_marginLeft="10dp"
-            android:layout_toEndOf="@id/recyclerTitle"
-            android:text="Swipe to see all"
-            android:fontFamily="@font/lexend_regular"
-            android:textColor="#3E3E3E" />
+            <TextView
+                android:id="@+id/recyclerTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:fontFamily="@font/lexend_regular"
+                android:text="What it has?"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/recyclerTitle"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/recyclerSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/recyclerTitle"
+                android:layout_marginLeft="10dp"
+                android:layout_toEndOf="@id/recyclerTitle"
+                android:text="Swipe to see all"
+                android:fontFamily="@font/lexend_regular"
+                android:textColor="#3E3E3E" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/buildingExtrasRecyclerView"
+            <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scaleType="fitXY" />
-        </LinearLayout>
+                android:layout_below="@+id/recyclerTitle"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/buildingExtrasRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY" />
+            </LinearLayout>
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/descriptionTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/linearLayout"
+            android:layout_below="@+id/buildingExtrasContainer"
             android:textColor="@color/black"
             android:layout_marginLeft="16dp"
+            android:layout_marginTop="15dp"
             android:fontFamily="@font/lexend_regular"
             android:textSize="20sp"
             android:text="Description" />

@@ -60,6 +60,7 @@ public class BuildingFragment extends Fragment {
     LinearLayoutManager HorizontalLayout;
     ProgressDialog progressDialog;
     SwipeRefreshLayout swipeRefreshLayout;
+    RelativeLayout buildingExtrasContainer;
 
 
     //TAG for debug logs
@@ -97,6 +98,7 @@ public class BuildingFragment extends Fragment {
         locationTextView = view.findViewById(R.id.locationTextView);
         descriptionTextView = view.findViewById(R.id.descriptionTextView);
         swipeRefreshLayout = view.findViewById(R.id.swipeToRefresh);
+        buildingExtrasContainer = view.findViewById(R.id.buildingExtrasContainer);
         progressDialog = new ProgressDialog(getActivity());
         RecyclerViewLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         buildingAllExtrasList = MapFragment.buildingAllExtrasList;
@@ -178,7 +180,11 @@ public class BuildingFragment extends Fragment {
                     progressDialog.dismiss();
                 }
                 getLocation(location);
-                getExtras();
+                if(extras == null)
+                    //TODO MAYBE PUT A MESSAGE SAYING IT DOESNT HAVE ANY
+                    buildingExtrasContainer.setVisibility(View.GONE);
+                else
+                    getExtras();
             }
         });
     }

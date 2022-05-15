@@ -40,6 +40,8 @@ import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -77,6 +79,14 @@ public class NewBunkerFragment extends Fragment {
 
     private GeoPoint location;
 
+    private Button buildingExtrasButton;
+
+    private ArrayList<MapPinTypeClass> buildingExtras;
+
+    private ArrayList<String> selectedExtras;
+
+    private TextView buildingExtrasTextView;
+
     //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
 
@@ -113,10 +123,14 @@ public class NewBunkerFragment extends Fragment {
         bunkerNameEditText = view.findViewById(R.id.bunkerNameEditText);
         bunkerDescriptionEditText = view.findViewById(R.id.bunkerDescriptionEditText);
         createButton = view.findViewById(R.id.createButton);
+        buildingExtrasButton = view.findViewById(R.id.buildingExtrasButton);
+        buildingExtrasTextView = view.findViewById(R.id.buildingExtrasTextView);
+        buildingExtras = MapFragment.buildingAllExtrasList;
 
         uriList = new ArrayList<>();
         imagesLinks = new ArrayList<>();
         addressesList = new ArrayList<>();
+        selectedExtras = new ArrayList<>();
 
         getLocation();
 
@@ -126,6 +140,7 @@ public class NewBunkerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setCancelable(false);
                 builder.setMessage("Are you sure you want to return? All progress will be lost")
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -160,6 +175,62 @@ public class NewBunkerFragment extends Fragment {
             }
         });
 
+        buildingExtrasButton.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("NewApi")
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("Choose extras");
+                builder.setCancelable(false);
+
+                String[] extras = new String[buildingExtras.size()];
+
+                for(int i = 0; i < buildingExtras.size(); i++){
+                    extras[i] = buildingExtras.get(i).getName();
+                }
+
+                final boolean[] checkedExtras = new boolean[buildingExtras.size()];
+
+                builder.setMultiChoiceItems(extras, checkedExtras, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        checkedExtras[which] = isChecked;
+                    }
+                });
+
+                builder.setPositiveButton("Adicionar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        buildingExtrasTextView.setText("");
+                        selectedExtras.clear();
+                        for (int i = 0; i < checkedExtras.length; i++){
+                            boolean checked = checkedExtras[i];
+                            if (checked) {
+                                selectedExtras.add(buildingExtras.get(i).getType());
+                                if(buildingExtrasTextView.getText().equals(""))
+                                    buildingExtrasTextView.setText(buildingExtras.get(i).getName());
+                                else
+                                    buildingExtrasTextView.setText(buildingExtrasTextView.getText() + ", " + buildingExtras.get(i).getName());
+
+                            }
+                        }
+                    }
+                });
+
+                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // use for loop
+                        for (int j = 0; j < checkedExtras.length; j++) {
+                            checkedExtras[j] = false;
+                            selectedExtras.clear();
+                        }
+                    }
+                });
+                builder.show();
+            }
+        });
+
 
         //Returns the view
         return view;
@@ -183,9 +254,12 @@ public class NewBunkerFragment extends Fragment {
             if(data.getClipData() != null){
                 int totalItems = data.getClipData().getItemCount();
 
-                if(totalItems > 6){
-                    Toast.makeText(getActivity(), "The limit is 6 images", Toast.LENGTH_SHORT).show();
+                if(totalItems > 1){
+                    Toast.makeText(getActivity(), "Images are mandatory", Toast.LENGTH_SHORT).show();
                     return;
+                }
+                else if(totalItems > 6){
+
                 }else{
                     Picasso.get()
                             .load(data.getClipData().getItemAt(totalItems-1).getUri())
@@ -300,6 +374,7 @@ public class NewBunkerFragment extends Fragment {
         bunkerData.put("buildingID", buildingRef.getId());
         bunkerData.put("buildingName", bunkerName);
         bunkerData.put("buildingDescription", bunkerDescription);
+        bunkerData.put("extras", selectedExtras);
         bunkerData.put("images", imagesLinks);
         bunkerData.put("location", new GeoPoint(location.getLatitude(), location.getLongitude()));
         bunkerData.put("type", "bunker");
