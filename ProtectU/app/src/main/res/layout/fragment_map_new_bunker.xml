@@ -6,11 +6,10 @@
     android:id="@+id/mainPostID"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F1EFEF"
-    tools:context=".MainActivity">
+    android:background="#F1EFEF">
 
     <ImageView
-        android:id="@+id/backID"
+        android:id="@+id/backButton"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginLeft="15dp"
@@ -21,11 +20,11 @@
         app:tint="@color/black" />
 
     <TextView
-        android:id="@+id/titlePageMissingPostID"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="@string/newPost"
+        android:text="New bunker"
         android:textColor="@color/black"
         android:textSize="23dp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -34,10 +33,10 @@
         tools:ignore="MissingConstraints"></TextView>
 
     <EditText
-        android:id="@+id/nameNewMissingPostID"
+        android:id="@+id/bunkerNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="30dp"
         android:drawablePadding="10dp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
@@ -47,26 +46,10 @@
         android:textSize="15sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titlePageMissingPostID" />
-
-    <EditText
-        android:id="@+id/ageNewMissingPostID"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:drawablePadding="10dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
-        android:hint="@string/Age"
-        android:inputType="number"
-        android:textSize="15sp"
-        android:maxLength="2"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameNewMissingPostID" />
+        app:layout_constraintTop_toBottomOf="@+id/title" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/addDescriptionCardID"
+        android:id="@+id/descriptionCard"
         android:layout_width="match_parent"
         android:layout_height="160dp"
         android:layout_marginTop="20dp"
@@ -76,14 +59,14 @@
         app:cardCornerRadius="15dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ageNewMissingPostID">
+        app:layout_constraintTop_toBottomOf="@id/bunkerNameEditText">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <EditText
-                android:id="@+id/descriptionNewMissingPostID"
+                android:id="@+id/bunkerDescriptionEditText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/lexend_regular"
@@ -93,27 +76,58 @@
                 android:hint="@string/description"
                 android:maxLength="500"
                 android:inputType="text|textMultiLine"
-                android:textSize="15sp"/>
+                android:textSize="15sp" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/informationAboutAddImagesID"
+        android:id="@+id/locationTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/addDescriptionCardID"
         android:layout_marginTop="20dp"
         android:drawablePadding="10dp"
-        android:hint="@string/addImage1"
+        android:hint=""
         android:inputType="text"
         android:textColor="@color/black"
         android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="@id/addDescriptionCardID"
-        app:layout_constraintTop_toBottomOf="@+id/addDescriptionCardID" />
+        app:layout_constraintStart_toStartOf="@id/descriptionCard"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionCard" />
+
+    <Button
+        android:id="@+id/buildingExtrasButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Building Extras"
+        app:layout_constraintStart_toStartOf="@id/locationTextView"
+        app:layout_constraintTop_toBottomOf="@+id/locationTextView"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/buildingExtrasTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/buildingExtrasButton"
+        app:layout_constraintTop_toBottomOf="@+id/buildingExtrasButton"
+        android:layout_marginTop="5dp"/>
+
+
+    <TextView
+        android:id="@+id/imageTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/descriptionCard"
+        android:layout_marginTop="10dp"
+        android:drawablePadding="10dp"
+        android:hint="Add images (max. 6)"
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        app:layout_constraintStart_toStartOf="@id/buildingExtrasTextView"
+        app:layout_constraintTop_toBottomOf="@+id/buildingExtrasTextView" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/uploadImageID"
+        android:id="@+id/imageCard"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginTop="30dp"
@@ -123,17 +137,10 @@
         app:cardCornerRadius="15dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/informationAboutAddImagesID">
-
-
-        <ImageView
-            android:id="@+id/imageUplaodedID"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY" />
+        app:layout_constraintTop_toBottomOf="@+id/imageTextView">
 
         <ImageView
-            android:id="@+id/uploadImageIconID"
+            android:id="@+id/imagesImageView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
@@ -143,7 +150,7 @@
 
 
     <Button
-        android:id="@+id/createButtonNewMissingID"
+        android:id="@+id/createButton"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
@@ -154,7 +161,7 @@
         android:textColor="#FFFFFF"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/uploadImageID" />
+        app:layout_constraintTop_toBottomOf="@+id/imageCard" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

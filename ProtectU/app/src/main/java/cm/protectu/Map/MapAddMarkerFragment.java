@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
@@ -78,7 +79,7 @@ public class MapAddMarkerFragment extends Fragment {
 
     GoogleMap gMap;
 
-    List<Marker> markerList = new ArrayList<>();
+    List<Marker> markerList;
 
     @Nullable
     @Override
@@ -104,6 +105,7 @@ public class MapAddMarkerFragment extends Fragment {
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         client = LocationServices.getFusedLocationProviderClient(getActivity());
+        markerList = new ArrayList<>();
 
         resetBtn = view.findViewById(R.id.resetBtn);
         confirmPinBtn = view.findViewById(R.id.confirmPinBtn);
@@ -206,7 +208,7 @@ public class MapAddMarkerFragment extends Fragment {
                                     }else{
                                         Marker oldMarker = markerList.get(markerList.size()-1);
                                         oldMarker.remove();
-                                        markerList.remove(markerList.size()-1);
+                                        markerList.clear();
                                         MarkerOptions markerOptions = new MarkerOptions().position(latLng);
                                         markerOptions.icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_map_add_pin_45dp));
                                         Marker marker = gMap.addMarker(markerOptions);
@@ -243,12 +245,9 @@ public class MapAddMarkerFragment extends Fragment {
 
     public void insertMarker() {
         if(markerList.isEmpty()){
-            getParentFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new MapFragment())
-                    .addToBackStack(null)
-                    .commit();
+            Toast.makeText(getActivity(), "You have to choose a location", Toast.LENGTH_SHORT).show();
         }else{
-            MarkerChooseFragment bottomLogin = new MarkerChooseFragment(markerList);
+            MarkerChooseFragment bottomLogin = new MarkerChooseFragment(getActivity(), markerList);
             bottomLogin.show(getActivity().getSupportFragmentManager(), bottomLogin.getTag());
         }
     }

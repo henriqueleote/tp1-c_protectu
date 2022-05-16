@@ -1,4 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipeToRefresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -21,6 +28,7 @@
             app:sliderAutoCycleDirection="back_and_forth"
             app:sliderIndicatorAnimationDuration="600"
             app:sliderIndicatorEnabled="true"
+            android:adjustViewBounds="true"
             app:sliderIndicatorOrientation="horizontal"
             app:sliderIndicatorPadding="5dp"
             app:sliderIndicatorRadius="3dp"
@@ -31,41 +39,134 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/imageContainer">
+        android:layout_below="@+id/imageContainer"
+        android:background="@drawable/layout_bg">
+
+        <TextView
+            android:id="@+id/bunkerNameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/lexend_regular"
+            android:textColor="@color/black"
+            android:textSize="25sp" />
+
+        <LinearLayout
+            android:id="@+id/locationContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bunkerNameTextView"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_bottom_map_black_24dp"
+                app:tint="@color/black" />
+
+            <TextView
+                android:id="@+id/locationTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="Lisboa"
+                android:fontFamily="@font/lexend_regular"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/buildingExtrasContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/locationContainer"
+            android:layout_marginTop="15dp">
+
+            <TextView
+                android:id="@+id/recyclerTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:fontFamily="@font/lexend_regular"
+                android:text="What it has?"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/recyclerSubtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/recyclerTitle"
+                android:layout_marginLeft="10dp"
+                android:layout_toEndOf="@id/recyclerTitle"
+                android:text="Swipe to see all"
+                android:fontFamily="@font/lexend_regular"
+                android:textColor="#3E3E3E" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/recyclerTitle"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/buildingExtrasRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/descriptionTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/buildingExtrasContainer"
+            android:textColor="@color/black"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/lexend_regular"
+            android:textSize="20sp"
+            android:text="Description" />
+
+        <TextView
+            android:id="@+id/descriptionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/descriptionTitle"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/lexend_regular"
+            android:justificationMode="inter_word"
+            android:text="Description" />
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/backButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/border_button">
 
         <ImageView
-            android:id="@+id/backButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="15dp"
+            android:layout_centerVertical="true"
             android:padding="3dp"
+            android:scaleType="centerCrop"
             android:src="@drawable/ic_arrow_back_black_24dp"
             app:tint="@color/black" />
     </RelativeLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/createMessageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="32dp"
-        android:background="?android:attr/selectableItemBackground"
-        android:clickable="true"
-        android:elevation="16dp"
-        android:focusable="true"
-        app:backgroundTint="@color/white"
-        app:pressedTranslationZ="12dp"
-        app:srcCompat="@drawable/ic_add_black_24dp" />
-
 </RelativeLayout>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

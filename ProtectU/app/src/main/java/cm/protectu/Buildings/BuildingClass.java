@@ -1,4 +1,6 @@
-package cm.protectu.Map.Buildings;
+package cm.protectu.Buildings;
+
+import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
 
@@ -7,13 +9,33 @@ public class BuildingClass {
     String buildingID;
     String buildingName;
     String type;
+    String buildingDescription;
     ArrayList<String> images;
+    GeoPoint buildingLocation;
 
-    public BuildingClass(String buildingID, String buildingName, String type, ArrayList<String> images) {
+    public BuildingClass(String buildingID, String buildingName, String buildingDescription, String type, ArrayList<String> images, GeoPoint buildingLocation) {
         this.buildingID = buildingID;
         this.buildingName = buildingName;
         this.type = type;
         this.images = images;
+        this.buildingDescription = buildingDescription;
+        this.buildingLocation = buildingLocation;
+    }
+
+    public GeoPoint getBuildingLocation() {
+        return buildingLocation;
+    }
+
+    public void setBuildingLocation(GeoPoint buildingLocation) {
+        this.buildingLocation = buildingLocation;
+    }
+
+    public String getBuildingDescription() {
+        return buildingDescription;
+    }
+
+    public void setBuildingDescription(String buildingDescription) {
+        this.buildingDescription = buildingDescription;
     }
 
     public String getBuildingName() {

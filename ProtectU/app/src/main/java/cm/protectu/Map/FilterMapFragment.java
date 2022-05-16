@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 
 import cm.protectu.Authentication.AuthActivity;
-import cm.protectu.Map.Buildings.MapPinTypeClass;
+import cm.protectu.Buildings.MapPinTypeClass;
 import cm.protectu.R;
 
 public class FilterMapFragment extends BottomSheetDialogFragment {

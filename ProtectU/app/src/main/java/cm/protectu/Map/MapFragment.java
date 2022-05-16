@@ -48,15 +48,14 @@ import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.MainActivity;
-import cm.protectu.Map.Buildings.BuildingClass;
-import cm.protectu.Map.Buildings.MapBuildingFragment;
-import cm.protectu.Map.Buildings.MapPinTypeClass;
+import cm.protectu.Buildings.BuildingClass;
+import cm.protectu.Buildings.MapBuildingFragment;
+import cm.protectu.Buildings.MapPinTypeClass;
 import cm.protectu.R;
 
 
@@ -100,6 +99,8 @@ public class MapFragment extends Fragment {
     //List with the buildings of the map
     public static ArrayList<BuildingClass> buildingsList;
 
+    public static ArrayList<MapPinTypeClass> buildingAllExtrasList;
+
     MapFragment fragment = this;
 
     BitmapDescriptor pinIcon;
@@ -142,6 +143,7 @@ public class MapFragment extends Fragment {
         mapZoneClasses = new ArrayList<>();
         mapPinTypes = new ArrayList<>();
         buildingsList = new ArrayList<>();
+        buildingAllExtrasList = new ArrayList<>();
 
         getLoadData();
 
@@ -236,17 +238,6 @@ public class MapFragment extends Fragment {
         });
     }
 
-    public static int getResId(String resName, Class<?> c) {
-
-        try {
-            Field idField = c.getDeclaredField(resName);
-            return idField.getInt(idField);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return -1;
-        }
-    }
-
     //TODO - Check if the users location is enabled
     //Gets the user current location and displays in the map
     private void loadMap() {
@@ -296,8 +287,7 @@ public class MapFragment extends Fragment {
                                                         pinIcon = bitmapDescriptorFromVector(getActivity(), getContext().getResources().getIdentifier(mapPinType.getLogo(), "drawable", getContext().getPackageName()));
                                                     }
                                                 });
-                                                MarkerOptions options = new MarkerOptions().position(latLng).title(mapPin.getType()).snippet(mapPin.getPinID()).icon(pinIcon);
-                                                googleMap.addMarker(options);
+                                                googleMap.addMarker(new MarkerOptions().position(latLng).title(mapPin.getType()).snippet(mapPin.getPinID()).icon(pinIcon));
                                             }
                                         } else {
                                             Log.d(TAG, "Error getting documents: ", task.getException());
@@ -331,15 +321,27 @@ public class MapFragment extends Fragment {
                                     }
                                 });
 
+                                firebaseFirestore.collection("building-extras").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if(task.isSuccessful()){
+                                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                                buildingAllExtrasList.add(new MapPinTypeClass(document.get("type").toString(), document.get("logo").toString(), document.get("name").toString()));
+                                            }
+                                        }
+
+                                    }
+                                });
+
                                 //get the marker data on map load
                                 firebaseFirestore.collection("map-buildings").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                         if (task.isSuccessful()) {
                                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                                //Log.d(TAG, "\nBuilding Object Data (Database) => " + document.getData() + "\n");
+                                                Log.d(TAG, "\nBuilding Object Data (Database) => " + document.getData() + "\n");
                                                 ArrayList<String> images = (ArrayList<String>) document.get("images");
-                                                BuildingClass building = new BuildingClass(document.get("buildingID").toString(), document.get("buildingName").toString(), document.get("type").toString(), images);
+                                                BuildingClass building = new BuildingClass(document.get("buildingID").toString(), document.get("buildingName").toString(), document.get("buildingDescription").toString(), document.get("type").toString(), images, new GeoPoint(document.getGeoPoint("location").getLatitude(), document.getGeoPoint("location").getLongitude()));
                                                 buildingsList.add(building);
                                             }
                                             mDialog.dismiss();
@@ -370,6 +372,7 @@ public class MapFragment extends Fragment {
                                     BuildingClass building = null;
                                     marker.hideInfoWindow();
                                     String buildingID = marker.getSnippet();
+                                    Log.d(TAG, "Building Clicked: " + buildingID);
                                     for(int i = 0; i < buildingsList.size(); i++)
                                         if (buildingsList.get(i).getBuildingID().equals(buildingID))
                                             building = buildingsList.get(i);
@@ -492,16 +495,13 @@ public class MapFragment extends Fragment {
     @SuppressLint("NewApi")
     public void loadFilteredPins(){
         FilterMapFragment.filteredMapPinClasses.forEach(mapPin -> {
-            BitmapDescriptor icon = null;
             LatLng latLng = new LatLng(mapPin.getLocation().getLatitude(), mapPin.getLocation().getLongitude());
-            if (mapPin.getType().trim().equals("war")) {
-                icon = bitmapDescriptorFromVector(getActivity(), R.drawable.ic_map_war_pin_45dp);
-            }
-            if (mapPin.getType().trim().equals("hospital")) {
-                icon = bitmapDescriptorFromVector(getActivity(), R.drawable.ic_map_hospital_pin_45dp);
-            }
-            MarkerOptions options = new MarkerOptions().position(latLng).title(mapPin.getType()).snippet(mapPin.getPinID()).icon(icon);
-            gMap.addMarker(options);
+            mapPinTypes.forEach(mapPinType -> {
+                if(mapPin.getType().equals(mapPinType.getType())){
+                    pinIcon = bitmapDescriptorFromVector(getActivity(), getContext().getResources().getIdentifier(mapPinType.getLogo(), "drawable", getContext().getPackageName()));
+                }
+            });
+            gMap.addMarker(new MarkerOptions().position(latLng).title(mapPin.getType()).snippet(mapPin.getPinID()).icon(pinIcon));
         });
     }
 

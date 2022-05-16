@@ -40,7 +40,6 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
     private FragmentManager parentFragment;
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth mAuth;
-    private String urlProfile;
 
 
     private static final String TAG = MainActivity.class.getName();
@@ -108,7 +107,7 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
         holder.cardMissing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MissingPostFragment fragment = new MissingPostFragment(mData.get(holder.getAdapterPosition()).getUserID(),mData.get(holder.getAdapterPosition()).getMissingName(),mData.get(holder.getAdapterPosition()).getDescription(),mData.get(holder.getAdapterPosition()).getMissingAge(),mData.get(holder.getAdapterPosition()).getPhoneNumber(),urlProfile,mData.get(pos).getFotoMissing());
+                MissingPostFragment fragment = new MissingPostFragment(mData.get(holder.getAdapterPosition()).getUserID(),mData.get(holder.getAdapterPosition()).getMissingName(),mData.get(holder.getAdapterPosition()).getDescription(),mData.get(holder.getAdapterPosition()).getMissingAge(),mData.get(holder.getAdapterPosition()).getPhoneNumber(),mData.get(pos).getFoto(),mData.get(pos).getFotoMissing());
                 FragmentTransaction transaction = parentFragment.beginTransaction();
                 transaction.replace(R.id.fragment_container, fragment);
                 transaction.addToBackStack(null);
