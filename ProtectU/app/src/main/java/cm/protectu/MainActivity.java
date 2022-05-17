@@ -77,6 +77,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     private static Context context;
 
+    public static ViewPagerFragment viewPager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -278,6 +280,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
             case R.id.navigation_community:
                 fragment = new ViewPagerFragment();
+                viewPager = (ViewPagerFragment)fragment;
                 break;
 
             case R.id.navigation_panic:

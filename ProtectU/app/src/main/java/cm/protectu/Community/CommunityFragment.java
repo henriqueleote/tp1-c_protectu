@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import cm.protectu.Authentication.AuthActivity;
+import cm.protectu.MainActivity;
 import cm.protectu.MissingBoard.MissingBoardFragment;
 import cm.protectu.Profile.ProfileFragment;
 import cm.protectu.R;
@@ -132,7 +133,8 @@ public class CommunityFragment extends Fragment {
             missingPeopleButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Fragment fragmentToChange = new MissingBoardFragment();
+                    MainActivity.viewPager.changeToMissing();
+                    /**Fragment fragmentToChange = new MissingBoardFragment();
                     getFragmentManager().beginTransaction()
                             .setCustomAnimations(
                                     R.anim.slide_in,  // enter
@@ -142,13 +144,7 @@ public class CommunityFragment extends Fragment {
                             )
                             .replace(R.id.fragment_container, fragmentToChange)
                             .addToBackStack(null)
-                            .commit();
-                    /**
-                     MissingBoardFragment fragment = new MissingBoardFragment();
-                     FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                     transaction.replace(R.id.fragment_container, fragment);
-                     transaction.addToBackStack(null);
-                     transaction.commit();**/
+                            .commit();**/
                 }
             });
         }
