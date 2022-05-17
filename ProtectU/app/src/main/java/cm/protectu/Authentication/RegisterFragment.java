@@ -306,7 +306,6 @@ public class RegisterFragment extends BottomSheetDialogFragment {
 
                                 //Show success message and redirects to the app
                                 mDialog.dismiss();
-                                Toast.makeText(getActivity(), getString(R.string.registration_sucessful), Toast.LENGTH_LONG).show();
                                 startActivity(new Intent(getActivity(), MainActivity.class));
                             } else {
                                 mDialog.dismiss();

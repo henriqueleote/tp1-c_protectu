@@ -1,6 +1,5 @@
-package cm.protectu.Map.Buildings;
+package cm.protectu.Buildings;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,6 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import cm.protectu.Authentication.AuthActivity;
-import cm.protectu.Map.MapAddZoneFragment;
 import cm.protectu.R;
 
 public class MapBuildingFragment extends BottomSheetDialogFragment {

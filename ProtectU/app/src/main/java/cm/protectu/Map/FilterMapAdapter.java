@@ -1,10 +1,6 @@
 package cm.protectu.Map;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +10,9 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.DrawableRes;
-import androidx.core.content.ContextCompat;
-
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-
 import java.util.ArrayList;
 
-import cm.protectu.Map.Buildings.MapPinTypeClass;
+import cm.protectu.Buildings.MapPinTypeClass;
 import cm.protectu.R;
 
 public class FilterMapAdapter extends ArrayAdapter<MapPinTypeClass> {

@@ -48,15 +48,14 @@ import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.MainActivity;
-import cm.protectu.Map.Buildings.BuildingClass;
-import cm.protectu.Map.Buildings.MapBuildingFragment;
-import cm.protectu.Map.Buildings.MapPinTypeClass;
+import cm.protectu.Buildings.BuildingClass;
+import cm.protectu.Buildings.MapBuildingFragment;
+import cm.protectu.Buildings.MapPinTypeClass;
 import cm.protectu.R;
 
 
@@ -100,6 +99,8 @@ public class MapFragment extends Fragment {
     //List with the buildings of the map
     public static ArrayList<BuildingClass> buildingsList;
 
+    public static ArrayList<MapPinTypeClass> buildingAllExtrasList;
+
     MapFragment fragment = this;
 
     BitmapDescriptor pinIcon;
@@ -142,6 +143,7 @@ public class MapFragment extends Fragment {
         mapZoneClasses = new ArrayList<>();
         mapPinTypes = new ArrayList<>();
         buildingsList = new ArrayList<>();
+        buildingAllExtrasList = new ArrayList<>();
 
         getLoadData();
 
@@ -236,17 +238,6 @@ public class MapFragment extends Fragment {
         });
     }
 
-    public static int getResId(String resName, Class<?> c) {
-
-        try {
-            Field idField = c.getDeclaredField(resName);
-            return idField.getInt(idField);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return -1;
-        }
-    }
-
     //TODO - Check if the users location is enabled
     //Gets the user current location and displays in the map
     private void loadMap() {
@@ -330,6 +321,18 @@ public class MapFragment extends Fragment {
                                     }
                                 });
 
+                                firebaseFirestore.collection("building-extras").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                        if(task.isSuccessful()){
+                                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                                buildingAllExtrasList.add(new MapPinTypeClass(document.get("type").toString(), document.get("logo").toString(), document.get("name").toString()));
+                                            }
+                                        }
+
+                                    }
+                                });
+
                                 //get the marker data on map load
                                 firebaseFirestore.collection("map-buildings").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                                     @Override
@@ -338,7 +341,7 @@ public class MapFragment extends Fragment {
                                             for (QueryDocumentSnapshot document : task.getResult()) {
                                                 Log.d(TAG, "\nBuilding Object Data (Database) => " + document.getData() + "\n");
                                                 ArrayList<String> images = (ArrayList<String>) document.get("images");
-                                                BuildingClass building = new BuildingClass(document.get("buildingID").toString(), document.get("buildingName").toString(), document.get("type").toString(), images);
+                                                BuildingClass building = new BuildingClass(document.get("buildingID").toString(), document.get("buildingName").toString(), document.get("buildingDescription").toString(), document.get("type").toString(), images, new GeoPoint(document.getGeoPoint("location").getLatitude(), document.getGeoPoint("location").getLongitude()));
                                                 buildingsList.add(building);
                                             }
                                             mDialog.dismiss();

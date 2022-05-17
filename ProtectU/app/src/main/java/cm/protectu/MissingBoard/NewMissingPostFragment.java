@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -79,6 +80,7 @@ public class NewMissingPostFragment extends Fragment {
         create = view.findViewById(R.id.createButtonNewMissingID);
 
 
+
         //TODO Check the animation
         //Checks if there is a session, if not, redirects to the Auth page
         if (mAuth.getCurrentUser() == null) {
@@ -101,7 +103,6 @@ public class NewMissingPostFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 imageFileChooser();
-                cameraIcon.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -139,7 +140,7 @@ public class NewMissingPostFragment extends Fragment {
     /**
      * Allows you to create a new publication with the data received
      */
-    public void createMissingPost(String missingName, String description, String missingAge, String phoneNumber, String foto,String userID,String fotoMissing,String missingID){
+    public void createMissingPost(String missingName, String description, String missingAge, String phoneNumber, String foto,String userID,String fotoMissing,String missingID) {
 
         // Permite verificar se os campos prenchidos estão corretos
         if (TextUtils.isEmpty(missingName)) {
@@ -148,43 +149,47 @@ public class NewMissingPostFragment extends Fragment {
             return;
 
         }
-        if(TextUtils.isEmpty(String.valueOf(missingAge))){
+        if (TextUtils.isEmpty(String.valueOf(missingAge))) {
             age.setError(getString(R.string.error_age_not_valid));
             age.requestFocus();
             return;
         }
-        if(TextUtils.isEmpty(description)){
+        if (TextUtils.isEmpty(description)) {
             this.description.setError(getString(R.string.error_description_not_valid));
             this.description.requestFocus();
             return;
         }
 
-        ProgressDialog mDialog = new ProgressDialog(getActivity());
-        mDialog.setMessage("Creating post...");
-        mDialog.setCancelable(false);
-        mDialog.show();
+        if (!TextUtils.isEmpty(fotoMissing)) {
 
-        //Allows placing in the database the data received when creating a new publication
-        firebaseFirestore.collection("missing-board")
-                .add(new MissingCardClass(missingName, description,missingAge,phoneNumber,foto,userID,fotoMissing,missingID, new Date()))
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        firebaseFirestore.collection("missing-board").document(documentReference.getId())
-                                .update("missingID",documentReference.getId());
-                        Log.d(TAG, "Document successfully created!");
-                        mDialog.dismiss();
-                        getFragmentManager().beginTransaction().replace(R.id.fragment_container, new MissingBoardFragment()).addToBackStack(null).commit();
-                        Toast.makeText(getActivity(), "Publicação criada", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error creating document", e);
-                        mDialog.dismiss();
-                    }
-                });
+            ProgressDialog mDialog = new ProgressDialog(getActivity());
+            mDialog.setMessage("Creating post...");
+            mDialog.setCancelable(false);
+            mDialog.show();
+            //Allows placing in the database the data received when creating a new publication
+            firebaseFirestore.collection("missing-board")
+                    .add(new MissingCardClass(missingName, description, missingAge, phoneNumber, foto, userID, fotoMissing, missingID, new Date()))
+                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                        @Override
+                        public void onSuccess(DocumentReference documentReference) {
+                            firebaseFirestore.collection("missing-board").document(documentReference.getId())
+                                    .update("missingID", documentReference.getId());
+                            Log.d(TAG, "Document successfully created!");
+                            mDialog.dismiss();
+                            getFragmentManager().beginTransaction().replace(R.id.fragment_container, new MissingBoardFragment()).addToBackStack(null).commit();
+                            Toast.makeText(getActivity(), "Publicação criada", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.w(TAG, "Error creating document", e);
+                            mDialog.dismiss();
+                        }
+                    });
+        }else {
+            Toast.makeText(getActivity(), "Terá que colocar uma imagem", Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -245,6 +250,8 @@ public class NewMissingPostFragment extends Fragment {
                     .centerCrop()
                     .fit()
                     .into(imageUploaded);
+            cameraIcon.setVisibility(View.INVISIBLE);
+
 
 
             ProgressDialog mDialog = new ProgressDialog(getActivity());

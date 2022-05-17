@@ -32,6 +32,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Locale;
 
+import cm.protectu.Customization.CustomizationManager;
 import cm.protectu.MainActivity;
 import cm.protectu.R;
 

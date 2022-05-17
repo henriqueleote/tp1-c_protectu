@@ -1,4 +1,4 @@
-package cm.protectu.Map.Buildings;
+package cm.protectu.Buildings;
 
 public class MapPinTypeClass {
 

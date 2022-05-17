@@ -83,7 +83,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Read and Load Themes
-        CustomizationManager.getInstance(this);
+        if (CustomizationManager.getInstance(this).getSelectedTheme().equalsIgnoreCase("dark"))
+            setTheme(R.style.Theme_Dark);
+        else
+            setTheme(R.style.Theme_Light);
 //        if (AppCompatDelegate.getDefaultNightMode()== AppCompatDelegate.MODE_NIGHT_YES){
 //            setTheme(R.style.Theme_Dark);
 //        }else

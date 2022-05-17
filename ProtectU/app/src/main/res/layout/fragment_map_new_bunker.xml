@@ -94,19 +94,37 @@
         app:layout_constraintStart_toStartOf="@id/descriptionCard"
         app:layout_constraintTop_toBottomOf="@+id/descriptionCard" />
 
+    <Button
+        android:id="@+id/buildingExtrasButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Building Extras"
+        app:layout_constraintStart_toStartOf="@id/locationTextView"
+        app:layout_constraintTop_toBottomOf="@+id/locationTextView"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/buildingExtrasTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/buildingExtrasButton"
+        app:layout_constraintTop_toBottomOf="@+id/buildingExtrasButton"
+        android:layout_marginTop="5dp"/>
+
+
     <TextView
         android:id="@+id/imageTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="@id/descriptionCard"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:drawablePadding="10dp"
         android:hint="Add images (max. 6)"
         android:inputType="text"
         android:textColor="@color/black"
         android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="@id/locationTextView"
-        app:layout_constraintTop_toBottomOf="@+id/locationTextView" />
+        app:layout_constraintStart_toStartOf="@id/buildingExtrasTextView"
+        app:layout_constraintTop_toBottomOf="@+id/buildingExtrasTextView" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/imageCard"

@@ -2,21 +2,17 @@ package cm.protectu.Map;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.maps.model.Marker;
@@ -34,8 +30,8 @@ import java.util.List;
 import java.util.Map;
 
 import cm.protectu.Authentication.AuthActivity;
-import cm.protectu.Map.Buildings.MapPinTypeClass;
-import cm.protectu.Map.Buildings.NewBunkerFragment;
+import cm.protectu.Buildings.MapPinTypeClass;
+import cm.protectu.Buildings.NewBunkerFragment;
 import cm.protectu.R;
 
 public class MarkerChooseFragment extends BottomSheetDialogFragment {

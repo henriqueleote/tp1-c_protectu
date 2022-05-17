@@ -77,12 +77,15 @@ public class MissingPostFragment extends Fragment {
         MissingImage = view.findViewById(R.id.imageMissingID);
 
         //coloca a imagem do utilizador
-        Picasso.get()
-                .load(urlProfile)
-                .centerCrop()
-                .fit()
-                .transform(new CropCircleTransformation())
-                .into(profileImage);
+        if(!urlProfile.equals("null")){
+            Picasso.get()
+                    .load(urlProfile)
+                    .centerCrop()
+                    .fit()
+                    .transform(new CropCircleTransformation())
+                    .into(profileImage);
+        }
+
 
         //coloca a imagem da pessoa desaparecida
         Picasso.get()
