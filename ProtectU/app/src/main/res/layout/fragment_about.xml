@@ -40,14 +40,13 @@
         <TextView
             android:id="@+id/textAboutUsID"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="80dp"
             android:layout_marginTop="100dp"
             android:fontFamily="@font/lexend_regular"
             android:paddingTop="50dp"
-            android:text="Esta aplicação foi desenvolvida no âmbito de uma disciplina do segundo ano, Computação Móvel, do curso de Engenharia Informática, do Instituto Politécnico de Setúbal. Tendo esta sido desenvolvida pelo grupo descrito mais a baixo. \n
-Esta aplicação tem como principal objetivo ajudar pessoas que se encontrem em perigo, mais precisamente de acontecimentos bélicos, pelo que nesta é providenciada informações de lugares seguros, em que locais estão a ocorrer estes acontecimentos, quais as pessoas que se encontram desaparecidas entre outras informações/funções. \n
+            android:text="Esta aplicação foi desenvolvida no âmbito de uma disciplina do segundo ano, Computação Móvel, do curso de Engenharia Informática, do Instituto Politécnico de Setúbal. Tendo esta sido desenvolvida pelo grupo descrito mais a baixo. \nEsta aplicação tem como principal objetivo ajudar pessoas que se encontrem em perigo, mais precisamente de acontecimentos bélicos, pelo que nesta é providenciada informações de lugares seguros, em que locais estão a ocorrer estes acontecimentos, quais as pessoas que se encontram desaparecidas entre outras informações/funções. \n
 "
             android:textColor="@color/black" />
 
