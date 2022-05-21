@@ -12,7 +12,9 @@ import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -199,6 +201,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                         });
                     }
                 });
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayout.openDrawer(Gravity.LEFT);
+            }
+        });
 
         bottomBar.setOnNavigationItemSelectedListener(this);
         sideBar.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

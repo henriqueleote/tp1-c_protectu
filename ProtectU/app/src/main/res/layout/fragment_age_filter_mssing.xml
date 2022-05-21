@@ -63,13 +63,13 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_below="@+id/titleAgeFilterID"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         >
 
         <CheckBox
             android:id="@+id/childrensFilterID"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_marginLeft="30dp"
             android:button="@null"
             android:background="?android:attr/listChoiceIndicatorMultiple"/>
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:text="Childrens"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:layout_toRightOf="@+id/childrensFilterID"
             android:fontFamily="@font/lexend_regular"
             android:layout_marginTop="20dp"
@@ -92,13 +92,13 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_below="@+id/firstFilterID"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         >
 
         <CheckBox
             android:id="@+id/adultsFilterID"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_marginLeft="30dp"
             android:button="@null"
             android:background="?android:attr/listChoiceIndicatorMultiple"/>
@@ -108,7 +108,7 @@
             android:layout_height="wrap_content"
             android:text="Adults"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:layout_toRightOf="@+id/adultsFilterID"
             android:fontFamily="@font/lexend_regular"
             android:layout_marginTop="20dp"
@@ -121,26 +121,25 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_below="@+id/seconFilterID"
-        android:layout_marginTop="20dp"
-        >
+        android:layout_marginTop="10dp">
 
         <CheckBox
             android:id="@+id/seniorsFilterID"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_marginLeft="30dp"
-            android:button="@null"
-            android:background="?android:attr/listChoiceIndicatorMultiple"/>
+            android:background="?android:attr/listChoiceIndicatorMultiple"
+            android:button="@null" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_toRightOf="@+id/seniorsFilterID"
+            android:fontFamily="@font/lexend_regular"
             android:text="Seniors"
             android:textColor="@color/black"
             android:textSize="20sp"
-            android:layout_toRightOf="@+id/seniorsFilterID"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/lexend_regular"
 
             />
 
@@ -153,7 +152,7 @@
         android:layout_height="50dp"
         android:layout_below="@+id/finalFilterID"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:backgroundTint="#313030"
         android:fontFamily="@font/lexend_regular"
         android:text="Show Results"
