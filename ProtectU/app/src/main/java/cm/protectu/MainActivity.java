@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -49,6 +51,7 @@ import cm.protectu.Customization.CustomizationManager;
 import cm.protectu.Language.LanguageFragment;
 import cm.protectu.Language.LanguageManagerClass;
 import cm.protectu.Map.MapFragment;
+import cm.protectu.MissingBoard.MissingPostFragment;
 import cm.protectu.News.NewsFragment;
 import cm.protectu.Panic.PanicFragment;
 import cm.protectu.Profile.ProfileFragment;
@@ -70,6 +73,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private float floatThreshold = 1;
     private SensorManager sensorManager;
     private Sensor sensorLight;
+
+    private ImageView menu;
+
 
     public static UserDataClass sessionUser;
 
@@ -146,6 +152,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomBar = findViewById(R.id.bottom_menu);
         sideBar = findViewById(R.id.side_menu);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        menu = findViewById(R.id.menu_ID);
+
 
         getUserData(1);
 

@@ -40,6 +40,7 @@ import com.squareup.picasso.Picasso;
 import java.util.Date;
 
 import cm.protectu.Authentication.AuthActivity;
+import cm.protectu.MainActivity;
 import cm.protectu.R;
 
 
@@ -112,11 +113,7 @@ public class NewMissingPostFragment extends Fragment {
         arrowBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MissingBoardFragment fragment = new MissingBoardFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                MainActivity.viewPager.changeToMissing();
 
             }
         });
