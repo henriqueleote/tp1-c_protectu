@@ -33,6 +33,7 @@
             android:layout_height="25dp"
             app:cardCornerRadius="10dp"
             app:cardBackgroundColor="@color/white"
+            android:fontFamily="@font/lexend_regular"
             android:layout_below="@+id/titleMissingMainID"
             android:layout_marginLeft="50dp"
             android:layout_marginTop="20dp">

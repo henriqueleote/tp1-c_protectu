@@ -33,17 +33,22 @@
             android:layout_centerHorizontal="true"
             android:paddingTop="15dp"
             android:text="About"
+            android:fontFamily="@font/lexend_regular"
             android:textColor="@color/black"
             android:textSize="24dp" />
 
         <TextView
             android:id="@+id/textAboutUsID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="80dp"
             android:layout_marginTop="100dp"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Dui sapien eget mi proin. Eu volutpat odio facilisis mauris sit amet massa vitae. Aliquam vestibulum morbi blandit cursus risus at ultrices mi. Enim ut sem viverra aliquet eget sit amet tellus. Eleifend donec pretium vulputate sapien nec. Metus aliquam eleifend mi in nulla posuere sollicitudin aliquam ultrices. Aliquam ut porttitor leo a diam sollicitudin tempor. Lorem ipsum dolor sit amet consectetur. At erat pellentesque adipiscing commodo elit at imperdiet. Vel pretium lectus quam id leo in vitae turpis. At lectus urna duis convallis convallis tellus id. Quis vel eros donec ac. Felis imperdiet proin fermentum leo vel. Elit ullamcorper dignissim cras tincidunt lobortis feugiat vivamus at. Eu turpis egestas pretium aenean pharetra magna ac placerat. "
+            android:fontFamily="@font/lexend_regular"
+            android:paddingTop="50dp"
+            android:text="Esta aplicação foi desenvolvida no âmbito de uma disciplina do segundo ano, Computação Móvel, do curso de Engenharia Informática, do Instituto Politécnico de Setúbal. Tendo esta sido desenvolvida pelo grupo descrito mais a baixo. \n
+Esta aplicação tem como principal objetivo ajudar pessoas que se encontrem em perigo, mais precisamente de acontecimentos bélicos, pelo que nesta é providenciada informações de lugares seguros, em que locais estão a ocorrer estes acontecimentos, quais as pessoas que se encontram desaparecidas entre outras informações/funções. \n
+"
             android:textColor="@color/black" />
 
         <TextView
@@ -55,7 +60,9 @@
             android:paddingTop="20dp"
             android:text="Version:"
             android:textColor="@color/black"
+            android:fontFamily="@font/lexend_regular"
             android:textStyle="bold" />
+
 
         <TextView
             android:id="@+id/versionNumberID"
@@ -65,6 +72,7 @@
             android:layout_marginLeft="40dp"
             android:paddingTop="5dp"
             android:text="1.0.0"
+            android:fontFamily="@font/lexend_regular"
             android:textColor="@color/black" />
 
         <TextView
@@ -85,6 +93,7 @@
             android:layout_below="@+id/grupID"
             android:layout_marginLeft="40dp"
             android:paddingTop="5dp"
+            android:fontFamily="@font/lexend_regular"
             android:text="David Belchior, AndrÃ© Matias, Pedro Peralta, \n Ulyana...,Guilherme Oliveira, Henrrique Leote"
             android:textColor="@color/black" />
 
@@ -95,6 +104,7 @@
             android:layout_below="@+id/grupNamesID"
             android:layout_marginLeft="40dp"
             android:paddingTop="20dp"
+            android:fontFamily="@font/lexend_regular"
             android:text="Terms and Responsabilities"
             android:textColor="@color/black"
             android:textStyle="bold" />
@@ -106,6 +116,7 @@
             android:layout_below="@+id/termsResponsID"
             android:layout_marginLeft="40dp"
             android:paddingTop="20dp"
+            android:fontFamily="@font/lexend_regular"
             android:text="Contacts_id"
             android:textColor="@color/black"
             android:textStyle="bold" />
@@ -117,6 +128,7 @@
             android:layout_below="@+id/contactsID"
             android:layout_marginLeft="40dp"
             android:paddingTop="5dp"
+            android:fontFamily="@font/lexend_regular"
             android:text="+123456789 \n example@gmail.com"
             android:textColor="@color/black" />
 
