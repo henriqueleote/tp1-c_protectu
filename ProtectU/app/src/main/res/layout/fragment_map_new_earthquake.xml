@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="New bunker"
+        android:text="New earthquake"
         android:textColor="@color/black"
         android:textSize="23dp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -48,38 +48,53 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/descriptionCard"
+    <EditText
+        android:id="@+id/earthquakeRichterEditText"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:drawablePadding="10dp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
-        android:elevation="20dp"
-        app:cardCornerRadius="15dp"
+        android:hint="Magnitude em escala de Richter (0-10)"
+        android:maxLength="20"
+        android:inputType="number"
+        android:textSize="15sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/earthquakeNameEditText">
+        app:layout_constraintTop_toBottomOf="@+id/earthquakeNameEditText" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <EditText
+        android:id="@+id/earthquakeDeathCountEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:drawablePadding="10dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:hint="Death Count"
+        android:maxLength="20"
+        android:inputType="number"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/earthquakeRichterEditText" />
 
-            <EditText
-                android:id="@+id/earthquakeDescriptionEditText"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fontFamily="@font/lexend_regular"
-                android:gravity="top"
-                android:background="@null"
-                android:drawablePadding="10dp"
-                android:hint="@string/description"
-                android:maxLength="500"
-                android:inputType="text|textMultiLine"
-                android:textSize="15sp" />
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
+    <EditText
+        android:id="@+id/earthquakeMissingCountEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:drawablePadding="10dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:hint="Missing Count"
+        android:maxLength="20"
+        android:inputType="number"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/earthquakeDeathCountEditText" />
 
     <TextView
         android:id="@+id/locationTextView"
@@ -91,40 +106,23 @@
         android:inputType="text"
         android:textColor="@color/black"
         android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="@id/descriptionCard"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionCard" />
-
-    <Button
-        android:id="@+id/buildingExtrasButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add Building Extras"
-        app:layout_constraintStart_toStartOf="@id/locationTextView"
-        app:layout_constraintTop_toBottomOf="@+id/locationTextView"
-        android:layout_marginTop="10dp"/>
-
-    <TextView
-        android:id="@+id/buildingExtrasTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/buildingExtrasButton"
-        app:layout_constraintTop_toBottomOf="@+id/buildingExtrasButton"
-        android:layout_marginTop="5dp"/>
+        app:layout_constraintStart_toStartOf="@id/earthquakeMissingCountEditText"
+        app:layout_constraintTop_toBottomOf="@+id/earthquakeMissingCountEditText" />
 
 
     <TextView
         android:id="@+id/imageTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/descriptionCard"
+        app:layout_constraintEnd_toEndOf="@id/earthquakeRichterEditText"
         android:layout_marginTop="10dp"
         android:drawablePadding="10dp"
         android:hint="Add images (max. 6)"
         android:inputType="text"
         android:textColor="@color/black"
         android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="@id/buildingExtrasTextView"
-        app:layout_constraintTop_toBottomOf="@+id/buildingExtrasTextView" />
+        app:layout_constraintStart_toStartOf="@id/locationTextView"
+        app:layout_constraintTop_toBottomOf="@+id/locationTextView" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/imageCard"

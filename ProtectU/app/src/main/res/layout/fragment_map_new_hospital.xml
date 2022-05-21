@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="New bunker"
+        android:text="New hospital"
         android:textColor="@color/black"
         android:textSize="23dp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -33,7 +33,7 @@
         tools:ignore="MissingConstraints"></TextView>
 
     <EditText
-        android:id="@+id/earthquakeNameEditText"
+        android:id="@+id/hospitalNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -48,38 +48,21 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/descriptionCard"
+    <EditText
+        android:id="@+id/earthquakeRichterEditText"
         android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:drawablePadding="10dp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
-        android:elevation="20dp"
-        app:cardCornerRadius="15dp"
+        android:hint="Number of beds"
+        android:maxLength="20"
+        android:inputType="number"
+        android:textSize="15sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/earthquakeNameEditText">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <EditText
-                android:id="@+id/earthquakeDescriptionEditText"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fontFamily="@font/lexend_regular"
-                android:gravity="top"
-                android:background="@null"
-                android:drawablePadding="10dp"
-                android:hint="@string/description"
-                android:maxLength="500"
-                android:inputType="text|textMultiLine"
-                android:textSize="15sp" />
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintTop_toBottomOf="@+id/hospitalNameEditText" />
 
     <TextView
         android:id="@+id/locationTextView"
@@ -87,29 +70,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:drawablePadding="10dp"
-        android:hint=""
         android:inputType="text"
         android:textColor="@color/black"
         android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="@id/descriptionCard"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionCard" />
-
-    <Button
-        android:id="@+id/buildingExtrasButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add Building Extras"
-        app:layout_constraintStart_toStartOf="@id/locationTextView"
-        app:layout_constraintTop_toBottomOf="@+id/locationTextView"
-        android:layout_marginTop="10dp"/>
-
-    <TextView
-        android:id="@+id/buildingExtrasTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/buildingExtrasButton"
-        app:layout_constraintTop_toBottomOf="@+id/buildingExtrasButton"
-        android:layout_marginTop="5dp"/>
+        app:layout_constraintStart_toStartOf="@id/earthquakeRichterEditText"
+        app:layout_constraintTop_toBottomOf="@+id/earthquakeRichterEditText" />
 
 
     <TextView
@@ -123,8 +88,8 @@
         android:inputType="text"
         android:textColor="@color/black"
         android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="@id/buildingExtrasTextView"
-        app:layout_constraintTop_toBottomOf="@+id/buildingExtrasTextView" />
+        app:layout_constraintStart_toStartOf="@id/locationTextView"
+        app:layout_constraintTop_toBottomOf="@+id/locationTextView" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/imageCard"

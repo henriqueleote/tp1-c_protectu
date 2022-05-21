@@ -30,11 +30,22 @@ import java.util.List;
 import java.util.Map;
 
 import cm.protectu.Authentication.AuthActivity;
-import cm.protectu.Buildings.MapPinTypeClass;
-import cm.protectu.Buildings.NewBunkerFragment;
+import cm.protectu.Buildings.Bunker.NewBunkerFragment;
+import cm.protectu.Buildings.Earthquake.NewEarthquakeFragment;
+import cm.protectu.Buildings.Fire.NewFireFragment;
+import cm.protectu.Buildings.Hospital.NewHospitalFragment;
 import cm.protectu.R;
 
 public class MarkerChooseFragment extends BottomSheetDialogFragment {
+
+    /*
+    * Incendios:
+    *
+    * Hospitais:
+    *  - nº macas
+    *  -
+    * Terramotos:
+    * */
 
     //ImageView
     private ImageView closeBtn;
@@ -114,7 +125,28 @@ public class MarkerChooseFragment extends BottomSheetDialogFragment {
                     .replace(R.id.fragment_container, new NewBunkerFragment(new GeoPoint(markerList.get(markerList.size()-1).getPosition().latitude, markerList.get(markerList.size()-1).getPosition().longitude)))
                     .addToBackStack(null)
                     .commit();
-        }else{
+        }
+        if(MarkerChooseAdapter.checkedButton.get(MarkerChooseAdapter.checkedButton.size()-1).equalsIgnoreCase("hospital")) {
+            getDialog().dismiss();
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new NewHospitalFragment(new GeoPoint(markerList.get(markerList.size()-1).getPosition().latitude, markerList.get(markerList.size()-1).getPosition().longitude)))
+                    .addToBackStack(null)
+                    .commit();
+        }
+        if(MarkerChooseAdapter.checkedButton.get(MarkerChooseAdapter.checkedButton.size()-1).equalsIgnoreCase("fire")) {
+            getDialog().dismiss();
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new NewFireFragment(new GeoPoint(markerList.get(markerList.size()-1).getPosition().latitude, markerList.get(markerList.size()-1).getPosition().longitude)))
+                    .addToBackStack(null)
+                    .commit();
+        }
+        if(MarkerChooseAdapter.checkedButton.get(MarkerChooseAdapter.checkedButton.size()-1).equalsIgnoreCase("earthquake")) {
+            getDialog().dismiss();
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, new NewEarthquakeFragment(new GeoPoint(markerList.get(markerList.size()-1).getPosition().latitude, markerList.get(markerList.size()-1).getPosition().longitude)))
+                    .addToBackStack(null)
+                    .commit();
+        }/*else{
             ProgressDialog progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("Adding marker");
             progressDialog.setMessage("Loading...");
@@ -132,7 +164,7 @@ public class MarkerChooseFragment extends BottomSheetDialogFragment {
                         public void onSuccess(Void aVoid) {
                             progressDialog.dismiss();
                             Log.d(TAG, "DocumentSnapshot with the ID: " + documentReference.getId());
-                            getDialog().dismiss();
+                            //getDialog().dismiss();
                             getFragmentManager().beginTransaction()
                                     .replace(R.id.fragment_container, new MapFragment())
                                     .addToBackStack(null)
@@ -145,7 +177,7 @@ public class MarkerChooseFragment extends BottomSheetDialogFragment {
                             Log.w(TAG, "Error writing document", e);
                         }
                     });
-        }
+        }*/
 
     }
 }

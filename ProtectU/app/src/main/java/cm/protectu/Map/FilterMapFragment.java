@@ -2,7 +2,6 @@ package cm.protectu.Map;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 
 import cm.protectu.Authentication.AuthActivity;
-import cm.protectu.Buildings.MapPinTypeClass;
 import cm.protectu.R;
 
 public class FilterMapFragment extends BottomSheetDialogFragment {
@@ -34,17 +32,19 @@ public class FilterMapFragment extends BottomSheetDialogFragment {
     private CheckBox checkBoxHospital, checkBoxWar;
 
     //Firebase Authentication
-    FirebaseAuth mAuth;
+    private FirebaseAuth mAuth;
 
-    //List with the pins of the map
+    //List with all the pins of the map
     public static ArrayList<MapPinTypeClass> mapPinTypes;
 
+    //List with the filtered pins of the map
     public static ArrayList<MapPinClass> filteredMapPinClasses;
 
     //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
 
-    MapFragment fragment;
+    //An object from the MapFragment
+    private MapFragment fragment;
 
     public FilterMapFragment(MapFragment fragment){
         this.fragment = fragment;
@@ -62,16 +62,13 @@ public class FilterMapFragment extends BottomSheetDialogFragment {
         //Link the view objects with the XML
         closeBtn = view.findViewById(R.id.closeBtn);
         filterBtn = view.findViewById(R.id.filterBtn);
-        //checkBoxHospital = view.findViewById(R.id.checkBoxHospital);
-        //checkBoxWar = view.findViewById(R.id.checkBoxWar);
+        ListView listView = (ListView) view.findViewById(R.id.checkBoxListView);
+
+        //Initialize the list with the static value from the previous fragment in order to be "real time"
         mapPinTypes = MapFragment.mapPinTypes;
 
-        //checkBoxHospital.setChecked(false);
-        //checkBoxWar.setChecked(false);
-
-        Log.d(TAG, "Array in filter: -> " + mapPinTypes.size());
+        //Initializes the adapter with the pins in order to show them as an recycler view
         FilterMapAdapter adapter = new FilterMapAdapter(getActivity(), mapPinTypes);
-        ListView listView = (ListView) view.findViewById(R.id.checkBoxListView);
         listView.setAdapter(adapter);
 
         //TODO IF ALREADY IN FILTER, TRUE IN THE CHECKBOX
@@ -97,24 +94,11 @@ public class FilterMapFragment extends BottomSheetDialogFragment {
         return view;
     }
 
-    /*
-    @SuppressLint("NewApi")
-    public void filterMap(){
-        filteredMapPinClasses = new ArrayList<>();
-        mapPinClasses.forEach(mapPinClass -> {
-            if (checkBoxWar.isChecked()) {
-                if(mapPinClass.getType().equals("war"))
-                    filteredMapPinClasses.add(mapPinClass);
-            }
-            if(checkBoxHospital.isChecked()){
-                if(mapPinClass.getType().equals("hospital"))
-                    filteredMapPinClasses.add(mapPinClass);
-            }
-        });
-        getDialog().cancel();
-        fragment.refreshMap();
-    }*/
 
+    //This method filters the map.
+    //Firstly it clears the map in the background to only show the filtered when the users clicks. Then, for each mapPin in the general list
+    //it's gonna check if there is in the checkedPositions from the adapter, if so, it adds that specific pin type to the filtered list
+    //After treating the data, it refreshes the map in the background and closes the dialog
     @SuppressLint("NewApi")
     public void filter(){
         fragment.clearMap();

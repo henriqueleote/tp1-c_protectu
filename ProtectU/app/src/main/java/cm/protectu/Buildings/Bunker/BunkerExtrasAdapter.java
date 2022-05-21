@@ -1,4 +1,4 @@
-package cm.protectu.Buildings;
+package cm.protectu.Buildings.Bunker;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,10 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import cm.protectu.Map.MapPinTypeClass;
 import cm.protectu.R;
 
-public class BuildingExtrasAdapter
-        extends RecyclerView.Adapter<BuildingExtrasAdapter.MyView> {
+public class BunkerExtrasAdapter
+        extends RecyclerView.Adapter<BunkerExtrasAdapter.MyView> {
 
     // List with String type
     private List<MapPinTypeClass> buildingExtrasList;
@@ -36,7 +37,7 @@ public class BuildingExtrasAdapter
 
     // Constructor for adapter class
     // which takes a list of String type
-    public BuildingExtrasAdapter(Context context, List<MapPinTypeClass> buildingExtrasList)
+    public BunkerExtrasAdapter(Context context, List<MapPinTypeClass> buildingExtrasList)
     {
         this.context = context;
         this.buildingExtrasList = buildingExtrasList;

@@ -1,4 +1,4 @@
-package cm.protectu.Buildings;
+package cm.protectu.Buildings.Earthquake;
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
@@ -7,6 +7,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,38 +36,35 @@ import java.util.List;
 import java.util.Locale;
 
 import cm.protectu.Authentication.AuthActivity;
+import cm.protectu.Buildings.BuildingClass;
+import cm.protectu.Buildings.Bunker.BunkerExtrasAdapter;
+import cm.protectu.Buildings.SliderAdapter;
 import cm.protectu.Map.MapFragment;
+import cm.protectu.Map.MapPinTypeClass;
 import cm.protectu.R;
 
 
-public class BuildingFragment extends Fragment {
+public class EarthquakeFragment extends Fragment {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
-    BuildingClass buildingInfo;
     SliderView sliderView;
     ArrayList<String> images;
     ArrayList<String> extras;
     SliderAdapter adapter;
     String buildingID;
     RelativeLayout backButton;
-    private TextView bunkerNameTextView, locationTextView, descriptionTextView;
+    private TextView earthquakeNameTextView, earthquakeRichterTextView, earthquakeDeathCountTextView, earthquakeMissingCountTextView, locationTextView;
     private List<Address> addressesList;
-    private ArrayList<MapPinTypeClass> buildingAllExtrasList;
-    private ArrayList<MapPinTypeClass> finalExtrasList;
-    RecyclerView recyclerView;
     RecyclerView.LayoutManager RecyclerViewLayoutManager;
-    BuildingExtrasAdapter extrasAdapter;
-    LinearLayoutManager HorizontalLayout;
     ProgressDialog progressDialog;
     SwipeRefreshLayout swipeRefreshLayout;
-    RelativeLayout buildingExtrasContainer;
 
 
     //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
 
-    public BuildingFragment(String buildingID){
+    public EarthquakeFragment(String buildingID){
         this.buildingID = buildingID;
     }
 
@@ -75,7 +73,7 @@ public class BuildingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         //Link the layout to the Fragment
-        View view = inflater.inflate(R.layout.fragment_building, container, false);
+        View view = inflater.inflate(R.layout.fragment_building_earthquake, container, false);
 
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
@@ -84,8 +82,6 @@ public class BuildingFragment extends Fragment {
         //Checks if there is a session, if not, redirects to the Auth page
         if (mAuth.getCurrentUser() == null) {
             getActivity().finish();
-            //Swipe animation ?? not sure, consult previous code
-            //getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             startActivity(new Intent(getActivity(), AuthActivity.class));
         }
 
@@ -93,17 +89,14 @@ public class BuildingFragment extends Fragment {
 
         sliderView = view.findViewById(R.id.autoImageSlider);
         backButton = view.findViewById(R.id.backButton);
-        recyclerView = view.findViewById(R.id.buildingExtrasRecyclerView);
-        bunkerNameTextView = view.findViewById(R.id.bunkerNameTextView);
+        earthquakeNameTextView = view.findViewById(R.id.earthquakeNameTextView);
+        earthquakeRichterTextView = view.findViewById(R.id.earthquakeRichterTextView);
+        earthquakeDeathCountTextView = view.findViewById(R.id.earthquakeDeathCountTextView);
+        earthquakeMissingCountTextView = view.findViewById(R.id.earthquakeMissingCountTextView);
         locationTextView = view.findViewById(R.id.locationTextView);
-        descriptionTextView = view.findViewById(R.id.descriptionTextView);
         swipeRefreshLayout = view.findViewById(R.id.swipeToRefresh);
-        buildingExtrasContainer = view.findViewById(R.id.buildingExtrasContainer);
         progressDialog = new ProgressDialog(getActivity());
         RecyclerViewLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        buildingAllExtrasList = MapFragment.buildingAllExtrasList;
-        extras = new ArrayList<>();
-        finalExtrasList = new ArrayList<>();
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -140,22 +133,6 @@ public class BuildingFragment extends Fragment {
 
     }
 
-    @SuppressLint("NewApi")
-    public void getExtras(){
-        extras.forEach(extra -> {
-            buildingAllExtrasList.forEach(allExtras -> {
-                if(extra.equals(allExtras.getType())){
-                    finalExtrasList.add(allExtras);
-                }
-            });
-        });
-        extrasAdapter = new BuildingExtrasAdapter(getActivity(), finalExtrasList);
-        HorizontalLayout = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
-        recyclerView.setLayoutManager(RecyclerViewLayoutManager);
-        recyclerView.setLayoutManager(HorizontalLayout);
-        recyclerView.setAdapter(extrasAdapter);
-    }
-
     public void getData(){
         firebaseFirestore.collection("map-buildings").document(buildingID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -166,9 +143,11 @@ public class BuildingFragment extends Fragment {
                     images = (ArrayList<String>) document.get("images");
                     extras = (ArrayList<String>) document.get("extras");
                     location = (GeoPoint) document.getGeoPoint("location");
-                    buildingInfo = new BuildingClass(document.get("buildingID").toString(), document.get("buildingName").toString(), document.get("buildingDescription").toString(), document.get("type").toString(), images, new GeoPoint(document.getGeoPoint("location").getLatitude(), document.getGeoPoint("location").getLongitude()));
-                    bunkerNameTextView.setText(buildingInfo.getBuildingName());
-                    descriptionTextView.setText(buildingInfo.getBuildingDescription());
+                    Log.d(TAG, "LOcation - " + location.toString());
+                    earthquakeNameTextView.setText(document.get("buildingName").toString());
+                    earthquakeRichterTextView.setText(document.get("earthquakeRichter").toString());
+                    earthquakeDeathCountTextView.setText(document.get("earthquakeDeathCount").toString());
+                    earthquakeMissingCountTextView.setText(document.get("earthquakeMissingCount").toString());
                     //Images Adapter
                     adapter = new SliderAdapter(getActivity(), images);
                     sliderView.setAutoCycleDirection(SliderView.LAYOUT_DIRECTION_LTR);
@@ -180,16 +159,12 @@ public class BuildingFragment extends Fragment {
                     progressDialog.dismiss();
                 }
                 getLocation(location);
-                if(extras == null)
-                    //TODO MAYBE PUT A MESSAGE SAYING IT DOESNT HAVE ANY
-                    buildingExtrasContainer.setVisibility(View.GONE);
-                else
-                    getExtras();
             }
         });
     }
     public void getLocation(GeoPoint location){
         Geocoder gcd = new Geocoder(getActivity(), Locale.getDefault());
+        addressesList = new ArrayList<>();
         try {
             addressesList = gcd.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
         } catch (IOException e) {

@@ -55,7 +55,6 @@ import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.MainActivity;
 import cm.protectu.Buildings.BuildingClass;
 import cm.protectu.Buildings.MapBuildingFragment;
-import cm.protectu.Buildings.MapPinTypeClass;
 import cm.protectu.R;
 
 
@@ -82,10 +81,13 @@ public class MapFragment extends Fragment {
     //LinearLayout
     private LinearLayout containerMarkerBtn, containerZoneBtn;
 
+    //Boolean
     boolean areAllButtonVisible;
 
+    //Google Map
     private GoogleMap gMap;
 
+    //Location
     public static Location currentLocation;
 
     //List with the pins of the map
@@ -94,6 +96,7 @@ public class MapFragment extends Fragment {
     //List with the zones of the map
     public static ArrayList<List<Object>> mapZoneClasses;
 
+    //List of Map Pin Types
     public static ArrayList<MapPinTypeClass> mapPinTypes;
 
     //List with the buildings of the map
@@ -101,8 +104,10 @@ public class MapFragment extends Fragment {
 
     public static ArrayList<MapPinTypeClass> buildingAllExtrasList;
 
+    //MapFragment object
     MapFragment fragment = this;
 
+    //BitmapDescriptor for the image
     BitmapDescriptor pinIcon;
 
     @Nullable
@@ -115,18 +120,17 @@ public class MapFragment extends Fragment {
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
 
-        //TODO Check the animation
         //Checks if there is a session, if not, redirects to the Auth page
         if (mAuth.getCurrentUser() == null) {
             getActivity().finish();
-            //Swipe animation ?? not sure, consult previous code
-            //getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             startActivity(new Intent(getActivity(), AuthActivity.class));
         }
 
+        //Variables initialization
         firebaseFirestore = FirebaseFirestore.getInstance();
         client = LocationServices.getFusedLocationProviderClient(getActivity());
-        //resetLocation = view.findViewById(R.id.resetLocationBtn);
+
+        //Link the view objects with the XML
         createMarkerBtn = view.findViewById(R.id.createMarkerBtn);
         createZoneBtn = view.findViewById(R.id.createZoneBtn);
         createBtn = view.findViewById(R.id.createBtn);
@@ -134,6 +138,7 @@ public class MapFragment extends Fragment {
         changeMapTypeBtn = view.findViewById(R.id.changeMapTypeBtn);
         containerZoneBtn = view.findViewById(R.id.containerZoneBtn);
         containerMarkerBtn = view.findViewById(R.id.containerMarkerBtn);
+
 
         containerZoneBtn.setVisibility(View.GONE);
         containerMarkerBtn.setVisibility(View.GONE);
@@ -341,7 +346,7 @@ public class MapFragment extends Fragment {
                                             for (QueryDocumentSnapshot document : task.getResult()) {
                                                 Log.d(TAG, "\nBuilding Object Data (Database) => " + document.getData() + "\n");
                                                 ArrayList<String> images = (ArrayList<String>) document.get("images");
-                                                BuildingClass building = new BuildingClass(document.get("buildingID").toString(), document.get("buildingName").toString(), document.get("buildingDescription").toString(), document.get("type").toString(), images, new GeoPoint(document.getGeoPoint("location").getLatitude(), document.getGeoPoint("location").getLongitude()));
+                                                BuildingClass building = new BuildingClass(document.get("buildingID").toString(), document.get("buildingName").toString(), document.get("type").toString(), images, new GeoPoint(document.getGeoPoint("location").getLatitude(), document.getGeoPoint("location").getLongitude()));
                                                 buildingsList.add(building);
                                             }
                                             mDialog.dismiss();
@@ -379,8 +384,7 @@ public class MapFragment extends Fragment {
                                     if(building == null)
                                         Toast.makeText(getActivity(), "Error getting building", Toast.LENGTH_SHORT).show();
                                     else{
-                                        //Opens the bottom sheet fragment
-                                        MapBuildingFragment bottomBuilding = new MapBuildingFragment(building.getBuildingID(), building.getBuildingName(), building.getImages());
+                                        MapBuildingFragment bottomBuilding = new MapBuildingFragment(building.getBuildingID(), building.getBuildingName(), building.getImages(), building.getType());
                                         bottomBuilding.show(getActivity().getSupportFragmentManager(), bottomBuilding.getTag());
                                     }
                                     return true;

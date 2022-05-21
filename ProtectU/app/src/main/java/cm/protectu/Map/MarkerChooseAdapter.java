@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import cm.protectu.Buildings.MapPinTypeClass;
 import cm.protectu.R;
 
 public class MarkerChooseAdapter extends ArrayAdapter<MapPinTypeClass> {

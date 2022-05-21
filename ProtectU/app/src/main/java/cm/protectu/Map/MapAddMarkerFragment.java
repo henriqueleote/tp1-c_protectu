@@ -75,11 +75,14 @@ public class MapAddMarkerFragment extends Fragment {
     //Map Fragment
     private SupportMapFragment supportMapFragment;
 
+    //Floating Action Buttons
     private FloatingActionButton resetBtn, confirmPinBtn, cancelPinBtn;
 
-    GoogleMap gMap;
+    //Google Map
+    private GoogleMap gMap;
 
-    List<Marker> markerList;
+    //ArrayList with markers
+    private List<Marker> markerList;
 
     @Nullable
     @Override
@@ -103,14 +106,21 @@ public class MapAddMarkerFragment extends Fragment {
             startActivity(new Intent(getActivity(), AuthActivity.class));
         }
 
+        //Initializes the access to the database
         firebaseFirestore = FirebaseFirestore.getInstance();
+
+        //Gets the device's current location if the permission was granted in the AuthActivity
         client = LocationServices.getFusedLocationProviderClient(getActivity());
+
+        //Initializes the list of markers
         markerList = new ArrayList<>();
 
+        //Link the view objects with the XML
         resetBtn = view.findViewById(R.id.resetBtn);
         confirmPinBtn = view.findViewById(R.id.confirmPinBtn);
         cancelPinBtn = view.findViewById(R.id.cancelPinBtn);
 
+        //If the user clicks to cancel, it will ask through a dialog for certain, if so, clears the list and goes back to the map
         cancelPinBtn.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("NewApi")
             @Override
@@ -137,6 +147,7 @@ public class MapAddMarkerFragment extends Fragment {
             }
         });
 
+        //Onclick, it runs the method to insert the marker
         confirmPinBtn.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("NewApi")
             @Override
@@ -145,6 +156,7 @@ public class MapAddMarkerFragment extends Fragment {
             }
         });
 
+        //Onclick, it runs the method to reset the marker
         resetBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -172,40 +184,49 @@ public class MapAddMarkerFragment extends Fragment {
     //Gets the user current location and displays in the map
     private void getCurrentLocation() {
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
+
+        //Get the users current location
         Task<Location> task = client.getLastLocation();
+
+        //Listener in case the location is successful
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
+
+                //if the location isn't null means that it was successful
                 if (location != null) {
                     supportMapFragment.getMapAsync(new OnMapReadyCallback() {
                         @SuppressLint({"NewApi", "MissingPermission"})
                         @Override
                         public void onMapReady(GoogleMap googleMap) {
+
+                            //indirectly turns the variable public for all the call
                             gMap = googleMap;
-                            //TODO CHECK IF IT ROTATES WHEN ON MOBILE
+
+                            //shows a blue dot with the current location
                             googleMap.setMyLocationEnabled(true);
 
-                            //Loads the map without animation with the device's current location in the map
+                            //After the map is loaded, moves the map to the current location
                             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 12));
 
+                            //when the map is clicked
                             gMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                                 @Override
                                 public void onMapClick(LatLng latLng) {
+
+                                    //if the map is empty means that the user hasnt clicked in the map in order to add a pin
                                     if(markerList.isEmpty()){
                                         MarkerOptions markerOptions = new MarkerOptions().position(latLng);
                                         markerOptions.icon(bitmapDescriptorFromVector(getActivity(), R.drawable.ic_map_add_pin_45dp));
                                         Marker marker = gMap.addMarker(markerOptions);
                                         markerList.add(marker);
-                                    }else{
+                                    }
+
+                                    //if the list isn't empty means that the user alright picked a location for the pin so it
+                                    // replaces the new one automatically
+                                    else{
                                         Marker oldMarker = markerList.get(markerList.size()-1);
                                         oldMarker.remove();
                                         markerList.clear();
@@ -223,7 +244,7 @@ public class MapAddMarkerFragment extends Fragment {
         });
     }
 
-    //TODO - COMMENT
+    //Checks if the permissions are granted
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permission, @NonNull int[] grantResults) {
         if (requestCode == 44) {
@@ -243,6 +264,7 @@ public class MapAddMarkerFragment extends Fragment {
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
+    //Redirects to the page to choose the type if there is a marker chosen
     public void insertMarker() {
         if(markerList.isEmpty()){
             Toast.makeText(getActivity(), "You have to choose a location", Toast.LENGTH_SHORT).show();
@@ -252,6 +274,7 @@ public class MapAddMarkerFragment extends Fragment {
         }
     }
 
+    //Removes the marker
     public void clearMarker(){
         for (Marker marker : markerList) marker.remove();
         markerList.clear();

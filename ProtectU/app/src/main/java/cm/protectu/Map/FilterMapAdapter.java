@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import cm.protectu.Buildings.MapPinTypeClass;
 import cm.protectu.R;
 
 public class FilterMapAdapter extends ArrayAdapter<MapPinTypeClass> {
@@ -51,6 +50,7 @@ public class FilterMapAdapter extends ArrayAdapter<MapPinTypeClass> {
         if (checkedPositions.contains(mapPinTypeClass.getType()))
             checkBoxCheck.setChecked(true);
 
+        //Depending on the selected checkbox, it adds to the array list, or removes if it was an uncheck
         checkBoxCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {

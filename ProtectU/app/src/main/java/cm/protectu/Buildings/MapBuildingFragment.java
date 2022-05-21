@@ -17,6 +17,8 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import cm.protectu.Authentication.AuthActivity;
+import cm.protectu.Buildings.Bunker.BunkerFragment;
+import cm.protectu.Buildings.Earthquake.EarthquakeFragment;
 import cm.protectu.R;
 
 public class MapBuildingFragment extends BottomSheetDialogFragment {
@@ -36,13 +38,16 @@ public class MapBuildingFragment extends BottomSheetDialogFragment {
     //Firebase Authentication
     FirebaseAuth mAuth;
 
+    String type;
+
     //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
 
-    public MapBuildingFragment(String buildingID, String buildingName, ArrayList<String> images){
+    public MapBuildingFragment(String buildingID, String buildingName, ArrayList<String> images, String type){
         this.buildingID = buildingID;
         this.buildingName = buildingName;
         this.images = images;
+        this.type = type;
     }
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -74,10 +79,18 @@ public class MapBuildingFragment extends BottomSheetDialogFragment {
             @Override
             public void onClick(View view) {
                 getDialog().cancel();
-                getParentFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new BuildingFragment(buildingID))
-                        .addToBackStack(null)
-                        .commit();
+                if(type.equalsIgnoreCase("bunker")){
+                    getParentFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, new BunkerFragment(buildingID))
+                            .addToBackStack(null)
+                            .commit();
+                }
+                if(type.equalsIgnoreCase("earthquake")){
+                    getParentFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container, new EarthquakeFragment(buildingID))
+                            .addToBackStack(null)
+                            .commit();
+                }
             }
         });
 

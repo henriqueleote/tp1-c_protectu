@@ -1,4 +1,4 @@
-package cm.protectu.Buildings;
+package cm.protectu.Buildings.Bunker;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -40,14 +40,13 @@ import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import cm.protectu.Authentication.AuthActivity;
+import cm.protectu.Map.MapPinTypeClass;
 import cm.protectu.Map.MapFragment;
 import cm.protectu.R;
 
@@ -120,8 +119,8 @@ public class NewBunkerFragment extends Fragment {
         backButton = view.findViewById(R.id.backButton);
         imagesImageView = view.findViewById(R.id.imagesImageView);
         locationTextView = view.findViewById(R.id.locationTextView);
-        bunkerNameEditText = view.findViewById(R.id.bunkerNameEditText);
-        bunkerDescriptionEditText = view.findViewById(R.id.bunkerDescriptionEditText);
+        bunkerNameEditText = view.findViewById(R.id.earthquakeNameEditText);
+        bunkerDescriptionEditText = view.findViewById(R.id.earthquakeDescriptionEditText);
         createButton = view.findViewById(R.id.createButton);
         buildingExtrasButton = view.findViewById(R.id.buildingExtrasButton);
         buildingExtrasTextView = view.findViewById(R.id.buildingExtrasTextView);
