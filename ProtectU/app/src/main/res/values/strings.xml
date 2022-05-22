@@ -76,4 +76,5 @@
     <string name="question_app_will_restart">The app is going to restart, are you sure?</string>
     <string name="map_of_shelters">Map of shelters</string>
     <string name="theme">Theme</string>
+    <string name="pay_attention">"Pay attention to the air alarms in your area"</string>
 </resources>

@@ -58,6 +58,16 @@
             android:name=".Authentication.AuthActivity"
             android:exported="true"
             android:screenOrientation="portrait"></activity>
+        <service
+            android:name=".NotificationService"
+            android:enabled="true">
+        </service>
+        <receiver
+            android:name=".SensorRestarterBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:label="RestartServiceWhenStopped">
+        </receiver>
     </application>
 
 </manifest>

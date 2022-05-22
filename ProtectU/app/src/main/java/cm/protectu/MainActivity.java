@@ -1,6 +1,9 @@
 package cm.protectu;
 
+import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,6 +26,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.NotificationCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -41,6 +45,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.Date;
 import java.util.Locale;
 
 import cm.protectu.About.AboutFragment;
@@ -78,6 +83,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     private ImageView menu;
 
+    Intent mServiceIntent;
+    private NotificationService mSensorService;
 
     public static UserDataClass sessionUser;
 
@@ -87,7 +94,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     public static ViewPagerFragment viewPager;
 
-
+    private static boolean active = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Read and Load Themes
@@ -100,10 +107,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 //        }else
 //            setTheme(R.style.Theme_Light);
 
+        mSensorService = new NotificationService();
+        mServiceIntent = new Intent(this, NotificationService.class);
+        if (!isMyServiceRunning(mSensorService.getClass())) {
+            startService(mServiceIntent);
+        }
         //brightness sensor
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensorLight = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
-
         SensorEventListener sensorEventListenerLight = new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent event) {
@@ -185,15 +196,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                             Log.w(TAG, "Listen failed.", e);
                             return;
                         }
-                        Query q = firebaseFirestore.collection("air-alarm").limit(1);
+                        Query q = firebaseFirestore.collection("air-alarm").orderBy("time");
                         q.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if (task.isSuccessful()) {
-                                    DocumentSnapshot document = task.getResult().getDocuments().get(0);
+                                    DocumentSnapshot document = task.getResult().getDocuments().get(task.getResult().getDocuments().size() - 1);
                                     AlarmClass alarmClass = document.toObject(AlarmClass.class);
-                                    AlarmFragment g = new AlarmFragment(MainActivity.this, alarmClass);
-                                    //g.show();
+                                    long cur = System.currentTimeMillis();
+                                    if(active && alarmClass.getTime().before((new Date(cur + 120000))) && alarmClass.getTime().after((new Date(cur - 120000)))){
+                                        AlarmFragment g = new AlarmFragment(MainActivity.this, alarmClass);
+                                        g.show();
+                                    }
                                 } else {
                                     Log.d(TAG, "Error");
                                 }
@@ -346,6 +360,35 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         return MainActivity.context;
     }
 
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                Log.i ("isMyServiceRunning?", true+"");
+                return true;
+            }
+        }
+        Log.i ("isMyServiceRunning?", false+"");
+        return false;
+    }
+
+    @Override
+    protected void onDestroy() {
+        stopService(mServiceIntent);
+        super.onDestroy();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        active = true;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        active = false;
+    }
 }
 
 
