@@ -108,6 +108,8 @@ public class AuthActivity extends AppCompatActivity {
         });
     }
 
+    //TODO THE LOGO HAS A WEIRD BORDER
+
     public void loginUserAnonymous() {
         ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);

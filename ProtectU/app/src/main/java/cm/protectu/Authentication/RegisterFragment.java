@@ -169,7 +169,6 @@ public class RegisterFragment extends BottomSheetDialogFragment {
                                     users.add(new UserType(user.get("code"), user.get("logo"), user.get("type")));
                                 });
                             }
-                            checkPin("oi");
                         } else {
                             //Shows the error
                             Log.w(TAG, "Error getting documents.", task.getException());

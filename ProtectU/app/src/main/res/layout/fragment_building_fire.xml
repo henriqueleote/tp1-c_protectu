@@ -43,7 +43,7 @@
         android:background="@drawable/layout_bg">
 
         <TextView
-            android:id="@+id/earthquakeNameTextView"
+            android:id="@+id/bunkerNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
@@ -56,7 +56,7 @@
             android:id="@+id/locationContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/earthquakeNameTextView"
+            android:layout_below="@id/bunkerNameTextView"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="10dp">
 
@@ -77,33 +77,34 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/richterTitle"
+            android:id="@+id/descriptionTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/locationContainer"
-            android:textColor="@color/black"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/lexend_regular"
-            android:textSize="20sp"
-            android:text="Magnitude" />
+            android:text="Description"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/earthquakeRichterTextView"
+            android:id="@+id/descriptionTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/richterTitle"
+            android:layout_below="@+id/descriptionTitle"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="16dp"
             android:fontFamily="@font/lexend_regular"
-            android:text="" />
+            android:justificationMode="inter_word"
+            android:text="Description" />
 
         <TextView
             android:id="@+id/deathCountTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/earthquakeRichterTextView"
+            android:layout_below="@+id/descriptionTextView"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/lexend_regular"

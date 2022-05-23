@@ -43,7 +43,7 @@
         android:background="@drawable/layout_bg">
 
         <TextView
-            android:id="@+id/earthquakeNameTextView"
+            android:id="@+id/warNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
@@ -56,7 +56,7 @@
             android:id="@+id/locationContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/earthquakeNameTextView"
+            android:layout_below="@id/warNameTextView"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="10dp">
 
@@ -77,68 +77,22 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/richterTitle"
+            android:id="@+id/deadCountTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/locationContainer"
-            android:textColor="@color/black"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/lexend_regular"
-            android:textSize="20sp"
-            android:text="Magnitude" />
-
-        <TextView
-            android:id="@+id/earthquakeRichterTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/richterTitle"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/lexend_regular"
-            android:text="" />
-
-        <TextView
-            android:id="@+id/deathCountTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/earthquakeRichterTextView"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="15dp"
-            android:fontFamily="@font/lexend_regular"
-            android:text="Deaths"
+            android:text="Number of beds"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/fireDeathCountTextView"
+            android:id="@+id/warDeadCountTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/deathCountTitle"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/lexend_regular"
-            android:text="" />
-
-        <TextView
-            android:id="@+id/missingCountTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/fireDeathCountTextView"
-            android:textColor="@color/black"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="15dp"
-            android:fontFamily="@font/lexend_regular"
-            android:textSize="20sp"
-            android:text="Missing" />
-
-        <TextView
-            android:id="@+id/fireMissingCountTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/missingCountTitle"
+            android:layout_below="@+id/deadCountTitle"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="10dp"

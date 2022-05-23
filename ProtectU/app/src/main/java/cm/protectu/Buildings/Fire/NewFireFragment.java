@@ -8,7 +8,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
-import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -38,14 +37,13 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import cm.protectu.Authentication.AuthActivity;
+import cm.protectu.LocationAddress;
 import cm.protectu.Map.MapFragment;
 import cm.protectu.R;
 
@@ -58,7 +56,7 @@ public class NewFireFragment extends Fragment {
 
     private TextView locationTextView;
 
-    private EditText fireNameEditText, fireDescriptionEditText;
+    private EditText fireNameEditText, fireDescriptionEditText, fireDeathCountEditText, fireMissingCountEditText;
 
     private Button createButton;
 
@@ -109,13 +107,15 @@ public class NewFireFragment extends Fragment {
         locationTextView = view.findViewById(R.id.locationTextView);
         fireNameEditText = view.findViewById(R.id.fireNameEditText);
         fireDescriptionEditText = view.findViewById(R.id.fireDescriptionEditText);
+        fireMissingCountEditText = view.findViewById(R.id.fireMissingCountEditText);
+        fireDeathCountEditText = view.findViewById(R.id.fireDeathCountEditText);
         createButton = view.findViewById(R.id.createButton);
 
         uriList = new ArrayList<>();
         imagesLinks = new ArrayList<>();
         addressesList = new ArrayList<>();
 
-        getLocation();
+        locationTextView.setText(LocationAddress.getLocation(getActivity(), location));
 
         //TODO AT LEAST ONE PHOTO
         //On click closes the form sheet
@@ -154,7 +154,9 @@ public class NewFireFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 createFire(fireNameEditText.getText().toString(),
-                        fireDescriptionEditText.getText().toString());
+                        fireDescriptionEditText.getText().toString(),
+                        fireDeathCountEditText.getText().toString(),
+                        fireMissingCountEditText.getText().toString());
             }
         });
 
@@ -180,12 +182,12 @@ public class NewFireFragment extends Fragment {
             if(data.getClipData() != null){
                 int totalItems = data.getClipData().getItemCount();
 
-                if(totalItems > 1){
+                if(totalItems < 1){
                     Toast.makeText(getActivity(), "Images are mandatory", Toast.LENGTH_SHORT).show();
                     return;
-                }
-                else if(totalItems > 6){
-
+                }else if(totalItems > 6){
+                    Toast.makeText(getActivity(), "Cant have more than 6 images", Toast.LENGTH_SHORT).show();
+                    return;
                 }else{
                     Picasso.get()
                             .load(data.getClipData().getItemAt(totalItems-1).getUri())
@@ -251,24 +253,7 @@ public class NewFireFragment extends Fragment {
         }
     }
 
-    public void getLocation(){
-            Geocoder gcd = new Geocoder(getActivity(), Locale.getDefault());
-            try {
-                addressesList = gcd.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (addressesList.size() > 0){
-                if(addressesList.get(0).getLocality() == null)
-                    locationTextView.setText("Country: " + addressesList.get(0).getCountryName());
-                else
-                    locationTextView.setText("Location: " + addressesList.get(0).getLocality() + ", " + addressesList.get(0).getCountryName());
-            }
-            else
-                locationTextView.setText("Location: Unknown");
-        }
-
-    public void createFire(String fireName, String fireDescription){
+    public void createFire(String fireName, String fireDescription, String fireDeathCount, String fireMissingCount){
 
         // Name field check
         if (TextUtils.isEmpty(fireName)) {
@@ -284,6 +269,20 @@ public class NewFireFragment extends Fragment {
             return;
         }
 
+        // Death Count field check
+        if (TextUtils.isEmpty(fireDeathCount)) {
+            fireDeathCountEditText.setError("Death count is mandatory");
+            fireDeathCountEditText.requestFocus();
+            return;
+        }
+
+        // Missing Count field check
+        if (TextUtils.isEmpty(fireMissingCount)) {
+            fireMissingCountEditText.setError("Missing count is mandatory");
+            fireMissingCountEditText.requestFocus();
+            return;
+        }
+
         if(uriList.isEmpty() && imagesLinks.isEmpty()){
             Toast.makeText(getActivity(), "Images are mandatory", Toast.LENGTH_SHORT).show();
             return;
@@ -296,15 +295,17 @@ public class NewFireFragment extends Fragment {
         progressDialog.show();
 
         DocumentReference buildingRef = firebaseFirestore.collection("map-buildings").document();
-        Map<String, Object> bunkerData = new HashMap<>();
-        bunkerData.put("buildingID", buildingRef.getId());
-        bunkerData.put("buildingName", fireName);
-        bunkerData.put("buildingDescription", fireDescription);
-        bunkerData.put("images", imagesLinks);
-        bunkerData.put("location", new GeoPoint(location.getLatitude(), location.getLongitude()));
-        bunkerData.put("type", "fire");
+        Map<String, Object> fireData = new HashMap<>();
+        fireData.put("buildingID", buildingRef.getId());
+        fireData.put("buildingName", fireName);
+        fireData.put("buildingDescription", fireDescription);
+        fireData.put("fireDeathCount", fireDeathCount);
+        fireData.put("fireMissingCount", fireMissingCount);
+        fireData.put("images", imagesLinks);
+        fireData.put("location", new GeoPoint(location.getLatitude(), location.getLongitude()));
+        fireData.put("type", "fire");
 
-        buildingRef.set(bunkerData)
+        buildingRef.set(fireData)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

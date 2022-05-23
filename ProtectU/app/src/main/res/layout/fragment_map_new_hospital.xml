@@ -81,7 +81,7 @@
         android:id="@+id/imageTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/descriptionCard"
+        app:layout_constraintEnd_toEndOf="@id/earthquakeRichterEditText"
         android:layout_marginTop="10dp"
         android:drawablePadding="10dp"
         android:hint="Add images (max. 6)"

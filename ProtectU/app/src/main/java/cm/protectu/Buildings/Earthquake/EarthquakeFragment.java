@@ -1,10 +1,8 @@
 package cm.protectu.Buildings.Earthquake;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -30,17 +28,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.smarteist.autoimageslider.SliderView;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import cm.protectu.Authentication.AuthActivity;
-import cm.protectu.Buildings.BuildingClass;
-import cm.protectu.Buildings.Bunker.BunkerExtrasAdapter;
 import cm.protectu.Buildings.SliderAdapter;
+import cm.protectu.LocationAddress;
 import cm.protectu.Map.MapFragment;
-import cm.protectu.Map.MapPinTypeClass;
 import cm.protectu.R;
 
 
@@ -91,8 +85,8 @@ public class EarthquakeFragment extends Fragment {
         backButton = view.findViewById(R.id.backButton);
         earthquakeNameTextView = view.findViewById(R.id.earthquakeNameTextView);
         earthquakeRichterTextView = view.findViewById(R.id.earthquakeRichterTextView);
-        earthquakeDeathCountTextView = view.findViewById(R.id.earthquakeDeathCountTextView);
-        earthquakeMissingCountTextView = view.findViewById(R.id.earthquakeMissingCountTextView);
+        earthquakeDeathCountTextView = view.findViewById(R.id.fireDeathCountTextView);
+        earthquakeMissingCountTextView = view.findViewById(R.id.fireMissingCountTextView);
         locationTextView = view.findViewById(R.id.locationTextView);
         swipeRefreshLayout = view.findViewById(R.id.swipeToRefresh);
         progressDialog = new ProgressDialog(getActivity());
@@ -158,26 +152,9 @@ public class EarthquakeFragment extends Fragment {
                     //Extras Adapter
                     progressDialog.dismiss();
                 }
-                getLocation(location);
+                locationTextView.setText(LocationAddress.getLocation(getActivity(), location));
             }
         });
-    }
-    public void getLocation(GeoPoint location){
-        Geocoder gcd = new Geocoder(getActivity(), Locale.getDefault());
-        addressesList = new ArrayList<>();
-        try {
-            addressesList = gcd.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (addressesList.size() > 0){
-            if(addressesList.get(0).getLocality() == null)
-                locationTextView.setText(addressesList.get(0).getCountryName());
-            else
-                locationTextView.setText(addressesList.get(0).getLocality() + ", " + addressesList.get(0).getCountryName());
-        }
-        else
-            locationTextView.setText("Unknown");
     }
 }
 

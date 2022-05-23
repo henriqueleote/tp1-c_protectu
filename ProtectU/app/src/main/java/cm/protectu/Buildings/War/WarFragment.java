@@ -1,6 +1,5 @@
-package cm.protectu.Buildings.Bunker;
+package cm.protectu.Buildings.War;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.location.Address;
@@ -16,8 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,40 +29,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cm.protectu.Authentication.AuthActivity;
-import cm.protectu.LocationAddress;
-import cm.protectu.Map.MapPinTypeClass;
 import cm.protectu.Buildings.SliderAdapter;
+import cm.protectu.LocationAddress;
 import cm.protectu.Map.MapFragment;
 import cm.protectu.R;
 
 
-public class BunkerFragment extends Fragment {
+public class WarFragment extends Fragment {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
     SliderView sliderView;
     ArrayList<String> images;
-    ArrayList<String> extras;
     SliderAdapter adapter;
     String buildingID;
     RelativeLayout backButton;
-    private TextView bunkerNameTextView, locationTextView, descriptionTextView;
+    private TextView warNameTextView, locationTextView, warDeadCountTextView;
     private List<Address> addressesList;
-    private ArrayList<MapPinTypeClass> buildingAllExtrasList;
-    private ArrayList<MapPinTypeClass> finalExtrasList;
-    RecyclerView recyclerView;
-    RecyclerView.LayoutManager RecyclerViewLayoutManager;
-    BunkerExtrasAdapter extrasAdapter;
-    LinearLayoutManager HorizontalLayout;
     ProgressDialog progressDialog;
     SwipeRefreshLayout swipeRefreshLayout;
-    RelativeLayout buildingExtrasContainer;
 
 
     //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
 
-    public BunkerFragment(String buildingID){
+    public WarFragment(String buildingID){
         this.buildingID = buildingID;
     }
 
@@ -74,7 +62,7 @@ public class BunkerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         //Link the layout to the Fragment
-        View view = inflater.inflate(R.layout.fragment_building_bunker, container, false);
+        View view = inflater.inflate(R.layout.fragment_building_war, container, false);
 
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
@@ -92,17 +80,11 @@ public class BunkerFragment extends Fragment {
 
         sliderView = view.findViewById(R.id.autoImageSlider);
         backButton = view.findViewById(R.id.backButton);
-        recyclerView = view.findViewById(R.id.buildingExtrasRecyclerView);
-        bunkerNameTextView = view.findViewById(R.id.bunkerNameTextView);
+        warNameTextView = view.findViewById(R.id.warNameTextView);
         locationTextView = view.findViewById(R.id.locationTextView);
-        descriptionTextView = view.findViewById(R.id.descriptionTextView);
+        warDeadCountTextView = view.findViewById(R.id.warDeadCountTextView);
         swipeRefreshLayout = view.findViewById(R.id.swipeToRefresh);
-        buildingExtrasContainer = view.findViewById(R.id.buildingExtrasContainer);
         progressDialog = new ProgressDialog(getActivity());
-        RecyclerViewLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-        buildingAllExtrasList = MapFragment.buildingAllExtrasList;
-        extras = new ArrayList<>();
-        finalExtrasList = new ArrayList<>();
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -139,22 +121,6 @@ public class BunkerFragment extends Fragment {
 
     }
 
-    @SuppressLint("NewApi")
-    public void getExtras(){
-        extras.forEach(extra -> {
-            buildingAllExtrasList.forEach(allExtras -> {
-                if(extra.equals(allExtras.getType())){
-                    finalExtrasList.add(allExtras);
-                }
-            });
-        });
-        extrasAdapter = new BunkerExtrasAdapter(getActivity(), finalExtrasList);
-        HorizontalLayout = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
-        recyclerView.setLayoutManager(RecyclerViewLayoutManager);
-        recyclerView.setLayoutManager(HorizontalLayout);
-        recyclerView.setAdapter(extrasAdapter);
-    }
-
     public void getData(){
         firebaseFirestore.collection("map-buildings").document(buildingID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -163,10 +129,10 @@ public class BunkerFragment extends Fragment {
                 if (task.isSuccessful()){
                     DocumentSnapshot document = task.getResult();
                     images = (ArrayList<String>) document.get("images");
-                    extras = (ArrayList<String>) document.get("extras");
                     location = (GeoPoint) document.getGeoPoint("location");
-                    bunkerNameTextView.setText(document.get("buildingName").toString());
-                    descriptionTextView.setText(document.get("buildingDescription").toString());
+                    warNameTextView.setText(document.get("buildingName").toString());
+                    warDeadCountTextView.setText(document.get("warDeadCount").toString());
+
                     //Images Adapter
                     adapter = new SliderAdapter(getActivity(), images);
                     sliderView.setAutoCycleDirection(SliderView.LAYOUT_DIRECTION_LTR);
@@ -178,11 +144,6 @@ public class BunkerFragment extends Fragment {
                     progressDialog.dismiss();
                 }
                 locationTextView.setText(LocationAddress.getLocation(getActivity(), location));
-                if(extras == null)
-                    //TODO MAYBE PUT A MESSAGE SAYING IT DOESNT HAVE ANY
-                    buildingExtrasContainer.setVisibility(View.GONE);
-                else
-                    getExtras();
             }
         });
     }

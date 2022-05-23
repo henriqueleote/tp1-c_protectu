@@ -1,4 +1,4 @@
-package cm.protectu.Buildings.Bunker;
+package cm.protectu.Buildings.War;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -44,11 +46,10 @@ import java.util.Map;
 
 import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.LocationAddress;
-import cm.protectu.Map.MapPinTypeClass;
 import cm.protectu.Map.MapFragment;
 import cm.protectu.R;
 
-public class NewBunkerFragment extends Fragment {
+public class NewWarFragment extends Fragment {
 
     private static final int PICK_IMAGE = 1;
 
@@ -57,9 +58,9 @@ public class NewBunkerFragment extends Fragment {
 
     private TextView locationTextView;
 
-    private EditText bunkerNameEditText, bunkerDescriptionEditText;
+    private EditText warNameEditText, warDeadCountEditText, warMissingCountEditText;
 
-    private Button createButton;
+    private Button createButton, clearButton;
 
     private ArrayList<Uri> uriList;
 
@@ -76,25 +77,19 @@ public class NewBunkerFragment extends Fragment {
 
     private GeoPoint location;
 
-    private Button buildingExtrasButton;
-
-    private ArrayList<MapPinTypeClass> buildingExtras;
-
-    private ArrayList<String> selectedExtras;
-
-    private TextView buildingExtrasTextView;
+    private Drawable oldDrawable;
 
     //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
 
-    public NewBunkerFragment(GeoPoint location){
+    public NewWarFragment(GeoPoint location){
         this.location = location;
     }
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         //Link the layout to the Fragment
-        View view = inflater.inflate(R.layout.fragment_map_new_bunker, container, false);
+        View view = inflater.inflate(R.layout.fragment_map_new_war, container, false);
 
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
@@ -104,12 +99,9 @@ public class NewBunkerFragment extends Fragment {
 
         firebaseStorage = FirebaseStorage.getInstance();
 
-        //TODO Check the animation
         //Checks if there is a session, if not, redirects to the Auth page
         if (mAuth.getCurrentUser() == null) {
             getActivity().finish();
-            //Swipe animation ?? not sure, consult previous code
-            //getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             startActivity(new Intent(getActivity(), AuthActivity.class));
         }
 
@@ -117,17 +109,16 @@ public class NewBunkerFragment extends Fragment {
         backButton = view.findViewById(R.id.backButton);
         imagesImageView = view.findViewById(R.id.imagesImageView);
         locationTextView = view.findViewById(R.id.locationTextView);
-        bunkerNameEditText = view.findViewById(R.id.earthquakeNameEditText);
-        bunkerDescriptionEditText = view.findViewById(R.id.earthquakeDescriptionEditText);
+        warNameEditText = view.findViewById(R.id.warNameEditText);
+        warDeadCountEditText = view.findViewById(R.id.warDeadCountEditText);
+        warMissingCountEditText = view.findViewById(R.id.warMissingCountEditText);
         createButton = view.findViewById(R.id.createButton);
-        buildingExtrasButton = view.findViewById(R.id.buildingExtrasButton);
-        buildingExtrasTextView = view.findViewById(R.id.buildingExtrasTextView);
-        buildingExtras = MapFragment.buildingAllExtrasList;
+        clearButton = view.findViewById(R.id.clearButton);
+        oldDrawable = imagesImageView.getDrawable();
 
         uriList = new ArrayList<>();
         imagesLinks = new ArrayList<>();
         addressesList = new ArrayList<>();
-        selectedExtras = new ArrayList<>();
 
         locationTextView.setText(LocationAddress.getLocation(getActivity(), location));
 
@@ -167,67 +158,23 @@ public class NewBunkerFragment extends Fragment {
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createBunker(bunkerNameEditText.getText().toString(),
-                        bunkerDescriptionEditText.getText().toString());
+                createWar(warNameEditText.getText().toString(),
+                        warDeadCountEditText.getText().toString(),
+                        warMissingCountEditText.getText().toString());
             }
         });
 
-        buildingExtrasButton.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("NewApi")
+        clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Choose extras");
-                builder.setCancelable(false);
-
-                String[] extras = new String[buildingExtras.size()];
-
-                for(int i = 0; i < buildingExtras.size(); i++){
-                    extras[i] = buildingExtras.get(i).getName();
-                }
-
-                final boolean[] checkedExtras = new boolean[buildingExtras.size()];
-
-                builder.setMultiChoiceItems(extras, checkedExtras, new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                        checkedExtras[which] = isChecked;
-                    }
-                });
-
-                builder.setPositiveButton("Adicionar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        buildingExtrasTextView.setText("");
-                        selectedExtras.clear();
-                        for (int i = 0; i < checkedExtras.length; i++){
-                            boolean checked = checkedExtras[i];
-                            if (checked) {
-                                selectedExtras.add(buildingExtras.get(i).getType());
-                                if(buildingExtrasTextView.getText().equals(""))
-                                    buildingExtrasTextView.setText(buildingExtras.get(i).getName());
-                                else
-                                    buildingExtrasTextView.setText(buildingExtrasTextView.getText() + ", " + buildingExtras.get(i).getName());
-
-                            }
-                        }
-                    }
-                });
-
-                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        // use for loop
-                        for (int j = 0; j < checkedExtras.length; j++) {
-                            checkedExtras[j] = false;
-                            selectedExtras.clear();
-                        }
-                    }
-                });
-                builder.show();
+                uriList.clear();
+                warNameEditText.setText("");
+                warDeadCountEditText.setText("");
+                warMissingCountEditText.setText("");
+                Picasso.get().load(R.drawable.ic_camera_black_24dp).into(imagesImageView);;
+                //TODO MISSING DESCRIPTION EVERYWHERE
             }
         });
-
 
         //Returns the view
         return view;
@@ -258,10 +205,14 @@ public class NewBunkerFragment extends Fragment {
                     Toast.makeText(getActivity(), "Cant have more than 6 images", Toast.LENGTH_SHORT).show();
                     return;
                 }else{
+                    //TODO NOT PERFECT FIT
+                    ViewGroup.LayoutParams params = imagesImageView.getLayoutParams();
+                    params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                    params.height = ViewGroup.LayoutParams.MATCH_PARENT;                    clearButton.setVisibility(View.VISIBLE);
                     Picasso.get()
                             .load(data.getClipData().getItemAt(totalItems-1).getUri())
-                            .centerCrop()
                             .fit()
+                            .centerCrop()
                             .into(imagesImageView);
 
                     Log.d(TAG, "Value: " + data.getClipData().getItemAt(totalItems-1).getUri());
@@ -273,10 +224,16 @@ public class NewBunkerFragment extends Fragment {
 
             }
             else if(data.getData() != null){
+                //TODO NOT PERFECT FIT
+                ViewGroup.LayoutParams params = imagesImageView.getLayoutParams();
+                params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+                params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+                imagesImageView.requestLayout();
+                clearButton.setVisibility(View.VISIBLE);
                 Picasso.get()
                         .load(data.getData())
-                        .centerCrop()
                         .fit()
+                        .centerCrop()
                         .into(imagesImageView);
 
                 uriList.add(data.getData());
@@ -322,19 +279,26 @@ public class NewBunkerFragment extends Fragment {
         }
     }
 
-    public void createBunker(String bunkerName, String bunkerDescription){
+    public void createWar(String warName, String warDeadCount, String warMissingCount){
 
         // Name field check
-        if (TextUtils.isEmpty(bunkerName)) {
-            bunkerNameEditText.setError("Name is mandatory");
-            bunkerNameEditText.requestFocus();
+        if (TextUtils.isEmpty(warName)) {
+            warNameEditText.setError("Name is mandatory");
+            warNameEditText.requestFocus();
             return;
         }
 
-        // Description field check
-        if (TextUtils.isEmpty(bunkerDescription)) {
-            bunkerDescriptionEditText.setError("Description is mandatory");
-            bunkerDescriptionEditText.requestFocus();
+        // Death number field check
+        if (TextUtils.isEmpty(warDeadCount)) {
+            warDeadCountEditText.setError("Death number is mandatory");
+            warDeadCountEditText.requestFocus();
+            return;
+        }
+
+        // Missing number field check
+        if (TextUtils.isEmpty(warMissingCount)) {
+            warMissingCountEditText.setError("Missing number is mandatory");
+            warMissingCountEditText.requestFocus();
             return;
         }
 
@@ -344,22 +308,22 @@ public class NewBunkerFragment extends Fragment {
         }
 
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setTitle("Adding bunker");
+        progressDialog.setTitle("Adding war");
         progressDialog.setMessage("Loading...");
         progressDialog.setCancelable(false);
         progressDialog.show();
 
         DocumentReference buildingRef = firebaseFirestore.collection("map-buildings").document();
-        Map<String, Object> bunkerData = new HashMap<>();
-        bunkerData.put("buildingID", buildingRef.getId());
-        bunkerData.put("buildingName", bunkerName);
-        bunkerData.put("buildingDescription", bunkerDescription);
-        bunkerData.put("extras", selectedExtras);
-        bunkerData.put("images", imagesLinks);
-        bunkerData.put("location", new GeoPoint(location.getLatitude(), location.getLongitude()));
-        bunkerData.put("type", "bunker");
+        Map<String, Object> warData = new HashMap<>();
+        warData.put("buildingID", buildingRef.getId());
+        warData.put("buildingName", warName);
+        warData.put("warDeadCount", warDeadCount);
+        warData.put("warMissingCount", warMissingCount);
+        warData.put("images", imagesLinks);
+        warData.put("location", new GeoPoint(location.getLatitude(), location.getLongitude()));
+        warData.put("type", "war");
 
-        buildingRef.set(bunkerData)
+        buildingRef.set(warData)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -368,7 +332,7 @@ public class NewBunkerFragment extends Fragment {
                         pinData.put("pinID", pinRef.getId());
                         pinData.put("buildingID", buildingRef.getId());
                         pinData.put("location", new GeoPoint(location.getLatitude(), location.getLongitude()));
-                        pinData.put("type", "bunker");
+                        pinData.put("type", "war");
                         pinRef.set(pinData)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override

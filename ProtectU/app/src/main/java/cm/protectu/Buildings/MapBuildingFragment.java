@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,6 +20,9 @@ import java.util.ArrayList;
 import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.Buildings.Bunker.BunkerFragment;
 import cm.protectu.Buildings.Earthquake.EarthquakeFragment;
+import cm.protectu.Buildings.Fire.FireFragment;
+import cm.protectu.Buildings.Hospital.HospitalFragment;
+import cm.protectu.Buildings.War.WarFragment;
 import cm.protectu.R;
 
 public class MapBuildingFragment extends BottomSheetDialogFragment {
@@ -79,18 +83,22 @@ public class MapBuildingFragment extends BottomSheetDialogFragment {
             @Override
             public void onClick(View view) {
                 getDialog().cancel();
-                if(type.equalsIgnoreCase("bunker")){
-                    getParentFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_container, new BunkerFragment(buildingID))
-                            .addToBackStack(null)
-                            .commit();
-                }
-                if(type.equalsIgnoreCase("earthquake")){
-                    getParentFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_container, new EarthquakeFragment(buildingID))
-                            .addToBackStack(null)
-                            .commit();
-                }
+                Fragment fragment = null;
+                if(type.equalsIgnoreCase("bunker"))
+                    fragment = new BunkerFragment(buildingID);
+                if(type.equalsIgnoreCase("earthquake"))
+                    fragment = new EarthquakeFragment(buildingID);
+                if(type.equalsIgnoreCase("fire"))
+                    fragment = new FireFragment(buildingID);
+                if(type.equalsIgnoreCase("hospital"))
+                    fragment = new HospitalFragment(buildingID);
+                if(type.equalsIgnoreCase("war"))
+                    fragment = new WarFragment(buildingID);
+
+                getParentFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, fragment)
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 

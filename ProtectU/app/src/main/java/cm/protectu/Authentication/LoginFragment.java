@@ -159,6 +159,7 @@ public class LoginFragment extends BottomSheetDialogFragment {
                             startActivity(new Intent(getActivity(), MainActivity.class));
                         } else {
                             mDialog.dismiss();
+                            //TODO NOT SHOWING THE ERRORS
                             try {
                                 throw task.getException();
                             } catch(FirebaseAuthInvalidCredentialsException e) { //Error if password doesnt match the account //TODO error appears when email is wrong

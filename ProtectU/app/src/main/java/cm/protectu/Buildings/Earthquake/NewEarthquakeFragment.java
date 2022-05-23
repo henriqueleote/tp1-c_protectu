@@ -8,7 +8,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
-import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -38,14 +37,13 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import cm.protectu.Authentication.AuthActivity;
+import cm.protectu.LocationAddress;
 import cm.protectu.Map.MapFragment;
 import cm.protectu.R;
 
@@ -117,7 +115,7 @@ public class NewEarthquakeFragment extends Fragment {
         imagesLinks = new ArrayList<>();
         addressesList = new ArrayList<>();
 
-        getLocation();
+        locationTextView.setText(LocationAddress.getLocation(getActivity(), location));
 
         //TODO AT LEAST ONE PHOTO
         //On click closes the form sheet
@@ -184,12 +182,12 @@ public class NewEarthquakeFragment extends Fragment {
             if(data.getClipData() != null){
                 int totalItems = data.getClipData().getItemCount();
 
-                if(totalItems > 1){
+                if(totalItems < 1){
                     Toast.makeText(getActivity(), "Images are mandatory", Toast.LENGTH_SHORT).show();
                     return;
-                }
-                else if(totalItems > 6){
-
+                }else if(totalItems > 6){
+                    Toast.makeText(getActivity(), "Cant have more than 6 images", Toast.LENGTH_SHORT).show();
+                    return;
                 }else{
                     Picasso.get()
                             .load(data.getClipData().getItemAt(totalItems-1).getUri())
@@ -255,23 +253,6 @@ public class NewEarthquakeFragment extends Fragment {
         }
     }
 
-    public void getLocation(){
-            Geocoder gcd = new Geocoder(getActivity(), Locale.getDefault());
-            try {
-                addressesList = gcd.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if (addressesList.size() > 0){
-                if(addressesList.get(0).getLocality() == null)
-                    locationTextView.setText("Country: " + addressesList.get(0).getCountryName());
-                else
-                    locationTextView.setText("Location: " + addressesList.get(0).getLocality() + ", " + addressesList.get(0).getCountryName());
-            }
-            else
-                locationTextView.setText("Location: Unknown");
-    }
-
     public void createEarthquake(String earthquakeName, String earthquakeRichter, String earthquakeDeathCount, String earthquakeMissingCount){
 
         // Name field check
@@ -314,17 +295,17 @@ public class NewEarthquakeFragment extends Fragment {
         progressDialog.show();
 
         DocumentReference buildingRef = firebaseFirestore.collection("map-buildings").document();
-        Map<String, Object> bunkerData = new HashMap<>();
-        bunkerData.put("buildingID", buildingRef.getId());
-        bunkerData.put("buildingName", earthquakeName);
-        bunkerData.put("earthquakeRichter", earthquakeRichter);
-        bunkerData.put("earthquakeDeathCount", earthquakeDeathCount);
-        bunkerData.put("earthquakeMissingCount", earthquakeMissingCount);
-        bunkerData.put("images", imagesLinks);
-        bunkerData.put("location", new GeoPoint(location.getLatitude(), location.getLongitude()));
-        bunkerData.put("type", "earthquake");
+        Map<String, Object> earthquakeData = new HashMap<>();
+        earthquakeData.put("buildingID", buildingRef.getId());
+        earthquakeData.put("buildingName", earthquakeName);
+        earthquakeData.put("earthquakeRichter", earthquakeRichter);
+        earthquakeData.put("earthquakeDeathCount", earthquakeDeathCount);
+        earthquakeData.put("earthquakeMissingCount", earthquakeMissingCount);
+        earthquakeData.put("images", imagesLinks);
+        earthquakeData.put("location", new GeoPoint(location.getLatitude(), location.getLongitude()));
+        earthquakeData.put("type", "earthquake");
 
-        buildingRef.set(bunkerData)
+        buildingRef.set(earthquakeData)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

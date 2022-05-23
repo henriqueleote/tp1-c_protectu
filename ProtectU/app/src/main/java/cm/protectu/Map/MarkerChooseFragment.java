@@ -13,6 +13,7 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.maps.model.Marker;
@@ -30,22 +31,16 @@ import java.util.List;
 import java.util.Map;
 
 import cm.protectu.Authentication.AuthActivity;
+import cm.protectu.Buildings.Bunker.BunkerFragment;
 import cm.protectu.Buildings.Bunker.NewBunkerFragment;
 import cm.protectu.Buildings.Earthquake.NewEarthquakeFragment;
 import cm.protectu.Buildings.Fire.NewFireFragment;
 import cm.protectu.Buildings.Hospital.NewHospitalFragment;
+import cm.protectu.Buildings.War.NewWarFragment;
 import cm.protectu.R;
 
 public class MarkerChooseFragment extends BottomSheetDialogFragment {
 
-    /*
-    * Incendios:
-    *
-    * Hospitais:
-    *  - nº macas
-    *  -
-    * Terramotos:
-    * */
 
     //ImageView
     private ImageView closeBtn;
@@ -119,65 +114,22 @@ public class MarkerChooseFragment extends BottomSheetDialogFragment {
 
 
     public void insertMarker() {
-        if(MarkerChooseAdapter.checkedButton.get(MarkerChooseAdapter.checkedButton.size()-1).equalsIgnoreCase("bunker")) {
-            getDialog().dismiss();
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new NewBunkerFragment(new GeoPoint(markerList.get(markerList.size()-1).getPosition().latitude, markerList.get(markerList.size()-1).getPosition().longitude)))
-                    .addToBackStack(null)
-                    .commit();
-        }
-        if(MarkerChooseAdapter.checkedButton.get(MarkerChooseAdapter.checkedButton.size()-1).equalsIgnoreCase("hospital")) {
-            getDialog().dismiss();
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new NewHospitalFragment(new GeoPoint(markerList.get(markerList.size()-1).getPosition().latitude, markerList.get(markerList.size()-1).getPosition().longitude)))
-                    .addToBackStack(null)
-                    .commit();
-        }
-        if(MarkerChooseAdapter.checkedButton.get(MarkerChooseAdapter.checkedButton.size()-1).equalsIgnoreCase("fire")) {
-            getDialog().dismiss();
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new NewFireFragment(new GeoPoint(markerList.get(markerList.size()-1).getPosition().latitude, markerList.get(markerList.size()-1).getPosition().longitude)))
-                    .addToBackStack(null)
-                    .commit();
-        }
-        if(MarkerChooseAdapter.checkedButton.get(MarkerChooseAdapter.checkedButton.size()-1).equalsIgnoreCase("earthquake")) {
-            getDialog().dismiss();
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new NewEarthquakeFragment(new GeoPoint(markerList.get(markerList.size()-1).getPosition().latitude, markerList.get(markerList.size()-1).getPosition().longitude)))
-                    .addToBackStack(null)
-                    .commit();
-        }/*else{
-            ProgressDialog progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setTitle("Adding marker");
-            progressDialog.setMessage("Loading...");
-            progressDialog.setCancelable(false);
-            progressDialog.show();
+        Fragment fragment = null;
+        if(MarkerChooseAdapter.checkedButton.get(MarkerChooseAdapter.checkedButton.size()-1).equalsIgnoreCase("bunker"))
+            fragment = new NewBunkerFragment(new GeoPoint(markerList.get(markerList.size()-1).getPosition().latitude, markerList.get(markerList.size()-1).getPosition().longitude));
+        if(MarkerChooseAdapter.checkedButton.get(MarkerChooseAdapter.checkedButton.size()-1).equalsIgnoreCase("hospital"))
+            fragment = new NewHospitalFragment(new GeoPoint(markerList.get(markerList.size()-1).getPosition().latitude, markerList.get(markerList.size()-1).getPosition().longitude));
+        if(MarkerChooseAdapter.checkedButton.get(MarkerChooseAdapter.checkedButton.size()-1).equalsIgnoreCase("fire"))
+            fragment = new NewFireFragment(new GeoPoint(markerList.get(markerList.size()-1).getPosition().latitude, markerList.get(markerList.size()-1).getPosition().longitude));
+        if(MarkerChooseAdapter.checkedButton.get(MarkerChooseAdapter.checkedButton.size()-1).equalsIgnoreCase("earthquake"))
+            fragment = new NewEarthquakeFragment(new GeoPoint(markerList.get(markerList.size()-1).getPosition().latitude, markerList.get(markerList.size()-1).getPosition().longitude));
+        if(MarkerChooseAdapter.checkedButton.get(MarkerChooseAdapter.checkedButton.size()-1).equalsIgnoreCase("war"))
+            fragment = new NewWarFragment(new GeoPoint(markerList.get(markerList.size()-1).getPosition().latitude, markerList.get(markerList.size()-1).getPosition().longitude));
 
-            DocumentReference documentReference = firebaseFirestore.collection("map-pins").document();
-            Map<String, Object> markersData = new HashMap<>();
-            markersData.put("pinID", documentReference.getId());
-            markersData.put("location", new GeoPoint(markerList.get(markerList.size()-1).getPosition().latitude, markerList.get(markerList.size()-1).getPosition().longitude));
-            markersData.put("type", MarkerChooseAdapter.checkedButton.get(MarkerChooseAdapter.checkedButton.size()-1));
-            documentReference.set(markersData)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            progressDialog.dismiss();
-                            Log.d(TAG, "DocumentSnapshot with the ID: " + documentReference.getId());
-                            //getDialog().dismiss();
-                            getFragmentManager().beginTransaction()
-                                    .replace(R.id.fragment_container, new MapFragment())
-                                    .addToBackStack(null)
-                                    .commit();}
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressDialog.dismiss();
-                            Log.w(TAG, "Error writing document", e);
-                        }
-                    });
-        }*/
-
+        getDialog().dismiss();
+        getFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 }
