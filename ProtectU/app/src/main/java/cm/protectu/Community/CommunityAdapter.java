@@ -134,7 +134,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                 holder.makeVerified.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        makeVerified(messageID, holder, isVerified);
+                        makeVerified(messageID, holder);
                     }
                 });
             } else {
@@ -191,22 +191,31 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
 
         if (!isVerified) {
             if (!MainActivity.sessionUser.getUserType().equals("user")) {
-                constraintSet.connect(holder.makeVerified.getId(), ConstraintSet.END, holder.verified.getId(), ConstraintSet.END, margin);
-                constraintSet.applyTo(holder.constraintLayout);
+            constraintSet.connect(holder.makeVerified.getId(), ConstraintSet.END, holder.verified.getId(), ConstraintSet.END, margin);
+            constraintSet.applyTo(holder.constraintLayout);
 
-                constraintSet.connect(holder.removeMessageCommunity.getId(), ConstraintSet.END, holder.makeVerified.getId(), ConstraintSet.START, margin);
+            constraintSet.connect(holder.removeMessageCommunity.getId(), ConstraintSet.END, holder.makeVerified.getId(), ConstraintSet.START, margin);
 
             } else {
                 constraintSet.connect(holder.removeMessageCommunity.getId(), ConstraintSet.END, holder.makeVerified.getId(), ConstraintSet.END, margin);
             }
+
             constraintSet.applyTo(holder.constraintLayout);
+
+            holder.makeVerified.setVisibility(View.VISIBLE);
             holder.verified.setVisibility(View.INVISIBLE);
+
         } else {
             constraintSet.clear(holder.removeMessageCommunity.getId(), ConstraintSet.END);
 
             constraintSet.connect(holder.removeMessageCommunity.getId(), ConstraintSet.END, holder.verified.getId(), ConstraintSet.START, margin);
             constraintSet.applyTo(holder.constraintLayout);
+
+            holder.verified.setVisibility(View.VISIBLE);
+            holder.makeVerified.setVisibility(View.INVISIBLE);
+
         }
+
     }
 
     /**
@@ -214,14 +223,14 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
      *
      * @param messageID
      */
-    public void makeVerified(String messageID, MyViewHolder holder, boolean isVerified) {
+    public void makeVerified(String messageID, MyViewHolder holder) {
         firebaseFirestore.collection("community-chat")
                 .document(messageID)
                 .update("verified", new Boolean("true"))
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void unused) {
-                        adaptConstrains(holder, isVerified);
+                        adaptConstrains(holder, true);
                         Log.d(TAG, "Success");
                     }
                 })
