@@ -17,9 +17,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.squareup.picasso.Picasso;
 
 import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.Community.CommunityFragment;
@@ -157,11 +157,11 @@ public class ProfileFragment extends Fragment {
         emailTextView.setText(getString(R.string.email) + MainActivity.sessionUser.getEmail());
         contactTextView.setText(getString(R.string.contact) + MainActivity.sessionUser.getPhoneNumber());
         if(!MainActivity.sessionUser.getImageURL().equals("null")){
-            Picasso.get()
+            Glide.with(getActivity())
                     .load(MainActivity.sessionUser.getImageURL())
                     .centerCrop()
-                    .fit()
-                    .transform(new CropCircleTransformation())
+                    
+                    .circleCrop()
                     .into(profileImageView);
         }
 

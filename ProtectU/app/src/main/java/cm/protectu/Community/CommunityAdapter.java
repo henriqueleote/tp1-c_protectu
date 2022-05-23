@@ -19,6 +19,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -30,8 +33,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,8 +40,6 @@ import java.util.Date;
 import cm.protectu.MainActivity;
 import cm.protectu.R;
 import cm.protectu.UserDataClass;
-import jp.wasabeef.picasso.transformations.CropCircleTransformation;
-import jp.wasabeef.picasso.transformations.RoundedCornersTransformation;
 
 public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyViewHolder> {
 
@@ -107,11 +106,11 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                             holder.userName.setText(userDataClass.getFirstName() + " " + userDataClass.getLastName());
 
                             if (!userDataClass.getImageURL().equals("null")) {
-                                Picasso.get()
+                                Glide.with(context)
                                         .load(userDataClass.getImageURL())
                                         .centerCrop()
-                                        .fit()
-                                        .transform(new CropCircleTransformation())
+                                        
+                                        .circleCrop()
                                         .into(holder.userImage);
                             }
                         }
@@ -280,15 +279,11 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
         if (!listOfCommunityCards.get(pos).getImageURL().equals("")) {
             holder.imageCommunity.setVisibility(View.VISIBLE);
 
-            final int radius = 8;
-            final int margin = 5;
-            final Transformation transformation = new RoundedCornersTransformation(radius, margin);
-
-            Picasso.get()
+            Glide.with(context)
                     .load(listOfCommunityCards.get(pos).getImageURL())
                     .centerCrop()
-                    .fit()
-                    .transform(transformation)
+                    
+                    .transform(new CenterCrop(), new RoundedCorners(8))
                     .into(holder.imageCommunity);
 
             holder.imageCommunity.setOnClickListener(new View.OnClickListener() {
@@ -297,7 +292,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                     AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
                     View mView = view.inflate(context, R.layout.fragment_photoview_fullscreen, null);
                     PhotoView photoView = mView.findViewById(R.id.imageView);
-                    Picasso.get()
+                    Glide.with(context)
                             .load(listOfCommunityCards.get(pos).getImageURL())
                             .into(photoView);
 

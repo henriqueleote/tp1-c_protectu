@@ -1,7 +1,6 @@
 package cm.protectu.MissingBoard;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,21 +13,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.squareup.picasso.Picasso;
-
 
 import java.util.List;
 
 import cm.protectu.MainActivity;
 import cm.protectu.R;
-import cm.protectu.UserDataClass;
-import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 
 public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapter.MyViewHolder> {
@@ -93,10 +85,10 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
         holder.missingName.setText(mData.get(position).getMissingName());
         //holder.age.setText(String.valueOf(mData.get(position).getMissingAge()));
 
-        Picasso.get()
+        Glide.with(mContext)
                 .load(mData.get(position).getFotoMissing())
                 .centerCrop()
-                .fit()
+                
                 .into(holder.missingImage);
 
 

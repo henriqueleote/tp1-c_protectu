@@ -24,9 +24,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -37,7 +37,6 @@ import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -171,7 +170,7 @@ public class NewWarFragment extends Fragment {
                 warNameEditText.setText("");
                 warDeadCountEditText.setText("");
                 warMissingCountEditText.setText("");
-                Picasso.get().load(R.drawable.ic_camera_black_24dp).into(imagesImageView);;
+                Glide.with(getActivity()).load(R.drawable.ic_camera_black_24dp).into(imagesImageView);;
                 //TODO MISSING DESCRIPTION EVERYWHERE
             }
         });
@@ -209,9 +208,9 @@ public class NewWarFragment extends Fragment {
                     ViewGroup.LayoutParams params = imagesImageView.getLayoutParams();
                     params.width = ViewGroup.LayoutParams.MATCH_PARENT;
                     params.height = ViewGroup.LayoutParams.MATCH_PARENT;                    clearButton.setVisibility(View.VISIBLE);
-                    Picasso.get()
+                    Glide.with(getActivity())
                             .load(data.getClipData().getItemAt(totalItems-1).getUri())
-                            .fit()
+                            
                             .centerCrop()
                             .into(imagesImageView);
 
@@ -230,9 +229,9 @@ public class NewWarFragment extends Fragment {
                 params.height = ViewGroup.LayoutParams.MATCH_PARENT;
                 imagesImageView.requestLayout();
                 clearButton.setVisibility(View.VISIBLE);
-                Picasso.get()
+                Glide.with(getActivity())
                         .load(data.getData())
-                        .fit()
+                        
                         .centerCrop()
                         .into(imagesImageView);
 

@@ -26,6 +26,7 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -36,7 +37,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
@@ -133,11 +133,11 @@ public class EditProfileFragment extends Fragment {
         lastNameEditText.setText(MainActivity.sessionUser.getLastName());
         contactEditText.setText(MainActivity.sessionUser.getPhoneNumber());
         if(!MainActivity.sessionUser.getImageURL().equals("null")){
-            Picasso.get()
+            Glide.with(getActivity())
                     .load(MainActivity.sessionUser.getImageURL())
                     .centerCrop()
-                    .fit()
-                    .transform(new CropCircleTransformation())
+                    
+                    .circleCrop()
                     .into(profileImageView);
         }
 
@@ -213,11 +213,11 @@ public class EditProfileFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK) {
 
-            Picasso.get()
+            Glide.with(getActivity())
                     .load(imguri)
                     .centerCrop()
-                    .fit()
-                    .transform(new CropCircleTransformation())
+                    
+                    .circleCrop()
                     .into(profileImageView);
 
 

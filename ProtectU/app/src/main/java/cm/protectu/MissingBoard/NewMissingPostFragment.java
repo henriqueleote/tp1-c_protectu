@@ -14,15 +14,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -35,7 +34,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 
 import java.util.Date;
 
@@ -242,10 +240,10 @@ public class NewMissingPostFragment extends Fragment {
         if (requestCode == 1 && resultCode == RESULT_OK && data != null & data.getData() != null) {
 
             imguri = data.getData();
-            Picasso.get()
+            Glide.with(getActivity())
                     .load(imguri)
                     .centerCrop()
-                    .fit()
+                    
                     .into(imageUploaded);
             cameraIcon.setVisibility(View.INVISIBLE);
 

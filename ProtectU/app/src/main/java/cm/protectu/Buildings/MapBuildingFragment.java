@@ -11,9 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -110,7 +110,7 @@ public class MapBuildingFragment extends BottomSheetDialogFragment {
 
     public void putData(){
         buildingNameTextView.setText(buildingName);
-        Picasso.get().load(images.get(0)).into(buildingImage);
+        Glide.with(getActivity()).load(images.get(0)).into(buildingImage);
     }
 
 }

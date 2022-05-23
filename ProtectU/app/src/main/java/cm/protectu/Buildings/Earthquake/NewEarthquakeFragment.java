@@ -25,6 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -35,7 +36,6 @@ import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -189,10 +189,10 @@ public class NewEarthquakeFragment extends Fragment {
                     Toast.makeText(getActivity(), "Cant have more than 6 images", Toast.LENGTH_SHORT).show();
                     return;
                 }else{
-                    Picasso.get()
+                    Glide.with(getActivity())
                             .load(data.getClipData().getItemAt(totalItems-1).getUri())
                             .centerCrop()
-                            .fit()
+                            
                             .into(imagesImageView);
 
                     Log.d(TAG, "Value: " + data.getClipData().getItemAt(totalItems-1).getUri());
@@ -204,10 +204,10 @@ public class NewEarthquakeFragment extends Fragment {
 
             }
             else if(data.getData() != null){
-                Picasso.get()
+                Glide.with(getActivity())
                         .load(data.getData())
                         .centerCrop()
-                        .fit()
+                        
                         .into(imagesImageView);
 
                 uriList.add(data.getData());

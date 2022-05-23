@@ -6,8 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.smarteist.autoimageslider.SliderViewAdapter;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +18,12 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
 
     // list for storing urls of images.
     private List<String> mSliderItems;
+    private Context context;
 
     // Constructor
     public SliderAdapter(Context context, ArrayList<String> sliderDataArrayList) {
         this.mSliderItems = sliderDataArrayList;
+        this.context = context;
     }
 
     // We are inflating the slider_layout
@@ -39,9 +41,8 @@ public class SliderAdapter extends SliderViewAdapter<SliderAdapter.SliderAdapter
 
         final String sliderItem = mSliderItems.get(position);
 
-        Picasso.get()
+        Glide.with(context)
                 .load(sliderItem)
-                .fit()
                 .centerCrop()
                 .into(viewHolder.imageViewBackground);
     }

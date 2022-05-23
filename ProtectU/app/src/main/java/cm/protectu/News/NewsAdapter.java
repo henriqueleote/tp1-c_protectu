@@ -14,9 +14,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -59,7 +59,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder>{
         imgURL1 = listOfNewsCardClasses.get(position).getImageURL();
         Log.d(TAG,"DATA ->" + listOfNewsCardClasses.get(position).getImageURL());
         if(!imgURL1.equals("")){
-            Picasso.get()
+            Glide.with(context)
                     .load(imgURL1)
                     .into(holder.newsImage);
         }else{
@@ -67,11 +67,10 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder>{
         }
         imgURL2 = listOfNewsCardClasses.get(position).getPubImgURL();
         if(imgURL2 != null){
-            Picasso.get()
+            Glide.with(context)
                     .load(imgURL2)
                     .centerCrop()
-                    .fit()
-                    .transform(new CropCircleTransformation())
+                    .circleCrop()
                     .into(holder.newsPublisherImage);
         }
         holder.cardNews.setOnClickListener(new  View.OnClickListener() {

@@ -11,12 +11,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
 
-import java.security.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 import cm.protectu.R;
@@ -62,7 +59,7 @@ public class NewsDetailsFragment extends Fragment {
         });
         imgURL1 = card.getImageURL();
         if(!imgURL1.equals("")){
-            Picasso.get()
+            Glide.with(getActivity())
                     .load(imgURL1)
                     .into(newsBigImage);
         }else{
@@ -70,11 +67,11 @@ public class NewsDetailsFragment extends Fragment {
         }
         imgURL2 = card.getPubImgURL();
         if(imgURL2 != null){
-            Picasso.get()
+            Glide.with(getActivity())
                     .load(imgURL2)
                     .centerCrop()
-                    .fit()
-                    .transform(new CropCircleTransformation())
+                    
+                    .circleCrop()
                     .into(pubImage);
         }
 

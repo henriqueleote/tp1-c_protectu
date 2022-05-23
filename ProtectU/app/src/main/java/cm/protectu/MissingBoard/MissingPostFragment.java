@@ -15,13 +15,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.squareup.picasso.Picasso;
 
 import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.R;
@@ -78,20 +78,20 @@ public class MissingPostFragment extends Fragment {
 
         //coloca a imagem do utilizador
         if(!urlProfile.equals("null")){
-            Picasso.get()
+            Glide.with(getActivity())
                     .load(urlProfile)
                     .centerCrop()
-                    .fit()
-                    .transform(new CropCircleTransformation())
+                    
+                    .circleCrop()
                     .into(profileImage);
         }
 
 
         //coloca a imagem da pessoa desaparecida
-        Picasso.get()
+        Glide.with(getActivity())
                 .load(urlMissing)
                 .centerCrop()
-                .fit()
+                
                 .into(MissingImage);
 
         /**
