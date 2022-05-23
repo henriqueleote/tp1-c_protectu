@@ -3,9 +3,11 @@ package cm.protectu.News;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,6 +30,7 @@ import java.util.ArrayList;
 import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.Community.CommunityFragment;
 import cm.protectu.Community.NewMessageCommunityFragment;
+import cm.protectu.MainActivity;
 import cm.protectu.R;
 
 
@@ -42,6 +45,7 @@ public class NewsFragment extends Fragment {
     private FloatingActionButton floatingActionButton;
     private SwipeRefreshLayout swipeToRefresh;
     private NewsFragment fragment;
+    private ImageView menuImageView;
 
     @Nullable
     @Override
@@ -67,6 +71,7 @@ public class NewsFragment extends Fragment {
         listOfNewsCardClasses = new ArrayList<>();
         recyclerView = view.findViewById(R.id.newsRecyclerView);
         swipeToRefresh = view.findViewById(R.id.swipeToRefresh);
+        menuImageView = view.findViewById(R.id.menuImageView);
         newsAdapter = new NewsAdapter(getActivity(), listOfNewsCardClasses,mAuth, getParentFragmentManager());
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         recyclerView.setAdapter(newsAdapter);
@@ -111,6 +116,13 @@ public class NewsFragment extends Fragment {
                                                     }
             );
         }
+
+        menuImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity.drawerLayout.openDrawer(Gravity.LEFT);
+            }
+        });
 
         //Returns the view
         return view;

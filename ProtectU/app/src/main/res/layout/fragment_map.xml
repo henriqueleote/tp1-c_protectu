@@ -6,11 +6,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white">
 
+
     <fragment
         android:id="@+id/google_map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:name="com.google.android.gms.maps.SupportMapFragment"/>
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/createBtn"
@@ -123,6 +125,16 @@
         app:backgroundTint="@color/white"
         app:pressedTranslationZ="12dp"
         app:srcCompat="@drawable/ic_filter_24dp" />
+
+
+    <ImageView
+        android:id="@+id/menuImageView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/ic_menu_black_24dp"
+        app:tint="@color/black" />
 
 
 </RelativeLayout>

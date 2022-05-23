@@ -170,7 +170,8 @@ public class NewWarFragment extends Fragment {
                 warNameEditText.setText("");
                 warDeadCountEditText.setText("");
                 warMissingCountEditText.setText("");
-                Glide.with(getActivity()).load(R.drawable.ic_camera_black_24dp).into(imagesImageView);;
+                //DOESNT WORK
+                Glide.with(getActivity()).load(R.drawable.ic_camera_black_24dp).into(imagesImageView);
                 //TODO MISSING DESCRIPTION EVERYWHERE
             }
         });

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ContextMenu;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,7 +37,7 @@ public class ProfileFragment extends Fragment {
     TextView nameTextView, optionBtn, emailTextView, contactTextView;
 
     //ImageView
-    ImageView editImageView, profileImageView;
+    ImageView editImageView, profileImageView, menuImageView;
 
     //Button
     Button removeCommunityBtn, removeMissingBtn;
@@ -74,6 +75,8 @@ public class ProfileFragment extends Fragment {
         removeCommunityBtn = view.findViewById(R.id.removeCommunityButton);
         removeMissingBtn = view.findViewById(R.id.removeMissingButton);
         profileImageView = view.findViewById(R.id.profileImageView);
+        menuImageView = view.findViewById(R.id.menuImageView);
+
 
 
         registerForContextMenu(optionBtn);
@@ -116,6 +119,13 @@ public class ProfileFragment extends Fragment {
                 transaction.replace(R.id.fragment_container, fragment);
                 transaction.addToBackStack(null);
                 transaction.commit();
+            }
+        });
+
+        menuImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity.drawerLayout.openDrawer(Gravity.LEFT);
             }
         });
 

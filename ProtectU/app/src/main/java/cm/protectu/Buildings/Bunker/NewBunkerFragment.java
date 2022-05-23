@@ -261,7 +261,6 @@ public class NewBunkerFragment extends Fragment {
                     Glide.with(getActivity())
                             .load(data.getClipData().getItemAt(totalItems-1).getUri())
                             .centerCrop()
-                            
                             .into(imagesImageView);
 
                     Log.d(TAG, "Value: " + data.getClipData().getItemAt(totalItems-1).getUri());

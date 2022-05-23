@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,6 +48,7 @@ public class CommunityFragment extends Fragment {
     private SwipeRefreshLayout swipeToRefresh;
     private CommunityFragment fragment;
     private String userID;
+    private ImageView menuImageView;
 
     public CommunityFragment(String userID) {
         this.userID = userID;
@@ -80,6 +82,7 @@ public class CommunityFragment extends Fragment {
 
         swipeToRefresh = view.findViewById(R.id.swipeToRefresh);
         backProfile = view.findViewById(R.id.back_id);
+        menuImageView = view.findViewById(R.id.menuImageView);
 
         communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth, fragment);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -162,6 +165,13 @@ public class CommunityFragment extends Fragment {
                 }
             });
         }
+
+        menuImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity.drawerLayout.openDrawer(Gravity.LEFT);
+            }
+        });
 
         //Returns the view
         return view;

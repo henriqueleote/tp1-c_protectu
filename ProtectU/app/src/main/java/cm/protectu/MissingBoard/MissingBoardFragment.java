@@ -3,6 +3,7 @@ package cm.protectu.MissingBoard;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ import java.util.Collections;
 
 import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.Community.SortCommunityCardClass;
+import cm.protectu.MainActivity;
 import cm.protectu.R;
 
 /**
@@ -47,6 +49,7 @@ public class MissingBoardFragment extends Fragment {
     private CardView age;
     private SearchView searchNames;
     private SwipeRefreshLayout swipeToRefresh;
+    private ImageView menuImageView;
 
 
     //Firebase Authentication
@@ -68,6 +71,7 @@ public class MissingBoardFragment extends Fragment {
         age = view.findViewById(R.id.ageFilterButtonID);
         searchNames = view.findViewById(R.id.searchID);
         swipeToRefresh = view.findViewById(R.id.swipeToRefreshMissing);
+        menuImageView = view.findViewById(R.id.menuImageView);
 
         int searchCloseButtonId = searchNames.getContext().getResources().getIdentifier("android:id/search_close_btn", null, null);
         ImageView closeButton = (ImageView) this.searchNames.findViewById(searchCloseButtonId);
@@ -174,6 +178,13 @@ public class MissingBoardFragment extends Fragment {
             public boolean onQueryTextChange(String nameText) {
                 namesFiltered(nameText);
                 return true;
+            }
+        });
+
+        menuImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity.drawerLayout.openDrawer(Gravity.LEFT);
             }
         });
 

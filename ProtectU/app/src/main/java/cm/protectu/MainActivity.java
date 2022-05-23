@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private FirebaseFirestore firebaseFirestore;
 
     //Bottom navigation bar
-    private DrawerLayout drawerLayout;
+    public static DrawerLayout drawerLayout;
     private BottomNavigationView bottomBar;
     private NavigationView sideBar;
 
@@ -80,8 +80,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private float floatThreshold = 1;
     private SensorManager sensorManager;
     private Sensor sensorLight;
-
-    private ImageView menu;
 
     Intent mServiceIntent;
     private NotificationService mSensorService;
@@ -165,7 +163,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomBar = findViewById(R.id.bottom_menu);
         sideBar = findViewById(R.id.side_menu);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        menu = findViewById(R.id.menu_ID);
 
 
         getUserData(1);
@@ -215,12 +212,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                         });
                     }
                 });
-        menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayout.openDrawer(Gravity.LEFT);
-            }
-        });
+
 
         bottomBar.setOnNavigationItemSelectedListener(this);
         sideBar.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

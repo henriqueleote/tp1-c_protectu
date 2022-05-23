@@ -13,9 +13,11 @@ import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -104,6 +106,8 @@ public class MapFragment extends Fragment {
 
     public static ArrayList<MapPinTypeClass> buildingAllExtrasList;
 
+    private ImageView menuImageView;
+
     //MapFragment object
     MapFragment fragment = this;
 
@@ -138,7 +142,7 @@ public class MapFragment extends Fragment {
         changeMapTypeBtn = view.findViewById(R.id.changeMapTypeBtn);
         containerZoneBtn = view.findViewById(R.id.containerZoneBtn);
         containerMarkerBtn = view.findViewById(R.id.containerMarkerBtn);
-
+        menuImageView = view.findViewById(R.id.menuImageView);
 
         containerZoneBtn.setVisibility(View.GONE);
         containerMarkerBtn.setVisibility(View.GONE);
@@ -207,6 +211,13 @@ public class MapFragment extends Fragment {
             public void onClick(View view) {
                 FilterMapFragment bottomFilter = new FilterMapFragment(fragment);
                 bottomFilter.show(getParentFragmentManager(), bottomFilter.getTag());
+            }
+        });
+
+        menuImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity.drawerLayout.openDrawer(Gravity.LEFT);
             }
         });
 
