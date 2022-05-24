@@ -94,27 +94,22 @@
             android:scaleType="fitXY"/>
 
 
-        <FrameLayout
+        <RelativeLayout
             android:id="@+id/frameVideo"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="invisible"
-            android:layout_gravity="center">
+            android:layout_centerInParent="true"
+            >
 
             <VideoView
                 android:id="@+id/uploadVideo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="invisible"
-                android:layout_gravity="center"
-                />
-
-            <FrameLayout
-                android:id="@+id/placeholder"
-                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center"/>
-        </FrameLayout>
+                android:scaleType="fitXY"
+                android:visibility="invisible"
+                />
+        </RelativeLayout>
 
 
     </androidx.cardview.widget.CardView>

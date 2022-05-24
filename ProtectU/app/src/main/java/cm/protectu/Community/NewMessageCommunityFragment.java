@@ -5,7 +5,6 @@ import static android.app.Activity.RESULT_OK;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -17,9 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.MediaController;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 import android.widget.VideoView;
 
@@ -63,7 +62,7 @@ public class NewMessageCommunityFragment extends BottomSheetDialogFragment {
     private File file;
     private CommunityFragment communityFragment;
     private boolean isVideo;
-    private FrameLayout frameLayout,placeholder;
+    private RelativeLayout frameLayout;
 
     //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
@@ -92,7 +91,6 @@ public class NewMessageCommunityFragment extends BottomSheetDialogFragment {
         imageButton = view.findViewById(R.id.image);
         videoView = view.findViewById(R.id.uploadVideo);
         frameLayout = view.findViewById(R.id.frameVideo);
-        placeholder = view.findViewById(R.id.placeholder);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
 
@@ -117,13 +115,7 @@ public class NewMessageCommunityFragment extends BottomSheetDialogFragment {
                     @Override
                     public void onClick(View view) {
                         dispatchTakeVideoIntent();
-                        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                            @Override
-                            public void onPrepared(MediaPlayer mediaPlayer) {
-                                placeholder.setBackground(videoView.getBackground());
-                                placeholder.setVisibility(View.GONE);
-                            }
-                        });
+
                     }
                 });
             }
@@ -223,9 +215,6 @@ public class NewMessageCommunityFragment extends BottomSheetDialogFragment {
                         file);
                 takeVideoIntent.putExtra(MediaStore.EXTRA_OUTPUT, imguri);
 
-                MediaController mediaController = new MediaController(getContext());
-                videoView.setMediaController(mediaController);
-
                 startActivityForResult(takeVideoIntent, 1);
             }
 
@@ -297,6 +286,7 @@ public class NewMessageCommunityFragment extends BottomSheetDialogFragment {
                 MediaController mediaController = new MediaController(getContext());
                 videoView.setMediaController(mediaController);
                 mediaController.setAnchorView(videoView);
+                videoView.start();
             }
 
             mDialog.setCancelable(false);
