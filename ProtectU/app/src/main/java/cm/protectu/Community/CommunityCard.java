@@ -11,11 +11,12 @@ public class CommunityCard {
     private int likes;
     private int dislikes;
     private boolean verified;
+    private boolean isVideo;
 
     public CommunityCard() {
     }
 
-    public CommunityCard(String userID, String messageID, String messageText, String imageURL,Date date, int likes, int dislikes, boolean verified) {
+    public CommunityCard(String userID, String messageID, String messageText, String imageURL,Date date, int likes, int dislikes, boolean verified,boolean isVideo) {
         this.userID = userID;
         this.messageID = messageID;
         this.likes = likes;
@@ -24,6 +25,7 @@ public class CommunityCard {
         this.date = date;
         this.messageText = messageText;
         this.imageURL = imageURL;
+        this.isVideo = isVideo;
     }
 
     public String getImageURL() {
@@ -90,5 +92,11 @@ public class CommunityCard {
         this.date = date;
     }
 
+    public boolean isVideo() {
+        return isVideo;
+    }
 
+    public void setVideo(boolean video) {
+        isVideo = video;
+    }
 }

@@ -6,12 +6,16 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.icu.text.DateFormat;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -48,15 +52,17 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth mAuth;
     private CommunityFragment communityFragment;
+    private String userName;
 
     private static final String TAG = MainActivity.class.getName();
 
-    public CommunityAdapter(Context ct, ArrayList<CommunityCard> l, FirebaseAuth firebaseAuth, CommunityFragment cf) {
+    public CommunityAdapter(Context ct, ArrayList<CommunityCard> l, FirebaseAuth firebaseAuth, CommunityFragment cf,String userName) {
         firebaseFirestore = FirebaseFirestore.getInstance();
         context = ct;
         listOfCommunityCards = new ArrayList<>(l);
         mAuth = firebaseAuth;
         communityFragment = cf;
+        this.userName = userName;
     }
 
     @NonNull
@@ -122,7 +128,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                 holder.removeMessageCommunity.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        removeMessage(messageID);
+                        removeMessage(messageID,userName);
                     }
                 });
             } else {
@@ -248,7 +254,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
      *
      * @param messageID
      */
-    public void removeMessage(String messageID) {
+    public void removeMessage(String messageID, String userName) {
         firebaseFirestore.collection("community-chat").document(messageID).delete();
         firebaseFirestore.collection("community-chat-reactions").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -259,7 +265,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                             firebaseFirestore.collection("community-chat-reactions").document(document.getId()).delete();
                         }
                     }
-                    communityFragment.communityCardsData(null);
+                    communityFragment.communityCardsData(userName);
                 } else {
                     Log.d(TAG, "Insucess");
                 }
@@ -277,39 +283,66 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
      */
     public void textAndMessageAdjuster(MyViewHolder holder, int pos, String messageText) {
         if (!listOfCommunityCards.get(pos).getImageURL().equals("")) {
-            holder.imageCommunity.setVisibility(View.VISIBLE);
+            if (listOfCommunityCards.get(pos).isVideo()){
+                holder.videoView.setVisibility(View.VISIBLE);
+                holder.frameLayout.setVisibility(View.VISIBLE);
 
-            Glide.with(context)
-                    .load(listOfCommunityCards.get(pos).getImageURL())
-                    .centerCrop()
-                    
-                    .transform(new CenterCrop(), new RoundedCorners(8))
-                    .into(holder.imageCommunity);
+                String videoPath = listOfCommunityCards.get(pos).getImageURL();
+                Uri uri = Uri.parse(videoPath);
+                holder.videoView.setVideoURI(uri);
 
-            holder.imageCommunity.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
-                    View mView = view.inflate(context, R.layout.fragment_photoview_fullscreen, null);
-                    PhotoView photoView = mView.findViewById(R.id.imageView);
-                    Glide.with(context)
-                            .load(listOfCommunityCards.get(pos).getImageURL())
-                            .into(photoView);
+                MediaController mediaController = new MediaController(context);
+                holder.videoView.setMediaController(mediaController);
+                mediaController.setAnchorView(holder.videoView);
 
-                    mBuilder.setView(mView);
-                    AlertDialog mDialog = mBuilder.create();
-                    mDialog.show();
-                }
-            });
 
-            ConstraintSet constraintSet = new ConstraintSet();
-            constraintSet.clone(holder.constraintLayout);
 
-            constraintSet.connect(holder.communityTextWithImage.getId(), ConstraintSet.BOTTOM, holder.imageCommunity.getId(), ConstraintSet.TOP, 8);
-            constraintSet.applyTo(holder.constraintLayout);
+                ConstraintSet constraintSet = new ConstraintSet();
+                constraintSet.clone(holder.constraintLayout);
+
+                constraintSet.connect(holder.communityTextWithImage.getId(), ConstraintSet.BOTTOM, holder.frameLayout.getId(), ConstraintSet.TOP, 8);
+                constraintSet.applyTo(holder.constraintLayout);
+
+
+                holder.videoView.setZOrderOnTop(true);
+                holder.videoView.start();
+            }
+            else {
+                holder.imageCommunity.setVisibility(View.VISIBLE);
+
+                Glide.with(context)
+                        .load(listOfCommunityCards.get(pos).getImageURL())
+                        .centerCrop()
+                        .transform(new CenterCrop(), new RoundedCorners(8))
+                        .into(holder.imageCommunity);
+
+
+                holder.imageCommunity.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        AlertDialog.Builder mBuilder = new AlertDialog.Builder(context);
+                        View mView = view.inflate(context, R.layout.fragment_photoview_fullscreen, null);
+                        PhotoView photoView = mView.findViewById(R.id.imageView);
+                        Glide.with(context)
+                                .load(listOfCommunityCards.get(pos).getImageURL())
+                                .into(photoView);
+
+                        mBuilder.setView(mView);
+                        AlertDialog mDialog = mBuilder.create();
+                        mDialog.show();
+                    }
+                });
+
+                ConstraintSet constraintSet = new ConstraintSet();
+                constraintSet.clone(holder.constraintLayout);
+
+                constraintSet.connect(holder.communityTextWithImage.getId(), ConstraintSet.BOTTOM, holder.imageCommunity.getId(), ConstraintSet.TOP, 8);
+                constraintSet.applyTo(holder.constraintLayout);
+            }
 
         } else {
             holder.imageCommunity.setVisibility(View.GONE);
+            holder.videoView.setVisibility(View.GONE);
 
             ConstraintSet constraintSet = new ConstraintSet();
             constraintSet.clone(holder.constraintLayout);
@@ -530,6 +563,8 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
         TextView userName, likeCounter, dislikeCounter, communityTextWithImage, dateText;
         ImageView userImage, verified, likeButton, dislikeButton, imageCommunity, shareButton, removeMessageCommunity, makeVerified;
         CardView cardCommunity;
+        VideoView videoView;
+        FrameLayout frameLayout,placeholder;
         ConstraintLayout constraintLayout,constraintLayoutDetails;
 
         public MyViewHolder(@NonNull View itemView) {
@@ -550,6 +585,8 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
             cardCommunity = itemView.findViewById(R.id.cardCommunity);
             constraintLayout = itemView.findViewById(R.id.constraintLayout);
             constraintLayoutDetails = itemView.findViewById(R.id.buttonsCommunity);
+            videoView = itemView.findViewById(R.id.videoCommunity);
+            frameLayout = itemView.findViewById(R.id.frameVideo);
         }
     }
 }

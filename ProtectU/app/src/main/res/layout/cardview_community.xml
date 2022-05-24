@@ -190,6 +190,25 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/communityTextWithImage" />
 
+            <FrameLayout
+                android:id="@+id/frameVideo"
+                android:layout_width="200dp"
+                android:layout_height="100dp"
+                android:layout_marginVertical="10dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@id/buttonsCommunity"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/communityTextWithImage">
+
+            <VideoView
+                android:id="@+id/videoCommunity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                />
+
+            </FrameLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

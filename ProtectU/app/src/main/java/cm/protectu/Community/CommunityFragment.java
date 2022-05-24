@@ -31,7 +31,6 @@ import java.util.Collections;
 
 import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.MainActivity;
-import cm.protectu.MissingBoard.MissingBoardFragment;
 import cm.protectu.Profile.ProfileFragment;
 import cm.protectu.R;
 
@@ -84,7 +83,7 @@ public class CommunityFragment extends Fragment {
         backProfile = view.findViewById(R.id.back_id);
         menuImageView = view.findViewById(R.id.menuImageView);
 
-        communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth, fragment);
+        communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth, fragment,userID);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(communityAdapter);
 
@@ -209,7 +208,7 @@ public class CommunityFragment extends Fragment {
                             Collections.sort(listOfCommunityCards, new SortCommunityCardClass());
 
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                            communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth, fragment);
+                            communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth, fragment,userID);
                             recyclerView.setAdapter(communityAdapter);
                             communityAdapter.notifyDataSetChanged();
 

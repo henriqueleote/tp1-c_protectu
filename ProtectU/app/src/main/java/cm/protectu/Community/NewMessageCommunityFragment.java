@@ -5,6 +5,7 @@ import static android.app.Activity.RESULT_OK;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -16,8 +17,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -47,23 +51,27 @@ import cm.protectu.R;
 public class NewMessageCommunityFragment extends BottomSheetDialogFragment {
 
     private EditText message;
-    private Button createButton;
+    private Button createButton, videoButton, imageButton;
     private ImageView closeButton, upLoadedImage;
+    private VideoView videoView;
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseFirestore;
     private FirebaseStorage storage;
-    private String photoPath;
+    private String path;
     private Uri imguri;
     private String firebaseUrl;
-    private File photoFile;
+    private File file;
     private CommunityFragment communityFragment;
+    private boolean isVideo;
+    private FrameLayout frameLayout,placeholder;
 
     //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
 
     public NewMessageCommunityFragment(CommunityFragment communityFragment) {
         this.communityFragment = communityFragment;
-        this.photoFile = null;
+        this.file = null;
+        this.isVideo = false;
     }
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -80,6 +88,11 @@ public class NewMessageCommunityFragment extends BottomSheetDialogFragment {
         message = view.findViewById(R.id.message);
         createButton = view.findViewById(R.id.createNewMessageButton);
         upLoadedImage = view.findViewById(R.id.uploadImage);
+        videoButton = view.findViewById(R.id.video);
+        imageButton = view.findViewById(R.id.image);
+        videoView = view.findViewById(R.id.uploadVideo);
+        frameLayout = view.findViewById(R.id.frameVideo);
+        placeholder = view.findViewById(R.id.placeholder);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
 
@@ -90,6 +103,38 @@ public class NewMessageCommunityFragment extends BottomSheetDialogFragment {
             @Override
             public void onCancel(DialogInterface dialogInterface) {
                 communityFragment.communityCardsData(null);
+            }
+        });
+
+        videoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                videoView.setVisibility(View.VISIBLE);
+                frameLayout.setVisibility(View.VISIBLE);
+                upLoadedImage.setVisibility(View.GONE);
+
+                frameLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dispatchTakeVideoIntent();
+                        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                            @Override
+                            public void onPrepared(MediaPlayer mediaPlayer) {
+                                placeholder.setBackground(videoView.getBackground());
+                                placeholder.setVisibility(View.GONE);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                videoView.setVisibility(View.GONE);
+                frameLayout.setVisibility(View.GONE);
+                upLoadedImage.setVisibility(View.VISIBLE);
             }
         });
 
@@ -111,8 +156,11 @@ public class NewMessageCommunityFragment extends BottomSheetDialogFragment {
             @Override
             public void onClick(View view) {
                 dispatchTakePictureIntent();
+
             }
         });
+
+
 
         /**
          * Creates the new message and returns to the fragment
@@ -121,7 +169,7 @@ public class NewMessageCommunityFragment extends BottomSheetDialogFragment {
             @Override
             public void onClick(View view) {
                 createMessage(message.getText().toString().trim()
-                        ,mAuth.getUid());
+                        , mAuth.getUid());
                 getDialog().cancel();
             }
         });
@@ -133,22 +181,23 @@ public class NewMessageCommunityFragment extends BottomSheetDialogFragment {
     /**
      * This method is responsible for creating aN Intent to take the photograph and if successful transform the image file into Uri
      */
-    public void dispatchTakePictureIntent(){
+    public void dispatchTakePictureIntent() {
+        isVideo = false;
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         // Ensure that there's a camera activity to handle the intent
         if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
             // Create the File where the photo should go
             try {
-                photoFile = createImageFile();
+                file = createImageFile();
             } catch (IOException ex) {
                 // Error occurred while creating the File
             }
             // Continue only if the File was successfully created
-            if (photoFile != null) {
+            if (file != null) {
                 imguri = FileProvider.getUriForFile(getActivity(),
                         "com.example.android.fileprovider",
-                        photoFile);
+                        file);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imguri);
                 startActivityForResult(takePictureIntent, 1);
             }
@@ -156,9 +205,38 @@ public class NewMessageCommunityFragment extends BottomSheetDialogFragment {
         }
     }
 
+    public void dispatchTakeVideoIntent() {
+        isVideo = true;
+        Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+
+        if (takeVideoIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            // Create the File where the photo should go
+            try {
+                file = createVideoFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+            }
+            // Continue only if the File was successfully created
+            if (file != null) {
+                imguri = FileProvider.getUriForFile(getActivity(),
+                        "com.example.android.fileprovider",
+                        file);
+                takeVideoIntent.putExtra(MediaStore.EXTRA_OUTPUT, imguri);
+
+                MediaController mediaController = new MediaController(getContext());
+                videoView.setMediaController(mediaController);
+
+                startActivityForResult(takeVideoIntent, 1);
+            }
+
+        }
+    }
+
     //TODO: REVIEW THE DOCUMENTATION
+
     /**
      * This method create a file for the photo, with the chosen directory for the file
+     *
      * @return
      * @throws IOException
      */
@@ -174,28 +252,53 @@ public class NewMessageCommunityFragment extends BottomSheetDialogFragment {
         );
 
         // Save a file: path for use with ACTION_VIEW intents
-        photoPath = image.getAbsolutePath();
+        path = image.getAbsolutePath();
         return image;
+    }
+
+    private File createVideoFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String videoFileName = "mp4_" + timeStamp + "_";
+        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File video = File.createTempFile(
+                videoFileName,
+                ".mp4",
+                storageDir
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        path = video.getAbsolutePath();
+        return video;
     }
 
     /**
      * This method puts the photo inside the image view and sends it to storage, with a dialog while loading the image
+     *
      * @param requestCode
      * @param resultCode
      * @param data
      */
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        ProgressDialog mDialog = new ProgressDialog(getActivity());
+
         if (requestCode == 1 && resultCode == RESULT_OK) {
+            if (!isVideo) {
+                mDialog.setMessage("Loading image...");
 
-            Glide.with(getActivity())
-                    .load(imguri)
-                    .into(upLoadedImage);
+                Glide.with(getActivity())
+                        .load(imguri)
+                        .into(upLoadedImage);
+            } else {
+                mDialog.setMessage("Loading video...");
 
+                videoView.setVideoURI(imguri);
+                MediaController mediaController = new MediaController(getContext());
+                videoView.setMediaController(mediaController);
+                mediaController.setAnchorView(videoView);
+            }
 
-            ProgressDialog mDialog = new ProgressDialog(getActivity());
-            //TODO UPDATE WITH STATUS
-            mDialog.setMessage("Loading image...");
             mDialog.setCancelable(false);
             mDialog.show();
 
@@ -230,10 +333,11 @@ public class NewMessageCommunityFragment extends BottomSheetDialogFragment {
     /**
      * This method will create a message with what the user writes and with an image if the user transfers it,
      * when creating the message sends it to the database
+     *
      * @param messageText text written by the user
      * @param userID
      */
-    public void createMessage(String messageText,String userID){
+    public void createMessage(String messageText, String userID) {
         // Message's field check
         if (TextUtils.isEmpty(messageText)) {
             message.setError("Please enter a message");
@@ -241,12 +345,12 @@ public class NewMessageCommunityFragment extends BottomSheetDialogFragment {
             return;
         }
 
-        if (firebaseUrl == null){
+        if (firebaseUrl == null) {
             firebaseUrl = "";
         }
 
         DocumentReference documentReference = firebaseFirestore.collection("community-chat").document();
-        documentReference.set(new CommunityCard(userID,documentReference.getId(),messageText, firebaseUrl,new Date(),0,0,false))
+        documentReference.set(new CommunityCard(userID, documentReference.getId(), messageText, firebaseUrl, new Date(), 0, 0, false, isVideo))
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
