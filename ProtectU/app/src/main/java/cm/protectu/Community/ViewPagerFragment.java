@@ -24,7 +24,7 @@ public class ViewPagerFragment extends Fragment {
 
         list = new ArrayList<>();
         list.add(new CommunityFragment(null));
-        list.add(new MissingBoardFragment());
+        list.add(new MissingBoardFragment(null));
 
         viewPagerAdapter = new ViewPagerAdapter(getParentFragmentManager(),getLifecycle(),list);
 
@@ -35,7 +35,7 @@ public class ViewPagerFragment extends Fragment {
     }
 
     public void changeToMissing(){
-        list.set(1,new MissingBoardFragment());
+        list.set(1,new MissingBoardFragment(null));
         viewPagerAdapter = new ViewPagerAdapter(getParentFragmentManager(),getLifecycle(),list);
         viewPager.setAdapter(viewPagerAdapter);
         viewPager.setCurrentItem(1);

@@ -32,6 +32,8 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
     private FragmentManager parentFragment;
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth mAuth;
+    private MissingBoardFragment missingBoardFragment;
+    private String userID;
 
 
     private static final String TAG = MainActivity.class.getName();
@@ -43,12 +45,14 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
      * @param fragment
      * @param firebaseAuth
      */
-    public MissingBoardAdapter(Context mContext, List<MissingCardClass> mData, FragmentManager fragment, FirebaseAuth firebaseAuth) {
+    public MissingBoardAdapter(Context mContext, List<MissingCardClass> mData, FragmentManager fragment, FirebaseAuth firebaseAuth, MissingBoardFragment missingBoardFragment, String userID) {
         this.mContext = mContext;
         this.mData = mData;
         this.parentFragment= fragment;
         this.mAuth = firebaseAuth;
         firebaseFirestore = FirebaseFirestore.getInstance();
+        this.missingBoardFragment = missingBoardFragment;
+        this.userID = userID;
 
     }
 
@@ -83,7 +87,8 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         int pos = position;
         holder.missingName.setText(mData.get(position).getMissingName());
-        //holder.age.setText(String.valueOf(mData.get(position).getMissingAge()));
+        String missingID = mData.get(position).getMissingID();
+        String userID = mData.get(position).getUserID();
 
         Glide.with(mContext)
                 .load(mData.get(position).getFotoMissing())
@@ -107,6 +112,19 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
             }
         });
 
+        if (!mAuth.getCurrentUser().isAnonymous()) {
+            if (MainActivity.sessionUser.getUid().equals(userID) || !MainActivity.sessionUser.getUserType().equals("user")) {
+                holder.removeMissing.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        removeMissing(missingID);
+                    }
+                });
+            } else {
+                holder.removeMissing.setVisibility(View.INVISIBLE);
+            }
+        }
+
     }
 
     /**
@@ -118,12 +136,23 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
         return mData.size();
     }
 
+    /**
+     * This method is responsible for removing a mising post from the missingBoard
+     *
+     * @param missingID
+     */
+    public void removeMissing(String missingID) {
+        firebaseFirestore.collection("missing-board").document(missingID).delete();
+        missingBoardFragment.missingCardsData(mAuth.getUid());
+
+    }
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
         //Declaração dos elementos a serem utilizados
         TextView description, userName, missingName, age;
-        ImageView userImage, missingImage;
+        ImageView userImage, missingImage,removeMissing;
         CardView cardMissing;
 
 
@@ -138,7 +167,7 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
             userImage = itemView.findViewById(R.id.imageProfileID);
             missingImage = itemView.findViewById(R.id.imageMissingID);
             cardMissing = itemView.findViewById(R.id.cardMissingID);
-
+            removeMissing = itemView.findViewById(R.id.removeMissing);
 
         }
 

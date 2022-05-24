@@ -50,12 +50,16 @@ public class MissingBoardFragment extends Fragment {
     private SearchView searchNames;
     private SwipeRefreshLayout swipeToRefresh;
     private ImageView menuImageView;
+    private String userID;
+    private MissingBoardFragment fragment;
 
 
     //Firebase Authentication
     private FirebaseAuth mAuth;
 
-
+    public MissingBoardFragment(String userID) {
+        this.userID = userID;
+    }
 
     @Nullable
     @Override
@@ -76,9 +80,10 @@ public class MissingBoardFragment extends Fragment {
         int searchCloseButtonId = searchNames.getContext().getResources().getIdentifier("android:id/search_close_btn", null, null);
         ImageView closeButton = (ImageView) this.searchNames.findViewById(searchCloseButtonId);
 
+        fragment = this;
 
         //Link the view objects with the XML
-        myAdapter = new MissingBoardAdapter(getActivity(), missingCardClasses,getParentFragmentManager(),mAuth);
+        myAdapter = new MissingBoardAdapter(getActivity(), missingCardClasses,getParentFragmentManager(),mAuth, fragment,userID);
         myRecycleView.setLayoutManager(new GridLayoutManager(getActivity(),2));
         myRecycleView.setAdapter(myAdapter);
 
@@ -97,7 +102,7 @@ public class MissingBoardFragment extends Fragment {
 
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        missingCardsData();
+        missingCardsData(userID);
 
         /**
          *
@@ -106,7 +111,7 @@ public class MissingBoardFragment extends Fragment {
         swipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                missingCardsData();
+                missingCardsData(userID);
                 searchNames.setQuery("", false);
                 searchNames.setIconified(true);
                 final Handler handler = new Handler();
@@ -128,7 +133,7 @@ public class MissingBoardFragment extends Fragment {
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                missingCardsData();
+                missingCardsData(userID);
                 searchNames.setQuery("", false);
                 searchNames.setIconified(true);
             }
@@ -138,7 +143,7 @@ public class MissingBoardFragment extends Fragment {
          *
          * Lets you go to the fragment to create new posts
          */
-        if (mAuth.getCurrentUser().isAnonymous()) {
+        if (mAuth.getCurrentUser().isAnonymous() || userID != null) {
             floatingActionButton.setVisibility(View.GONE);
         } else {
             floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -155,7 +160,7 @@ public class MissingBoardFragment extends Fragment {
             });
         }
 
-        MissingBoardFragment fragment = this;
+
 
         /**
          * Allows you to go to the fragment corresponding to the filter options of publications by age
@@ -199,7 +204,7 @@ public class MissingBoardFragment extends Fragment {
      * Allows you to check if the task of fetching the data in the collection is successful, then
      * transforms the returned data into the desired class and creates the respective publications
      */
-    public void missingCardsData() {
+    public void missingCardsData(String userId) {
         missingCardClasses.clear();
         firebaseFirestore.collection("missing-board")
                 .get()
@@ -209,9 +214,15 @@ public class MissingBoardFragment extends Fragment {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 MissingCardClass missingCardClass = document.toObject(MissingCardClass.class);
-                                missingCardClasses.add(missingCardClass);
+                                if (userId == null) {
+                                    missingCardClasses.add(missingCardClass);
+                                } else {
+                                    if (missingCardClass.getUserID().equals(userId)) {
+                                        missingCardClasses.add(missingCardClass);
+                                    }
+                                }
                                 Collections.sort(missingCardClasses, new SortMissingBoardCardClass());
-                                myAdapter = new MissingBoardAdapter(getActivity(), missingCardClasses,getParentFragmentManager(),mAuth);
+                                myAdapter = new MissingBoardAdapter(getActivity(), missingCardClasses,getParentFragmentManager(),mAuth,fragment,missingCardClass.getUserID());
                                 myRecycleView.setAdapter(myAdapter);
                                 myAdapter.notifyDataSetChanged();
                             }
@@ -239,14 +250,14 @@ public class MissingBoardFragment extends Fragment {
         refreshCards(missingCardsFilteredByNameClass);
     }
 
-    //TODO SHOW MESSAGE TO REFRESH OR ERROR CANT FIND
+
     public void refreshCards(ArrayList<MissingCardClass> missCards){
         if(missCards.isEmpty()){
             Toast.makeText(getActivity(), "Não existem publicações", Toast.LENGTH_SHORT).show();
         }else{
             missingCardClasses.clear();
             missingCardClasses.addAll(missCards);
-            myAdapter = new MissingBoardAdapter(getActivity(), missingCardClasses,getParentFragmentManager(),mAuth);
+            myAdapter = new MissingBoardAdapter(getActivity(), missingCardClasses,getParentFragmentManager(),mAuth,fragment,userID);
             myRecycleView.setAdapter(myAdapter);
             myAdapter.notifyDataSetChanged();
         }

@@ -171,7 +171,7 @@ public class NewMissingPostFragment extends Fragment {
                                     .update("missingID", documentReference.getId());
                             Log.d(TAG, "Document successfully created!");
                             mDialog.dismiss();
-                            getFragmentManager().beginTransaction().replace(R.id.fragment_container, new MissingBoardFragment()).addToBackStack(null).commit();
+                            getFragmentManager().beginTransaction().replace(R.id.fragment_container, new MissingBoardFragment(null)).addToBackStack(null).commit();
                             Toast.makeText(getActivity(), "Publicação criada", Toast.LENGTH_SHORT).show();
                         }
                     })

@@ -131,7 +131,7 @@ public class MissingPostFragment extends Fragment {
         arrowBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MissingBoardFragment fragment = new MissingBoardFragment();
+                MissingBoardFragment fragment = new MissingBoardFragment(null);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container, fragment);
                 transaction.addToBackStack(null);

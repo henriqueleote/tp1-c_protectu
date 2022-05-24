@@ -25,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.Community.CommunityFragment;
 import cm.protectu.MainActivity;
+import cm.protectu.MissingBoard.MissingBoardFragment;
 import cm.protectu.R;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
@@ -106,7 +107,11 @@ public class ProfileFragment extends Fragment {
         removeMissingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                
+                MissingBoardFragment fragment = new MissingBoardFragment(mAuth.getCurrentUser().getUid());
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
 
