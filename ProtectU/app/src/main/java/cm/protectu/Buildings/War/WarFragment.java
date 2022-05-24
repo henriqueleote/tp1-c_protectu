@@ -82,7 +82,7 @@ public class WarFragment extends Fragment {
         backButton = view.findViewById(R.id.backButton);
         warNameTextView = view.findViewById(R.id.warNameTextView);
         locationTextView = view.findViewById(R.id.locationTextView);
-        warDeadCountTextView = view.findViewById(R.id.warDeadCountTextView);
+        warDeadCountTextView = view.findViewById(R.id.warDeathCountTextView);
         swipeRefreshLayout = view.findViewById(R.id.swipeToRefresh);
         progressDialog = new ProgressDialog(getActivity());
 

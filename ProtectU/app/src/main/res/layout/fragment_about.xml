@@ -128,7 +128,7 @@
             android:layout_marginLeft="40dp"
             android:paddingTop="5dp"
             android:fontFamily="@font/lexend_regular"
-            android:text="+123456789 \n example@gmail.com"
+            android:text=" +123456789 \n example@gmail.com"
             android:textColor="@color/black" />
 
     </RelativeLayout>

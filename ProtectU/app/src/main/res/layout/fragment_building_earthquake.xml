@@ -6,8 +6,7 @@
     android:layout_height="match_parent">
 
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
@@ -71,8 +70,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Lisboa"
                 android:fontFamily="@font/lexend_regular"
+                android:text="Lisboa"
                 android:textColor="@color/black" />
         </LinearLayout>
 
@@ -81,12 +80,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/locationContainer"
-            android:textColor="@color/black"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/lexend_regular"
-            android:textSize="20sp"
-            android:text="Magnitude" />
+            android:text="Magnitude"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/earthquakeRichterTextView"
@@ -94,8 +93,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/richterTitle"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="16dp"
             android:fontFamily="@font/lexend_regular"
             android:text="" />
 
@@ -117,8 +116,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/deathCountTitle"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="16dp"
             android:fontFamily="@font/lexend_regular"
             android:text="" />
 
@@ -127,12 +126,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/fireDeathCountTextView"
-            android:textColor="@color/black"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/lexend_regular"
-            android:textSize="20sp"
-            android:text="Missing" />
+            android:text="Missing"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/fireMissingCountTextView"
@@ -140,8 +139,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/missingCountTitle"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="16dp"
             android:fontFamily="@font/lexend_regular"
             android:text="" />
 
@@ -158,13 +157,45 @@
         <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginLeft="15dp"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="15dp"
             android:padding="3dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_arrow_back_black_24dp"
             app:tint="@color/black" />
     </RelativeLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/phoneButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/mapsButton"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="10dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:elevation="16dp"
+        android:focusable="true"
+        app:backgroundTint="@color/white"
+        app:pressedTranslationZ="12dp"
+        app:srcCompat="@drawable/ic_phone_black_24dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/mapsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:elevation="16dp"
+        android:focusable="true"
+        app:backgroundTint="@color/white"
+        app:pressedTranslationZ="12dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="32dp"
+        android:layout_marginRight="24dp"
+        app:srcCompat="@drawable/ic_map_black_24dp" />
 
 </RelativeLayout>
 

@@ -55,7 +55,7 @@ public class RegisterFragment extends BottomSheetDialogFragment {
     private Button signUpBtn;
 
     //EditText
-    private EditText nameText, surnameText,contactText, emailText, passwordText, passwordConfirmText, securityCodeText;
+    private EditText nameText, surnameText, contactText, emailText, passwordText, passwordConfirmText, securityCodeText;
 
     //CountryCodePicker
     private CountryCodePicker countryCodePicker;
@@ -204,7 +204,6 @@ public class RegisterFragment extends BottomSheetDialogFragment {
             return;
         }
 
-        //TODO: add string check
         // Contact's field check
         if (TextUtils.isEmpty(contact)) {
             contactText.setError(getResources().getString(R.string.error_invalid_contact));  //Apresentar um erro
@@ -277,7 +276,7 @@ public class RegisterFragment extends BottomSheetDialogFragment {
                                 userData.put("firstName", name);
                                 userData.put("lastName", surname);
                                 userData.put("email", email);
-                                userData.put("phoneNumber", countryCodePicker.getSelectedCountryCodeWithPlus() +" "+ contact);
+                                userData.put("phoneNumber", countryCodePicker.getSelectedCountryCodeWithPlus() + " " + contact);
                                 userData.put("imageURL", url);
                                 userData.put("userType", userType);
 

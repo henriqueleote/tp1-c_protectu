@@ -46,7 +46,7 @@ public class MapPinClass {
     //Object To String
     @Override
     public String toString(){
-        return "ID : "+ getPinID() +
+        return "ID : " + getPinID() +
                 "\nType : " + getType() +
                 "\nLat : " + getLocation().getLatitude() +
                 "\nLong : " + getLocation().getLongitude();

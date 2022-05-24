@@ -36,6 +36,7 @@ import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.hbb20.CountryCodePicker;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,7 +57,9 @@ public class NewHospitalFragment extends Fragment {
 
     private TextView locationTextView;
 
-    private EditText hospitalNameEditText, hospitalNumberOfBedsEditText;
+    private EditText hospitalNameEditText, hospitalDescriptionEditText, hospitalBedCountEditText, hospitalContactEditText;
+
+    private CountryCodePicker countryCodePicker;
 
     private Button createButton;
 
@@ -106,8 +109,11 @@ public class NewHospitalFragment extends Fragment {
         imagesImageView = view.findViewById(R.id.imagesImageView);
         locationTextView = view.findViewById(R.id.locationTextView);
         hospitalNameEditText = view.findViewById(R.id.hospitalNameEditText);
-        hospitalNumberOfBedsEditText = view.findViewById(R.id.earthquakeRichterEditText);
+        hospitalDescriptionEditText = view.findViewById(R.id.hospitalDescriptionEditText);
+        hospitalBedCountEditText = view.findViewById(R.id.hospitalBedCountEditText);
         createButton = view.findViewById(R.id.createButton);
+        hospitalContactEditText = view.findViewById(R.id.contactEditText);
+        countryCodePicker = view.findViewById(R.id.contactPicker);
 
         uriList = new ArrayList<>();
         imagesLinks = new ArrayList<>();
@@ -152,7 +158,9 @@ public class NewHospitalFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 createHospital(hospitalNameEditText.getText().toString(),
-                        hospitalNumberOfBedsEditText.getText().toString());
+                        hospitalDescriptionEditText.getText().toString(),
+                        hospitalBedCountEditText.getText().toString(),
+                        hospitalContactEditText.getText().toString());
             }
         });
 
@@ -249,7 +257,7 @@ public class NewHospitalFragment extends Fragment {
         }
     }
 
-    public void createHospital(String hospitalName, String hospitalNumberOfBeds){
+    public void createHospital(String hospitalName, String hospitalDescription, String hospitalBedCount, String contact){
 
         // Name field check
         if (TextUtils.isEmpty(hospitalName)) {
@@ -258,10 +266,24 @@ public class NewHospitalFragment extends Fragment {
             return;
         }
 
+        // Description field check
+        if (TextUtils.isEmpty(hospitalDescription)) {
+            hospitalDescriptionEditText.setError("Description is mandatory");
+            hospitalDescriptionEditText.requestFocus();
+            return;
+        }
+
         // Number Of Beds field check
-        if (TextUtils.isEmpty(hospitalNumberOfBeds)) {
-            hospitalNumberOfBedsEditText.setError("Number of beds is mandatory");
-            hospitalNumberOfBedsEditText.requestFocus();
+        if (TextUtils.isEmpty(hospitalBedCount)) {
+            hospitalBedCountEditText.setError("Beds count is mandatory");
+            hospitalBedCountEditText.requestFocus();
+            return;
+        }
+
+        // Contact's field check
+        if (TextUtils.isEmpty(contact)) {
+            hospitalContactEditText.setError(getResources().getString(R.string.error_invalid_contact));  //Apresentar um erro
+            hospitalContactEditText.requestFocus();
             return;
         }
 
@@ -280,7 +302,9 @@ public class NewHospitalFragment extends Fragment {
         Map<String, Object> hospitalData = new HashMap<>();
         hospitalData.put("buildingID", buildingRef.getId());
         hospitalData.put("buildingName", hospitalName);
-        hospitalData.put("hospitalNumberOfBeds", hospitalNumberOfBeds);
+        hospitalData.put("hospitalDescription", hospitalDescription);
+        hospitalData.put("buildingContact", countryCodePicker.getSelectedCountryCodeWithPlus() + " " + contact);
+        hospitalData.put("hospitalNumberOfBeds", hospitalBedCount);
         hospitalData.put("images", imagesLinks);
         hospitalData.put("location", new GeoPoint(location.getLatitude(), location.getLongitude()));
         hospitalData.put("type", "hospital");

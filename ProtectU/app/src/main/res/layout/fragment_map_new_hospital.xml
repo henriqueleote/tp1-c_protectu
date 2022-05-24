@@ -24,13 +24,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="New hospital"
+        android:text="Create hospital details"
         android:textColor="@color/black"
-        android:textSize="23dp"
+        android:textSize="22dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints"></TextView>
+        tools:ignore="MissingConstraints"/>
 
     <EditText
         android:id="@+id/hospitalNameEditText"
@@ -48,40 +48,107 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title" />
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/descriptionCard"
+        android:layout_width="match_parent"
+        android:layout_height="105dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:elevation="20dp"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/hospitalNameEditText">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp">
+
+            <EditText
+                android:id="@+id/hospitalDescriptionEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/lexend_regular"
+                android:gravity="top"
+                android:background="@null"
+                android:hint="@string/description"
+                android:maxLength="500"
+                android:inputType="text|textMultiLine"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
     <EditText
-        android:id="@+id/earthquakeRichterEditText"
+        android:id="@+id/hospitalBedCountEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:drawablePadding="10dp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
-        android:hint="Number of beds"
+        android:hint="Beds number"
         android:maxLength="20"
         android:inputType="number"
         android:textSize="15sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hospitalNameEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/descriptionCard" />
+
+    <LinearLayout
+        android:id="@+id/emergencyNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@id/hospitalBedCountEditText"
+        app:layout_constraintTop_toBottomOf="@+id/hospitalBedCountEditText">
+
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/contactPicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:ccp_textSize="15sp"
+            android:layout_gravity="center_vertical"
+            app:ccp_defaultNameCode="PT"
+            android:layout_weight="0"
+            android:ellipsize="end"
+            android:maxLines="1"/>
+
+        <EditText
+            android:id="@+id/contactEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="10dp"
+            android:hint="Contacto number"
+            android:inputType="number"
+            android:textSize="15sp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/locationTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:drawablePadding="10dp"
+        android:layout_marginTop="10dp"
         android:inputType="text"
         android:textColor="@color/black"
         android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="@id/earthquakeRichterEditText"
-        app:layout_constraintTop_toBottomOf="@+id/earthquakeRichterEditText" />
+        app:layout_constraintStart_toStartOf="@id/hospitalBedCountEditText"
+        app:layout_constraintTop_toBottomOf="@+id/emergencyNumber" />
 
 
     <TextView
         android:id="@+id/imageTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/earthquakeRichterEditText"
         android:layout_marginTop="10dp"
         android:drawablePadding="10dp"
         android:hint="Add images (max. 6)"
@@ -89,27 +156,28 @@
         android:textColor="@color/black"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@id/locationTextView"
-        app:layout_constraintTop_toBottomOf="@+id/locationTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/locationTextView"
+        app:layout_constraintEnd_toEndOf="@id/hospitalBedCountEditText" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/imageCard"
-        android:layout_width="match_parent"
+        android:layout_width="175dp"
         android:layout_height="150dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginTop="10dp"
         android:elevation="20dp"
-        app:cardCornerRadius="15dp"
+        app:cardCornerRadius="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageTextView">
 
         <ImageView
             android:id="@+id/imagesImageView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
             android:src="@drawable/ic_camera_black_24dp" />
+
+
 
     </androidx.cardview.widget.CardView>
 

@@ -3,6 +3,7 @@ package cm.protectu.Buildings.Earthquake;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.location.Address;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -22,6 +23,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -53,6 +55,9 @@ public class EarthquakeFragment extends Fragment {
     RecyclerView.LayoutManager RecyclerViewLayoutManager;
     ProgressDialog progressDialog;
     SwipeRefreshLayout swipeRefreshLayout;
+    private FloatingActionButton phoneButton, mapsButton;
+    String earthquakeContact;
+    private GeoPoint location;
 
 
     //TAG for debug logs
@@ -91,6 +96,8 @@ public class EarthquakeFragment extends Fragment {
         swipeRefreshLayout = view.findViewById(R.id.swipeToRefresh);
         progressDialog = new ProgressDialog(getActivity());
         RecyclerViewLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+        phoneButton = view.findViewById(R.id.phoneButton);
+        mapsButton = view.findViewById(R.id.mapsButton);
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -121,6 +128,26 @@ public class EarthquakeFragment extends Fragment {
             }
         });
 
+        mapsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String latitude = String.valueOf(location.getLatitude());
+                String longitude = String.valueOf(location.getLongitude());
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse("http://maps.google.com/maps?saddr=" + latitude + "&daddr=" + longitude + ""));
+                startActivity(intent);
+            }
+        });
+
+        phoneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + earthquakeContact));
+                startActivity(intent);
+            }
+        });
+
 
         //Returns the view
         return view;
@@ -131,17 +158,17 @@ public class EarthquakeFragment extends Fragment {
         firebaseFirestore.collection("map-buildings").document(buildingID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                GeoPoint location = null;
                 if (task.isSuccessful()){
                     DocumentSnapshot document = task.getResult();
                     images = (ArrayList<String>) document.get("images");
                     extras = (ArrayList<String>) document.get("extras");
                     location = (GeoPoint) document.getGeoPoint("location");
-                    Log.d(TAG, "LOcation - " + location.toString());
+                    Log.d(TAG, "Location - " + location.toString());
                     earthquakeNameTextView.setText(document.get("buildingName").toString());
                     earthquakeRichterTextView.setText(document.get("earthquakeRichter").toString());
                     earthquakeDeathCountTextView.setText(document.get("earthquakeDeathCount").toString());
                     earthquakeMissingCountTextView.setText(document.get("earthquakeMissingCount").toString());
+                    earthquakeContact = "maddie";
                     //Images Adapter
                     adapter = new SliderAdapter(getActivity(), images);
                     sliderView.setAutoCycleDirection(SliderView.LAYOUT_DIRECTION_LTR);

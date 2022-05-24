@@ -44,7 +44,7 @@ public class HospitalFragment extends Fragment {
     SliderAdapter adapter;
     String buildingID;
     RelativeLayout backButton;
-    private TextView hospitalNameTextView, locationTextView, hospitalNumberOfBedsTextView;
+    private TextView hospitalNameTextView, hospitalDescriptionTextView, locationTextView, hospitalNumberOfBedsTextView;
     private List<Address> addressesList;
     ProgressDialog progressDialog;
     SwipeRefreshLayout swipeRefreshLayout;
@@ -82,6 +82,7 @@ public class HospitalFragment extends Fragment {
         backButton = view.findViewById(R.id.backButton);
         hospitalNameTextView = view.findViewById(R.id.hospitalNameTextView);
         locationTextView = view.findViewById(R.id.locationTextView);
+        hospitalDescriptionTextView = view.findViewById(R.id.descriptionTextView);
         hospitalNumberOfBedsTextView = view.findViewById(R.id.hospitalNumberOfBedsTextView);
         swipeRefreshLayout = view.findViewById(R.id.swipeToRefresh);
         progressDialog = new ProgressDialog(getActivity());
@@ -132,6 +133,7 @@ public class HospitalFragment extends Fragment {
                     location = (GeoPoint) document.getGeoPoint("location");
                     hospitalNameTextView.setText(document.get("buildingName").toString());
                     hospitalNumberOfBedsTextView.setText(document.get("hospitalNumberOfBeds").toString());
+                    hospitalDescriptionTextView.setText(document.get("hospitalDescription").toString());
                     //Images Adapter
                     adapter = new SliderAdapter(getActivity(), images);
                     sliderView.setAutoCycleDirection(SliderView.LAYOUT_DIRECTION_LTR);

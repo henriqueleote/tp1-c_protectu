@@ -77,27 +77,74 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/deadCountTitle"
+            android:id="@+id/deathCountTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/locationContainer"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/lexend_regular"
-            android:text="Number of beds"
+            android:text="Deaths"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/warDeadCountTextView"
+            android:id="@+id/warDeathCountTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/deadCountTitle"
+            android:layout_below="@+id/deathCountTitle"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/lexend_regular"
             android:text="" />
+
+        <TextView
+            android:id="@+id/missingCountTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/warDeathCountTextView"
+            android:textColor="@color/black"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/lexend_regular"
+            android:textSize="20sp"
+            android:text="Missing" />
+
+        <TextView
+            android:id="@+id/warMissingCountTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/missingCountTitle"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/lexend_regular"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/descriptionTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/warMissingCountTextView"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/lexend_regular"
+            android:text="Description"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/descriptionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/descriptionTitle"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="16dp"
+            android:fontFamily="@font/lexend_regular"
+            android:justificationMode="inter_word"
+            android:text="Description" />
 
     </RelativeLayout>
 

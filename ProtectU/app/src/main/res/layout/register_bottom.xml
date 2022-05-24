@@ -67,6 +67,9 @@
             android:id="@+id/contactPicker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:ccp_textSize="15sp"
+            android:layout_gravity="center_vertical"
+            app:ccp_defaultNameCode="PT"
             android:layout_weight="0"
             android:ellipsize="end"
             android:maxLines="1"/>

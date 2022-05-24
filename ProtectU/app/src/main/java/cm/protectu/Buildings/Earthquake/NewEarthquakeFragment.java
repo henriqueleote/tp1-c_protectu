@@ -36,6 +36,7 @@ import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.hbb20.CountryCodePicker;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,7 +57,9 @@ public class NewEarthquakeFragment extends Fragment {
 
     private TextView locationTextView;
 
-    private EditText earthquakeNameEditText, earthquakeRichterEditText, earthquakeDeathCountEditText, earthquakeMissingCountEditText;
+    private EditText earthquakeNameEditText, earthquakeRichterEditText, earthquakeDeathCountEditText, earthquakeMissingCountEditText, earthquakeContactEditText;
+
+    private CountryCodePicker countryCodePicker;
 
     private Button createButton;
 
@@ -110,6 +113,8 @@ public class NewEarthquakeFragment extends Fragment {
         earthquakeDeathCountEditText = view.findViewById(R.id.earthquakeDeathCountEditText);
         earthquakeMissingCountEditText = view.findViewById(R.id.earthquakeMissingCountEditText);
         createButton = view.findViewById(R.id.createButton);
+        earthquakeContactEditText = view.findViewById(R.id.contactEditText);
+        countryCodePicker = view.findViewById(R.id.contactPicker);
 
         uriList = new ArrayList<>();
         imagesLinks = new ArrayList<>();
@@ -156,7 +161,8 @@ public class NewEarthquakeFragment extends Fragment {
                 createEarthquake(earthquakeNameEditText.getText().toString(),
                         earthquakeRichterEditText.getText().toString(),
                         earthquakeDeathCountEditText.getText().toString(),
-                        earthquakeMissingCountEditText.getText().toString());
+                        earthquakeMissingCountEditText.getText().toString(),
+                        earthquakeContactEditText.getText().toString());
             }
         });
 
@@ -253,7 +259,7 @@ public class NewEarthquakeFragment extends Fragment {
         }
     }
 
-    public void createEarthquake(String earthquakeName, String earthquakeRichter, String earthquakeDeathCount, String earthquakeMissingCount){
+    public void createEarthquake(String earthquakeName, String earthquakeRichter, String earthquakeDeathCount, String earthquakeMissingCount, String contact){
 
         // Name field check
         if (TextUtils.isEmpty(earthquakeName)) {
@@ -283,6 +289,13 @@ public class NewEarthquakeFragment extends Fragment {
             return;
         }
 
+        // Contact's field check
+        if (TextUtils.isEmpty(contact)) {
+            earthquakeContactEditText.setError(getResources().getString(R.string.error_invalid_contact));  //Apresentar um erro
+            earthquakeContactEditText.requestFocus();
+            return;
+        }
+
         if(uriList.isEmpty() && imagesLinks.isEmpty()){
             Toast.makeText(getActivity(), "Images are mandatory", Toast.LENGTH_SHORT).show();
             return;
@@ -298,6 +311,7 @@ public class NewEarthquakeFragment extends Fragment {
         Map<String, Object> earthquakeData = new HashMap<>();
         earthquakeData.put("buildingID", buildingRef.getId());
         earthquakeData.put("buildingName", earthquakeName);
+        earthquakeData.put("buildingContact", countryCodePicker.getSelectedCountryCodeWithPlus() + " " + contact);
         earthquakeData.put("earthquakeRichter", earthquakeRichter);
         earthquakeData.put("earthquakeDeathCount", earthquakeDeathCount);
         earthquakeData.put("earthquakeMissingCount", earthquakeMissingCount);

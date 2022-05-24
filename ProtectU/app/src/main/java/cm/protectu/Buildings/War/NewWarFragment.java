@@ -37,6 +37,7 @@ import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.hbb20.CountryCodePicker;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,9 +58,11 @@ public class NewWarFragment extends Fragment {
 
     private TextView locationTextView;
 
-    private EditText warNameEditText, warDeadCountEditText, warMissingCountEditText;
+    private EditText warNameEditText, warDeadCountEditText, warMissingCountEditText, warContactEditText;
 
-    private Button createButton, clearButton;
+    private CountryCodePicker countryCodePicker;
+
+    private Button createButton;
 
     private ArrayList<Uri> uriList;
 
@@ -112,8 +115,9 @@ public class NewWarFragment extends Fragment {
         warDeadCountEditText = view.findViewById(R.id.warDeadCountEditText);
         warMissingCountEditText = view.findViewById(R.id.warMissingCountEditText);
         createButton = view.findViewById(R.id.createButton);
-        clearButton = view.findViewById(R.id.clearButton);
         oldDrawable = imagesImageView.getDrawable();
+        warContactEditText = view.findViewById(R.id.contactEditText);
+        countryCodePicker = view.findViewById(R.id.contactPicker);
 
         uriList = new ArrayList<>();
         imagesLinks = new ArrayList<>();
@@ -159,20 +163,8 @@ public class NewWarFragment extends Fragment {
             public void onClick(View view) {
                 createWar(warNameEditText.getText().toString(),
                         warDeadCountEditText.getText().toString(),
-                        warMissingCountEditText.getText().toString());
-            }
-        });
-
-        clearButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                uriList.clear();
-                warNameEditText.setText("");
-                warDeadCountEditText.setText("");
-                warMissingCountEditText.setText("");
-                //DOESNT WORK
-                Glide.with(getActivity()).load(R.drawable.ic_camera_black_24dp).into(imagesImageView);
-                //TODO MISSING DESCRIPTION EVERYWHERE
+                        warMissingCountEditText.getText().toString(),
+                        warContactEditText.getText().toString());
             }
         });
 
@@ -208,7 +200,7 @@ public class NewWarFragment extends Fragment {
                     //TODO NOT PERFECT FIT
                     ViewGroup.LayoutParams params = imagesImageView.getLayoutParams();
                     params.width = ViewGroup.LayoutParams.MATCH_PARENT;
-                    params.height = ViewGroup.LayoutParams.MATCH_PARENT;                    clearButton.setVisibility(View.VISIBLE);
+                    params.height = ViewGroup.LayoutParams.MATCH_PARENT;
                     Glide.with(getActivity())
                             .load(data.getClipData().getItemAt(totalItems-1).getUri())
                             
@@ -229,7 +221,6 @@ public class NewWarFragment extends Fragment {
                 params.width = ViewGroup.LayoutParams.MATCH_PARENT;
                 params.height = ViewGroup.LayoutParams.MATCH_PARENT;
                 imagesImageView.requestLayout();
-                clearButton.setVisibility(View.VISIBLE);
                 Glide.with(getActivity())
                         .load(data.getData())
                         
@@ -279,7 +270,7 @@ public class NewWarFragment extends Fragment {
         }
     }
 
-    public void createWar(String warName, String warDeadCount, String warMissingCount){
+    public void createWar(String warName, String warDeadCount, String warMissingCount, String contact){
 
         // Name field check
         if (TextUtils.isEmpty(warName)) {
@@ -302,6 +293,13 @@ public class NewWarFragment extends Fragment {
             return;
         }
 
+        // Contact's field check
+        if (TextUtils.isEmpty(contact)) {
+            warContactEditText.setError(getResources().getString(R.string.error_invalid_contact));  //Apresentar um erro
+            warContactEditText.requestFocus();
+            return;
+        }
+
         if(uriList.isEmpty() && imagesLinks.isEmpty()){
             Toast.makeText(getActivity(), "Images are mandatory", Toast.LENGTH_SHORT).show();
             return;
@@ -317,6 +315,7 @@ public class NewWarFragment extends Fragment {
         Map<String, Object> warData = new HashMap<>();
         warData.put("buildingID", buildingRef.getId());
         warData.put("buildingName", warName);
+        warData.put("buildingContact", countryCodePicker.getSelectedCountryCodeWithPlus() + " " + contact);
         warData.put("warDeadCount", warDeadCount);
         warData.put("warMissingCount", warMissingCount);
         warData.put("images", imagesLinks);

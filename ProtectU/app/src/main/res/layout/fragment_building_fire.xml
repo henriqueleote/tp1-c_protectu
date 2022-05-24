@@ -43,7 +43,7 @@
         android:background="@drawable/layout_bg">
 
         <TextView
-            android:id="@+id/bunkerNameTextView"
+            android:id="@+id/fireNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
@@ -56,7 +56,7 @@
             android:id="@+id/locationContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/bunkerNameTextView"
+            android:layout_below="@id/fireNameTextView"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="10dp">
 
@@ -77,34 +77,10 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/descriptionTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/locationContainer"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="15dp"
-            android:fontFamily="@font/lexend_regular"
-            android:text="Description"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/descriptionTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/descriptionTitle"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="16dp"
-            android:fontFamily="@font/lexend_regular"
-            android:justificationMode="inter_word"
-            android:text="Description" />
-
-        <TextView
             android:id="@+id/deathCountTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/descriptionTextView"
+            android:layout_below="@+id/locationContainer"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/lexend_regular"
@@ -145,6 +121,30 @@
             android:layout_marginTop="10dp"
             android:fontFamily="@font/lexend_regular"
             android:text="" />
+
+        <TextView
+            android:id="@+id/descriptionTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fireMissingCountTextView"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/lexend_regular"
+            android:text="Description"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/descriptionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/descriptionTitle"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="16dp"
+            android:fontFamily="@font/lexend_regular"
+            android:justificationMode="inter_word"
+            android:text="Description" />
 
     </RelativeLayout>
 

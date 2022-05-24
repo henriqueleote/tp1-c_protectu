@@ -36,6 +36,7 @@ import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.hbb20.CountryCodePicker;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,7 +58,9 @@ public class NewBunkerFragment extends Fragment {
 
     private TextView locationTextView;
 
-    private EditText bunkerNameEditText, bunkerDescriptionEditText;
+    private EditText bunkerNameEditText, bunkerDescriptionEditText, bunkerContactEditText;
+
+    private CountryCodePicker countryCodePicker;
 
     private Button createButton;
 
@@ -117,12 +120,14 @@ public class NewBunkerFragment extends Fragment {
         backButton = view.findViewById(R.id.backButton);
         imagesImageView = view.findViewById(R.id.imagesImageView);
         locationTextView = view.findViewById(R.id.locationTextView);
-        bunkerNameEditText = view.findViewById(R.id.earthquakeNameEditText);
-        bunkerDescriptionEditText = view.findViewById(R.id.earthquakeDescriptionEditText);
+        bunkerNameEditText = view.findViewById(R.id.bunkerNameEditText);
+        bunkerDescriptionEditText = view.findViewById(R.id.bunkerDescriptionEditText);
         createButton = view.findViewById(R.id.createButton);
         buildingExtrasButton = view.findViewById(R.id.buildingExtrasButton);
         buildingExtrasTextView = view.findViewById(R.id.buildingExtrasTextView);
         buildingExtras = MapFragment.buildingAllExtrasList;
+        bunkerContactEditText = view.findViewById(R.id.contactEditText);
+        countryCodePicker = view.findViewById(R.id.contactPicker);
 
         uriList = new ArrayList<>();
         imagesLinks = new ArrayList<>();
@@ -168,7 +173,8 @@ public class NewBunkerFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 createBunker(bunkerNameEditText.getText().toString(),
-                        bunkerDescriptionEditText.getText().toString());
+                        bunkerDescriptionEditText.getText().toString(),
+                        bunkerContactEditText.getText().toString());
             }
         });
 
@@ -321,7 +327,7 @@ public class NewBunkerFragment extends Fragment {
         }
     }
 
-    public void createBunker(String bunkerName, String bunkerDescription){
+    public void createBunker(String bunkerName, String bunkerDescription, String contact){
 
         // Name field check
         if (TextUtils.isEmpty(bunkerName)) {
@@ -334,6 +340,13 @@ public class NewBunkerFragment extends Fragment {
         if (TextUtils.isEmpty(bunkerDescription)) {
             bunkerDescriptionEditText.setError("Description is mandatory");
             bunkerDescriptionEditText.requestFocus();
+            return;
+        }
+
+        // Contact's field check
+        if (TextUtils.isEmpty(contact)) {
+            bunkerContactEditText.setError(getResources().getString(R.string.error_invalid_contact));  //Apresentar um erro
+            bunkerContactEditText.requestFocus();
             return;
         }
 
@@ -353,6 +366,7 @@ public class NewBunkerFragment extends Fragment {
         bunkerData.put("buildingID", buildingRef.getId());
         bunkerData.put("buildingName", bunkerName);
         bunkerData.put("buildingDescription", bunkerDescription);
+        bunkerData.put("buildingContact", countryCodePicker.getSelectedCountryCodeWithPlus() + " " + contact);
         bunkerData.put("extras", selectedExtras);
         bunkerData.put("images", imagesLinks);
         bunkerData.put("location", new GeoPoint(location.getLatitude(), location.getLongitude()));

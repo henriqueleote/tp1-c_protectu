@@ -36,6 +36,7 @@ import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.hbb20.CountryCodePicker;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,7 +57,9 @@ public class NewFireFragment extends Fragment {
 
     private TextView locationTextView;
 
-    private EditText fireNameEditText, fireDescriptionEditText, fireDeathCountEditText, fireMissingCountEditText;
+    private EditText fireNameEditText, fireDescriptionEditText, fireDeathCountEditText, fireMissingCountEditText, fireContactEditText;
+
+    private CountryCodePicker countryCodePicker;
 
     private Button createButton;
 
@@ -110,6 +113,8 @@ public class NewFireFragment extends Fragment {
         fireMissingCountEditText = view.findViewById(R.id.fireMissingCountEditText);
         fireDeathCountEditText = view.findViewById(R.id.fireDeathCountEditText);
         createButton = view.findViewById(R.id.createButton);
+        fireContactEditText = view.findViewById(R.id.contactEditText);
+        countryCodePicker = view.findViewById(R.id.contactPicker);
 
         uriList = new ArrayList<>();
         imagesLinks = new ArrayList<>();
@@ -156,7 +161,8 @@ public class NewFireFragment extends Fragment {
                 createFire(fireNameEditText.getText().toString(),
                         fireDescriptionEditText.getText().toString(),
                         fireDeathCountEditText.getText().toString(),
-                        fireMissingCountEditText.getText().toString());
+                        fireMissingCountEditText.getText().toString(),
+                        fireContactEditText.getText().toString());
             }
         });
 
@@ -253,7 +259,7 @@ public class NewFireFragment extends Fragment {
         }
     }
 
-    public void createFire(String fireName, String fireDescription, String fireDeathCount, String fireMissingCount){
+    public void createFire(String fireName, String fireDescription, String fireDeathCount, String fireMissingCount, String contact){
 
         // Name field check
         if (TextUtils.isEmpty(fireName)) {
@@ -283,6 +289,13 @@ public class NewFireFragment extends Fragment {
             return;
         }
 
+        // Contact's field check
+        if (TextUtils.isEmpty(contact)) {
+            fireContactEditText.setError(getResources().getString(R.string.error_invalid_contact));  //Apresentar um erro
+            fireContactEditText.requestFocus();
+            return;
+        }
+
         if(uriList.isEmpty() && imagesLinks.isEmpty()){
             Toast.makeText(getActivity(), "Images are mandatory", Toast.LENGTH_SHORT).show();
             return;
@@ -298,6 +311,7 @@ public class NewFireFragment extends Fragment {
         Map<String, Object> fireData = new HashMap<>();
         fireData.put("buildingID", buildingRef.getId());
         fireData.put("buildingName", fireName);
+        fireData.put("buildingContact", countryCodePicker.getSelectedCountryCodeWithPlus() + " " + contact);
         fireData.put("buildingDescription", fireDescription);
         fireData.put("fireDeathCount", fireDeathCount);
         fireData.put("fireMissingCount", fireMissingCount);

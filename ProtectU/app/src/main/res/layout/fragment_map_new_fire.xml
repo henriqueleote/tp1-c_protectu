@@ -24,9 +24,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="New fire"
+        android:text="Create fire details"
         android:textColor="@color/black"
-        android:textSize="23dp"
+        android:textSize="22dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -51,19 +51,20 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/descriptionCard"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="105dp"
         android:layout_marginTop="20dp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
         android:elevation="20dp"
-        app:cardCornerRadius="15dp"
+        app:cardCornerRadius="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fireNameEditText">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_margin="5dp">
 
             <EditText
                 android:id="@+id/fireDescriptionEditText"
@@ -72,7 +73,6 @@
                 android:fontFamily="@font/lexend_regular"
                 android:gravity="top"
                 android:background="@null"
-                android:drawablePadding="10dp"
                 android:hint="@string/description"
                 android:maxLength="500"
                 android:inputType="text|textMultiLine"
@@ -81,15 +81,16 @@
 
     </androidx.cardview.widget.CardView>
 
+
     <EditText
         android:id="@+id/fireDeathCountEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:drawablePadding="10dp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
-        android:hint="Death Count"
+        android:hint="Death number"
         android:maxLength="20"
         android:inputType="number"
         android:textSize="15sp"
@@ -101,11 +102,11 @@
         android:id="@+id/fireMissingCountEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:drawablePadding="10dp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
-        android:hint="Missing Count"
+        android:hint="Missing number"
         android:maxLength="20"
         android:inputType="number"
         android:textSize="15sp"
@@ -113,25 +114,57 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fireDeathCountEditText" />
 
+    <LinearLayout
+        android:id="@+id/emergencyNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="@id/fireMissingCountEditText"
+        app:layout_constraintTop_toBottomOf="@+id/fireMissingCountEditText">
+
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/contactPicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:ccp_textSize="15sp"
+            android:layout_gravity="center_vertical"
+            app:ccp_defaultNameCode="PT"
+            android:layout_weight="0"
+            android:ellipsize="end"
+            android:maxLines="1"/>
+
+        <EditText
+            android:id="@+id/contactEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="10dp"
+            android:hint="Emergency number"
+            android:inputType="number"
+            android:textSize="15sp"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:maxLines="1" />
+
+    </LinearLayout>
+
     <TextView
         android:id="@+id/locationTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:drawablePadding="10dp"
-        android:hint=""
+        android:layout_marginTop="10dp"
         android:inputType="text"
         android:textColor="@color/black"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@id/fireMissingCountEditText"
-        app:layout_constraintTop_toBottomOf="@+id/fireMissingCountEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/emergencyNumber" />
 
 
     <TextView
         android:id="@+id/imageTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/descriptionCard"
         android:layout_marginTop="10dp"
         android:drawablePadding="10dp"
         android:hint="Add images (max. 6)"
@@ -139,27 +172,28 @@
         android:textColor="@color/black"
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@id/locationTextView"
-        app:layout_constraintTop_toBottomOf="@+id/locationTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/locationTextView"
+        app:layout_constraintEnd_toEndOf="@id/fireMissingCountEditText" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/imageCard"
-        android:layout_width="match_parent"
+        android:layout_width="175dp"
         android:layout_height="150dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginTop="10dp"
         android:elevation="20dp"
-        app:cardCornerRadius="15dp"
+        app:cardCornerRadius="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageTextView">
 
         <ImageView
             android:id="@+id/imagesImageView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
             android:src="@drawable/ic_camera_black_24dp" />
+
+
 
     </androidx.cardview.widget.CardView>
 
