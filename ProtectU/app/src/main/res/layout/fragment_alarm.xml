@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
@@ -28,33 +28,29 @@
 
     <TextView
         android:id="@+id/alarmSubMessage"
-        android:layout_below="@+id/alarmMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/alarmMessage"
         android:layout_marginStart="40dp"
         android:fontFamily="@font/lexend_regular"
-        android:paddingTop="5dp"
+        android:layout_marginTop="5dp"
         android:text="Please proceed to the shelters immediately!"
         android:textColor="#858585"
         android:textSize="12sp" />
 
     <Button
         android:id="@+id/mapButton"
-        android:layout_below="@+id/alarmSubMessage"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_marginTop="20dp"
-        android:drawableLeft="@drawable/folder_map"
-        android:textColor="#000000"
-        android:text="@string/map_of_shelters"
-        android:fontFamily="@font/lexend_regular"
-        android:textAllCaps="false"
-        android:backgroundTint="@color/white"
-        android:textSize="12sp"
+        android:layout_below="@+id/alarmSubMessage"
+        android:layout_marginTop="15dp"
         android:layout_centerHorizontal="true"
-        android:shadowRadius="5"
         android:background="@drawable/rounded_button"
-        app:backgroundTint="@null">
-    </Button>
+        android:drawableLeft="@drawable/folder_map"
+        android:fontFamily="@font/lexend_regular"
+        android:text="@string/map_of_shelters"
+        android:textColor="#000000"
+        android:textSize="12sp"
+        app:backgroundTint="@null"></Button>
 
 </RelativeLayout>

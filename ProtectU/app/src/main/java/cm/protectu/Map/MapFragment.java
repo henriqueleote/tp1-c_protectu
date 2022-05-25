@@ -143,6 +143,8 @@ public class MapFragment extends Fragment {
         containerZoneBtn = view.findViewById(R.id.containerZoneBtn);
         containerMarkerBtn = view.findViewById(R.id.containerMarkerBtn);
         menuImageView = view.findViewById(R.id.menuImageView);
+        createMarkerBtn.setCompatElevation(0.0f);
+        createZoneBtn.setCompatElevation(0.0f);
 
         containerZoneBtn.setVisibility(View.GONE);
         containerMarkerBtn.setVisibility(View.GONE);
@@ -510,6 +512,7 @@ public class MapFragment extends Fragment {
 
     @SuppressLint("NewApi")
     public void loadFilteredPins(){
+        clearMap();
         FilterMapFragment.filteredMapPinClasses.forEach(mapPin -> {
             LatLng latLng = new LatLng(mapPin.getLocation().getLatitude(), mapPin.getLocation().getLongitude());
             mapPinTypes.forEach(mapPinType -> {

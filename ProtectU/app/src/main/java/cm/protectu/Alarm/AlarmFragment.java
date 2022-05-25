@@ -46,13 +46,23 @@ public class AlarmFragment extends AlertDialog {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         View view = getLayoutInflater().inflate(R.layout.fragment_alarm, null);
         this.setView(view);
+
         ImageView imageView = view.findViewById(R.id.imageAlarm);
         TextView message = view.findViewById(R.id.alarmMessage);
         TextView subMessage = view.findViewById(R.id.alarmSubMessage);
         Button mapButton = view.findViewById(R.id.mapButton);
         AlarmFragment dialog = this;
+
+                message.setText(new SimpleDateFormat("h:mm a", Locale.getDefault()).format(alarm.getTime())  + " " + alarm.getMessage());
+        subMessage.setText(alarm.getSubMessage());
+
+        if(!alarm.isAlarm()){
+            imageView.setImageDrawable(getContext().getResources().getDrawable(R.drawable.green_circle_alarm));
+            mapButton.setVisibility(View.GONE);
+        }else imageView.setImageDrawable(getContext().getResources().getDrawable(R.drawable.red_circle_alarm));
 
         mapButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,14 +73,6 @@ public class AlarmFragment extends AlertDialog {
                 dialog.dismiss();
             }
         });
-
-
-        message.setText(new SimpleDateFormat("h:mm a", Locale.getDefault()).format(alarm.getTime())  + " " + alarm.getMessage());
-        subMessage.setText(alarm.getSubMessage());
-        if(!alarm.isAlarm()){
-            imageView.setImageDrawable(getContext().getResources().getDrawable(R.drawable.green_circle_alarm));
-            mapButton.setVisibility(View.GONE);
-        }else imageView.setImageDrawable(getContext().getResources().getDrawable(R.drawable.red_circle_alarm));
 
         super.onCreate(savedInstanceState);
     }
