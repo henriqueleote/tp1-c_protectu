@@ -48,6 +48,10 @@
         <item>Dark</item>
         <item>Blue</item>
     </string-array>
+    <string-array name="alarm_types">
+        <item>Red</item>
+        <item>Green</item>
+    </string-array>
     <string name="About">About</string>
     <string name="Language">Language</string>
     <string name="notifications">Notifications</string>
@@ -77,4 +81,8 @@
     <string name="map_of_shelters">Map of shelters</string>
     <string name="theme">Theme</string>
     <string name="pay_attention">"Pay attention to the air alarms in your area"</string>
+    <string name="type_alarm_message">Type alarm message</string>
+    <string name="type_details">Type details</string>
+    <string name="send_alert">Send alert</string>
+    <string name="new_alarm">New Alarm</string>
 </resources>

@@ -1,0 +1,87 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/panic"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/layout_bg"
+    android:orientation="vertical"
+    android:padding="16dp"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="0dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+
+    <ImageView
+        android:id="@+id/closeNewAlarm"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_close_black_24dp" />
+
+    <TextView
+        android:id="@+id/new_alarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/lexend_regular"
+        android:text="@string/new_alarm"
+        android:textColor="#000000"
+        android:textSize="20sp"/>
+    <Spinner
+        android:id="@+id/alarmType"
+        style="@style/Widget.AppCompat.Spinner.Underlined"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/new_alarm"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/lexend_regular"
+        android:gravity="center"
+        android:entries="@array/alarm_types"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/messageAlarm"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/alarmType"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/lexend_regular"
+        android:gravity="center"
+        android:nextFocusDown="@+id/subMessageAlarm"
+        android:singleLine="true"
+        android:hint="@string/type_alarm_message"
+        android:textSize="15sp" />
+
+    <EditText
+        android:id="@+id/subMessageAlarm"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/messageAlarm"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/lexend_regular"
+        android:gravity="center"
+        android:imeOptions="actionDone"
+        android:singleLine="true"
+        android:hint="@string/type_details"
+        android:textSize="15sp" />
+
+    <Button
+        android:id="@+id/createAlarm"
+        android:layout_width="200dp"
+        android:layout_height="45dp"
+        android:layout_below="@+id/subMessageAlarm"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/red_button"
+        android:fontFamily="@font/lexend_regular"
+        android:text="@string/send_alert"
+        android:textColor="#FFFFFF" />
+
+</RelativeLayout>

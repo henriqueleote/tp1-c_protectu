@@ -53,6 +53,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
+import cm.protectu.Alarm.NewAlarmFragment;
 import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.MainActivity;
 import cm.protectu.Buildings.BuildingClass;
@@ -78,10 +79,10 @@ public class MapFragment extends Fragment {
     private SupportMapFragment supportMapFragment;
 
     //Floating Action Button
-    private FloatingActionButton createBtn, createZoneBtn, createMarkerBtn, changeMapTypeBtn, mapFilterBtn;
+    private FloatingActionButton createBtn, createZoneBtn, createMarkerBtn, pushAlertBtn, changeMapTypeBtn, mapFilterBtn;
 
     //LinearLayout
-    private LinearLayout containerMarkerBtn, containerZoneBtn;
+    private LinearLayout containerPushAlertBtn, containerMarkerBtn, containerZoneBtn;
 
     //Boolean
     boolean areAllButtonVisible;
@@ -139,15 +140,18 @@ public class MapFragment extends Fragment {
         createZoneBtn = view.findViewById(R.id.createZoneBtn);
         createBtn = view.findViewById(R.id.createBtn);
         mapFilterBtn = view.findViewById(R.id.mapFilterBtn);
+        pushAlertBtn = view.findViewById(R.id.pushAlertBtn);
         changeMapTypeBtn = view.findViewById(R.id.changeMapTypeBtn);
         containerZoneBtn = view.findViewById(R.id.containerZoneBtn);
         containerMarkerBtn = view.findViewById(R.id.containerMarkerBtn);
+        containerPushAlertBtn = view.findViewById(R.id.containerAlertBtn);
         menuImageView = view.findViewById(R.id.menuImageView);
         createMarkerBtn.setCompatElevation(0.0f);
         createZoneBtn.setCompatElevation(0.0f);
 
         containerZoneBtn.setVisibility(View.GONE);
         containerMarkerBtn.setVisibility(View.GONE);
+        containerPushAlertBtn.setVisibility(View.GONE);
         areAllButtonVisible = false;
 
         mapPinClasses = new ArrayList<>();
@@ -164,11 +168,13 @@ public class MapFragment extends Fragment {
                 if (!areAllButtonVisible) {
                     containerZoneBtn.setVisibility(View.VISIBLE);
                     containerMarkerBtn.setVisibility(View.VISIBLE);
+                    containerPushAlertBtn.setVisibility(View.VISIBLE);
                     createBtn.animate().rotation(45).setDuration(200).start();
                     areAllButtonVisible = true;
                 }else{
                     containerZoneBtn.setVisibility(View.GONE);
                     containerMarkerBtn.setVisibility(View.GONE);
+                    containerPushAlertBtn.setVisibility(View.GONE);
                     createBtn.animate().rotation(0).setDuration(200).start();
                     areAllButtonVisible = false;
                 }
@@ -205,6 +211,19 @@ public class MapFragment extends Fragment {
                         .replace(R.id.fragment_container, new MapAddMarkerFragment())
                         .addToBackStack(null)
                         .commit();
+            }
+        });
+
+        pushAlertBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                containerZoneBtn.setVisibility(View.GONE);
+                containerMarkerBtn.setVisibility(View.GONE);
+                containerPushAlertBtn.setVisibility(View.GONE);
+                createBtn.animate().rotation(0).setDuration(200).start();
+                areAllButtonVisible = false;
+                NewAlarmFragment bottomFilter = new NewAlarmFragment();
+                bottomFilter.show(getParentFragmentManager(), bottomFilter.getTag());
             }
         });
 

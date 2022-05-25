@@ -206,6 +206,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                                     if(active && alarmClass.getTime().before((new Date(cur + 120000))) && alarmClass.getTime().after((new Date(cur - 120000)))){
                                         AlarmFragment g = new AlarmFragment(MainActivity.this, alarmClass);
                                         g.show();
+
                                     }
                                 } else {
                                     Log.d(TAG, "Error");
@@ -309,9 +310,28 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
 
             case R.id.navigation_panic:
-                PanicFragment bottomPanic = new PanicFragment();
-                bottomPanic.show(getSupportFragmentManager(), bottomPanic.getTag());
-                break;
+                if(mAuth.getCurrentUser().isAnonymous()){
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setMessage(R.string.want_to_go_to_login)
+                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    mAuth.signOut();
+                                    startActivity(new Intent(MainActivity.this, AuthActivity.class));
+                                }
+                            })
+                            .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    // Create the AlertDialog object and return it
+                    builder.show();
+                }else{
+                    PanicFragment bottomPanic = new PanicFragment();
+                    bottomPanic.show(getSupportFragmentManager(), bottomPanic.getTag());
+                    break;
+                }
+
         }
 
         //loads the fragment
