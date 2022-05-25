@@ -31,7 +31,7 @@
 
 
     <EditText
-        android:id="@+id/message"
+        android:id="@+id/title"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/makeVerified"
@@ -39,37 +39,16 @@
         android:layout_marginTop="20dp"
         android:drawablePadding="10dp"
         android:fontFamily="@font/lexend_regular"
-        android:hint="@string/message"
+        android:hint="Title of the New"
         android:inputType="text"
         android:textSize="15sp"
         android:maxLength="200"/>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/uploadImageCard"
-        android:layout_width="150dp"
-        android:layout_height="130dp"
-        android:layout_below="@+id/message"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:elevation="20dp"
-        app:cardCornerRadius="15dp">
-
-        <ImageView
-            android:id="@+id/uploadImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:src="@drawable/ic_camera_black_24dp"
-            android:scaleType="fitXY"/>
-
-
-    </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/createNewNewsButton"
         android:layout_width="300dp"
         android:layout_height="50dp"
-        android:layout_below="@+id/uploadImageCard"
+        android:layout_below="@+id/title"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/primary_button"

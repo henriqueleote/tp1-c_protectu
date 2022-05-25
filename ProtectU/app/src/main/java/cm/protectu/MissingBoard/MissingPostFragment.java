@@ -24,9 +24,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import cm.protectu.Authentication.AuthActivity;
+import cm.protectu.Community.ViewPagerFragment;
 import cm.protectu.R;
 import cm.protectu.UserDataClass;
-import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 
 public class MissingPostFragment extends Fragment {
@@ -131,7 +131,8 @@ public class MissingPostFragment extends Fragment {
         arrowBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MissingBoardFragment fragment = new MissingBoardFragment(null);
+                //MissingBoardFragment fragment = new MissingBoardFragment(null);
+                ViewPagerFragment fragment = new ViewPagerFragment(true);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container, fragment);
                 transaction.addToBackStack(null);

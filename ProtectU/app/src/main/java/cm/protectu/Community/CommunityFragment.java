@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -43,11 +44,11 @@ public class CommunityFragment extends Fragment {
     private CommunityAdapter communityAdapter;
     private ArrayList<CommunityCard> listOfCommunityCards;
     private FloatingActionButton floatingActionButton;
-    private ImageView missingPeopleButton,backProfile;
+    private ImageView missingPeopleButton,backProfile,menuImageView;
+    private TextView communityText;
     private SwipeRefreshLayout swipeToRefresh;
     private CommunityFragment fragment;
     private String userID;
-    private ImageView menuImageView;
 
     public CommunityFragment(String userID) {
         this.userID = userID;
@@ -82,6 +83,7 @@ public class CommunityFragment extends Fragment {
         swipeToRefresh = view.findViewById(R.id.swipeToRefresh);
         backProfile = view.findViewById(R.id.back_id);
         menuImageView = view.findViewById(R.id.menuImageView);
+        communityText = view.findViewById(R.id.communityText);
 
         communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth, fragment,userID);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -117,36 +119,29 @@ public class CommunityFragment extends Fragment {
             floatingActionButton.setVisibility(View.GONE);
         } else {
             floatingActionButton.setOnClickListener(new View.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(View view) {
-                                                            if (!mAuth.getCurrentUser().isAnonymous()) {
-                                                                NewMessageCommunityFragment newMessageCommunityFragment = new NewMessageCommunityFragment(fragment);
-                                                                newMessageCommunityFragment.show(getParentFragmentManager(), newMessageCommunityFragment.getTag());
-                                                            }
-                                                        }
-                                                    }
+                @Override
+                public void onClick(View view) {
+                    if (!mAuth.getCurrentUser().isAnonymous()) {
+                        NewMessageCommunityFragment newMessageCommunityFragment = new NewMessageCommunityFragment(fragment);
+                        newMessageCommunityFragment.show(getParentFragmentManager(), newMessageCommunityFragment.getTag());
+                    }
+                }
+            }
             );
         }
 
-        /**
-         * This button changes to the missing fragment, replacing the community fragment with this one
-         */
         if (userID == null) {
             missingPeopleButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     MainActivity.viewPager.changeToMissing();
-                    /**Fragment fragmentToChange = new MissingBoardFragment();
-                    getFragmentManager().beginTransaction()
-                            .setCustomAnimations(
-                                    R.anim.slide_in,  // enter
-                                    R.anim.fade_out,  // exit
-                                    R.anim.fade_in,   // popEnter
-                                    R.anim.slide_out  // popExit
-                            )
-                            .replace(R.id.fragment_container, fragmentToChange)
-                            .addToBackStack(null)
-                            .commit();**/
+                }
+            });
+
+            menuImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    MainActivity.drawerLayout.openDrawer(Gravity.LEFT);
                 }
             });
         }
@@ -163,14 +158,13 @@ public class CommunityFragment extends Fragment {
                             .commit();
                 }
             });
+
+            menuImageView.setVisibility(View.GONE);
+
+            communityText.setText("My Publications");
         }
 
-        menuImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity.drawerLayout.openDrawer(Gravity.LEFT);
-            }
-        });
+
 
         //Returns the view
         return view;
@@ -212,8 +206,11 @@ public class CommunityFragment extends Fragment {
                             recyclerView.setAdapter(communityAdapter);
                             communityAdapter.notifyDataSetChanged();
 
-
                             cDialog.dismiss();
+
+                            if (listOfCommunityCards.isEmpty()){
+                                Toast.makeText(getActivity(), "Não existem Publicações", Toast.LENGTH_SHORT).show();
+                            }
 
                         } else {
                             Toast.makeText(getActivity(), "erro", Toast.LENGTH_SHORT).show();

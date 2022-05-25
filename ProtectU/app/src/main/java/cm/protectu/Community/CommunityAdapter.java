@@ -95,7 +95,8 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
 
         holder.dateText.setText(DateFormat.getDateInstance(DateFormat.FULL).format(listOfCommunityCards.get(position).getDate()));
 
-
+        CommunityCard card = listOfCommunityCards.get(position);
+        CommunityAdapter adapter = this;
 
         /**
          * will fetch the database the name of the user who created the message through the user id
@@ -139,7 +140,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                 holder.makeVerified.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        makeVerified(messageID, holder);
+                        makeVerified(messageID, holder, card,adapter);
                     }
                 });
             } else {
@@ -228,16 +229,18 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
      *
      * @param messageID
      */
-    public void makeVerified(String messageID, MyViewHolder holder) {
+    public void makeVerified(String messageID, MyViewHolder holder,CommunityCard card,CommunityAdapter adapter) {
         firebaseFirestore.collection("community-chat")
                 .document(messageID)
-                .update("verified", new Boolean("true"))
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        adaptConstrains(holder, true);
-                        Log.d(TAG, "Success");
-                    }
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    MakeVerifiedFragment makeVerifiedFragment = new MakeVerifiedFragment(communityFragment,card,messageID,adapter,holder);
+                    makeVerifiedFragment.show(communityFragment.getParentFragmentManager(), makeVerifiedFragment.getTag());
+
+                    adaptConstrains(holder, true);
+                    Log.d(TAG, "Success");
+                }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
@@ -297,11 +300,11 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
 
 
 
-                ConstraintSet constraintSet = new ConstraintSet();
+                /*ConstraintSet constraintSet = new ConstraintSet();
                 constraintSet.clone(holder.constraintLayout);
 
                 constraintSet.connect(holder.communityTextWithImage.getId(), ConstraintSet.BOTTOM, holder.frameLayout.getId(), ConstraintSet.TOP, 8);
-                constraintSet.applyTo(holder.constraintLayout);
+                constraintSet.applyTo(holder.constraintLayout);*/
 
 
                 holder.videoView.setZOrderOnTop(true);
@@ -333,16 +336,17 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                     }
                 });
 
-                ConstraintSet constraintSet = new ConstraintSet();
+                /*ConstraintSet constraintSet = new ConstraintSet();
                 constraintSet.clone(holder.constraintLayout);
 
                 constraintSet.connect(holder.communityTextWithImage.getId(), ConstraintSet.BOTTOM, holder.imageCommunity.getId(), ConstraintSet.TOP, 8);
-                constraintSet.applyTo(holder.constraintLayout);
+                constraintSet.applyTo(holder.constraintLayout);*/
             }
 
         } else {
             holder.imageCommunity.setVisibility(View.GONE);
             holder.videoView.setVisibility(View.GONE);
+            holder.multimedia.setVisibility(View.GONE);
 
             ConstraintSet constraintSet = new ConstraintSet();
             constraintSet.clone(holder.constraintLayout);
@@ -564,8 +568,8 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
         ImageView userImage, verified, likeButton, dislikeButton, imageCommunity, shareButton, removeMessageCommunity, makeVerified;
         CardView cardCommunity;
         VideoView videoView;
-        FrameLayout frameLayout,placeholder;
-        ConstraintLayout constraintLayout,constraintLayoutDetails;
+        FrameLayout frameLayout;
+        ConstraintLayout constraintLayout,constraintLayoutDetails,multimedia;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -587,6 +591,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
             constraintLayoutDetails = itemView.findViewById(R.id.buttonsCommunity);
             videoView = itemView.findViewById(R.id.videoCommunity);
             frameLayout = itemView.findViewById(R.id.frameVideo);
+            multimedia = itemView.findViewById(R.id.multimedia);
         }
     }
 }

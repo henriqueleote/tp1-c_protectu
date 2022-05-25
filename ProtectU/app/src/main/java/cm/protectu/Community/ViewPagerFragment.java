@@ -18,6 +18,15 @@ public class ViewPagerFragment extends Fragment {
     ViewPagerAdapter viewPagerAdapter;
     ViewPager2 viewPager;
     ArrayList<Fragment> list;
+    Boolean isMissing;
+
+    public ViewPagerFragment() {
+        this.isMissing = false;
+    }
+
+    public ViewPagerFragment(Boolean isMissing) {
+        this.isMissing = isMissing;
+    }
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
         View view = inflater.inflate(R.layout.fragment_viewpager, container, false);
@@ -30,6 +39,10 @@ public class ViewPagerFragment extends Fragment {
 
         viewPager = view.findViewById(R.id.view_pagerCommunity);
         viewPager.setAdapter(viewPagerAdapter);
+
+        if (isMissing){
+            viewPager.setCurrentItem(1);
+        }
 
         return view;
     }

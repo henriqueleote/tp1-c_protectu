@@ -14,7 +14,6 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
     public ViewPagerAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle,ArrayList<Fragment> fragmentArrayList) {
         super(fragmentManager, lifecycle);
         this.fragmentArrayList = new ArrayList<>(fragmentArrayList);
-
     }
 
     @NonNull

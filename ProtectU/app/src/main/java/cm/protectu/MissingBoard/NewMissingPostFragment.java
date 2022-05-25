@@ -20,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -38,7 +39,7 @@ import com.google.firebase.storage.UploadTask;
 import java.util.Date;
 
 import cm.protectu.Authentication.AuthActivity;
-import cm.protectu.MainActivity;
+import cm.protectu.Community.ViewPagerFragment;
 import cm.protectu.R;
 
 
@@ -111,8 +112,11 @@ public class NewMissingPostFragment extends Fragment {
         arrowBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainActivity.viewPager.changeToMissing();
-
+                ViewPagerFragment fragment = new ViewPagerFragment(true);
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
 
@@ -171,7 +175,14 @@ public class NewMissingPostFragment extends Fragment {
                                     .update("missingID", documentReference.getId());
                             Log.d(TAG, "Document successfully created!");
                             mDialog.dismiss();
-                            getFragmentManager().beginTransaction().replace(R.id.fragment_container, new MissingBoardFragment(null)).addToBackStack(null).commit();
+                            //getFragmentManager().beginTransaction().replace(R.id.fragment_container, new MissingBoardFragment(null)).addToBackStack(null).commit();
+
+                            ViewPagerFragment fragment = new ViewPagerFragment(true);
+                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                            transaction.replace(R.id.fragment_container, fragment);
+                            transaction.addToBackStack(null);
+                            transaction.commit();
+
                             Toast.makeText(getActivity(), "Publicação criada", Toast.LENGTH_SHORT).show();
                         }
                     })
