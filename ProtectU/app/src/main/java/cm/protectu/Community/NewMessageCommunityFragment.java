@@ -214,6 +214,9 @@ public class NewMessageCommunityFragment extends BottomSheetDialogFragment {
                         "com.example.android.fileprovider",
                         file);
                 takeVideoIntent.putExtra(MediaStore.EXTRA_OUTPUT, imguri);
+                takeVideoIntent.putExtra(android.provider.MediaStore.EXTRA_DURATION_LIMIT, 3);
+                takeVideoIntent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0);
+                takeVideoIntent.putExtra(MediaStore.EXTRA_SIZE_LIMIT, 12582912L); //12*1024*1024=12MiB
 
                 startActivityForResult(takeVideoIntent, 1);
             }

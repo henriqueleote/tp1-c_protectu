@@ -148,6 +148,7 @@ public class MapFragment extends Fragment {
         menuImageView = view.findViewById(R.id.menuImageView);
         createMarkerBtn.setCompatElevation(0.0f);
         createZoneBtn.setCompatElevation(0.0f);
+        pushAlertBtn.setCompatElevation(0.0f);
 
         containerZoneBtn.setVisibility(View.GONE);
         containerMarkerBtn.setVisibility(View.GONE);
