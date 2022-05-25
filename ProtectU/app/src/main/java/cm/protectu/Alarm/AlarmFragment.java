@@ -9,10 +9,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,6 +27,8 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 import cm.protectu.MainActivity;
+import cm.protectu.Map.FilterMapFragment;
+import cm.protectu.Map.MapFragment;
 import cm.protectu.R;
 
 public class AlarmFragment extends AlertDialog {
@@ -48,6 +52,19 @@ public class AlarmFragment extends AlertDialog {
         TextView message = view.findViewById(R.id.alarmMessage);
         TextView subMessage = view.findViewById(R.id.alarmSubMessage);
         Button mapButton = view.findViewById(R.id.mapButton);
+        AlarmFragment dialog = this;
+
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MapFragment frag = (MapFragment) MainActivity.currentFragment;
+                FilterMapFragment.filterBunker();
+                frag.loadFilteredPins();
+                dialog.dismiss();
+            }
+        });
+
+
         message.setText(new SimpleDateFormat("h:mm a", Locale.getDefault()).format(alarm.getTime())  + " " + alarm.getMessage());
         subMessage.setText(alarm.getSubMessage());
         if(!alarm.isAlarm()){

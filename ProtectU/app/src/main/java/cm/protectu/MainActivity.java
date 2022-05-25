@@ -57,6 +57,7 @@ import cm.protectu.Customization.CustomizationFragment;
 import cm.protectu.Customization.CustomizationManager;
 import cm.protectu.Language.LanguageFragment;
 import cm.protectu.Language.LanguageManagerClass;
+import cm.protectu.Map.FilterMapFragment;
 import cm.protectu.Map.MapFragment;
 import cm.protectu.MissingBoard.MissingPostFragment;
 import cm.protectu.News.NewsFragment;
@@ -93,6 +94,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public static ViewPagerFragment viewPager;
 
     private static boolean active = false;
+
+    public static Fragment currentFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //Read and Load Themes
@@ -164,7 +167,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         sideBar = findViewById(R.id.side_menu);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-
         getUserData(1);
 
         firebaseFirestore.collection("users").document(mAuth.getCurrentUser().getUid().toString()).addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -218,20 +220,19 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         sideBar.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment fragment = null;
 
                 //Switch case to load the fragment based on the side menu option
                 switch (item.getItemId()) {
                     case R.id.navigation_about:
-                        fragment = new AboutFragment();
+                        currentFragment = new AboutFragment();
                         break;
 
                     case R.id.navigation_language:
-                        fragment = new LanguageFragment();
+                        currentFragment = new LanguageFragment();
                         break;
 
                     case R.id.navigation_customize:
-                        fragment = new CustomizationFragment();
+                        currentFragment = new CustomizationFragment();
                         break;
 
                     case R.id.navigation_logout:
@@ -240,10 +241,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 }
 
                 //loads the fragment
-                if (fragment == null)
+                if (currentFragment == null)
                     return false;
                 drawerLayout.closeDrawers();
-                return loadFragment(fragment);
+                return loadFragment(currentFragment);
             }
         });
     }
@@ -266,13 +267,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-        Fragment fragment = null;
-
         //TODO CHECK WHY THE MAP SHOWS IN THE NEWS WHEN IN LAUNCH
         //Switch case to load the fragment based on the bottom navbar option
         switch (item.getItemId()) {
             case R.id.navigation_map:
-                fragment = new MapFragment();
+                FilterMapFragment.filteredMapPinClasses.clear();
+                currentFragment = new MapFragment();
                 break;
 
             case R.id.navigation_profile:
@@ -294,18 +294,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     builder.show();
                 }else{
                     getUserData(-1);
-                    fragment = new ProfileFragment();
+                    currentFragment = new ProfileFragment();
                 }
 
                 break;
 
             case R.id.navigation_news:
-                fragment = new NewsFragment();
+                currentFragment = new NewsFragment();
                 break;
 
             case R.id.navigation_community:
-                fragment = new ViewPagerFragment();
-                viewPager = (ViewPagerFragment)fragment;
+                currentFragment = new ViewPagerFragment();
+                viewPager = (ViewPagerFragment) currentFragment;
                 break;
 
             case R.id.navigation_panic:
@@ -315,7 +315,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         }
 
         //loads the fragment
-        return loadFragment(fragment);
+        return loadFragment(currentFragment);
     }
 
     public void logout() {
@@ -325,6 +325,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
     public void getUserData(int code){
+        currentFragment = new MapFragment();
         //Firebase Authentication function get the data from firebase with certain criteria
         firebaseFirestore.collection("users")
                 //where the userID is the same as the logged in user
@@ -338,7 +339,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                                 sessionUser = document.toObject(UserDataClass.class);
                             }
                             if(code == 1)
-                                loadFragment(new MapFragment());
+                                loadFragment(currentFragment);
                         } else {
                             //TODO Maybe reload the page or kill the session?
                             //Shows the error

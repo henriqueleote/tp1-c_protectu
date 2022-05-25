@@ -2,6 +2,7 @@ package cm.protectu.Map;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -115,5 +117,16 @@ public class FilterMapFragment extends BottomSheetDialogFragment {
             filteredMapPinClasses.clear();
         getDialog().cancel();
         fragment.refreshMap();
+    }
+
+    @SuppressLint("NewApi")
+    public static void filterBunker(){
+        filteredMapPinClasses = new ArrayList<>();
+        MapFragment.mapPinClasses.forEach(mapPinClass -> {
+            if(mapPinClass.getType().equalsIgnoreCase("bunker"))
+                filteredMapPinClasses.add(mapPinClass);
+        });
+        Log.d(TAG, "Size : " + filteredMapPinClasses.size());
+        //then redirect to the map maybe
     }
 }
