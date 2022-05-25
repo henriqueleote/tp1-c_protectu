@@ -1,5 +1,7 @@
 package cm.protectu.Buildings;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +15,9 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.GeoPoint;
 
 import java.util.ArrayList;
 
@@ -23,6 +27,7 @@ import cm.protectu.Buildings.Earthquake.EarthquakeFragment;
 import cm.protectu.Buildings.Fire.FireFragment;
 import cm.protectu.Buildings.Hospital.HospitalFragment;
 import cm.protectu.Buildings.War.WarFragment;
+import cm.protectu.LocationAddress;
 import cm.protectu.R;
 
 public class MapBuildingFragment extends BottomSheetDialogFragment {
@@ -31,27 +36,33 @@ public class MapBuildingFragment extends BottomSheetDialogFragment {
     private ImageView closeBtn, buildingImage;
 
     //TextView
-    private TextView buildingNameTextView;
+    private TextView buildingNameTextView, locationTextView;
 
     //Button
     private Button seeMoreButton;
 
-    String buildingID, buildingName;
+    String buildingID, buildingName, contactNumber, type;
+
     ArrayList<String> images;
+
+    GeoPoint location;
 
     //Firebase Authentication
     FirebaseAuth mAuth;
 
-    String type;
+    private FloatingActionButton phoneButton, mapsButton;
+
 
     //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
 
-    public MapBuildingFragment(String buildingID, String buildingName, ArrayList<String> images, String type){
+    public MapBuildingFragment(String buildingID, String buildingName, ArrayList<String> images, String type, GeoPoint location, String contactNumber){
         this.buildingID = buildingID;
         this.buildingName = buildingName;
         this.images = images;
         this.type = type;
+        this.location = location;
+        this.contactNumber = contactNumber;
     }
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,7 +77,10 @@ public class MapBuildingFragment extends BottomSheetDialogFragment {
         closeBtn = view.findViewById(R.id.close);
         buildingImage = view.findViewById(R.id.buildingImage);
         buildingNameTextView = view.findViewById(R.id.buildingName);
+        locationTextView = view.findViewById(R.id.locationTextView);
         seeMoreButton = view.findViewById(R.id.seeMoreButton);
+        phoneButton = view.findViewById(R.id.phoneButton);
+        mapsButton = view.findViewById(R.id.mapsButton);
 
 
         //On click closes the form sheet
@@ -102,6 +116,25 @@ public class MapBuildingFragment extends BottomSheetDialogFragment {
             }
         });
 
+        mapsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String latitude = String.valueOf(location.getLatitude());
+                String longitude = String.valueOf(location.getLongitude());
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:"+latitude+","+longitude+"?q="+latitude+","+longitude+""));
+                startActivity(intent);
+            }
+        });
+
+        phoneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + contactNumber));
+                startActivity(intent);
+            }
+        });
+
         putData();
 
         //Returns the view
@@ -110,6 +143,7 @@ public class MapBuildingFragment extends BottomSheetDialogFragment {
 
     public void putData(){
         buildingNameTextView.setText(buildingName);
+        locationTextView.setText(LocationAddress.getLocation(getActivity(), location));
         Glide.with(getActivity()).load(images.get(0)).into(buildingImage);
     }
 

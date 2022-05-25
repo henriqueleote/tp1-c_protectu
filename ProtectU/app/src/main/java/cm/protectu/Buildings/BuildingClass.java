@@ -11,13 +11,15 @@ public class BuildingClass {
     String type;
     ArrayList<String> images;
     GeoPoint buildingLocation;
+    String buildingContact;
 
-    public BuildingClass(String buildingID, String buildingName, String type, ArrayList<String> images, GeoPoint buildingLocation) {
+    public BuildingClass(String buildingID, String buildingName, String type, ArrayList<String> images, GeoPoint buildingLocation, String buildingContact) {
         this.buildingID = buildingID;
         this.buildingName = buildingName;
         this.type = type;
         this.images = images;
         this.buildingLocation = buildingLocation;
+        this.buildingContact = buildingContact;
     }
 
     public GeoPoint getBuildingLocation() {
@@ -58,6 +60,14 @@ public class BuildingClass {
 
     public void setImages(ArrayList<String> images) {
         this.images = images;
+    }
+
+    public String getBuildingContact() {
+        return buildingContact;
+    }
+
+    public void setBuildingContact(String buildingContact) {
+        this.buildingContact = buildingContact;
     }
 
     @Override

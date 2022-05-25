@@ -3,6 +3,7 @@ package cm.protectu.Buildings.Hospital;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.location.Address;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -19,6 +20,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -48,6 +50,10 @@ public class HospitalFragment extends Fragment {
     private List<Address> addressesList;
     ProgressDialog progressDialog;
     SwipeRefreshLayout swipeRefreshLayout;
+    private FloatingActionButton phoneButton, mapsButton;
+    String hospitalContact;
+    private GeoPoint location;
+
 
 
     //TAG for debug logs
@@ -85,6 +91,8 @@ public class HospitalFragment extends Fragment {
         hospitalDescriptionTextView = view.findViewById(R.id.descriptionTextView);
         hospitalNumberOfBedsTextView = view.findViewById(R.id.hospitalNumberOfBedsTextView);
         swipeRefreshLayout = view.findViewById(R.id.swipeToRefresh);
+        phoneButton = view.findViewById(R.id.phoneButton);
+        mapsButton = view.findViewById(R.id.mapsButton);
         progressDialog = new ProgressDialog(getActivity());
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -117,6 +125,26 @@ public class HospitalFragment extends Fragment {
         });
 
 
+        mapsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String latitude = String.valueOf(location.getLatitude());
+                String longitude = String.valueOf(location.getLongitude());
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:"+latitude+","+longitude+"?q="+latitude+","+longitude+""));
+                startActivity(intent);
+            }
+        });
+
+        phoneButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + hospitalContact));
+                startActivity(intent);
+            }
+        });
+
+
         //Returns the view
         return view;
 
@@ -126,14 +154,14 @@ public class HospitalFragment extends Fragment {
         firebaseFirestore.collection("map-buildings").document(buildingID).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                GeoPoint location = null;
                 if (task.isSuccessful()){
                     DocumentSnapshot document = task.getResult();
                     images = (ArrayList<String>) document.get("images");
                     location = (GeoPoint) document.getGeoPoint("location");
                     hospitalNameTextView.setText(document.get("buildingName").toString());
-                    hospitalNumberOfBedsTextView.setText(document.get("hospitalNumberOfBeds").toString());
+                    hospitalNumberOfBedsTextView.setText(document.get("hospitalNumberOfBeds").toString() + " camas");
                     hospitalDescriptionTextView.setText(document.get("hospitalDescription").toString());
+                    hospitalContact = document.get("buildingContact").toString();
                     //Images Adapter
                     adapter = new SliderAdapter(getActivity(), images);
                     sliderView.setAutoCycleDirection(SliderView.LAYOUT_DIRECTION_LTR);

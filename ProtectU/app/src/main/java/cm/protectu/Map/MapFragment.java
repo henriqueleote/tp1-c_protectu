@@ -297,6 +297,7 @@ public class MapFragment extends Fragment {
                                                 MapPinClass mapPin = new MapPinClass(document.getId(), location, document.get("type").toString());
                                                 mapPinClasses.add(mapPin);
 
+                                                //TODO SOMETIMES DOESNT LOAD OR CRASHES
                                                 LatLng latLng = new LatLng(mapPin.getLocation().getLatitude(), mapPin.getLocation().getLongitude());
                                                 mapPinTypes.forEach(mapPinType -> {
                                                     if(mapPin.getType().equals(mapPinType.getType())){
@@ -357,7 +358,7 @@ public class MapFragment extends Fragment {
                                             for (QueryDocumentSnapshot document : task.getResult()) {
                                                 Log.d(TAG, "\nBuilding Object Data (Database) => " + document.getData() + "\n");
                                                 ArrayList<String> images = (ArrayList<String>) document.get("images");
-                                                BuildingClass building = new BuildingClass(document.get("buildingID").toString(), document.get("buildingName").toString(), document.get("type").toString(), images, new GeoPoint(document.getGeoPoint("location").getLatitude(), document.getGeoPoint("location").getLongitude()));
+                                                BuildingClass building = new BuildingClass(document.get("buildingID").toString(), document.get("buildingName").toString(), document.get("type").toString(), images, new GeoPoint(document.getGeoPoint("location").getLatitude(), document.getGeoPoint("location").getLongitude()), document.get("buildingContact").toString());
                                                 buildingsList.add(building);
                                             }
                                             mDialog.dismiss();
@@ -395,7 +396,7 @@ public class MapFragment extends Fragment {
                                     if(building == null)
                                         Toast.makeText(getActivity(), "Error getting building", Toast.LENGTH_SHORT).show();
                                     else{
-                                        MapBuildingFragment bottomBuilding = new MapBuildingFragment(building.getBuildingID(), building.getBuildingName(), building.getImages(), building.getType());
+                                        MapBuildingFragment bottomBuilding = new MapBuildingFragment(building.getBuildingID(), building.getBuildingName(), building.getImages(), building.getType(), building.getBuildingLocation(), building.getBuildingContact());
                                         bottomBuilding.show(getActivity().getSupportFragmentManager(), bottomBuilding.getTag());
                                     }
                                     return true;

@@ -58,7 +58,7 @@ public class NewWarFragment extends Fragment {
 
     private TextView locationTextView;
 
-    private EditText warNameEditText, warDeadCountEditText, warMissingCountEditText, warContactEditText;
+    private EditText warNameEditText, warDescriptionEditText, warDeadCountEditText, warMissingCountEditText, warContactEditText;
 
     private CountryCodePicker countryCodePicker;
 
@@ -112,6 +112,7 @@ public class NewWarFragment extends Fragment {
         imagesImageView = view.findViewById(R.id.imagesImageView);
         locationTextView = view.findViewById(R.id.locationTextView);
         warNameEditText = view.findViewById(R.id.warNameEditText);
+        warDescriptionEditText = view.findViewById(R.id.warDescriptionEditText);
         warDeadCountEditText = view.findViewById(R.id.warDeadCountEditText);
         warMissingCountEditText = view.findViewById(R.id.warMissingCountEditText);
         createButton = view.findViewById(R.id.createButton);
@@ -162,6 +163,7 @@ public class NewWarFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 createWar(warNameEditText.getText().toString(),
+                        warDescriptionEditText.getText().toString(),
                         warDeadCountEditText.getText().toString(),
                         warMissingCountEditText.getText().toString(),
                         warContactEditText.getText().toString());
@@ -270,12 +272,19 @@ public class NewWarFragment extends Fragment {
         }
     }
 
-    public void createWar(String warName, String warDeadCount, String warMissingCount, String contact){
+    public void createWar(String warName, String warDescription, String warDeadCount, String warMissingCount, String contact){
 
         // Name field check
         if (TextUtils.isEmpty(warName)) {
             warNameEditText.setError("Name is mandatory");
             warNameEditText.requestFocus();
+            return;
+        }
+
+        // Description field check
+        if (TextUtils.isEmpty(warDescription)) {
+            warDescriptionEditText.setError("Description is mandatory");
+            warDescriptionEditText.requestFocus();
             return;
         }
 
@@ -315,6 +324,7 @@ public class NewWarFragment extends Fragment {
         Map<String, Object> warData = new HashMap<>();
         warData.put("buildingID", buildingRef.getId());
         warData.put("buildingName", warName);
+        warData.put("buildingDescription", warDescription);
         warData.put("buildingContact", countryCodePicker.getSelectedCountryCodeWithPlus() + " " + contact);
         warData.put("warDeadCount", warDeadCount);
         warData.put("warMissingCount", warMissingCount);

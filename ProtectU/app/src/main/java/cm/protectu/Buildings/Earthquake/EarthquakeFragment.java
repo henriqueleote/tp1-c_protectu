@@ -133,8 +133,7 @@ public class EarthquakeFragment extends Fragment {
             public void onClick(View view) {
                 String latitude = String.valueOf(location.getLatitude());
                 String longitude = String.valueOf(location.getLongitude());
-                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                        Uri.parse("http://maps.google.com/maps?saddr=" + latitude + "&daddr=" + longitude + ""));
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:"+latitude+","+longitude+"?q="+latitude+","+longitude+""));
                 startActivity(intent);
             }
         });
@@ -165,10 +164,10 @@ public class EarthquakeFragment extends Fragment {
                     location = (GeoPoint) document.getGeoPoint("location");
                     Log.d(TAG, "Location - " + location.toString());
                     earthquakeNameTextView.setText(document.get("buildingName").toString());
-                    earthquakeRichterTextView.setText(document.get("earthquakeRichter").toString());
-                    earthquakeDeathCountTextView.setText(document.get("earthquakeDeathCount").toString());
-                    earthquakeMissingCountTextView.setText(document.get("earthquakeMissingCount").toString());
-                    earthquakeContact = "maddie";
+                    earthquakeRichterTextView.setText(document.get("earthquakeRichter").toString() + " de magnitude");
+                    earthquakeDeathCountTextView.setText(document.get("earthquakeDeathCount").toString() + " mortos");
+                    earthquakeMissingCountTextView.setText(document.get("earthquakeMissingCount").toString() + " desaparecidos");
+                    earthquakeContact = document.get("buildingContact").toString();
                     //Images Adapter
                     adapter = new SliderAdapter(getActivity(), images);
                     sliderView.setAutoCycleDirection(SliderView.LAYOUT_DIRECTION_LTR);
