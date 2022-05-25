@@ -11,13 +11,7 @@
     app:behavior_peekHeight="0dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/designOnly"
-        android:layout_width="160dp"
-        android:layout_height="5dp"
-        app:cardBackgroundColor="@color/black"
-        android:layout_centerHorizontal="true"
-        />
+
 
     <ImageView
         android:id="@+id/closeFilterID"
@@ -25,7 +19,7 @@
         android:layout_height="25dp"
         android:layout_alignParentRight="true"
         android:src="@drawable/ic_close_black_24dp"
-        android:layout_below="@+id/designOnly"/>
+        />
 
 
     <TextView
@@ -33,7 +27,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/designOnly"
         android:fontFamily="@font/lexend_regular"
         android:text="Age Range"
         android:textColor="#000000"
