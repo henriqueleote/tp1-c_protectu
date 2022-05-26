@@ -73,7 +73,7 @@ public class NewAlarmFragment extends BottomSheetDialogFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
             {
-                alarmT = parent.getItemAtPosition(position).toString().equals("Red");
+                alarmT = parent.getItemAtPosition(position).toString().equalsIgnoreCase("Red");
             }
 
             @Override

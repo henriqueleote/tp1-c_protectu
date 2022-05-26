@@ -239,7 +239,7 @@ public class NewPostNewsFragment extends BottomSheetDialogFragment {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
                             mDialog.dismiss();
-                            Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), getString(R.string.error), Toast.LENGTH_SHORT).show();
                         }
                     });
         }

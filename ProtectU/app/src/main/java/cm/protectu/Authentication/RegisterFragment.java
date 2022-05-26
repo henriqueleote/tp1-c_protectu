@@ -109,11 +109,11 @@ public class RegisterFragment extends BottomSheetDialogFragment {
                 if (isChecked) {
                     passwordText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                     passwordConfirmText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    passwordCheckBox.setText("Hide password");
+                    passwordCheckBox.setText(getString(R.string.hide_password));
                 } else {
                     passwordText.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     passwordConfirmText.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    passwordCheckBox.setText("Show password");
+                    passwordCheckBox.setText(getString(R.string.show_password));
                 }
             }
         });
@@ -154,11 +154,9 @@ public class RegisterFragment extends BottomSheetDialogFragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                //TODO FINISH THIS
                                 users = new ArrayList<>();
                                 List<Map<String, String>> usersData = (List<Map<String, String>>) document.get("users");
                                 usersData.forEach(user -> {
-                                    //array de mapas
                                     Log.d(TAG, "each -> " +user.get("code") + " " + user.get("logo") + " " + user.get("type"));
                                     users.add(new UserType(user.get("code"), user.get("logo"), user.get("type")));
                                 });
@@ -192,35 +190,35 @@ public class RegisterFragment extends BottomSheetDialogFragment {
 
         // First name field check
         if (TextUtils.isEmpty(name)) {
-            nameText.setError(getResources().getString(R.string.error_enter_your_name));  //Apresentar um erro
+            nameText.setError(getResources().getString(R.string.error_enter_your_name));
             nameText.requestFocus();
             return;
         }
 
         // Last name field check
         if (TextUtils.isEmpty(surname)) {
-            surnameText.setError(getResources().getString(R.string.error_enter_your_surname));  //Apresentar um erro
+            surnameText.setError(getResources().getString(R.string.error_enter_your_surname));
             surnameText.requestFocus();
             return;
         }
 
         // Contact's field check
         if (TextUtils.isEmpty(contact)) {
-            contactText.setError(getResources().getString(R.string.error_invalid_contact));  //Apresentar um erro
+            contactText.setError(getResources().getString(R.string.error_invalid_contact));
             contactText.requestFocus();
             return;
         }
 
         // E-mail's field check
         if (TextUtils.isEmpty(email)) {
-            emailText.setError(getResources().getString(R.string.error_enter_your_mail));  //Apresentar um erro
+            emailText.setError(getResources().getString(R.string.error_enter_your_mail));
             emailText.requestFocus();
             return;
         }
 
         // Password's field check
         if (TextUtils.isEmpty(password)) {
-            passwordText.setError(getResources().getString(R.string.error_enter_your_password));  //Apresentar um erro
+            passwordText.setError(getResources().getString(R.string.error_enter_your_password));
             passwordText.requestFocus();
             return;
         }
@@ -228,14 +226,14 @@ public class RegisterFragment extends BottomSheetDialogFragment {
 
         // Email's string check
         if(!isEmailValid(email)){
-            emailText.setError(getResources().getString(R.string.error_email_not_valid));  //Apresentar um erro
+            emailText.setError(getResources().getString(R.string.error_email_not_valid));
             emailText.requestFocus();
             return;
         }
 
         //Check if both passwords match
         if(!confirmPassword.equals(password)){
-            passwordConfirmText.setError(getResources().getString(R.string.error_password_dont_match));  //Apresentar um erro
+            passwordConfirmText.setError(getResources().getString(R.string.error_password_dont_match));
             passwordConfirmText.requestFocus();
             return;
         }
@@ -254,7 +252,7 @@ public class RegisterFragment extends BottomSheetDialogFragment {
             return;
         } else{
             ProgressDialog mDialog = new ProgressDialog(getActivity());
-            mDialog.setMessage("Registering...");
+            mDialog.setMessage(getString(R.string.registering));
             mDialog.setCancelable(false);
             mDialog.show();
             //TODO Test with an existing email to see the error, and in Login, test with one that doesnt exist
@@ -267,8 +265,6 @@ public class RegisterFragment extends BottomSheetDialogFragment {
 
                                 //Set the Firebase User to the just logged in one
                                 user = mAuth.getCurrentUser();
-
-                                // TODO - Add date of register
                                 String url = "null";
                                 //Create HashMap object with the user's profile data
                                 Map<String, Object> userData = new HashMap<>();

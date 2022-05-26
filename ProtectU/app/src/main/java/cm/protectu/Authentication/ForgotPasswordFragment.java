@@ -42,9 +42,6 @@ public class ForgotPasswordFragment extends BottomSheetDialogFragment {
     //Firebase Authentication
     private FirebaseAuth mAuth;
 
-    //Firebase User
-    private FirebaseUser user;
-
     //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
 
@@ -84,7 +81,6 @@ public class ForgotPasswordFragment extends BottomSheetDialogFragment {
         return view;
     }
 
-    //TODO - Tests and add catches. Add the strings
     public void forgotPassword(String email){
 
         // E-mail's field check
@@ -96,7 +92,7 @@ public class ForgotPasswordFragment extends BottomSheetDialogFragment {
 
         // Email's string check
         if(!isEmailValid(email)){
-            emailText.setError(getResources().getString(R.string.error_email_not_valid));  //Apresentar um erro
+            emailText.setError(getResources().getString(R.string.error_email_not_valid));
             emailText.requestFocus();
             return;
         }

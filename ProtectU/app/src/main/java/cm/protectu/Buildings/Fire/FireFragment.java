@@ -73,12 +73,9 @@ public class FireFragment extends Fragment {
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
 
-        //TODO Check the animation
         //Checks if there is a session, if not, redirects to the Auth page
         if (mAuth.getCurrentUser() == null) {
             getActivity().finish();
-            //Swipe animation ?? not sure, consult previous code
-            //getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             startActivity(new Intent(getActivity(), AuthActivity.class));
         }
 
@@ -161,8 +158,8 @@ public class FireFragment extends Fragment {
                     location = (GeoPoint) document.getGeoPoint("location");
                     fireNameTextView.setText(document.get("buildingName").toString());
                     descriptionTextView.setText(document.get("buildingDescription").toString());
-                    fireDeathCountTextView.setText(document.get("fireDeathCount").toString() + " mortos");
-                    fireMissingCountTextView.setText(document.get("fireMissingCount").toString() + " desaparecidos");
+                    fireDeathCountTextView.setText(document.get("fireDeathCount").toString() + " " + getString(R.string.deads));
+                    fireMissingCountTextView.setText(document.get("fireMissingCount").toString() + " " + getString(R.string.missing));
                     fireContact = document.get("buildingContact").toString();
                     //Images Adapter
                     adapter = new SliderAdapter(getActivity(), images);

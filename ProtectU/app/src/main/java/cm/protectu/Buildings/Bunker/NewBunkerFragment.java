@@ -107,12 +107,9 @@ public class NewBunkerFragment extends Fragment {
 
         firebaseStorage = FirebaseStorage.getInstance();
 
-        //TODO Check the animation
         //Checks if there is a session, if not, redirects to the Auth page
         if (mAuth.getCurrentUser() == null) {
             getActivity().finish();
-            //Swipe animation ?? not sure, consult previous code
-            //getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             startActivity(new Intent(getActivity(), AuthActivity.class));
         }
 
@@ -136,14 +133,13 @@ public class NewBunkerFragment extends Fragment {
 
         locationTextView.setText(LocationAddress.getLocation(getActivity(), location));
 
-        //TODO AT LEAST ONE PHOTO
         //On click closes the form sheet
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setCancelable(false);
-                builder.setMessage("Are you sure you want to return? All progress will be lost")
+                builder.setMessage(getString(R.string.areYouSureProgressLost))
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 getFragmentManager().beginTransaction()
@@ -183,7 +179,7 @@ public class NewBunkerFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Choose extras");
+                builder.setTitle(getString(R.string.chooseExtras));
                 builder.setCancelable(false);
 
                 String[] extras = new String[buildingExtras.size()];
@@ -201,7 +197,7 @@ public class NewBunkerFragment extends Fragment {
                     }
                 });
 
-                builder.setPositiveButton("Adicionar", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(getString(R.string.add), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         buildingExtrasTextView.setText("");
@@ -220,7 +216,7 @@ public class NewBunkerFragment extends Fragment {
                     }
                 });
 
-                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // use for loop
@@ -258,10 +254,10 @@ public class NewBunkerFragment extends Fragment {
                 int totalItems = data.getClipData().getItemCount();
 
                 if(totalItems < 1){
-                    Toast.makeText(getActivity(), "Images are mandatory", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.images_mandatory), Toast.LENGTH_SHORT).show();
                     return;
                 }else if(totalItems > 6){
-                    Toast.makeText(getActivity(), "Cant have more than 6 images", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.limit_six_images), Toast.LENGTH_SHORT).show();
                     return;
                 }else{
                     Glide.with(getActivity())
@@ -290,7 +286,7 @@ public class NewBunkerFragment extends Fragment {
             }
 
             ProgressDialog mDialog = new ProgressDialog(getActivity());
-            mDialog.setMessage("Loading image(s)...");
+            mDialog.setMessage(getString(R.string.loading_images));
             mDialog.setCancelable(false);
             mDialog.show();
 
@@ -319,7 +315,7 @@ public class NewBunkerFragment extends Fragment {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
                         mDialog.dismiss();
-                        Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.error), Toast.LENGTH_SHORT).show();
                     }
                 });
             });
@@ -331,14 +327,14 @@ public class NewBunkerFragment extends Fragment {
 
         // Name field check
         if (TextUtils.isEmpty(bunkerName)) {
-            bunkerNameEditText.setError("Name is mandatory");
+            bunkerNameEditText.setError(getString(R.string.name_mandatory));
             bunkerNameEditText.requestFocus();
             return;
         }
 
         // Description field check
         if (TextUtils.isEmpty(bunkerDescription)) {
-            bunkerDescriptionEditText.setError("Description is mandatory");
+            bunkerDescriptionEditText.setError(getString(R.string.description_mandatory));
             bunkerDescriptionEditText.requestFocus();
             return;
         }
@@ -351,13 +347,13 @@ public class NewBunkerFragment extends Fragment {
         }
 
         if(uriList.isEmpty() && imagesLinks.isEmpty()){
-            Toast.makeText(getActivity(), "Images are mandatory", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.images_mandatory), Toast.LENGTH_SHORT).show();
             return;
         }
 
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setTitle("Adding bunker");
-        progressDialog.setMessage("Loading...");
+        progressDialog.setTitle(getString(R.string.adding_bunker));
+        progressDialog.setMessage(getString(R.string.loading));
         progressDialog.setCancelable(false);
         progressDialog.show();
 

@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Sign up"
+        android:text="@string/sign_up"
         android:textColor="#000000"
         android:textSize="20sp" />
 
@@ -37,7 +37,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:drawablePadding="10dp"
-        android:hint="First name"
+        android:hint="@string/first_name"
         android:inputType="text"
         android:textSize="15sp" />
 
@@ -49,7 +49,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:drawablePadding="10dp"
-        android:hint="Last name"
+        android:hint="@string/last_name"
         android:inputType="text"
         android:textSize="15sp" />
 
@@ -79,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="10dp"
-            android:hint="Phone number"
+            android:hint="@string/phone_number"
             android:inputType="number"
             android:textSize="15sp"
             android:layout_weight="1"
@@ -109,7 +109,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:drawablePadding="10dp"
-        android:hint="Password"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:textSize="15sp" />
 
@@ -122,7 +122,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:drawablePadding="10dp"
-        android:hint="Confirm your password"
+        android:hint="@string/confirm_password"
         android:inputType="textPassword"
         android:textSize="15sp" />
 
@@ -134,7 +134,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:drawablePadding="10dp"
-        android:hint="Security pin"
+        android:hint="@string/security_pin"
         android:inputType="numberPassword"
         android:textSize="15sp" />
 
@@ -145,7 +145,7 @@
         android:layout_below="@+id/securityCodeText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        android:text="Password"
+        android:text="@string/show_password"
         android:textColor="#000000" />
 
     <Button
@@ -155,7 +155,7 @@
         android:layout_below="@+id/passwordCheckBox"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="Sign up"
+        android:text="@string/sign_up"
         android:textColor="#FFFFFF"
         android:backgroundTint="@color/primary_button"/>
 

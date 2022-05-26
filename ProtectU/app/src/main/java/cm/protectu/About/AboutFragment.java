@@ -43,12 +43,10 @@ public class AboutFragment extends Fragment {
         arrowBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MapFragment fragment = new MapFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragment_container, fragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new MapFragment())
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 

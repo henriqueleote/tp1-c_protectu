@@ -121,14 +121,13 @@ public class NewHospitalFragment extends Fragment {
 
         locationTextView.setText(LocationAddress.getLocation(getActivity(), location));
 
-        //TODO AT LEAST ONE PHOTO
         //On click closes the form sheet
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setCancelable(false);
-                builder.setMessage("Are you sure you want to return? All progress will be lost")
+                builder.setMessage(getString(R.string.areYouSureProgressLost))
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 getFragmentManager().beginTransaction()
@@ -187,10 +186,10 @@ public class NewHospitalFragment extends Fragment {
                 int totalItems = data.getClipData().getItemCount();
 
                 if(totalItems < 1){
-                    Toast.makeText(getActivity(), "Images are mandatory", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.images_mandatory), Toast.LENGTH_SHORT).show();
                     return;
                 }else if(totalItems > 6){
-                    Toast.makeText(getActivity(), "Cant have more than 6 images", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.limit_six_images), Toast.LENGTH_SHORT).show();
                     return;
                 }else{
                     Glide.with(getActivity())
@@ -220,7 +219,7 @@ public class NewHospitalFragment extends Fragment {
             }
 
             ProgressDialog mDialog = new ProgressDialog(getActivity());
-            mDialog.setMessage("Loading image(s)...");
+            mDialog.setMessage(getString(R.string.loading_images));
             mDialog.setCancelable(false);
             mDialog.show();
 
@@ -249,7 +248,7 @@ public class NewHospitalFragment extends Fragment {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
                         mDialog.dismiss();
-                        Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.error), Toast.LENGTH_SHORT).show();
                     }
                 });
             });
@@ -261,40 +260,40 @@ public class NewHospitalFragment extends Fragment {
 
         // Name field check
         if (TextUtils.isEmpty(hospitalName)) {
-            hospitalNameEditText.setError("Name is mandatory");
+            hospitalNameEditText.setError(getString(R.string.name_mandatory));
             hospitalNameEditText.requestFocus();
             return;
         }
 
         // Description field check
         if (TextUtils.isEmpty(hospitalDescription)) {
-            hospitalDescriptionEditText.setError("Description is mandatory");
+            hospitalDescriptionEditText.setError(getString(R.string.description_mandatory));
             hospitalDescriptionEditText.requestFocus();
             return;
         }
 
         // Number Of Beds field check
         if (TextUtils.isEmpty(hospitalBedCount)) {
-            hospitalBedCountEditText.setError("Beds count is mandatory");
+            hospitalBedCountEditText.setError(getString(R.string.beds_count_mandatory));
             hospitalBedCountEditText.requestFocus();
             return;
         }
 
         // Contact's field check
         if (TextUtils.isEmpty(contact)) {
-            hospitalContactEditText.setError(getResources().getString(R.string.error_invalid_contact));  //Apresentar um erro
+            hospitalContactEditText.setError(getResources().getString(R.string.error_invalid_contact));
             hospitalContactEditText.requestFocus();
             return;
         }
 
         if(uriList.isEmpty() && imagesLinks.isEmpty()){
-            Toast.makeText(getActivity(), "Images are mandatory", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.images_mandatory), Toast.LENGTH_SHORT).show();
             return;
         }
 
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setTitle("Adding hospital");
-        progressDialog.setMessage("Loading...");
+        progressDialog.setTitle(getString(R.string.adding_hospital));
+        progressDialog.setMessage(getString(R.string.loading));
         progressDialog.setCancelable(false);
         progressDialog.show();
 

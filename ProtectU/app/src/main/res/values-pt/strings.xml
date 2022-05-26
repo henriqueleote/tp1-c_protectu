@@ -73,4 +73,5 @@
     <string name="camera">Camera</string>
     <string name="see_more">ver mais</string>
     <string name="question_app_will_restart">A app vai reiniciar, tem a certeza?</string>
+    <string name="cancel">Cancel</string>
 </resources>

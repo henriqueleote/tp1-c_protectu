@@ -182,7 +182,6 @@ public class MapFragment extends Fragment {
             }
         });
 
-        //TODO Comment
         changeMapTypeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -397,11 +396,6 @@ public class MapFragment extends Fragment {
 
                             /*  THESE THREE LISTENERS ABOVE CAN'T BE IN OUTSIDE METHODS OR THEY WONT BE CALLED  */
 
-                            //TODO CHECK IF IT ROTATES WHEN ON MOBILE
-
-                            //TODO It would be nice instead of a marker, put those blue dots from google
-                            // and apple maps with the compass sensor telling where it's turned to
-
                             //Loads the map without animation with the device's current location in the map
                             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(location.getLatitude(), location.getLongitude()), 12));
 
@@ -431,52 +425,6 @@ public class MapFragment extends Fragment {
         });
     }
 
-    //TODO - Add the filter with the method where equals before the get, would be nice if it was possible to do without duplicate code.
-    //TODO CHECK IF IT WORKS PROPERLY
-    //Gets the map's pins from firebase to an arraylist
-    public void getPinsFromDatabase() {
-        firebaseFirestore.collection("map-pins")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, "\nPin Object Data (Database) => " + document.getData() + "\n");
-                                GeoPoint location = document.getGeoPoint("location");
-                                MapPinClass pin = new MapPinClass(document.getId(), location, document.get("type").toString());
-                                Log.d(TAG, "\nPin Object Data (Object) => " + pin + "\n");
-                                mapPinClasses.add(pin);
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-    }
-
-    //TODO - IT WORKS WITH THE ARRAY
-    //TODO - SOMETIMES DOESN'T WORK, I THINK ITS BECAUSE OF THE INTERNET ACCESS, WE HAVE TO PUT THE LOAD AS AN ASYNC FUNCTION
-    //Gets the map's zones from firebase to an arraylist
-    public void getZoneFromDatabase() {
-        firebaseFirestore.collection("map-zones")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, "\nZone Object Data (Database) => " + document.getData() + "\n");
-                                List<Object> polyPoint = (List<Object>) document.get("points");
-                                mapZoneClasses.add(polyPoint);
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-    }
-
 
     //TODO ERROR WHEN THE APP ITS OPENED AND WE GO DIRECTLY TO THE PROFILE
     //TODO FIX THIS ERROR
@@ -498,9 +446,6 @@ public class MapFragment extends Fragment {
         Log.d(TAG, "MapPin: " + mapPinClasses.toString());
         //TODO FIX THE INTERNET PROBLEM, IF THATS THE PROBLEM
         //TODO FIX THE ICON PROBLEM, FROM DRAWABLE VECTOR TO BITMAP
-        //TODO ADD THE IFS WITH THE TYPE
-        //TODO ADD THE DANGER ZONE
-        //TODO ADD THE WINDOW ON CLICK
         mapPinClasses.forEach(mapPinClass -> {
             BitmapDescriptor icon = null;
             LatLng latLng = new LatLng(mapPinClass.getLocation().getLatitude(), mapPinClass.getLocation().getLongitude());

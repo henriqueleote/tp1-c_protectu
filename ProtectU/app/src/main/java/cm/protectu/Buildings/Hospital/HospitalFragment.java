@@ -73,12 +73,9 @@ public class HospitalFragment extends Fragment {
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
 
-        //TODO Check the animation
         //Checks if there is a session, if not, redirects to the Auth page
         if (mAuth.getCurrentUser() == null) {
             getActivity().finish();
-            //Swipe animation ?? not sure, consult previous code
-            //getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             startActivity(new Intent(getActivity(), AuthActivity.class));
         }
 
@@ -159,7 +156,7 @@ public class HospitalFragment extends Fragment {
                     images = (ArrayList<String>) document.get("images");
                     location = (GeoPoint) document.getGeoPoint("location");
                     hospitalNameTextView.setText(document.get("buildingName").toString());
-                    hospitalNumberOfBedsTextView.setText(document.get("hospitalNumberOfBeds").toString() + " camas");
+                    hospitalNumberOfBedsTextView.setText(document.get("hospitalNumberOfBeds").toString() + " " + getString(R.string.beds));
                     hospitalDescriptionTextView.setText(document.get("hospitalDescription").toString());
                     hospitalContact = document.get("buildingContact").toString();
                     //Images Adapter

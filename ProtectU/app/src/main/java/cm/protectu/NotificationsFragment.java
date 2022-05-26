@@ -8,17 +8,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
+import cm.protectu.Map.MapFragment;
+import cm.protectu.Profile.ProfileFragment;
 
 public class NotificationsFragment extends Fragment {
 
     private SwitchCompat enabled;
     private Button btnSave;
+    private ImageView btnBack;
     private String notifications;
 
     @Nullable
@@ -28,6 +34,7 @@ public class NotificationsFragment extends Fragment {
 
         enabled = view.findViewById(R.id.notificationSwitch);
         btnSave = view.findViewById(R.id.btnSave);
+        btnBack = view.findViewById(R.id.backID);
 
         PrefManager prefManager = new PrefManager(getActivity());
 
@@ -67,6 +74,17 @@ public class NotificationsFragment extends Fragment {
                 }
             }
         });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new MapFragment())
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
         return view;
     }
 }

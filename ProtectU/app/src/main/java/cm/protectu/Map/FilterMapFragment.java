@@ -73,8 +73,6 @@ public class FilterMapFragment extends BottomSheetDialogFragment {
         FilterMapAdapter adapter = new FilterMapAdapter(getActivity(), mapPinTypes);
         listView.setAdapter(adapter);
 
-        //TODO IF ALREADY IN FILTER, TRUE IN THE CHECKBOX
-
         //On click closes the form sheet
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override

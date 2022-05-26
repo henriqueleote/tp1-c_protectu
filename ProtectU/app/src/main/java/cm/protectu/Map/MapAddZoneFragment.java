@@ -268,7 +268,7 @@ public class MapAddZoneFragment extends Fragment {
             //shows a progress dialog meanwhile
             ProgressDialog progressDialog = new ProgressDialog(getActivity());
             progressDialog.setTitle("Adding zone");
-            progressDialog.setMessage("Loading...");
+            progressDialog.setMessage(getString(R.string.loading));
             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progressDialog.setCancelable(false);
             progressDialog.show();

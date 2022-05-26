@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Create hospital details"
+        android:text="@string/create_hospital_details"
         android:textColor="@color/black"
         android:textSize="22dp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -90,7 +90,7 @@
         android:drawablePadding="10dp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
-        android:hint="Beds number"
+        android:hint="@string/beds_number"
         android:maxLength="20"
         android:inputType="number"
         android:textSize="15sp"
@@ -124,7 +124,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawablePadding="10dp"
-            android:hint="Contacto number"
+            android:hint="@string/emergency_number"
             android:inputType="number"
             android:textSize="15sp"
             android:layout_weight="1"
@@ -151,7 +151,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:drawablePadding="10dp"
-        android:hint="Add images (max. 6)"
+        android:hint="@string/add_images_max_six"
         android:inputType="text"
         android:textColor="@color/black"
         android:textSize="15sp"
@@ -176,8 +176,6 @@
             android:layout_height="100dp"
             android:layout_gravity="center"
             android:src="@drawable/ic_camera_black_24dp" />
-
-
 
     </androidx.cardview.widget.CardView>
 

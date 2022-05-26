@@ -90,7 +90,6 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        //TODO Open edit profile page
         //On click opens edit page
         editImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,22 +133,11 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        //TODO Check the animation
         //Checks if there is a session, if not, redirects to the Auth page
         if (mAuth.getCurrentUser() == null) {
             getActivity().finish();
-            //Swipe animation ?? not sure, consult previous code
-            //getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             startActivity(new Intent(getActivity(), AuthActivity.class));
         }
-
-        //TODO Check the animation
-        //If the user is anonymous
-        /*if (mAuth.getCurrentUser().getEmail().equals(null)) {
-            getActivity().finish();
-            MainActivity main = new MainActivity();
-            main.loadFragment(new MapFragment());
-        }*/
 
         //Gets the data from Firestore
         getData();
@@ -159,7 +147,6 @@ public class ProfileFragment extends Fragment {
 
     }
 
-    //TODO - Add progress bar or splash screen
     //Method to get profile data from Firestore Database
     public void getData(){
 

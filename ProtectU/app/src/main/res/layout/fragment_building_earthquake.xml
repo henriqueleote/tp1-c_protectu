@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:fontFamily="@font/lexend_regular"
-                android:text="Lisboa"
+                android:text=""
                 android:textColor="@color/black" />
         </LinearLayout>
 
@@ -83,7 +83,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/lexend_regular"
-            android:text="Magnitude"
+            android:text="@string/_magnitude"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -106,7 +106,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/lexend_regular"
-            android:text="Deaths"
+            android:text="@string/deaths"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -129,7 +129,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/lexend_regular"
-            android:text="Missing"
+            android:text="@string/_missing"
             android:textColor="@color/black"
             android:textSize="20sp" />
 

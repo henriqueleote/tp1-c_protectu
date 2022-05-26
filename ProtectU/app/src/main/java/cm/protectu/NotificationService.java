@@ -69,7 +69,7 @@ public class NotificationService extends Service {
                                         triggerNotification(alarmClass.getMessage(), alarmClass.getSubMessage());
                                     }
                                 } else {
-                                    Log.d(TAG, "Error");
+                                    Log.d(TAG, getString(R.string.error));
                                 }
                             }
                         });

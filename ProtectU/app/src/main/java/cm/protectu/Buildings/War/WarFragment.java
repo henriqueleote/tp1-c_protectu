@@ -73,12 +73,9 @@ public class WarFragment extends Fragment {
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
 
-        //TODO Check the animation
         //Checks if there is a session, if not, redirects to the Auth page
         if (mAuth.getCurrentUser() == null) {
             getActivity().finish();
-            //Swipe animation ?? not sure, consult previous code
-            //getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             startActivity(new Intent(getActivity(), AuthActivity.class));
         }
 
@@ -161,8 +158,8 @@ public class WarFragment extends Fragment {
                     location = (GeoPoint) document.getGeoPoint("location");
                     warNameTextView.setText(document.get("buildingName").toString());
                     warDescriptionTextView.setText(document.get("buildingDescription").toString());
-                    warDeadCountTextView.setText(document.get("warDeadCount").toString() + " mortos");
-                    warMissingCountTextView.setText(document.get("warMissingCount").toString() + " desaparecidos");
+                    warDeadCountTextView.setText(document.get("warDeadCount").toString() + " " + getString(R.string.deads));
+                    warMissingCountTextView.setText(document.get("warMissingCount").toString() + " " + getString(R.string.missing));
                     warContact = document.get("buildingContact").toString();
                     //Images Adapter
                     adapter = new SliderAdapter(getActivity(), images);

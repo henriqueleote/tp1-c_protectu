@@ -191,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
                                     }
                                 } else {
-                                    Log.d(TAG, "Error");
+                                    Log.d(TAG, getString(R.string.error));
                                 }
                             }
                         });
@@ -254,7 +254,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-        //TODO CHECK WHY THE MAP SHOWS IN THE NEWS WHEN IN LAUNCH
         //Switch case to load the fragment based on the bottom navbar option
         switch (item.getItemId()) {
             case R.id.navigation_map:
@@ -348,7 +347,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                             if(code == 1)
                                 loadFragment(currentFragment);
                         } else {
-                            //TODO Maybe reload the page or kill the session?
                             //Shows the error
                             Log.w(TAG, "Error getting documents.", task.getException());
                         }
@@ -401,6 +399,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     haveConnectedMobile = true;
         }
         return haveConnectedWifi || haveConnectedMobile;
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }
 

@@ -77,7 +77,6 @@ public class EarthquakeFragment extends Fragment {
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
 
-        //TODO Check the animation
         //Checks if there is a session, if not, redirects to the Auth page
         if (mAuth.getCurrentUser() == null) {
             getActivity().finish();
@@ -164,9 +163,9 @@ public class EarthquakeFragment extends Fragment {
                     location = (GeoPoint) document.getGeoPoint("location");
                     Log.d(TAG, "Location - " + location.toString());
                     earthquakeNameTextView.setText(document.get("buildingName").toString());
-                    earthquakeRichterTextView.setText(document.get("earthquakeRichter").toString() + " de magnitude");
-                    earthquakeDeathCountTextView.setText(document.get("earthquakeDeathCount").toString() + " mortos");
-                    earthquakeMissingCountTextView.setText(document.get("earthquakeMissingCount").toString() + " desaparecidos");
+                    earthquakeRichterTextView.setText(document.get("earthquakeRichter").toString() + " " + getString(R.string.magnitude));
+                    earthquakeDeathCountTextView.setText(document.get("earthquakeDeathCount").toString() + " " + getString(R.string.deads));
+                    earthquakeMissingCountTextView.setText(document.get("earthquakeMissingCount").toString() + " " + getString(R.string.missing));
                     earthquakeContact = document.get("buildingContact").toString();
                     //Images Adapter
                     adapter = new SliderAdapter(getActivity(), images);

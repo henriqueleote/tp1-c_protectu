@@ -4,7 +4,6 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="10dp">
-        <!-- //TODO ADD SHADOW -->
         <RelativeLayout
             android:layout_width="100dp"
             android:layout_height="100dp"
@@ -16,8 +15,7 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginTop="5dp"
-                    android:layout_centerHorizontal="true"
-                    android:src="@drawable/ic_building_bunk_beds_black_50dp" />
+                    android:layout_centerHorizontal="true" />
 
                 <TextView
                     android:id="@+id/buildingExtrasTextView"
@@ -28,7 +26,7 @@
                     android:fontFamily="@font/lexend_regular"
                     android:textColor="@color/black"
                     android:layout_below="@+id/buildingExtrasImageView"
-                    android:text="teste"/>
+                    android:text=""/>
 
 
         </RelativeLayout>

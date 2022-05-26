@@ -257,4 +257,10 @@ public class WelcomeScreenActivity extends AppCompatActivity {
         conf.locale = myLocale;
         res.updateConfiguration(conf, dm);
     }
+
+
+    @Override
+    public void onBackPressed() {
+
+    }
 }

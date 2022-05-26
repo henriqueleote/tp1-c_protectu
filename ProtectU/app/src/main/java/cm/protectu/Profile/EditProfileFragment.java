@@ -146,12 +146,9 @@ public class EditProfileFragment extends Fragment {
                     .into(profileImageView);
         }
 
-        //TODO Check the animation
         //Checks if there is a session, if not, redirects to the Auth page
         if (mAuth.getCurrentUser() == null) {
             getActivity().finish();
-            //Swipe animation ?? not sure, consult previous code
-            //getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             startActivity(new Intent(getActivity(), AuthActivity.class));
         }
 
@@ -225,8 +222,6 @@ public class EditProfileFragment extends Fragment {
 
 
             ProgressDialog mDialog = new ProgressDialog(getActivity());
-            //TODO UPDATE WITH STATUS
-
             mDialog.setMessage(getString(R.string.loading_image));
             mDialog.setCancelable(false);
             mDialog.show();
@@ -254,7 +249,7 @@ public class EditProfileFragment extends Fragment {
                         @Override
                         public void onFailure(@NonNull Exception exception) {
                             mDialog.dismiss();
-                            Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), getString(R.string.error), Toast.LENGTH_SHORT).show();
                         }
                     });
         }
@@ -285,12 +280,6 @@ public class EditProfileFragment extends Fragment {
         }
     }
 
-    //TODO: REVIEW THE DOCUMENTATION
-    /**
-     * This method create a file for the photo, with the chosen directory for the file
-     * @return
-     * @throws IOException
-     */
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());

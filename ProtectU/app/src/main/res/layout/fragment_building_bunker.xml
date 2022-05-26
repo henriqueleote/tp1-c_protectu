@@ -71,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Lisboa"
+                android:text=""
                 android:fontFamily="@font/lexend_regular"
                 android:textColor="@color/black" />
         </LinearLayout>
@@ -89,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:fontFamily="@font/lexend_regular"
-                android:text="What it has?"
+                android:text="@string/what_it_has"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -100,7 +100,7 @@
                 android:layout_alignBottom="@+id/recyclerTitle"
                 android:layout_marginLeft="10dp"
                 android:layout_toEndOf="@id/recyclerTitle"
-                android:text="Swipe to see all"
+                android:text="@string/swipe_to_see_all"
                 android:fontFamily="@font/lexend_regular"
                 android:textColor="#3E3E3E" />
 
@@ -130,7 +130,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/lexend_regular"
-            android:text="Description"
+            android:text="@string/description"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -143,8 +143,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/lexend_regular"
-            android:justificationMode="inter_word"
-            android:text="Description" />
+            android:justificationMode="inter_word" />
 
     </RelativeLayout>
 

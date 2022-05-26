@@ -126,14 +126,13 @@ public class NewWarFragment extends Fragment {
 
         locationTextView.setText(LocationAddress.getLocation(getActivity(), location));
 
-        //TODO AT LEAST ONE PHOTO
         //On click closes the form sheet
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setCancelable(false);
-                builder.setMessage("Are you sure you want to return? All progress will be lost")
+                builder.setMessage(getString(R.string.areYouSureProgressLost))
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 getFragmentManager().beginTransaction()
@@ -193,13 +192,12 @@ public class NewWarFragment extends Fragment {
                 int totalItems = data.getClipData().getItemCount();
 
                 if(totalItems < 1){
-                    Toast.makeText(getActivity(), "Images are mandatory", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.images_mandatory), Toast.LENGTH_SHORT).show();
                     return;
                 }else if(totalItems > 6){
-                    Toast.makeText(getActivity(), "Cant have more than 6 images", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.limit_six_images), Toast.LENGTH_SHORT).show();
                     return;
                 }else{
-                    //TODO NOT PERFECT FIT
                     ViewGroup.LayoutParams params = imagesImageView.getLayoutParams();
                     params.width = ViewGroup.LayoutParams.MATCH_PARENT;
                     params.height = ViewGroup.LayoutParams.MATCH_PARENT;
@@ -218,7 +216,6 @@ public class NewWarFragment extends Fragment {
 
             }
             else if(data.getData() != null){
-                //TODO NOT PERFECT FIT
                 ViewGroup.LayoutParams params = imagesImageView.getLayoutParams();
                 params.width = ViewGroup.LayoutParams.MATCH_PARENT;
                 params.height = ViewGroup.LayoutParams.MATCH_PARENT;
@@ -235,7 +232,7 @@ public class NewWarFragment extends Fragment {
             }
 
             ProgressDialog mDialog = new ProgressDialog(getActivity());
-            mDialog.setMessage("Loading image(s)...");
+            mDialog.setMessage(getString(R.string.loading_images));
             mDialog.setCancelable(false);
             mDialog.show();
 
@@ -264,7 +261,7 @@ public class NewWarFragment extends Fragment {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
                         mDialog.dismiss();
-                        Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.error), Toast.LENGTH_SHORT).show();
                     }
                 });
             });
@@ -276,47 +273,47 @@ public class NewWarFragment extends Fragment {
 
         // Name field check
         if (TextUtils.isEmpty(warName)) {
-            warNameEditText.setError("Name is mandatory");
+            warNameEditText.setError(getString(R.string.name_mandatory));
             warNameEditText.requestFocus();
             return;
         }
 
         // Description field check
         if (TextUtils.isEmpty(warDescription)) {
-            warDescriptionEditText.setError("Description is mandatory");
+            warDescriptionEditText.setError(getString(R.string.description_mandatory));
             warDescriptionEditText.requestFocus();
             return;
         }
 
         // Death number field check
         if (TextUtils.isEmpty(warDeadCount)) {
-            warDeadCountEditText.setError("Death number is mandatory");
+            warDeadCountEditText.setError(getString(R.string.death_count_mandatory));
             warDeadCountEditText.requestFocus();
             return;
         }
 
         // Missing number field check
         if (TextUtils.isEmpty(warMissingCount)) {
-            warMissingCountEditText.setError("Missing number is mandatory");
+            warMissingCountEditText.setError(getString(R.string.missing_count_mandatory));
             warMissingCountEditText.requestFocus();
             return;
         }
 
         // Contact's field check
         if (TextUtils.isEmpty(contact)) {
-            warContactEditText.setError(getResources().getString(R.string.error_invalid_contact));  //Apresentar um erro
+            warContactEditText.setError(getResources().getString(R.string.error_invalid_contact));
             warContactEditText.requestFocus();
             return;
         }
 
         if(uriList.isEmpty() && imagesLinks.isEmpty()){
-            Toast.makeText(getActivity(), "Images are mandatory", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), getString(R.string.images_mandatory), Toast.LENGTH_SHORT).show();
             return;
         }
 
         ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setTitle("Adding war");
-        progressDialog.setMessage("Loading...");
+        progressDialog.setTitle(getString(R.string.adding_war));
+        progressDialog.setMessage(getString(R.string.loading));
         progressDialog.setCancelable(false);
         progressDialog.show();
 

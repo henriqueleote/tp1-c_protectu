@@ -178,7 +178,7 @@ public class CommunityFragment extends Fragment {
      */
     public void communityCardsData(String userId) {
         ProgressDialog cDialog = new ProgressDialog(getActivity());
-        cDialog.setMessage("Loading...");
+        cDialog.setMessage(getString(R.string.loading));
         cDialog.setCancelable(false);
         cDialog.show();
         listOfCommunityCards.clear();

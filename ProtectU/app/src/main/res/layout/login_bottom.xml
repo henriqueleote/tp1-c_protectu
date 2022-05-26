@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Login"
+        android:text="@string/sign_in"
         android:textColor="#000000"
         android:textSize="20sp" />
 
@@ -49,7 +49,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:drawablePadding="10dp"
-        android:hint="Password"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:textSize="15sp" />
 
@@ -57,7 +57,7 @@
         android:id="@+id/forgotPasswordBtn"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="Forgot password?"
+        android:text="@string/forgot_password"
         android:layout_centerHorizontal="true"
         android:textColor="@color/primary_button"
         android:gravity="right"
@@ -70,7 +70,7 @@
         android:layout_below="@+id/forgotPasswordBtn"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        android:text="Show password"
+        android:text="@string/show_password"
         android:textColor="#000000" />
 
 
@@ -82,7 +82,7 @@
         android:layout_below="@+id/passwordCheckBox"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="Login"
+        android:text="@string/sign_in"
         android:textColor="#FFFFFF"
         android:backgroundTint="@color/primary_button"/>
 

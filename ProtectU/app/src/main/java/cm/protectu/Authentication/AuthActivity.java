@@ -117,7 +117,7 @@ public class AuthActivity extends AppCompatActivity {
     public void loginUserAnonymous() {
         ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
-        progressDialog.setMessage("Logging in...");
+        progressDialog.setMessage(getString(R.string.logging_in));
         progressDialog.show();
         mAuth.signInAnonymously()
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -148,5 +148,10 @@ public class AuthActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    public void onBackPressed() {
+
     }
 }

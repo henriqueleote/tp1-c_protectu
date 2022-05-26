@@ -34,7 +34,6 @@
         android:layout_marginStart="40dp"
         android:fontFamily="@font/lexend_regular"
         android:layout_marginTop="5dp"
-        android:text="Please proceed to the shelters immediately!"
         android:textColor="#858585"
         android:textSize="12sp" />
 

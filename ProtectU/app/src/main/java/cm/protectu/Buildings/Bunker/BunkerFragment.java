@@ -52,7 +52,6 @@ public class BunkerFragment extends Fragment {
     String buildingID;
     RelativeLayout backButton;
     private TextView bunkerNameTextView, locationTextView, descriptionTextView;
-    private List<Address> addressesList;
     private ArrayList<MapPinTypeClass> buildingAllExtrasList;
     private ArrayList<MapPinTypeClass> finalExtrasList;
     RecyclerView recyclerView;
@@ -65,11 +64,6 @@ public class BunkerFragment extends Fragment {
     private FloatingActionButton phoneButton, mapsButton;
     String bunkerContact;
     private GeoPoint location;
-
-
-
-    //TAG for debug logs
-    private static final String TAG = AuthActivity.class.getName();
 
     public BunkerFragment(String buildingID){
         this.buildingID = buildingID;
@@ -85,12 +79,9 @@ public class BunkerFragment extends Fragment {
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
 
-        //TODO Check the animation
         //Checks if there is a session, if not, redirects to the Auth page
         if (mAuth.getCurrentUser() == null) {
             getActivity().finish();
-            //Swipe animation ?? not sure, consult previous code
-            //getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             startActivity(new Intent(getActivity(), AuthActivity.class));
         }
 
@@ -207,7 +198,6 @@ public class BunkerFragment extends Fragment {
                 }
                 locationTextView.setText(LocationAddress.getLocation(getActivity(), location));
                 if(extras == null)
-                    //TODO MAYBE PUT A MESSAGE SAYING IT DOESNT HAVE ANY
                     buildingExtrasContainer.setVisibility(View.GONE);
                 else
                     getExtras();

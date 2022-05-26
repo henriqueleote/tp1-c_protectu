@@ -81,15 +81,14 @@ public class LoginFragment extends BottomSheetDialogFragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     passwordText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    passwordCheckBox.setText("Hide password");
+                    passwordCheckBox.setText(getString(R.string.hide_password));
                 } else {
                     passwordText.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    passwordCheckBox.setText("Show password");
+                    passwordCheckBox.setText(getString(R.string.show_password));
                 }
             }
         });
 
-        //TODO Close the one in the back
         //If users forgot the password, sends a recover link
         forgotPasswordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,7 +138,7 @@ public class LoginFragment extends BottomSheetDialogFragment {
         }
 
         ProgressDialog mDialog = new ProgressDialog(getActivity());
-        mDialog.setMessage("Logging in...");
+        mDialog.setMessage(getString(R.string.logging_in));
         mDialog.setCancelable(false);
         mDialog.show();
 
@@ -159,10 +158,9 @@ public class LoginFragment extends BottomSheetDialogFragment {
                             startActivity(new Intent(getActivity(), MainActivity.class));
                         } else {
                             mDialog.dismiss();
-                            //TODO NOT SHOWING THE ERRORS
                             try {
                                 throw task.getException();
-                            } catch(FirebaseAuthInvalidCredentialsException e) { //Error if password doesnt match the account //TODO error appears when email is wrong
+                            } catch(FirebaseAuthInvalidCredentialsException e) { //Error if password doesnt match the account
                                 passwordText.setError(getString(R.string.error_invalid_password));
                                 passwordText.requestFocus();
                                 passwordText.setText("");

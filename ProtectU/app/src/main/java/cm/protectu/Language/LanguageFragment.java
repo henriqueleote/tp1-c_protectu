@@ -13,13 +13,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.util.Locale;
 
+import cm.protectu.Map.MapFragment;
 import cm.protectu.PrefManager;
+import cm.protectu.Profile.ProfileFragment;
 import cm.protectu.R;
 import cm.protectu.WelcomeScreenActivity;
 
@@ -27,6 +31,7 @@ public class LanguageFragment extends Fragment {
 
     private CheckBox portugueseCheck, englishCheck;
     private Button btnSave;
+    private ImageView btnBack;
     private PrefManager prefManager;
     String language;
     View view;
@@ -44,6 +49,7 @@ public class LanguageFragment extends Fragment {
         portugueseCheck = view.findViewById(R.id.portugueseRadio);
         englishCheck = view.findViewById(R.id.englishRadio);
         btnSave = view.findViewById(R.id.btnSave);
+        btnBack = view.findViewById(R.id.backID);
 
         prefManager = new PrefManager(getActivity());
 
@@ -90,6 +96,16 @@ public class LanguageFragment extends Fragment {
                     portugueseCheck.setChecked(false);
                     language = "us";
                 }
+            }
+        });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, new MapFragment())
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 
