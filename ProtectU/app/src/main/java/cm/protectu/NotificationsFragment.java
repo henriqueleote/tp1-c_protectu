@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,8 @@ import androidx.fragment.app.Fragment;
 public class NotificationsFragment extends Fragment {
 
     private SwitchCompat enabled;
+    private Button btnSave;
+    private String notifications;
 
     @Nullable
     @Override
@@ -24,24 +27,23 @@ public class NotificationsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_notifications, container, false);
 
         enabled = view.findViewById(R.id.notificationSwitch);
+        btnSave = view.findViewById(R.id.btnSave);
 
         PrefManager prefManager = new PrefManager(getActivity());
-        if(prefManager.getNotifications().equals("true"))
+
+        if(prefManager.getNotifications().equalsIgnoreCase("true"))
             enabled.setChecked(true);
-        enabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    prefManager.setNotifications("true");
-                } else {
-                    NotificationManagerCompat.from(getContext()).cancelAll();
-                    prefManager.setNotifications("false");
-                }
+            public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setMessage(R.string.question_app_will_restart)
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                //code here
+                                prefManager.setNotifications(notifications);
+                                if (notifications.equalsIgnoreCase("false"))
+                                    NotificationManagerCompat.from(getContext()).cancelAll();
                                 getActivity().recreate();
                             }
                         })
@@ -52,6 +54,17 @@ public class NotificationsFragment extends Fragment {
                         });
                 // Create the AlertDialog object and return it
                 builder.show();
+            }
+        });
+
+        enabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    notifications = "true";
+                } else {
+                    notifications = "false";
+                }
             }
         });
         return view;
