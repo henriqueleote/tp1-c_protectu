@@ -7,19 +7,30 @@
     android:layout_height="match_parent"
     android:background="?attr/backgroundColor">
 
+    <ImageView
+        android:id="@+id/backID"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/ic_arrow_back_black_24dp"
+        app:tint="@color/black" />
+
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Linguagem"
-        android:textSize="30sp"
+        android:fontFamily="@font/lexend_regular"
+        android:paddingTop="15dp"
         android:textColor="@color/black"
-        android:fontFamily="@font/lexend_bold"
+        android:textSize="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="20dp"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
 
         <RelativeLayout

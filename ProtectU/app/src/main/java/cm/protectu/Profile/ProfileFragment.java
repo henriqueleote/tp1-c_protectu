@@ -169,8 +169,8 @@ public class ProfileFragment extends Fragment {
         mDialog.show();
 
         nameTextView.setText(MainActivity.sessionUser.getFirstName() + " " + MainActivity.sessionUser.getLastName());
-        emailTextView.setText(getString(R.string.email) + MainActivity.sessionUser.getEmail());
-        contactTextView.setText(getString(R.string.contact) + MainActivity.sessionUser.getPhoneNumber());
+        emailTextView.setText(/*getString(R.string.email) + */MainActivity.sessionUser.getEmail());
+        contactTextView.setText(/*getString(R.string.contact) + */MainActivity.sessionUser.getPhoneNumber());
         if(!MainActivity.sessionUser.getImageURL().equals("null")){
             Glide.with(getActivity())
                     .load(MainActivity.sessionUser.getImageURL())

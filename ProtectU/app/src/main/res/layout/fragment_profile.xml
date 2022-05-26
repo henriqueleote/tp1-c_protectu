@@ -35,105 +35,89 @@
 
     <ImageView
         android:id="@+id/profileImageView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_marginTop="100dp"
         android:src="@drawable/ic_bottom_profile_black_24dp"
-        app:layout_constraintBottom_toTopOf="@+id/nameAndEditLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_max="200dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_max="200dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:id="@+id/nameAndEditLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="70dp"
-        app:layout_constraintBottom_toTopOf="@+id/emailTextView"
-        app:layout_constraintEnd_toEndOf="@id/profileImageView"
-        app:layout_constraintStart_toStartOf="@id/profileImageView"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profileImageView">
 
         <TextView
             android:id="@+id/nameTextView"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginEnd="5dp"
             android:fontFamily="@font/lexend_regular"
             android:text="Name"
             android:textAlignment="center"
-            android:textSize="20dp"
-            app:layout_constraintEnd_toEndOf="@+id/nameAndEditLayout"
-            app:layout_constraintTop_toTopOf="@+id/nameAndEditLayout" />
+            android:textSize="20dp" />
 
+        <ImageView
+            android:id="@+id/editImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_edit_black_24dp" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
-    <ImageView
-        android:id="@+id/editImageView"
+    <TextView
+        android:id="@+id/emailTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:src="@drawable/ic_edit_black_24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/nameAndEditLayout"
-        app:layout_constraintStart_toEndOf="@+id/nameAndEditLayout"
-        app:layout_constraintTop_toTopOf="@+id/nameAndEditLayout" />
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/lexend_regular"
+        app:layout_constraintTop_toBottomOf="@+id/nameAndEditLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/contactTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/lexend_regular"
+        app:layout_constraintTop_toBottomOf="@+id/emailTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/removeCommunityButton"
-        android:layout_width="0dp"
+        android:layout_width="250dp"
         android:layout_height="75dp"
-        android:layout_marginBottom="5dp"
-        android:backgroundTint="#ff1100"
+        android:backgroundTint="#ED1C0E"
         android:fontFamily="@font/lexend_regular"
         android:scaleType="fitXY"
         android:text="@string/publicationsInCommunity"
-        app:layout_constraintBottom_toTopOf="@+id/removeMissingButton"
-        app:layout_constraintEnd_toEndOf="@+id/removeMissingButton"
-        app:layout_constraintStart_toStartOf="@+id/removeMissingButton"
-        app:layout_constraintTop_toBottomOf="@+id/contactTextView" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/contactTextView"
+        android:layout_marginTop="50dp"/>
 
     <Button
         android:id="@+id/removeMissingButton"
-        android:layout_width="200dp"
+        android:layout_width="250dp"
         android:layout_height="75dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginBottom="85dp"
         android:backgroundTint="#ff1100"
         android:fontFamily="@font/lexend_regular"
         android:scaleType="fitXY"
         android:text="@string/publicationsInMissing"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/removeCommunityButton" />
 
-    <TextView
-        android:id="@+id/emailTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="6dp"
-        android:fontFamily="@font/lexend_regular"
-        android:text="E-mail: "
-        app:layout_constraintBottom_toTopOf="@+id/contactTextView"
-        app:layout_constraintEnd_toEndOf="@+id/contactTextView"
-        app:layout_constraintStart_toStartOf="@+id/contactTextView"
-        app:layout_constraintTop_toBottomOf="@+id/nameAndEditLayout" />
 
-    <TextView
-        android:id="@+id/contactTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:fontFamily="@font/lexend_regular"
-        android:text="Contact: "
-        app:layout_constraintBottom_toTopOf="@+id/removeCommunityButton"
-        app:layout_constraintEnd_toEndOf="@+id/removeCommunityButton"
-        app:layout_constraintStart_toStartOf="@+id/removeCommunityButton"
-        app:layout_constraintTop_toBottomOf="@+id/emailTextView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

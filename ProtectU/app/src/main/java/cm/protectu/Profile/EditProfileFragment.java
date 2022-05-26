@@ -37,6 +37,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.hbb20.CountryCodePicker;
 
 import java.io.File;
 import java.io.IOException;
@@ -59,6 +60,7 @@ public class EditProfileFragment extends Fragment {
     private EditText firstNameEditText;
     private EditText lastNameEditText;
     private EditText contactEditText;
+    private CountryCodePicker countryCodePicker;
     private ImageView backButton, profileImageView;
     private FirebaseFirestore firebaseFirestore;
     private String name, surname, phoneNumber, imageURL;
@@ -95,9 +97,9 @@ public class EditProfileFragment extends Fragment {
         firstNameEditText = view.findViewById(R.id.firstNameEditText);
         lastNameEditText = view.findViewById(R.id.lastNameEditText);
         contactEditText = view.findViewById(R.id.contactEditText);
+        countryCodePicker = view.findViewById(R.id.contactPicker);
         backButton = view.findViewById(R.id.backButton);
         profileImageView = view.findViewById(R.id.profileImageView);
-        BottomNavigationView bottomBar = getActivity().findViewById(R.id.bottom_menu);
 
         oldDrawable = profileImageView.getDrawable();
 
@@ -121,22 +123,25 @@ public class EditProfileFragment extends Fragment {
             }
         });
 
-        //TODO -- It works but it's gone forever, doesn't restore
-        //Hide the bottom bar in this page
-        //bottomBar.setVisibility(View.INVISIBLE);
+        String currentString = "Fruit: they taste good";
+        String[] separated = MainActivity.sessionUser.getPhoneNumber().split(" ");
 
         //Initialize Firebase Firestore Database
         firebaseFirestore = FirebaseFirestore.getInstance();
 
+
         firebaseUrl = MainActivity.sessionUser.getImageURL();
         firstNameEditText.setText(MainActivity.sessionUser.getFirstName());
         lastNameEditText.setText(MainActivity.sessionUser.getLastName());
-        contactEditText.setText(MainActivity.sessionUser.getPhoneNumber());
+        countryCodePicker.setCountryForPhoneCode(Integer.parseInt(separated[0]));
+        contactEditText.setText(separated[1]);
+        Log.d(TAG, "Value = " + Integer.parseInt(separated[0]));
+        Log.d(TAG, "Value = " + separated[1]);
+
         if(!MainActivity.sessionUser.getImageURL().equals("null")){
             Glide.with(getActivity())
                     .load(MainActivity.sessionUser.getImageURL())
                     .centerCrop()
-                    
                     .circleCrop()
                     .into(profileImageView);
         }
@@ -164,8 +169,7 @@ public class EditProfileFragment extends Fragment {
                 userData.put("lastName", surname);
                 if(!contactEditText.equals(phoneNumber))
                     phoneNumber = contactEditText.getText().toString();
-                userData.put("phoneNumber", phoneNumber);
-                //TODO Check if he changed the image, with the field from the database
+                userData.put("phoneNumber", countryCodePicker.getSelectedCountryCodeWithPlus() + " " + phoneNumber);
                 userData.put("imageURL", firebaseUrl);
                 userData.put("email", MainActivity.sessionUser.getEmail());
                 userData.put("userType", MainActivity.sessionUser.getUserType());
@@ -216,7 +220,6 @@ public class EditProfileFragment extends Fragment {
             Glide.with(getActivity())
                     .load(imguri)
                     .centerCrop()
-                    
                     .circleCrop()
                     .into(profileImageView);
 

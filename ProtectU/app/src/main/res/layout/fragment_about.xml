@@ -31,9 +31,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:fontFamily="@font/lexend_regular"
             android:paddingTop="15dp"
             android:text="About"
-            android:fontFamily="@font/lexend_regular"
             android:textColor="@color/black"
             android:textSize="24dp" />
 
