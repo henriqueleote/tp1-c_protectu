@@ -85,4 +85,6 @@
     <string name="type_details">Type details</string>
     <string name="send_alert">Send alert</string>
     <string name="new_alarm">New Alarm</string>
+    <string name="enable_notifications">Enable notifications</string>
+    <bool name="notifications">true</bool>
 </resources>

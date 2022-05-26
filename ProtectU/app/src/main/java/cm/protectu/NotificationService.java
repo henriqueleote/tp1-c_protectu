@@ -44,9 +44,9 @@ public class NotificationService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.e(TAG, "onStartCommand");
         super.onStartCommand(intent, flags, startId);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && new PrefManager(this).getNotifications().equals("true")) {
             startForeground(8071987, triggerNotification("ProtectU", getResources().getString(R.string.pay_attention)));
-        }
+        } else stopForeground(true);
         firebaseFirestore = FirebaseFirestore.getInstance();
         firebaseFirestore.collection("air-alarm")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -89,8 +89,11 @@ public class NotificationService extends Service {
     public void onDestroy() {
         super.onDestroy();
         Log.e(TAG, "onDestroy");
-        Intent broadcastIntent = new Intent(this, SensorRestarterBroadcastReceiver.class);
-        sendBroadcast(broadcastIntent);
+        if(new PrefManager(this).getNotifications().equals("true")){
+            Intent broadcastIntent = new Intent(this, SensorRestarterBroadcastReceiver.class);
+            sendBroadcast(broadcastIntent);
+        }
+
     }
 
     public Notification triggerNotification(String title, String content) {
@@ -109,7 +112,6 @@ public class NotificationService extends Service {
                         .setContentIntent(PendingIntent.getActivity(getApplicationContext(), 0,
                                 new Intent(getApplicationContext(), MainActivity.class), 0))
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
         notificationManager.notify(8071987, notificationBuilder.build());
         return notificationBuilder.build();
     }

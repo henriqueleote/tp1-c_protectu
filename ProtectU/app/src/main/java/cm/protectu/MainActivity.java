@@ -107,12 +107,12 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 //            setTheme(R.style.Theme_Dark);
 //        }else
 //            setTheme(R.style.Theme_Light);
-
+        PrefManager prefManager = new PrefManager(this);
         mSensorService = new NotificationService();
         mServiceIntent = new Intent(this, NotificationService.class);
-        if (!isMyServiceRunning(mSensorService.getClass())) {
+        if (prefManager.getNotifications().equals("true") && !isMyServiceRunning(mSensorService.getClass())) {
             startService(mServiceIntent);
-        }
+        }else stopService(mServiceIntent);
         //brightness sensor
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensorLight = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
@@ -233,6 +233,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
                     case R.id.navigation_customize:
                         currentFragment = new CustomizationFragment();
+                        break;
+
+                    case R.id.navigation_notifications:
+                        currentFragment = new NotificationsFragment();
                         break;
 
                     case R.id.navigation_logout:
