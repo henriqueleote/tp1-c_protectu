@@ -9,98 +9,64 @@
 
 
     <TextView
-        android:id="@+id/txtLanguage"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:text="Linguagem"
+        android:textSize="30sp"
+        android:textColor="@color/black"
         android:fontFamily="@font/lexend_bold"
-        android:text="@string/lbl_languague"
-        android:textAlignment="center"
-        android:textColor="?attr/textColor"
-        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="20dp"/>
 
 
-    <TextView
-        android:id="@+id/txtEnglish"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:fontFamily="@font/lexend_regular"
-        android:paddingVertical="6dp"
-        android:paddingStart="25dp"
-        android:text="English"
-        android:textColor="?attr/textColor"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtLanguage" />
+        <RelativeLayout
+            android:id="@+id/portugueseContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/title">
+            <TextView
+                android:id="@+id/portugueseTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="Portuguese"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
+            <CheckBox
+                android:id="@+id/portugueseRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/portugueseTextView"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="20dp"/>
+        </RelativeLayout>
 
-    <TextView
-        android:id="@+id/txtPortuguese"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/lexend_regular"
-        android:paddingVertical="8dp"
-        android:paddingStart="25dp"
-        android:text="Português"
-        android:textColor="?attr/textColor"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/txtFrench"
-        app:layout_constraintStart_toStartOf="@+id/txtFrench"
-        app:layout_constraintTop_toBottomOf="@+id/txtEnglish" />
+        <RelativeLayout
+            android:id="@+id/englishContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/portugueseContainer">
+            <TextView
+                android:id="@+id/englishTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="English"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
-
-    <TextView
-        android:id="@+id/txtFrench"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/lexend_regular"
-        android:paddingVertical="8dp"
-        android:paddingStart="25dp"
-        android:text="Français"
-        android:textColor="?attr/textColor"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/txtGerman"
-        app:layout_constraintStart_toStartOf="@+id/txtGerman"
-        app:layout_constraintTop_toBottomOf="@+id/txtPortuguese" />
-
-
-    <TextView
-        android:id="@+id/txtGerman"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/lexend_regular"
-        android:paddingVertical="8dp"
-        android:paddingStart="25dp"
-        android:text="Deutsch"
-        android:textColor="?attr/textColor"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@+id/txtUkrainian"
-        app:layout_constraintStart_toStartOf="@+id/txtUkrainian"
-        app:layout_constraintTop_toBottomOf="@+id/txtFrench" />
-
-
-    <TextView
-        android:id="@+id/txtUkrainian"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/lexend_regular"
-        android:paddingVertical="8dp"
-        android:paddingStart="25dp"
-        android:text="Українська"
-        android:textColor="?attr/textColor"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtGerman" />
-
+            <CheckBox
+                android:id="@+id/englishRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/englishTextView"
+                android:layout_marginRight="20dp"
+                android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
 
     <Button
         android:id="@+id/btnSave"

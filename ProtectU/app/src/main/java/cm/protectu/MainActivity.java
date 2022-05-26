@@ -140,15 +140,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         MainActivity.context = getApplicationContext();
 
-
-        String languageToLoad = LanguageManagerClass.getInstance().readLocale(getResources());
+        /*String languageToLoad = LanguageManagerClass.getInstance().readLocale(getResources());
         Locale locale;
         locale = new Locale(languageToLoad);
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         config.locale = locale;
         this.getBaseContext().getResources().updateConfiguration(config,
-                this.getBaseContext().getResources().getDisplayMetrics());
+                this.getBaseContext().getResources().getDisplayMetrics());*/
 
         //Link the layout to the activity
         setContentView(R.layout.activity_main);
@@ -272,7 +271,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         //Switch case to load the fragment based on the bottom navbar option
         switch (item.getItemId()) {
             case R.id.navigation_map:
-                FilterMapFragment.filteredMapPinClasses.clear();
+                if(FilterMapFragment.filteredMapPinClasses != null)
+                    FilterMapFragment.filteredMapPinClasses.clear();
                 currentFragment = new MapFragment();
                 break;
 

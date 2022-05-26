@@ -2,10 +2,15 @@ package cm.protectu;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +25,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.gson.Gson;
+
+import java.util.Locale;
+
 import cm.protectu.Authentication.AuthActivity;
 
 public class WelcomeScreenActivity extends AppCompatActivity {
@@ -33,6 +42,8 @@ public class WelcomeScreenActivity extends AppCompatActivity {
     private Button btnBegin;
     private ImageView btnNext;
     private TextView txtNext;
+
+    private static final String TAG = WelcomeScreenActivity.class.getName();
 
     //  viewpager change listener
     ViewPager.OnPageChangeListener viewPagerPageChangeListener = new ViewPager.OnPageChangeListener() {
@@ -73,6 +84,10 @@ public class WelcomeScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
 
         prefManager = new PrefManager(this);
+
+        //set language from storage
+        setLocale(prefManager.getLanguage());
+
         if (!prefManager.isFirstTimeLaunch()) {
             launchLoginScreen();
             finish();
@@ -234,5 +249,14 @@ public class WelcomeScreenActivity extends AppCompatActivity {
             View view = (View) object;
             container.removeView(view);
         }
+    }
+
+    public void setLocale(String lang) {
+        Locale myLocale = new Locale(lang);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
     }
 }

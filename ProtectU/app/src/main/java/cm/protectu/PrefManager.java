@@ -4,12 +4,17 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class PrefManager {
+
     // Shared preferences file name
     private static final String PREF_NAME = "ProtectU-welcome";
     private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
+    private static final String LANGUAGE = "us";
+    private static final String NOTIFICATIONS = "true";
+
     SharedPreferences pref;
     SharedPreferences.Editor editor;
     Context _context;
+
     // shared pref mode
     int PRIVATE_MODE = 0;
 
@@ -28,4 +33,21 @@ public class PrefManager {
         editor.commit();
     }
 
+    public void setLanguage(String language){
+        editor.putString(LANGUAGE, language);
+        editor.commit();
+    }
+
+    public String getLanguage(){
+        return pref.getString(LANGUAGE, "us");
+    }
+
+    public void setNotifications(String notifications){
+        editor.putString(NOTIFICATIONS, notifications);
+        editor.commit();
+    }
+
+    public String getNotifications(){
+        return pref.getString(NOTIFICATIONS, "true");
+    }
 }
