@@ -129,4 +129,9 @@ public class FilterMapFragment extends BottomSheetDialogFragment {
         Log.d(TAG, "Size : " + filteredMapPinClasses.size());
         //then redirect to the map maybe
     }
+
+    @Override
+    public int getTheme() {
+        return R.style.AppBottomSheetDialogTheme;
+    }
 }

@@ -25,8 +25,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.google.gson.Gson;
-
 import java.util.Locale;
 
 import cm.protectu.Authentication.AuthActivity;

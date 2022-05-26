@@ -121,4 +121,10 @@ public class NewAlarmFragment extends BottomSheetDialogFragment {
                     }
                 });
     }
+
+
+    @Override
+    public int getTheme() {
+        return R.style.AppBottomSheetDialogTheme;
+    }
 }

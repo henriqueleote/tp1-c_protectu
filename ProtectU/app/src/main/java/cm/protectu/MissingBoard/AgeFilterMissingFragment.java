@@ -150,6 +150,11 @@ public class AgeFilterMissingFragment extends BottomSheetDialogFragment {
         //Returns the view
         return view;
     }
+
+    @Override
+    public int getTheme() {
+        return R.style.AppBottomSheetDialogTheme;
+    }
 }
 
 

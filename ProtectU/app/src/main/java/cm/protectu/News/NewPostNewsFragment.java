@@ -278,4 +278,9 @@ public class NewPostNewsFragment extends BottomSheetDialogFragment {
                     }
                 });
     }
+
+    @Override
+    public int getTheme() {
+        return R.style.AppBottomSheetDialogTheme;
+    }
 }
