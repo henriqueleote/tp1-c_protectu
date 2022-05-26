@@ -1,5 +1,7 @@
 package cm.protectu.Language;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -50,8 +52,22 @@ public class LanguageFragment extends Fragment {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                prefManager.setLanguage(language);
-                setLocale(prefManager.getLanguage());
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage(R.string.question_app_will_restart)
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                prefManager.setLanguage(language);
+                                setLocale(prefManager.getLanguage());
+                                getActivity().recreate();
+                            }
+                        })
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        });
+                // Create the AlertDialog object and return it
+                builder.show();
             }
         });
 
@@ -63,7 +79,6 @@ public class LanguageFragment extends Fragment {
                     englishCheck.setChecked(false);
                     language = "pt";
                 }
-
             }
         });
 
@@ -75,7 +90,6 @@ public class LanguageFragment extends Fragment {
                     portugueseCheck.setChecked(false);
                     language = "us";
                 }
-
             }
         });
 
@@ -90,7 +104,6 @@ public class LanguageFragment extends Fragment {
         Configuration conf = res.getConfiguration();
         conf.locale = myLocale;
         res.updateConfiguration(conf, dm);
-        getActivity().recreate();
     }
 
     public void getChecked(){
@@ -99,5 +112,6 @@ public class LanguageFragment extends Fragment {
             portugueseCheck.setChecked(true);
         if(prefManager.getLanguage().equalsIgnoreCase("us"))
             englishCheck.setChecked(true);
+
     }
 }

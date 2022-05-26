@@ -132,4 +132,9 @@ public class MarkerChooseFragment extends BottomSheetDialogFragment {
                 .addToBackStack(null)
                 .commit();
     }
+
+    @Override
+    public int getTheme() {
+        return R.style.AppBottomSheetDialogTheme;
+    }
 }

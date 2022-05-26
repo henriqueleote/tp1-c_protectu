@@ -2,36 +2,31 @@ package cm.protectu;
 
 import android.app.ActivityManager;
 import android.app.AlertDialog;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.provider.Settings;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.app.NotificationCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
-import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -46,7 +41,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Date;
-import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import cm.protectu.About.AboutFragment;
 import cm.protectu.Alarm.AlarmClass;
@@ -56,10 +52,8 @@ import cm.protectu.Community.ViewPagerFragment;
 import cm.protectu.Customization.CustomizationFragment;
 import cm.protectu.Customization.CustomizationManager;
 import cm.protectu.Language.LanguageFragment;
-import cm.protectu.Language.LanguageManagerClass;
 import cm.protectu.Map.FilterMapFragment;
 import cm.protectu.Map.MapFragment;
-import cm.protectu.MissingBoard.MissingPostFragment;
 import cm.protectu.News.NewsFragment;
 import cm.protectu.Panic.PanicFragment;
 import cm.protectu.Profile.ProfileFragment;
@@ -89,11 +83,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     private static final String TAG = MainActivity.class.getName();
 
-    private static Context context;
-
     public static ViewPagerFragment viewPager;
 
     private static boolean active = false;
+
+    boolean connected = false;
 
     public static Fragment currentFragment;
     @Override
@@ -137,17 +131,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         sensorManager.registerListener(sensorEventListenerLight, sensorLight, SensorManager.SENSOR_DELAY_NORMAL);
 
         super.onCreate(savedInstanceState);
-
-        MainActivity.context = getApplicationContext();
-
-        /*String languageToLoad = LanguageManagerClass.getInstance().readLocale(getResources());
-        Locale locale;
-        locale = new Locale(languageToLoad);
-        Locale.setDefault(locale);
-        Configuration config = new Configuration();
-        config.locale = locale;
-        this.getBaseContext().getResources().updateConfiguration(config,
-                this.getBaseContext().getResources().getDisplayMetrics());*/
 
         //Link the layout to the activity
         setContentView(R.layout.activity_main);
@@ -369,10 +352,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 });
     }
 
-    public static Context getAppContext() {
-        return MainActivity.context;
-    }
-
     private boolean isMyServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
@@ -401,6 +380,23 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public void onStop() {
         super.onStop();
         active = false;
+    }
+
+    private boolean isConnected() {
+        boolean haveConnectedWifi = false;
+        boolean haveConnectedMobile = false;
+
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo[] netInfo = cm.getAllNetworkInfo();
+        for (NetworkInfo ni : netInfo) {
+            if (ni.getTypeName().equalsIgnoreCase("WIFI"))
+                if (ni.isConnected())
+                    haveConnectedWifi = true;
+            if (ni.getTypeName().equalsIgnoreCase("MOBILE"))
+                if (ni.isConnected())
+                    haveConnectedMobile = true;
+        }
+        return haveConnectedWifi || haveConnectedMobile;
     }
 }
 

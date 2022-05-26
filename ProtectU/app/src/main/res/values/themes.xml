@@ -39,4 +39,16 @@
         <item name="floatButton">@color/primary_button</item>
         <item name="floatButtonText">@color/white</item>
     </style>
+
+    <style name="AppBottomSheetDialogTheme"
+        parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+
+        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
+    </style>
+
+    <style name="CustomBottomSheetStyle"
+        parent="Widget.Design.BottomSheet.Modal">
+
+        <item name="android:background">@drawable/layout_bg</item>
+    </style>
 </resources>

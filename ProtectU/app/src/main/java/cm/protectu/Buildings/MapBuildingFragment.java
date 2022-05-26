@@ -147,4 +147,9 @@ public class MapBuildingFragment extends BottomSheetDialogFragment {
         Glide.with(getActivity()).load(images.get(0)).into(buildingImage);
     }
 
+
+    @Override
+    public int getTheme() {
+        return R.style.AppBottomSheetDialogTheme;
+    }
 }

@@ -326,4 +326,10 @@ public class RegisterFragment extends BottomSheetDialogFragment {
         Matcher matcher = pattern.matcher(email);
         return matcher.matches();
     }
+
+
+    @Override
+    public int getTheme() {
+        return R.style.AppBottomSheetDialogTheme;
+    }
 }
