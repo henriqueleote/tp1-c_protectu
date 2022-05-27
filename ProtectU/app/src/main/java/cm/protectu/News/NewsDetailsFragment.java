@@ -16,7 +16,6 @@ import com.bumptech.glide.Glide;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-import cm.protectu.MainActivity;
 import cm.protectu.R;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
@@ -67,11 +66,11 @@ public class NewsDetailsFragment extends Fragment {
             newsBigImage.setVisibility(View.GONE);
         }
         imgURL2 = card.getPubImgURL();
-        if(!imgURL2.equals("null")){
+        if(imgURL2 != null){
             Glide.with(getActivity())
                     .load(imgURL2)
                     .centerCrop()
-
+                    
                     .circleCrop()
                     .into(pubImage);
         }

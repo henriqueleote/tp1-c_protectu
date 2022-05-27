@@ -66,7 +66,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder>{
             holder.newsImage.setVisibility(View.GONE);
         }
         imgURL2 = listOfNewsCardClasses.get(position).getPubImgURL();
-        if(!imgURL2.equals("null")){
+        if(imgURL2 != null){
             Glide.with(context)
                     .load(imgURL2)
                     .centerCrop()
