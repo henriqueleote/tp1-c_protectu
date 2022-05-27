@@ -12,7 +12,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="?attr/backgroundColor"
         android:id="@+id/missingBoardMainID">
 
 
@@ -25,7 +25,7 @@
             android:src="@drawable/ic_menu_black_24dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/black" />
+            app:tint="?attr/textColor" />
 
         <TextView
             android:id="@+id/titleMissingMainID"
@@ -33,11 +33,11 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
+            android:fontFamily="@font/lexend_regular"
             android:text="@string/missingBoard"
-            android:textColor="@color/black"
+            android:textColor="?attr/textColor"
             android:textSize="23dp"
-            tools:ignore="MissingConstraints"
-            android:fontFamily="@font/lexend_regular"></TextView>
+            tools:ignore="MissingConstraints"></TextView>
 
         <androidx.cardview.widget.CardView
             android:id="@+id/ageFilterButtonID"
@@ -52,7 +52,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="?attr/backgroundColorSelected">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -60,7 +61,7 @@
                     android:layout_centerInParent="true"
                     android:fontFamily="@font/lexend_regular"
                     android:text="@string/Age"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/textColor"
                     android:textSize="18dp" />
 
             </RelativeLayout>
@@ -87,7 +88,7 @@
                 android:layout_height="match_parent"
                 android:inputType="text"
                 android:queryHint="@string/searchTheName"
-
+                android:background="?attr/backgroundColorSelected"
                 ></SearchView>
 
             <ListView
@@ -100,6 +101,7 @@
 
         </androidx.cardview.widget.CardView>
 
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/localCardsID"
             android:layout_width="match_parent"
@@ -107,13 +109,11 @@
             android:layout_below="@+id/ageFilterButtonID"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="50dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="21dp"
             android:layout_marginEnd="50dp">
 
 
         </androidx.recyclerview.widget.RecyclerView>
-
-
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/createMissingBoardButtonID"
@@ -121,15 +121,16 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="24dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginBottom="22dp"
             android:background="?android:attr/selectableItemBackground"
             android:clickable="true"
             android:elevation="16dp"
             android:focusable="true"
-            app:backgroundTint="@color/white"
+            app:backgroundTint="?attr/floatButton"
             app:pressedTranslationZ="12dp"
-            app:srcCompat="@drawable/ic_add_black_24dp" />
+            app:srcCompat="@drawable/ic_add_black_24dp"
+            />
 
     </RelativeLayout>
 

@@ -11,6 +11,12 @@
     app:behavior_peekHeight="0dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/designOnly"
+        android:layout_width="160dp"
+        android:layout_height="5dp"
+        android:layout_centerHorizontal="true"
+        app:cardBackgroundColor="?attr/textColor" />
 
 
     <ImageView
@@ -19,7 +25,7 @@
         android:layout_height="25dp"
         android:layout_alignParentRight="true"
         android:src="@drawable/ic_close_black_24dp"
-        />
+        app:tint="?attr/textColor" />
 
 
     <TextView
@@ -29,7 +35,7 @@
         android:layout_centerHorizontal="true"
         android:fontFamily="@font/lexend_regular"
         android:text="Age Range"
-        android:textColor="#000000"
+        android:textColor="?attr/textColor"
         android:textSize="20sp" />
 
 
@@ -40,7 +46,8 @@
         android:src="@drawable/ic_delete_black_24dp"
         android:layout_below="@+id/closeFilterID"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="30dp"
+        app:tint="?attr/textColor" />
 
     <ImageView
         android:id="@+id/allCheckID"
@@ -49,7 +56,8 @@
         android:src="@drawable/ic_allcheck"
         android:layout_below="@+id/closeFilterID"
         android:layout_toLeftOf="@+id/clearAllID"
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="30dp"
+        app:tint="?attr/textColor"/>
 
     <RelativeLayout
         android:id="@+id/firstFilterID"
@@ -65,18 +73,18 @@
             android:layout_height="60dp"
             android:layout_marginLeft="30dp"
             android:button="@null"
-            android:background="?android:attr/listChoiceIndicatorMultiple"/>
+            android:background="?android:attr/listChoiceIndicatorMultiple"
+            android:backgroundTint="?attr/textColor"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Childrens"
-            android:textColor="@color/black"
-            android:textSize="15sp"
+            android:layout_marginTop="20dp"
             android:layout_toRightOf="@+id/childrensFilterID"
             android:fontFamily="@font/lexend_regular"
-            android:layout_marginTop="20dp"
-            />
+            android:text="Childrens"
+            android:textColor="?attr/textColor"
+            android:textSize="15sp" />
 
     </RelativeLayout>
 
@@ -94,18 +102,18 @@
             android:layout_height="60dp"
             android:layout_marginLeft="30dp"
             android:button="@null"
-            android:background="?android:attr/listChoiceIndicatorMultiple"/>
+            android:background="?android:attr/listChoiceIndicatorMultiple"
+            android:backgroundTint="?attr/textColor"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Adults"
-            android:textColor="@color/black"
-            android:textSize="15sp"
+            android:layout_marginTop="20dp"
             android:layout_toRightOf="@+id/adultsFilterID"
             android:fontFamily="@font/lexend_regular"
-            android:layout_marginTop="20dp"
-            />
+            android:text="Adults"
+            android:textColor="?attr/textColor"
+            android:textSize="15sp" />
 
     </RelativeLayout>
 
@@ -122,7 +130,8 @@
             android:layout_height="60dp"
             android:layout_marginLeft="30dp"
             android:background="?android:attr/listChoiceIndicatorMultiple"
-            android:button="@null" />
+            android:button="@null"
+            android:backgroundTint="?attr/textColor"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -131,8 +140,8 @@
             android:layout_toRightOf="@+id/seniorsFilterID"
             android:fontFamily="@font/lexend_regular"
             android:text="Seniors"
-            android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textColor="?attr/textColor"
+            android:textSize="15sp"
 
             />
 
@@ -146,7 +155,7 @@
         android:layout_below="@+id/finalFilterID"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:backgroundTint="#313030"
+        android:backgroundTint="@color/primary_button"
         android:fontFamily="@font/lexend_regular"
         android:text="Show Results"
         android:textColor="#FFFFFF" />

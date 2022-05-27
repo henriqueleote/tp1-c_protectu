@@ -5,7 +5,7 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="?attr/backgroundColor">
 
     <ImageView
         android:id="@+id/menuImageView"
@@ -16,7 +16,7 @@
         android:src="@drawable/ic_menu_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/black" />
+        app:tint="?attr/textColor" />
 
     <TextView
         android:id="@+id/options"
@@ -25,13 +25,14 @@
         android:layout_marginTop="5dp"
         android:drawableRight="@drawable/ic_three_dots_menu_black_24dp"
         android:drawablePadding="5dp"
-        android:drawableTint="#000000"
+        android:drawableTint="?attr/textColor"
         android:gravity="center_vertical"
         android:paddingTop="10dp"
         android:paddingRight="10dp"
         android:textColor="#000000"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
     <ImageView
         android:id="@+id/profileImageView"
@@ -39,8 +40,10 @@
         android:layout_height="200dp"
         android:layout_marginTop="100dp"
         android:src="@drawable/ic_bottom_profile_black_24dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/nameAndEditLayout"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_max="200dp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <LinearLayout
@@ -61,7 +64,8 @@
             android:fontFamily="@font/lexend_regular"
             android:text="Name"
             android:textAlignment="center"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:textColor="?attr/textColor" />
 
         <ImageView
             android:id="@+id/editImageView"
@@ -90,7 +94,8 @@
         android:fontFamily="@font/lexend_regular"
         app:layout_constraintTop_toBottomOf="@+id/emailTextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:tint="?attr/textColor" />
 
     <Button
         android:id="@+id/removeCommunityButton"
@@ -109,6 +114,9 @@
         android:id="@+id/removeMissingButton"
         android:layout_width="250dp"
         android:layout_height="75dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="85dp"
         android:backgroundTint="#ff1100"
         android:fontFamily="@font/lexend_regular"
         android:scaleType="fitXY"

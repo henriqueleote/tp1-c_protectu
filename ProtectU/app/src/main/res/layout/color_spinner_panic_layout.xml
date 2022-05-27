@@ -6,7 +6,6 @@
     android:text="ProtectU"
     android:textColor="?attr/textColor"
     android:textSize="15dp"
-    android:background="?attr/backgroundColorSelected">
-
+    android:background="?attr/backgroundColor">
 
 </CheckedTextView>

@@ -93,13 +93,13 @@ public class CustomizationFragment extends Fragment implements AdapterView.OnIte
                                 case 1: //Light Mode
 //                                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 //                                    getActivity().setTheme(R.style.Theme_Light);
-                                    CustomizationManager.getInstance(getActivity()).saveTheme("light");
+                                    CustomizationManager.getInstance().saveTheme("light");
                                     getActivity().recreate();
                                     break;
                                 case 2: // Dark Mode
 //                                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 //                                    getActivity().setTheme(R.style.Theme_Dark);
-                                    CustomizationManager.getInstance(getActivity()).saveTheme("dark");
+                                    CustomizationManager.getInstance().saveTheme("dark");
                                     getActivity().recreate();
                                     break;
                                 case 3: // Blue Mode

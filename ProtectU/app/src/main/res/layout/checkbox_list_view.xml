@@ -14,14 +14,15 @@
 
         <TextView
             android:id="@+id/checkBoxName"
-            android:layout_alignBaseline="@+id/checkBoxIcon"
-            android:layout_toRightOf="@+id/checkBoxIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/checkBoxIcon"
+            android:layout_toRightOf="@+id/checkBoxIcon"
             android:paddingLeft="10dp"
             android:paddingRight="6dp"
             android:text="Teste"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="?attr/textColor"/>
 
         <CheckBox
             android:id="@+id/checkBoxCheck"
@@ -29,6 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/checkBoxName"
             android:paddingRight="6dp"
-            android:layout_alignParentEnd="true"/>
+            android:layout_alignParentEnd="true"
+            android:backgroundTint="?attr/textColor"/>
 
 </RelativeLayout>

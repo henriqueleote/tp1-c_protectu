@@ -11,7 +11,7 @@
         android:id="@+id/relativeLayout3"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:background="#F1EFEF"
+        android:background="?attr/backgroundColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -24,7 +24,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:src="@drawable/ic_arrow_back_black_24dp"
-            app:tint="@color/black" />
+            app:tint="?attr/textColor" />
 
         <TextView
             android:id="@+id/titleAboutID"
@@ -34,7 +34,7 @@
             android:fontFamily="@font/lexend_regular"
             android:paddingTop="15dp"
             android:text="About"
-            android:textColor="@color/black"
+            android:textColor="?attr/textColor"
             android:textSize="24dp" />
 
         <!--//TODO TRANSLATE-->
@@ -51,7 +51,7 @@
             android:fontFamily="@font/lexend_regular"
             android:text="Esta aplicação foi desenvolvida no âmbito de uma disciplina do segundo ano, Computação Móvel, do curso de Engenharia Informática, do Instituto Politécnico de Setúbal. Tendo esta sido desenvolvida pelo grupo descrito mais a baixo. \nEsta aplicação tem como principal objetivo ajudar pessoas que se encontrem em perigo, mais precisamente de acontecimentos bélicos, pelo que nesta é providenciada informações de lugares seguros, em que locais estão a ocorrer estes acontecimentos, quais as pessoas que se encontram desaparecidas entre outras informações/funções. \n
 "
-            android:textColor="@color/black" />
+            android:textColor="?attr/textColor" />
 
         <TextView
             android:id="@+id/versionID"
@@ -59,10 +59,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textAboutUsID"
             android:layout_marginLeft="40dp"
+            android:fontFamily="@font/lexend_regular"
             android:paddingTop="20dp"
             android:text="@string/version"
-            android:textColor="@color/black"
-            android:fontFamily="@font/lexend_regular"
+            android:textColor="?attr/textColor"
             android:textStyle="bold" />
 
 
@@ -75,7 +75,7 @@
             android:paddingTop="5dp"
             android:text="1.0.0"
             android:fontFamily="@font/lexend_regular"
-            android:textColor="@color/black" />
+            android:textColor="?attr/textColor"/>
 
         <TextView
             android:id="@+id/groupID"
@@ -85,7 +85,7 @@
             android:layout_marginLeft="40dp"
             android:paddingTop="20dp"
             android:text="@string/group"
-            android:textColor="@color/black"
+            android:textColor="?attr/textColor"
             android:textStyle="bold" />
 
         <TextView
@@ -108,7 +108,7 @@
             android:fontFamily="@font/lexend_regular"
             android:paddingTop="20dp"
             android:text="@string/terms"
-            android:textColor="@color/black"
+            android:textColor="?attr/textColor"
             android:textStyle="bold" />
 
         <TextView
@@ -120,7 +120,7 @@
             android:fontFamily="@font/lexend_regular"
             android:paddingTop="20dp"
             android:text="@string/contacts"
-            android:textColor="@color/black"
+            android:textColor="?attr/textColor"
             android:textStyle="bold" />
 
         <TextView
@@ -132,7 +132,7 @@
             android:fontFamily="@font/lexend_regular"
             android:paddingTop="5dp"
             android:text=" +351 960000000 \n example@gmail.com"
-            android:textColor="@color/black" />
+            android:textColor="?attr/textColor" />
 
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,7 +30,7 @@ import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.R;
 
 
-public class PanicFragment extends BottomSheetDialogFragment {
+public class PanicFragment extends BottomSheetDialogFragment{
 
     private EditText numberOfPeople;
 
@@ -56,6 +57,7 @@ public class PanicFragment extends BottomSheetDialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         //Link the layout to the Fragment
         View view = inflater.inflate(R.layout.fragment_panic, container, false);
+
 
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
@@ -88,6 +90,13 @@ public class PanicFragment extends BottomSheetDialogFragment {
                 selectedUrgencyLevel = "Slight";
             }
         });
+
+        Spinner spinner = view.findViewById(R.id.urgencyLevel);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(), R.array.panic_values, R.layout.color_spinner_panic_layout);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_layout);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(urgencyLevel.getOnItemSelectedListener());
+
 
         sosButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,4 +140,5 @@ public class PanicFragment extends BottomSheetDialogFragment {
     public int getTheme() {
         return R.style.AppBottomSheetDialogTheme;
     }
+
 }

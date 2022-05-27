@@ -10,20 +10,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="?attr/backgroundColor">
 
     <LinearLayout
         android:id="@+id/imageContainer"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@color/black"
+        android:background="?attr/backgroundColorSelected"
         android:orientation="horizontal">
 
         <com.smarteist.autoimageslider.SliderView
             android:id="@+id/autoImageSlider"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
+            android:background="?attr/backgroundColorSelected"
             app:sliderAnimationDuration="200"
             app:sliderAutoCycleDirection="back_and_forth"
             app:sliderIndicatorAnimationDuration="600"
@@ -49,7 +49,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/lexend_regular"
-            android:textColor="@color/black"
+            android:textColor="?attr/textColor"
             android:textSize="25sp" />
 
         <LinearLayout
@@ -64,15 +64,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_bottom_map_black_24dp"
-                app:tint="@color/black" />
+                app:tint="?attr/textColor" />
 
             <TextView
                 android:id="@+id/locationTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:text="Lisboa"
                 android:fontFamily="@font/lexend_regular"
-                android:textColor="@color/black" />
+                android:textColor="?attr/textColor" />
         </LinearLayout>
 
         <TextView
@@ -84,7 +85,7 @@
             android:layout_marginTop="15dp"
             android:fontFamily="@font/lexend_regular"
             android:text="@string/number_of_beds"
-            android:textColor="@color/black"
+            android:textColor="?attr/textColor"
             android:textSize="20sp" />
 
         <TextView
@@ -96,7 +97,8 @@
             android:layout_marginRight="16dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/lexend_regular"
-            android:text="" />
+            android:text=""
+            android:textColor="?attr/textColor"/>
 
         <TextView
             android:id="@+id/descriptionTitle"
@@ -107,7 +109,7 @@
             android:layout_marginTop="15dp"
             android:fontFamily="@font/lexend_regular"
             android:text="@string/description"
-            android:textColor="@color/black"
+            android:textColor="?attr/textColor"
             android:textSize="20sp" />
 
         <TextView
@@ -119,7 +121,9 @@
             android:layout_marginRight="16dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/lexend_regular"
-            android:justificationMode="inter_word" />
+            android:justificationMode="inter_word"
+            android:text="Description"
+            android:textColor="?attr/textColor"/>
 
     </RelativeLayout>
 
@@ -129,7 +133,8 @@
         android:layout_height="50dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
-        android:background="@drawable/border_button">
+        android:background="@drawable/border_button"
+        android:backgroundTint="?attr/backgroundColor">
 
         <ImageView
             android:layout_width="40dp"
@@ -139,7 +144,7 @@
             android:padding="3dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_arrow_back_black_24dp"
-            app:tint="@color/black" />
+            app:tint="?attr/textColor" />
     </RelativeLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

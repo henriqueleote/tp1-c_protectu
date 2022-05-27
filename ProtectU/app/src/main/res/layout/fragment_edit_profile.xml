@@ -5,7 +5,7 @@
     android:id="@+id/relativeLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="?attr/backgroundColor">
 
 
     <ImageView
@@ -31,7 +31,10 @@
         app:layout_constraintEnd_toEndOf="@+id/profileImageView"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/profileImageView"
-        app:layout_constraintTop_toBottomOf="@+id/profileImageView" />
+        app:layout_constraintTop_toBottomOf="@+id/profileImageView"
+        android:textColor="?attr/textColor"
+        android:backgroundTint="?attr/textColor"
+        android:textColorHint="?attr/textColor"/>
 
     <EditText
         android:id="@+id/lastNameEditText"
@@ -45,7 +48,10 @@
         android:textSize="15sp"
         app:layout_constraintStart_toStartOf="@+id/firstNameEditText"
         app:layout_constraintEnd_toEndOf="@+id/firstNameEditText"
-        app:layout_constraintTop_toBottomOf="@+id/firstNameEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/firstNameEditText"
+        android:textColor="?attr/textColor"
+        android:backgroundTint="?attr/textColor"
+        android:textColorHint="?attr/textColor"/>
 
     <LinearLayout
         android:id="@+id/contactRel"
@@ -79,7 +85,10 @@
             android:textSize="15sp"
             android:layout_weight="1"
             android:ellipsize="end"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:textColor="?attr/textColor"
+            android:backgroundTint="?attr/textColor"
+            android:textColorHint="?attr/textColor"/>
 
     </LinearLayout>
 
@@ -88,13 +97,32 @@
         android:layout_width="150dp"
         android:layout_height="60dp"
         android:layout_marginTop="40dp"
-        android:backgroundTint="#2E98F0"
+        android:backgroundTint="?attr/primaryButton"
         android:fontFamily="@font/lexend_regular"
         android:text="@string/btn_save"
         app:layout_constraintStart_toStartOf="@+id/contactRel"
         app:layout_constraintEnd_toEndOf="@+id/contactRel"
         app:layout_constraintTop_toBottomOf="@+id/contactRel" />
 
+    <ImageView
+        android:id="@+id/profileImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:src="@drawable/ic_bottom_profile_black_24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_camera_black_24dp"
+        app:layout_constraintBottom_toBottomOf="@+id/profileImageView"
+        app:layout_constraintEnd_toEndOf="@+id/profileImageView"
+        app:tint="?attr/textColor" />
 
     <ImageView
         android:id="@+id/backButton"
@@ -104,6 +132,7 @@
         android:layout_marginTop="15dp"
         android:src="@drawable/ic_arrow_back_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="?attr/textColor" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

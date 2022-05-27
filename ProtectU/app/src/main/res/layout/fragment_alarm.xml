@@ -5,13 +5,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="26dp"
+    android:background="?attr/backgroundColorSelected"
     >
 
     <ImageView
         android:id="@+id/imageAlarm"
         android:layout_marginTop="3dp"
         android:layout_width="20dp"
-        android:layout_height="20dp">
+        android:layout_height="20dp"
+        app:tint="?attr/textColor">
 
     </ImageView>
 
@@ -23,7 +25,7 @@
         android:layout_marginTop="3dp"
         android:fontFamily="@font/lexend_regular"
         android:textSize="16sp"
-        android:textColor="#000000" >
+        android:textColor="?attr/textColor" >
     </TextView>
 
     <TextView

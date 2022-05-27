@@ -73,5 +73,8 @@
     <string name="camera">Camera</string>
     <string name="see_more">ver mais</string>
     <string name="question_app_will_restart">A app vai reiniciar, tem a certeza?</string>
+    <string name="map_of_shelters">Mapa de abrigos</string>
+    <string name="theme">Tema</string>
+    <string name="pay_attention">Preste atenção aos alarmes aéreos em sua área</string>
     <string name="cancel">Cancel</string>
 </resources>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ProtectU</string>
+    <string name="profile">Profil</string>
+    <string name="map">Carte</string>
+    <string name="error_enter_your_name">Entrez votre nom</string>
+    <string name="error_enter_your_surname">Entrez votre nom de famille</string>
+    <string name="error_enter_your_mail">Entrez votre courrier</string>
+    <string name="error_enter_a_new_message">Écrire un message</string>
+    <string name="error_enter_your_password">Tapez votre mot de passe</string>
+    <string name="error_email_not_valid">Entrer un email valide</string>
+    <string name="error_password_dont_match">Les mots de passe ne correspondent pas</string>
+    <string name="error_email_in_use">Email déjà utilisé</string>
+    <string name="error_weak_password">mot de passe de la semaine</string>
+    <string name="error_invalid_email">Email invalide</string>
+    <string name="error_invalid_contact">Contact invalide</string>
+    <string name="error_invalid_password">Mot de passe incorrect</string>
+    <string name="error_number_of_people">Entrez le nombre de personnes</string>
+    <string name="error_name_not_valid">Veuillez entrer le nom de la personne disparue</string>
+    <string name="error_age_not_valid">Veuillez entrer un âge valide</string>
+    <string name="error_description_not_valid">Merci de mettre une description</string>
+    <string name="error_image_not_valid">Merci de poster une photo de la personne disparue</string>
+    <string name="options">Choix</string>
+    <string name="logout">Se déconnecter</string>
+    <string name="forgot_password">Mot de passe oublié</string>
+    <string name="email_sent">Email envoyé</string>
+    <string name="registration_sucessful">inscription réussi</string>
+    <string name="registration_failed">Échec de l\'enregistrement</string>
+    <string name="see_you_next_time">À la prochaine</string>
+    <string name="want_to_go_to_login">Vous souhaitez accéder à la page de connexion</string>
+    <string name="yes">OUI</string>
+    <string name="no">NON</string>
+    <string name="btn_save">Sauver</string>
+    <string name="lbl_languague">Langue</string>
+    <string name="backarrow">arrière</string>
+    <string name="contact">\\Contacter:</string>
+    <string name="loading_user_data">Chargement des données utilisateur…</string>
+    <string name="loading_image">Chargement de l\'image…</string>
+    <string name="About">Sur</string>
+    <string name="Language">Langue</string>
+    <string name="notifications">Avis</string>
+    <string name="Customization">Personnalisation</string>
+    <string name="news">Nouvelles</string>
+    <string name="panic">Panique</string>
+    <string name="Community">Communauté</string>
+    <string name="missingBoard">Conseil manquant</string>
+    <string name="Age">Âge</string>
+    <string name="searchTheName">Rechercher un nom..</string>
+    <string name="Name">Nom</string>
+    <string name="publicationsInCommunity">Publications dans la communauté</string>
+    <string name="publicationsInMissing">Publications manquantes</string>
+    <string name="numberOfPeople">Nombre de personnes</string>
+    <string name="requestHelp">Demander de l\'aide</string>
+    <string name="newPost">Nouveau poste</string>
+    <string name="description">La description</string>
+    <string name="addImage1">Ajouter une image (max. 1)</string>
+    <string name="Create">Créer</string>
+    <string name="newMessage">Nouveau message</string>
+    <string name="message">Message</string>
+    <string name="pick_image_intent_text">Sélectionnez une photo</string>
+    <string name="gallery">Galerie</string>
+    <string name="camera">Appareil photo</string>
+    <string name="see_more">voir plus</string>
+    <string name="question_app_will_restart">L\'application va redémarrer, êtes-vous sûr ?</string>
+    <string name="map_of_shelters">Carte des refuges</string>
+    <string name="theme">Thème</string>
+    <string name="pay_attention">Faites attention aux alarmes d\'air dans votre région</string>
+
+    <string-array name="panic_values">
+        <item>Légère</item>
+        <item>Grave</item>
+        <item>Urgente</item>
+    </string-array>
+    <string-array name="theme_values">
+        <item>Choisissez le thème</item>
+        <item>Légère</item>
+        <item>Sombre</item>
+        <item>Bleue</item>
+    </string-array>
+</resources>

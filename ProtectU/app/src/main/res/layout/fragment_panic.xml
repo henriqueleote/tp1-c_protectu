@@ -10,15 +10,18 @@
     android:padding="16dp"
     app:behavior_hideable="false"
     app:behavior_peekHeight="0dp"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+    android:backgroundTint="?attr/backgroundColor"
+    >
 
 
-<ImageView
+    <ImageView
         android:id="@+id/closePanic"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_alignParentRight="true"
-        android:src="@drawable/ic_close_black_24dp" />
+        android:src="@drawable/ic_close_black_24dp"
+        app:tint="?attr/textColor" />
 
     <TextView
         android:id="@+id/sos"
@@ -27,8 +30,8 @@
         android:layout_centerHorizontal="true"
         android:fontFamily="@font/lexend_regular"
         android:text="SOS"
-        android:textColor="#000000"
-        android:textSize="20sp"/>
+        android:textColor="?attr/textColor"
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/numberOfPeople"
@@ -42,21 +45,23 @@
         android:gravity="center"
         android:hint="@string/numberOfPeople"
         android:inputType="number"
+        android:textColor="?attr/textColor"
+        android:textColorHint="?attr/textColor"
         android:textSize="15sp" />
 
     <Spinner
         android:id="@+id/urgencyLevel"
         style="@style/Widget.AppCompat.Spinner.Underlined"
         android:layout_width="200dp"
-        android:layout_height="40dp"
+        android:layout_height="60dp"
         android:layout_below="@+id/numberOfPeople"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
+        android:layout_marginEnd="15dp"
         android:drawablePadding="10dp"
+        android:entries="@array/panic_values"
         android:fontFamily="@font/lexend_regular"
         android:gravity="center"
-        android:entries="@array/panic_values"
-        android:textSize="15sp" />
+        />
 
     <Button
         android:id="@+id/sosButton"

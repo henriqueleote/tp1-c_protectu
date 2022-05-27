@@ -17,7 +17,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="?attr/backgroundColor">
 
                 <ImageView
                     android:id="@+id/newsImage"
@@ -27,7 +28,8 @@
                     app:srcCompat="@drawable/ic_camera_black_24dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:background="?attr/backgroundColorSelected" />
 
                 <ImageView
                     android:id="@+id/newsPublisherImage"
@@ -38,7 +40,9 @@
                     app:layout_constraintTop_toBottomOf="@+id/newsImage"
                     app:layout_constraintTop_toTopOf="@+id/newsTitle"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/newsTitle"/>
+                    app:layout_constraintEnd_toStartOf="@+id/newsTitle"
+                    app:tint="?attr/textColor"
+                    />
 
                 <TextView
                     android:id="@+id/newsTitle"
@@ -51,6 +55,7 @@
                     android:textSize="20dp"
                     app:layout_constraintTop_toBottomOf="@+id/newsImage"
                     app:layout_constraintStart_toEndOf="@+id/newsPublisherImage"
+                    android:textColor="?attr/textColor"
                     />
 
                 <TextView
@@ -63,7 +68,8 @@
                     app:layout_constraintStart_toEndOf="@+id/newsPublisherImage"
                     app:layout_constraintTop_toBottomOf="@+id/newsTitle"
                     app:layout_constraintBottom_toTopOf="@+id/seeMoreText"
-                    android:text="text" />
+                    android:text="text"
+                    android:textColor="?attr/textColor"/>
 
                 <TextView
                     android:id="@+id/seeMoreText"
@@ -77,7 +83,8 @@
                     android:fontFamily="@font/lexend_regular"
                     android:text="@string/see_more"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:textColor="?attr/textColor"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

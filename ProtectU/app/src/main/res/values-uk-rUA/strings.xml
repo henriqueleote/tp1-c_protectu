@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ProtectU</string>
+    <string name="profile">Профіль</string>
+    <string name="map">карта</string>
+    <string name="error_enter_your_name">Введіть ім\'я</string>
+    <string name="error_enter_your_surname">Введіть своє прізвище</string>
+    <string name="error_enter_your_mail">Введіть свою пошту</string>
+    <string name="error_enter_a_new_message">Напишіть повідомлення</string>
+    <string name="error_enter_your_password">Введіть ваш пароль</string>
+    <string name="error_email_not_valid">Введіть дійсну адресу електронної пошти</string>
+    <string name="error_password_dont_match">Паролі не збігаються</string>
+    <string name="error_email_in_use">E-mail вже використовується</string>
+    <string name="error_weak_password">Слабкий пароль</string>
+    <string name="error_invalid_email">Недійсна електронна адреса</string>
+    <string name="error_invalid_contact">Недійсний контакт</string>
+    <string name="error_invalid_password">Недійсний пароль</string>
+    <string name="error_number_of_people">Введіть кількість людей</string>
+    <string name="error_name_not_valid">Будь ласка, введіть ім’я зниклої особи</string>
+    <string name="error_age_not_valid">Введіть дійсний вік</string>
+    <string name="error_description_not_valid">Будь ласка, додайте опис</string>
+    <string name="error_image_not_valid">Будь ласка, опублікуйте фото зниклого</string>
+    <string name="options">Параметри</string>
+    <string name="logout">Вийти</string>
+    <string name="forgot_password">Забули пароль</string>
+    <string name="email_sent">Листа відправлено</string>
+    <string name="registration_sucessful">Реєстрація успішна</string>
+    <string name="registration_failed">Помилка реєстрації</string>
+    <string name="see_you_next_time">Побачимось наступного разу</string>
+    <string name="want_to_go_to_login">Хочеться перейти на сторінку входу</string>
+    <string name="yes">ТАК</string>
+    <string name="no">НІ</string>
+    <string name="lbl_languague">Мова</string>
+    <string name="btn_save">Зберегти</string>
+    <string name="backarrow">назад</string>
+    <string name="contact">\\Контакт:</string>
+    <string name="loading_user_data">Завантаження даних користувача…</string>
+    <string name="loading_image">Завантаження зображення…</string>
+    <string name="About">Про</string>
+    <string name="Language">Мова</string>
+    <string name="notifications">Сповіщення</string>
+    <string name="Customization">Налаштування</string>
+    <string name="news">Новини</string>
+    <string name="panic">Паніка</string>
+    <string name="Community">Спільнота</string>
+    <string name="missingBoard">Відсутня дошка</string>
+    <string name="Age">Вік</string>
+    <string name="Name">Ім\'я</string>
+    <string name="searchTheName">Пошук імені..</string>
+    <string name="publicationsInCommunity">Публікації в спільноті</string>
+    <string name="publicationsInMissing">Публікації відсутні</string>
+    <string name="numberOfPeople">Кількість людей</string>
+    <string name="requestHelp">Запит на допомогу</string>
+    <string name="newPost">Новий пост</string>
+    <string name="description">Опис</string>
+    <string name="addImage1">Додати зображення (макс. 1)</string>
+    <string name="Create">Створюйте</string>
+    <string name="newMessage">Нове повідомлення</string>
+    <string name="message">повідомлення</string>
+    <string name="pick_image_intent_text">Виберіть фотографію</string>
+    <string name="gallery">Галерея</string>
+    <string name="camera">Камера</string>
+    <string name="see_more">побачити більше</string>
+    <string name="question_app_will_restart">Програма перезапуститься, ви впевнені?</string>
+    <string name="map_of_shelters">Карта притулків</string>
+    <string name="theme">Тема</string>
+    <string name="pay_attention">Зверніть увагу на повітряну сигналізацію у вашому районі</string>
+    <string-array name="panic_values">
+        <item>Невеликий</item>
+        <item>Сильний</item>
+        <item>Терміново</item>
+    </string-array>
+    <string-array name="theme_values">
+        <item>Виберіть тему</item>
+        <item>Світло</item>
+        <item>Темний</item>
+        <item>Синій</item>
+    </string-array>
+</resources>

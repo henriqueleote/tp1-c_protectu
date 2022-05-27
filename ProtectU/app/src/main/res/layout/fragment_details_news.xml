@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="?attr/backgroundColor">
 
 
     <ScrollView
@@ -21,7 +21,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_camera_black_24dp" />
+                android:src="@drawable/ic_camera_black_24dp"
+                app:tint="?attr/textColor" />
 
             <ImageView
                 android:id="@+id/back_id"
@@ -30,7 +31,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="15dp"
                 android:src="@drawable/ic_arrow_back_black_24dp"
-                app:tint="@color/black" />
+                app:tint="?attr/textColor" />
 
             <TextView
                 android:id="@+id/newsBigTitle"
@@ -45,7 +46,8 @@
                 app:autoSizeMaxTextSize="40sp"
                 app:autoSizeMinTextSize="12sp"
                 app:autoSizeStepGranularity="2sp"
-                app:autoSizeTextType="uniform" />
+                app:autoSizeTextType="uniform"
+                android:textColor="?attr/textColor"/>
 
             <RelativeLayout
                 android:id="@+id/date"
@@ -60,7 +62,8 @@
                     android:id="@+id/calendar"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-                    android:src="@drawable/ic_calendar_month_black_24dp" />
+                    android:src="@drawable/ic_calendar_month_black_24dp"
+                    app:tint="?attr/textColor" />
 
                 <TextView
                     android:id="@+id/newsDate"
@@ -69,7 +72,8 @@
                     android:layout_toRightOf="@+id/calendar"
                     android:fontFamily="@font/lexend_regular"
                     android:text="20 August, 2021"
-                    android:textSize="15dp" />
+                    android:textSize="15dp"
+                    android:textColor="?attr/textColor"/>
             </RelativeLayout>
 
             <TextView
@@ -85,7 +89,8 @@
                 app:autoSizeMaxTextSize="30sp"
                 app:autoSizeMinTextSize="12sp"
                 app:autoSizeStepGranularity="2sp"
-                app:autoSizeTextType="uniform" />
+                app:autoSizeTextType="uniform"
+                android:textColor="?attr/textColor"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -100,7 +105,8 @@
                     android:id="@+id/publisherImg"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@drawable/ic_bottom_profile_black_24dp" />
+                    android:src="@drawable/ic_bottom_profile_black_24dp"
+                    app:tint="?attr/textColor" />
 
                 <TextView
                     android:id="@+id/publisherID"
@@ -111,7 +117,8 @@
                     android:layout_toRightOf="@+id/publisherImg"
                     android:fontFamily="@font/lexend_regular"
                     android:text="dsfsdf"
-                    android:textSize="15dp" />
+                    android:textSize="15dp"
+                    android:textColor="?attr/textColor"/>
 
             </RelativeLayout>
         </RelativeLayout>

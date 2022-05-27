@@ -20,18 +20,16 @@ public class CustomizationManager {
     private static CustomizationManager instance = null;
 
 //    private String selectedTheme;
-    private Context ct;
     private SharedPreferences sharedPreferences;
 
-    private CustomizationManager(Context ct) {
-        this.ct = ct;
+    private CustomizationManager() {
 //        selectedTheme = "";
-        sharedPreferences = ct.getSharedPreferences("theme", 0);
+        sharedPreferences = MainActivity.getAppContext().getSharedPreferences("theme", 0);
     }
 
-    public static CustomizationManager getInstance(Context ct) {
+    public static CustomizationManager getInstance() {
         if (instance == null) {
-            instance = new CustomizationManager(ct);
+            instance = new CustomizationManager();
         }
 
         return instance;

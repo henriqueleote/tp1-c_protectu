@@ -6,7 +6,7 @@
     android:id="@+id/mainPostID"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F1EFEF">
+    android:background="?attr/backgroundColor">
 
     <ImageView
         android:id="@+id/backButton"
@@ -17,7 +17,7 @@
         android:src="@drawable/ic_arrow_back_black_24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/black" />
+        app:tint="?attr/textColor" />
 
     <TextView
         android:id="@+id/title"
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/create_bunker_details"
-        android:textColor="@color/black"
+        android:textColor="?attr/textColor"
         android:textSize="22dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -46,7 +46,10 @@
         android:textSize="15sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        android:textColor="?attr/textColor"
+        android:textColorHint="?attr/textColor"
+        android:backgroundTint="?attr/textColor"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/descriptionCard"
@@ -59,7 +62,8 @@
         app:cardCornerRadius="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bunkerNameEditText">
+        app:layout_constraintTop_toBottomOf="@id/bunkerNameEditText"
+        android:backgroundTint="?attr/backgroundColorSelected">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -75,8 +79,10 @@
                 android:background="@null"
                 android:hint="@string/description"
                 android:maxLength="500"
+                android:textColorHint="?attr/textColor"
+                android:textColor="?attr/textColor"
                 android:inputType="text|textMultiLine"
-                android:textSize="15sp" />
+                android:textSize="15sp"/>
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
@@ -100,7 +106,8 @@
         android:text="@string/add_building_extras"
         app:layout_constraintStart_toStartOf="@id/locationTextView"
         app:layout_constraintTop_toBottomOf="@+id/locationTextView"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/primary_button"/>
 
     <TextView
         android:id="@+id/buildingExtrasTextView"
@@ -130,7 +137,9 @@
             app:ccp_defaultNameCode="PT"
             android:layout_weight="0"
             android:ellipsize="end"
-            android:maxLines="1"/>
+            android:maxLines="1"
+            app:ccp_contentColor="?attr/textColor"
+            app:ccpDialog_textColor="?attr/textColor"/>
 
         <EditText
             android:id="@+id/contactEditText"
@@ -142,7 +151,10 @@
             android:textSize="15sp"
             android:layout_weight="1"
             android:ellipsize="end"
-            android:maxLines="1" />
+            android:maxLines="1"
+            android:textColor="?attr/textColor"
+            android:textColorHint="?attr/textColor"
+            android:backgroundTint="?attr/textColor"/>
 
     </LinearLayout>
 
@@ -155,8 +167,9 @@
         android:drawablePadding="10dp"
         android:hint="@string/add_images_max_six"
         android:inputType="text"
-        android:textColor="@color/black"
+        android:textColor="?attr/textColor"
         android:textSize="15sp"
+        android:textColorHint="?attr/textColor"
         app:layout_constraintStart_toStartOf="@id/descriptionCard"
         app:layout_constraintTop_toBottomOf="@+id/emergencyNumber"
         app:layout_constraintEnd_toEndOf="@id/descriptionCard" />
@@ -170,14 +183,16 @@
         app:cardCornerRadius="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageTextView">
+        app:layout_constraintTop_toBottomOf="@+id/imageTextView"
+        android:backgroundTint="?attr/backgroundColorSelected">
 
         <ImageView
             android:id="@+id/imagesImageView"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_camera_black_24dp" />
+            android:src="@drawable/ic_camera_black_24dp"
+            app:tint="?attr/textColor" />
 
 
 

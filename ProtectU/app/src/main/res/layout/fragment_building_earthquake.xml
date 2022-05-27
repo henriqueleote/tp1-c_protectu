@@ -3,26 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/swipeToRefresh"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?attr/backgroundColor"
+    >
 
 
 <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="?attr/backgroundColor">
 
     <LinearLayout
         android:id="@+id/imageContainer"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@color/black"
+        android:background="?attr/backgroundColorSelected"
         android:orientation="horizontal">
 
         <com.smarteist.autoimageslider.SliderView
             android:id="@+id/autoImageSlider"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
+            android:background="?attr/backgroundColorSelected"
             app:sliderAnimationDuration="200"
             app:sliderAutoCycleDirection="back_and_forth"
             app:sliderIndicatorAnimationDuration="600"
@@ -48,7 +50,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/lexend_regular"
-            android:textColor="@color/black"
+            android:textColor="?attr/textColor"
             android:textSize="25sp" />
 
         <LinearLayout
@@ -63,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_bottom_map_black_24dp"
-                app:tint="@color/black" />
+                app:tint="?attr/textColor" />
 
             <TextView
                 android:id="@+id/locationTextView"
@@ -72,7 +74,7 @@
                 android:layout_gravity="center_vertical"
                 android:fontFamily="@font/lexend_regular"
                 android:text=""
-                android:textColor="@color/black" />
+                android:textColor="?attr/textColor" />
         </LinearLayout>
 
         <TextView
@@ -84,7 +86,7 @@
             android:layout_marginTop="15dp"
             android:fontFamily="@font/lexend_regular"
             android:text="@string/_magnitude"
-            android:textColor="@color/black"
+            android:textColor="?attr/textColor"
             android:textSize="20sp" />
 
         <TextView
@@ -96,7 +98,8 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="16dp"
             android:fontFamily="@font/lexend_regular"
-            android:text="" />
+            android:text=""
+            android:textColor="?attr/textColor" />
 
         <TextView
             android:id="@+id/deathCountTitle"
@@ -107,7 +110,7 @@
             android:layout_marginTop="15dp"
             android:fontFamily="@font/lexend_regular"
             android:text="@string/deaths"
-            android:textColor="@color/black"
+            android:textColor="?attr/textColor"
             android:textSize="20sp" />
 
         <TextView
@@ -119,7 +122,8 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="16dp"
             android:fontFamily="@font/lexend_regular"
-            android:text="" />
+            android:text=""
+            android:textColor="?attr/textColor" />
 
         <TextView
             android:id="@+id/missingCountTitle"
@@ -130,7 +134,7 @@
             android:layout_marginTop="15dp"
             android:fontFamily="@font/lexend_regular"
             android:text="@string/_missing"
-            android:textColor="@color/black"
+            android:textColor="?attr/textColor"
             android:textSize="20sp" />
 
         <TextView
@@ -142,7 +146,8 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="16dp"
             android:fontFamily="@font/lexend_regular"
-            android:text="" />
+            android:text=""
+            android:textColor="?attr/textColor" />
 
     </RelativeLayout>
 
@@ -152,7 +157,8 @@
         android:layout_height="50dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
-        android:background="@drawable/border_button">
+        android:background="@drawable/border_button"
+        android:backgroundTint="?attr/backgroundColor">
 
         <ImageView
             android:layout_width="40dp"
@@ -162,7 +168,7 @@
             android:padding="3dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_arrow_back_black_24dp"
-            app:tint="@color/black" />
+            app:tint="?attr/textColor" />
     </RelativeLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -177,7 +183,7 @@
         android:clickable="true"
         android:elevation="16dp"
         android:focusable="true"
-        app:backgroundTint="@color/white"
+        app:backgroundTint="?attr/floatButton"
         app:pressedTranslationZ="12dp"
         app:srcCompat="@drawable/ic_phone_black_24dp" />
 
@@ -185,16 +191,16 @@
         android:id="@+id/mapsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="32dp"
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:elevation="16dp"
         android:focusable="true"
-        app:backgroundTint="@color/white"
+        app:backgroundTint="?attr/floatButton"
         app:pressedTranslationZ="12dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="32dp"
-        android:layout_marginRight="24dp"
         app:srcCompat="@drawable/ic_map_black_24dp" />
 
 </RelativeLayout>

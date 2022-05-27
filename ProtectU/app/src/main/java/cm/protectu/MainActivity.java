@@ -2,9 +2,12 @@ package cm.protectu;
 
 import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -17,16 +20,23 @@ import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.NotificationCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -83,6 +93,8 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     private static final String TAG = MainActivity.class.getName();
 
+    private static Context context;
+
     public static ViewPagerFragment viewPager;
 
     private static boolean active = false;
@@ -92,8 +104,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     public static Fragment currentFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        MainActivity.context = getApplicationContext();
+
         //Read and Load Themes
-        if (CustomizationManager.getInstance(this).getSelectedTheme().equalsIgnoreCase("dark"))
+        if (CustomizationManager.getInstance().getSelectedTheme().equalsIgnoreCase("dark"))
             setTheme(R.style.Theme_Dark);
         else
             setTheme(R.style.Theme_Light);
@@ -102,6 +116,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 //        }else
 //            setTheme(R.style.Theme_Light);
         PrefManager prefManager = new PrefManager(this);
+
         mSensorService = new NotificationService();
         mServiceIntent = new Intent(this, NotificationService.class);
         if (prefManager.getNotifications().equals("true") && !isMyServiceRunning(mSensorService.getClass())) {
@@ -132,6 +147,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         super.onCreate(savedInstanceState);
 
+
+        //Load language
+//        String languageToLoad = LanguageManagerClass.getInstance().readLocale();
+//        Locale locale;
+//        locale = new Locale(languageToLoad);
+//        Locale.setDefault(locale);
+//        Configuration config = new Configuration();
+//        config.locale = locale;
+//        this.getBaseContext().getResources().updateConfiguration(config,
+//                this.getBaseContext().getResources().getDisplayMetrics());
+
         //Link the layout to the activity
         setContentView(R.layout.activity_main);
 
@@ -148,6 +174,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         bottomBar = findViewById(R.id.bottom_menu);
         sideBar = findViewById(R.id.side_menu);
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
 
         getUserData(1);
 
@@ -352,6 +379,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                         }
                     }
                 });
+    }
+
+    public static Context getAppContext() {
+        return MainActivity.context;
     }
 
     private boolean isMyServiceRunning(Class<?> serviceClass) {

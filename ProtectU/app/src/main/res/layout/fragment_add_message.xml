@@ -16,7 +16,8 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_alignParentRight="true"
-        android:src="@drawable/ic_close_black_24dp" />
+        android:src="@drawable/ic_close_black_24dp"
+        app:tint="?attr/textColor" />
 
 
     <TextView
@@ -26,7 +27,7 @@
         android:layout_centerHorizontal="true"
         android:fontFamily="@font/lexend_regular"
         android:text="@string/newMessage"
-        android:textColor="#000000"
+        android:textColor="?attr/textColor"
         android:textSize="20sp" />
 
 
@@ -41,8 +42,11 @@
         android:fontFamily="@font/lexend_regular"
         android:hint="@string/message"
         android:inputType="text"
+        android:maxLength="200"
         android:textSize="15sp"
-        android:maxLength="200"/>
+        android:textColor="?attr/textColor"
+        android:textColorHint="?attr/textColor"
+        android:backgroundTint="?attr/textColor"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/chose"
@@ -83,6 +87,7 @@
         android:layout_marginTop="30dp"
         android:elevation="20dp"
         app:cardCornerRadius="15dp"
+        android:backgroundTint="?attr/backgroundColorSelected"
         >
 
         <ImageView
@@ -91,7 +96,8 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:src="@drawable/ic_camera_black_24dp"
-            android:scaleType="fitXY"/>
+            android:scaleType="fitXY"
+            app:tint="?attr/textColor" />
 
 
         <RelativeLayout
@@ -107,8 +113,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
-                android:visibility="invisible"
-                />
+                android:visibility="invisible" />
         </RelativeLayout>
 
 
