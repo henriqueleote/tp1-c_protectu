@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.icu.text.DateFormat;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,6 +54,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
     private FirebaseAuth mAuth;
     private CommunityFragment communityFragment;
     private String userName;
+    private RecyclerView recyclerView;
 
     private static final String TAG = MainActivity.class.getName();
 
@@ -73,6 +75,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
 
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        this.recyclerView = recyclerView;
         super.onAttachedToRecyclerView(recyclerView);
     }
 
@@ -298,17 +301,19 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                 holder.videoView.setMediaController(mediaController);
                 mediaController.setAnchorView(holder.videoView);
 
+                mediaController.setPadding(0,60,0,0);
+                mediaController.setScaleX(1);
+                mediaController.setScaleY(0.5f);
+
+                holder.videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        holder.videoView.start();
+                        holder.videoView.pause();
+                    }
+                });
 
 
-                /*ConstraintSet constraintSet = new ConstraintSet();
-                constraintSet.clone(holder.constraintLayout);
-
-                constraintSet.connect(holder.communityTextWithImage.getId(), ConstraintSet.BOTTOM, holder.frameLayout.getId(), ConstraintSet.TOP, 8);
-                constraintSet.applyTo(holder.constraintLayout);*/
-
-
-                holder.videoView.setZOrderOnTop(true);
-                holder.videoView.start();
             }
             else {
                 holder.imageCommunity.setVisibility(View.VISIBLE);
@@ -335,12 +340,6 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                         mDialog.show();
                     }
                 });
-
-                /*ConstraintSet constraintSet = new ConstraintSet();
-                constraintSet.clone(holder.constraintLayout);
-
-                constraintSet.connect(holder.communityTextWithImage.getId(), ConstraintSet.BOTTOM, holder.imageCommunity.getId(), ConstraintSet.TOP, 8);
-                constraintSet.applyTo(holder.constraintLayout);*/
             }
 
         } else {

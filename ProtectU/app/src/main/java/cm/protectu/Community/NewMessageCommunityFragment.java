@@ -2,9 +2,11 @@ package cm.protectu.Community;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -50,7 +52,7 @@ import cm.protectu.R;
 public class NewMessageCommunityFragment extends BottomSheetDialogFragment {
 
     private EditText message;
-    private Button createButton, videoButton, imageButton;
+    private Button createButton;
     private ImageView closeButton, upLoadedImage;
     private VideoView videoView;
     private FirebaseAuth mAuth;
@@ -87,8 +89,6 @@ public class NewMessageCommunityFragment extends BottomSheetDialogFragment {
         message = view.findViewById(R.id.message);
         createButton = view.findViewById(R.id.createNewMessageButton);
         upLoadedImage = view.findViewById(R.id.uploadImage);
-        videoButton = view.findViewById(R.id.video);
-        imageButton = view.findViewById(R.id.image);
         videoView = view.findViewById(R.id.uploadVideo);
         frameLayout = view.findViewById(R.id.frameVideo);
 
@@ -104,29 +104,59 @@ public class NewMessageCommunityFragment extends BottomSheetDialogFragment {
             }
         });
 
-        videoButton.setOnClickListener(new View.OnClickListener() {
+        upLoadedImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                videoView.setVisibility(View.VISIBLE);
-                frameLayout.setVisibility(View.VISIBLE);
-                upLoadedImage.setVisibility(View.GONE);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage(R.string.pick_image_intent_text)
+                        .setPositiveButton(R.string.video, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                isVideo = true;
+                                dispatchTakeVideoIntent();
+                                videoView.setVisibility(View.VISIBLE);
+                                frameLayout.setVisibility(View.VISIBLE);
+                                upLoadedImage.setVisibility(View.GONE);
 
-                frameLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dispatchTakeVideoIntent();
-
-                    }
-                });
-            }
-        });
-
-        imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                videoView.setVisibility(View.GONE);
-                frameLayout.setVisibility(View.GONE);
-                upLoadedImage.setVisibility(View.VISIBLE);
+                                frameLayout.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                        builder.setMessage(R.string.pick_image_intent_text)
+                                                .setPositiveButton(R.string.video, new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int id) {
+                                                        videoView.setVisibility(View.VISIBLE);
+                                                        frameLayout.setVisibility(View.VISIBLE);
+                                                        upLoadedImage.setVisibility(View.GONE);
+                                                        isVideo = true;
+                                                        dispatchTakeVideoIntent();
+                                                    }
+                                                })
+                                                .setNegativeButton(R.string.camera, new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int id) {
+                                                        videoView.setVisibility(View.GONE);
+                                                        frameLayout.setVisibility(View.GONE);
+                                                        upLoadedImage.setVisibility(View.VISIBLE);
+                                                        isVideo = false;
+                                                        dispatchTakePictureIntent();
+                                                    }
+                                                });
+                                        // Create the AlertDialog object and return it
+                                        builder.show();
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton(R.string.camera, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                videoView.setVisibility(View.GONE);
+                                frameLayout.setVisibility(View.GONE);
+                                upLoadedImage.setVisibility(View.VISIBLE);
+                                isVideo = false;
+                                dispatchTakePictureIntent();
+                            }
+                        });
+                // Create the AlertDialog object and return it
+                builder.show();
             }
         });
 
@@ -137,18 +167,6 @@ public class NewMessageCommunityFragment extends BottomSheetDialogFragment {
             @Override
             public void onClick(View v) {
                 getDialog().cancel();
-            }
-        });
-
-        //TODO: VIDEO PLAYER
-        /**
-         * Will fetch an image from the user's downloads
-         */
-        upLoadedImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dispatchTakePictureIntent();
-
             }
         });
 
@@ -289,7 +307,13 @@ public class NewMessageCommunityFragment extends BottomSheetDialogFragment {
                 MediaController mediaController = new MediaController(getContext());
                 videoView.setMediaController(mediaController);
                 mediaController.setAnchorView(videoView);
-                videoView.start();
+                videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mp) {
+                        videoView.start();
+                        videoView.pause();
+                    }
+                });
             }
 
             mDialog.setCancelable(false);
