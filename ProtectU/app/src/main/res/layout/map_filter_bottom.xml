@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Filter map"
+        android:text="@string/filter_map"
         android:textColor="?attr/textColor"
         android:textSize="20sp" />
 
@@ -109,7 +109,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/checkBoxListView"
-        android:text="Filter"
+        android:text="@string/filter"
         android:textColor="#FFFFFF"
         android:backgroundTint="@color/primary_button"/>
 

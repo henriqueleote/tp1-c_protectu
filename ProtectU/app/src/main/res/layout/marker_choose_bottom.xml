@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Choose pin"
+        android:text="@string/choose_pin"
         android:textColor="#000000"
         android:textSize="20sp" />
 
@@ -41,7 +41,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/buttonsListView"
-        android:text="Create"
+        android:text="@string/Create"
         android:textColor="#FFFFFF"
         android:backgroundTint="@color/primary_button"/>
 

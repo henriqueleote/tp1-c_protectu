@@ -44,7 +44,7 @@ public class CommunityFragment extends Fragment {
     private CommunityAdapter communityAdapter;
     private ArrayList<CommunityCard> listOfCommunityCards;
     private FloatingActionButton floatingActionButton;
-    private ImageView missingPeopleButton,backProfile,menuImageView;
+    private ImageView missingPeopleButton, backProfile, menuImageView;
     private TextView communityText;
     private SwipeRefreshLayout swipeToRefresh;
     private CommunityFragment fragment;
@@ -84,7 +84,7 @@ public class CommunityFragment extends Fragment {
         menuImageView = view.findViewById(R.id.menuImageView);
         communityText = view.findViewById(R.id.communityText);
 
-        communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth, fragment,userID);
+        communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth, fragment, userID);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(communityAdapter);
 
@@ -117,14 +117,14 @@ public class CommunityFragment extends Fragment {
             floatingActionButton.setVisibility(View.GONE);
         } else {
             floatingActionButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (!mAuth.getCurrentUser().isAnonymous()) {
-                        NewMessageCommunityFragment newMessageCommunityFragment = new NewMessageCommunityFragment(fragment);
-                        newMessageCommunityFragment.show(getParentFragmentManager(), newMessageCommunityFragment.getTag());
-                    }
-                }
-            }
+                                                        @Override
+                                                        public void onClick(View view) {
+                                                            if (!mAuth.getCurrentUser().isAnonymous()) {
+                                                                NewMessageCommunityFragment newMessageCommunityFragment = new NewMessageCommunityFragment(fragment);
+                                                                newMessageCommunityFragment.show(getParentFragmentManager(), newMessageCommunityFragment.getTag());
+                                                            }
+                                                        }
+                                                    }
             );
         }
 
@@ -142,8 +142,7 @@ public class CommunityFragment extends Fragment {
                     MainActivity.drawerLayout.openDrawer(Gravity.LEFT);
                 }
             });
-        }
-        else{
+        } else {
             missingPeopleButton.setVisibility(View.GONE);
             backProfile.setVisibility(View.VISIBLE);
             backProfile.setOnClickListener(new View.OnClickListener() {
@@ -159,9 +158,8 @@ public class CommunityFragment extends Fragment {
 
             menuImageView.setVisibility(View.GONE);
 
-            communityText.setText("My Publications");
+            communityText.setText(R.string.myPublications);
         }
-
 
 
         //Returns the view
@@ -200,18 +198,18 @@ public class CommunityFragment extends Fragment {
                             Collections.sort(listOfCommunityCards, new SortCommunityCardClass());
 
                             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                            communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth, fragment,userID);
+                            communityAdapter = new CommunityAdapter(getActivity(), listOfCommunityCards, mAuth, fragment, userID);
                             recyclerView.setAdapter(communityAdapter);
                             communityAdapter.notifyDataSetChanged();
 
                             cDialog.dismiss();
 
-                            if (listOfCommunityCards.isEmpty()){
-                                Toast.makeText(getActivity(), "Não existem Publicações", Toast.LENGTH_SHORT).show();
+                            if (listOfCommunityCards.isEmpty()) {
+                                Toast.makeText(getActivity(), "" + R.string.noPublications, Toast.LENGTH_SHORT).show();
                             }
 
                         } else {
-                            Toast.makeText(getActivity(), "erro", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), ""+ R.string.error, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

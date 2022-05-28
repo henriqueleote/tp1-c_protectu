@@ -147,4 +147,14 @@
     <bool name="notifications">true</bool>
     <string name="cancel">Cancel</string>
     <string name="video">Video</string>
+    <string name="myPublications">My Publications</string>
+    <string name="noPublications">There are no Publications</string>
+    <string name="make_verified">Make verified</string>
+    <string name="title_of_the_new">Title of the New</string>
+    <string name="push_alert">Push alert</string>
+    <string name="add_marker">Add marker</string>
+    <string name="add_zone">Add zone</string>
+    <string name="filter_map">Filter map</string>
+    <string name="filter">Filter</string>
+    <string name="choose_pin">Choose pin</string>
 </resources>

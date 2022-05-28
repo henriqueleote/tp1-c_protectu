@@ -116,7 +116,7 @@
 
                     <TextView
                         android:id="@+id/labelAID"
-                        android:layout_width="45dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="20dp"
                         android:fontFamily="@font/lexend_regular"
                         android:paddingLeft="12dp"
@@ -130,6 +130,7 @@
                         android:layout_toRightOf="@+id/labelAID"
                         android:fontFamily="@font/lexend_regular"
                         android:text="12"
+                        android:layout_marginLeft="10dp"
                         android:textColor="?attr/textColor" />
                 </RelativeLayout>
 
