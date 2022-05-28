@@ -12,7 +12,7 @@
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
 
-    
+
     <ImageView
         android:id="@+id/closeFilterID"
         android:layout_width="25dp"
