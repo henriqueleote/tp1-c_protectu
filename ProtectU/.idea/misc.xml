@@ -80,7 +80,7 @@
         <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_make_verified.xml" value="0.3625" />
         <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_map.xml" value="0.17864583333333334" />
         <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_missing_new_post.xml" value="0.3421875" />
-        <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_missing_post.xml" value="0.25" />
+        <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_missing_post.xml" value="0.17864583333333334" />
         <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_missingboard.xml" value="0.17864583333333334" />
         <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_more_information_community.xml" value="0.28854166666666664" />
         <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_news.xml" value="0.17864583333333334" />
@@ -90,8 +90,50 @@
         <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/header.xml" value="0.17864583333333334" />
         <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/login_bottom.xml" value="0.17864583333333334" />
         <entry key="..\:/Users/andem/OneDrive/Ambiente de Trabalho/tp1-c_protectu/ProtectU/app/src/main/res/layout/register_bottom.xml" value="0.1984375" />
-        <entry key="..\:/Users/gcoli/Documents/tp1-c_protectu/ProtectU/app/src/main/res/layout/cardview_news.xml" value="0.2740740740740741" />
-        <entry key="..\:/Users/gcoli/Documents/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_news.xml" value="0.2740740740740741" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/activity_welcome.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/building_extras_list_view.xml" value="0.2694746376811594" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/button_list_view.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/cardview_community.xml" value="0.25" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/cardview_missing.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/cardview_news.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/checkbox_list_view.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/color_spinner_layout.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/dropdown_item.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_about.xml" value="0.33" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_add_message.xml" value="0.2871376811594203" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_add_news.xml" value="0.22" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_age_filter_mssing.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_community.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_costumization.xml" value="0.25" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_customization.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_details_news.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_edit_profile.xml" value="0.2871376811594203" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_language.xml" value="0.25" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_make_verified.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_map.xml" value="0.2871376811594203" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_map_add_marker.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_map_add_zone.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_map_new_bunker.xml" value="0.2694746376811594" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_map_new_earthquake.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_map_new_fire.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_map_new_hospital.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_map_new_war.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_missing_new_post.xml" value="0.2871376811594203" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_missing_post.xml" value="0.33" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_missingboard.xml" value="0.2871376811594203" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_new_alarm.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_news.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_notifications.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_panic.xml" value="0.2871376811594203" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_photoview_fullscreen.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_profile.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/fragment_viewpager.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/header.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/login_bottom.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/map_building_bottom.xml" value="0.2871376811594203" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/map_filter_bottom.xml" value="0.2871376811594203" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/marker_choose_bottom.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/pedri/StudioProjects/tp1-c_protectu/ProtectU/app/src/main/res/layout/spinner_dropdown_layout.xml" value="0.2694746376811594" />
       </map>
     </option>
   </component>

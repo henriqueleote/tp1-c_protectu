@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
@@ -191,6 +192,8 @@ public class NewWarFragment extends Fragment {
         if (requestCode == 1 && resultCode == RESULT_OK && (data.getData() != null || data.getClipData() != null)) {
             uriList.clear();
             imagesLinks.clear();
+            ImageViewCompat.setImageTintList(imagesImageView, null);
+
             if(data.getClipData() != null){
                 int totalItems = data.getClipData().getItemCount();
 
