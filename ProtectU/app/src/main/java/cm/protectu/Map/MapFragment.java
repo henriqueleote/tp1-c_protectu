@@ -184,15 +184,15 @@ public class MapFragment extends Fragment {
             }
         });
 
-        //TODO FINISH THE COLOR COMMENTED
         changeMapTypeBtn.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceType")
             @Override
             public void onClick(View view) {
                 if(gMap.getMapType() == GoogleMap.MAP_TYPE_NORMAL){
-                    //menuImageView.setBackgroundTintList(branco);
+                    menuImageView.setColorFilter(ContextCompat.getColor(getContext(), R.color.white), android.graphics.PorterDuff.Mode.MULTIPLY);
                     gMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                 }else{
-                    //menuImageView.setBackgroundTintList(preto);
+                    menuImageView.setColorFilter(ContextCompat.getColor(getContext(), R.attr.textColor), android.graphics.PorterDuff.Mode.MULTIPLY);
                     gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                 }
                 loadMap();
