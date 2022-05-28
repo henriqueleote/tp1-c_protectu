@@ -24,8 +24,9 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="580dp"
-        android:text="teste"
+        android:layout_marginBottom="100dp"
+        android:layout_alignParentBottom="true"
+        android:text="Comecar"
         android:textColor="@android:color/white"
         android:visibility="gone" />
 
@@ -34,16 +35,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="600dp"
-        android:text="teste"
+        android:layout_marginBottom="100dp"
+        android:layout_alignParentBottom="true"
+        android:text="Swipe to the left"
         android:textColor="#000000"
-        android:textSize="14sp" />
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/Skip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@id/view_pager"
+        android:text="Skip"
+        android:textColor="#000000"
+        android:textSize="18sp" />
 
     <ImageView
         android:id="@+id/btn_next"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="300dp"
-        android:layout_marginTop="585dp" />
+        android:layout_marginBottom="85dp"
+        android:layout_marginLeft="20dp"
+        android:layout_toRightOf="@id/text_next"
+        android:layout_alignParentBottom="true"
+        android:rotation="180"
+        android:src="@drawable/ic_arrow_back_black_24dp" />
 
 </RelativeLayout>

@@ -2,7 +2,6 @@ package cm.protectu;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -10,7 +9,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +37,7 @@ public class WelcomeScreenActivity extends AppCompatActivity {
     private PrefManager prefManager;
     private Button btnBegin;
     private ImageView btnNext;
-    private TextView txtNext;
+    private TextView txtNext,skip;
 
     private static final String TAG = WelcomeScreenActivity.class.getName();
 
@@ -101,6 +99,7 @@ public class WelcomeScreenActivity extends AppCompatActivity {
         btnBegin = findViewById(R.id.btn_begin);
         btnNext = findViewById(R.id.btn_next);
         txtNext = findViewById(R.id.text_next);
+        skip = findViewById(R.id.Skip);
 
 
         // layouts of all welcome sliders
@@ -164,6 +163,24 @@ public class WelcomeScreenActivity extends AppCompatActivity {
                 }
             }
         });
+
+        skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // checking for last page
+                // if last page home screen will be launched
+                int current = getItem(+1);
+                if (current < layouts.length) {
+                    // move to next screen
+                    viewPager.setCurrentItem(2);
+                } else {
+                    launchHomeScreen();
+                }
+            }
+        });
+
+
+
     }
 
     private void addBottomDots(int currentPage) {
@@ -183,6 +200,13 @@ public class WelcomeScreenActivity extends AppCompatActivity {
 
         if (dots.length > 0)
             dots[currentPage].setTextColor(colorsActive[currentPage]);
+
+        if (getItem(1) == 3 ){
+            skip.setVisibility(View.GONE);
+        }
+        else {
+            skip.setVisibility(View.VISIBLE);
+        }
     }
 
     private int getItem(int i) {
