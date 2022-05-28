@@ -184,13 +184,15 @@ public class MapFragment extends Fragment {
             }
         });
 
-        //TODO Comment
+        //TODO FINISH THE COLOR COMMENTED
         changeMapTypeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(gMap.getMapType() == GoogleMap.MAP_TYPE_NORMAL){
+                    //menuImageView.setBackgroundTintList(branco);
                     gMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                 }else{
+                    //menuImageView.setBackgroundTintList(preto);
                     gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                 }
                 loadMap();

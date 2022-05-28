@@ -37,6 +37,8 @@ public class CustomizationFragment extends Fragment implements AdapterView.OnIte
     private Spinner spinner;
     private Button btnSave;
 
+    String setting;
+
 
     @Nullable
     @Override
@@ -78,6 +80,7 @@ public class CustomizationFragment extends Fragment implements AdapterView.OnIte
                 builder.setMessage(R.string.question_app_will_restart)
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
+                                CustomizationManager.getInstance().saveTheme(setting);
                                 getActivity().recreate();
                             }
                         })
@@ -109,10 +112,10 @@ public class CustomizationFragment extends Fragment implements AdapterView.OnIte
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
         switch (position) {
             case 1: //Light Mode
-                CustomizationManager.getInstance().saveTheme("light");
+                setting = "light";
                 break;
             case 2: // Dark Mode
-                CustomizationManager.getInstance().saveTheme("dark");
+                setting = "dark";
                 break;
             default: // System Default
         }
