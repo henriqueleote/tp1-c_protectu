@@ -176,8 +176,8 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                 public void onClick(View view) {
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("text/plain");
-                    String shareBody = "Your Body here";
-                    String shareSub = "Your Subject here";
+                    String shareBody = messageText;
+                    String shareSub = holder.userName.getText().toString() + " " + messageText;
                     intent.putExtra(Intent.EXTRA_SUBJECT, shareBody);
                     intent.putExtra(Intent.EXTRA_TEXT, shareSub);
                     context.startActivity(Intent.createChooser(intent, "Share this Post"));
@@ -198,7 +198,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
         int margin = 5;
 
         if (!isVerified) {
-            if (!MainActivity.sessionUser.getUserType().equals("user")) {
+            if (!mAuth.getCurrentUser().isAnonymous() && !MainActivity.sessionUser.getUserType().equals("user")) {
             constraintSet.connect(holder.makeVerified.getId(), ConstraintSet.END, holder.verified.getId(), ConstraintSet.END, margin);
             constraintSet.applyTo(holder.constraintLayout);
 

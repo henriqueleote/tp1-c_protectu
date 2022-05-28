@@ -123,6 +123,8 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
             } else {
                 holder.removeMissing.setVisibility(View.INVISIBLE);
             }
+        }else {
+            holder.removeMissing.setVisibility(View.INVISIBLE);
         }
 
     }

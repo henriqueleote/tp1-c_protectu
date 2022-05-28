@@ -11,6 +11,7 @@ public class PrefManager {
     private static final String LANGUAGE = "us";
     private static final String NOTIFICATIONS = "true";
 
+
     SharedPreferences pref;
     SharedPreferences.Editor editor;
     Context _context;

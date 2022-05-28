@@ -278,6 +278,7 @@ public class MapFragment extends Fragment {
         });
     }
 
+
     //TODO - Check if the users location is enabled
     //Gets the user current location and displays in the map
     private void loadMap() {
