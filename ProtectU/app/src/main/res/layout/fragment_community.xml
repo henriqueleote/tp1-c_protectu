@@ -85,8 +85,7 @@
             android:focusable="true"
             app:backgroundTint="?attr/floatButton"
             app:pressedTranslationZ="12dp"
-            app:srcCompat="@drawable/ic_add_black_24dp"
-            />
+            app:srcCompat="@drawable/ic_add_black_24dp" />
 
     </RelativeLayout>
 

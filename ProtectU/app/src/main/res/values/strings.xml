@@ -164,4 +164,5 @@
     <string name="seniors">Seniors</string>
     <string name="show_results">Show Results</string>
     <string name="no_posts">There are no posts</string>
+    <string name="delete_account">Delete account</string>
 </resources>
