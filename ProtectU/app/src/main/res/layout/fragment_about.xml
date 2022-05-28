@@ -35,7 +35,7 @@
             android:paddingTop="15dp"
             android:text="About"
             android:textColor="?attr/textColor"
-            android:textSize="24dp" />
+            android:textSize="24sp" />
 
         <!--//TODO TRANSLATE-->
         <TextView

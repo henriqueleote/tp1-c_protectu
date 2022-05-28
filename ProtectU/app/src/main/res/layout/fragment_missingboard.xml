@@ -36,7 +36,7 @@
             android:fontFamily="@font/lexend_regular"
             android:text="@string/missingBoard"
             android:textColor="?attr/textColor"
-            android:textSize="23dp"
+            android:textSize="23sp"
             tools:ignore="MissingConstraints"></TextView>
 
         <androidx.cardview.widget.CardView
@@ -62,7 +62,7 @@
                     android:fontFamily="@font/lexend_regular"
                     android:text="@string/Age"
                     android:textColor="?attr/textColor"
-                    android:textSize="15dp" />
+                    android:textSize="15sp" />
 
             </RelativeLayout>
 
