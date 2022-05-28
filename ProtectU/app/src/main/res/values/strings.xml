@@ -163,4 +163,5 @@
     <string name="adults">Adults</string>
     <string name="seniors">Seniors</string>
     <string name="show_results">Show Results</string>
+    <string name="no_posts">There are no posts</string>
 </resources>
