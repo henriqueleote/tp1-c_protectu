@@ -33,7 +33,7 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth mAuth;
     private MissingBoardFragment missingBoardFragment;
-    private String userID;
+    private String idUser;
 
 
     private static final String TAG = MainActivity.class.getName();
@@ -45,14 +45,14 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
      * @param fragment
      * @param firebaseAuth
      */
-    public MissingBoardAdapter(Context mContext, List<MissingCardClass> mData, FragmentManager fragment, FirebaseAuth firebaseAuth, MissingBoardFragment missingBoardFragment, String userID) {
+    public MissingBoardAdapter(Context mContext, List<MissingCardClass> mData, FragmentManager fragment, FirebaseAuth firebaseAuth, MissingBoardFragment missingBoardFragment, String id) {
         this.mContext = mContext;
         this.mData = mData;
         this.parentFragment= fragment;
         this.mAuth = firebaseAuth;
         firebaseFirestore = FirebaseFirestore.getInstance();
         this.missingBoardFragment = missingBoardFragment;
-        this.userID = userID;
+        this.idUser = id;
 
     }
 
@@ -117,7 +117,7 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
                 holder.removeMissing.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        removeMissing(missingID);
+                        removeMissing(missingID,idUser);
                     }
                 });
             } else {
@@ -143,9 +143,9 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
      *
      * @param missingID
      */
-    public void removeMissing(String missingID) {
+    public void removeMissing(String missingID,String id) {
         firebaseFirestore.collection("missing-board").document(missingID).delete();
-        missingBoardFragment.missingCardsData(mAuth.getUid());
+        missingBoardFragment.missingCardsData(id);
 
     }
 

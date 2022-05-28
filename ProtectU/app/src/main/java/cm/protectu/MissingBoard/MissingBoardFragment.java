@@ -60,8 +60,6 @@ public class MissingBoardFragment extends Fragment {
         this.userID = userID;
     }
 
-    public MissingBoardFragment() {
-    }
 
     @Nullable
     @Override
@@ -204,7 +202,7 @@ public class MissingBoardFragment extends Fragment {
      * Allows you to check if the task of fetching the data in the collection is successful, then
      * transforms the returned data into the desired class and creates the respective publications
      */
-    public void missingCardsData(String userId) {
+    public void missingCardsData(String id) {
         missingCardClasses.clear();
         firebaseFirestore.collection("missing-board")
                 .get()
@@ -214,18 +212,20 @@ public class MissingBoardFragment extends Fragment {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 MissingCardClass missingCardClass = document.toObject(MissingCardClass.class);
-                                if (userId == null) {
+                                if (id == null) {
                                     missingCardClasses.add(missingCardClass);
                                 } else {
-                                    if (missingCardClass.getUserID().equals(userId)) {
+                                    if (missingCardClass.getUserID().equals(id)) {
                                         missingCardClasses.add(missingCardClass);
                                     }
                                 }
                                 Collections.sort(missingCardClasses, new SortMissingBoardCardClass());
-                                myAdapter = new MissingBoardAdapter(getActivity(), missingCardClasses,getParentFragmentManager(),mAuth,fragment,missingCardClass.getUserID());
+                                myAdapter = new MissingBoardAdapter(getActivity(), missingCardClasses,getParentFragmentManager(),mAuth,fragment,id);
                                 myRecycleView.setAdapter(myAdapter);
                                 myAdapter.notifyDataSetChanged();
+
                             }
+
                         } else {
                             Toast.makeText(getActivity(),"erro", Toast.LENGTH_SHORT).show();
                         }
