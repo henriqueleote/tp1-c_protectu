@@ -17,7 +17,8 @@
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_alignParentRight="true"
-        android:src="@drawable/ic_close_black_24dp" />
+        android:src="@drawable/ic_close_black_24dp"
+        app:tint="?attr/textColor" />
 
     <TextView
         android:id="@+id/new_alarm"
@@ -26,21 +27,24 @@
         android:layout_centerHorizontal="true"
         android:fontFamily="@font/lexend_regular"
         android:text="@string/new_alarm"
-        android:textColor="#000000"
-        android:textSize="20sp"/>
+        android:textColor="?attr/textColor"
+        android:textSize="20sp" />
+
     <Spinner
         android:id="@+id/alarmType"
         style="@style/Widget.AppCompat.Spinner.Underlined"
         android:layout_width="200dp"
-        android:layout_height="40dp"
+        android:layout_height="60dp"
         android:layout_below="@+id/new_alarm"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="24dp"
         android:drawablePadding="10dp"
+        android:entries="@array/alarm_types"
         android:fontFamily="@font/lexend_regular"
         android:gravity="center"
-        android:entries="@array/alarm_types"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        />
+
 
     <EditText
         android:id="@+id/messageAlarm"
@@ -52,10 +56,12 @@
         android:drawablePadding="10dp"
         android:fontFamily="@font/lexend_regular"
         android:gravity="center"
+        android:hint="@string/type_alarm_message"
         android:nextFocusDown="@+id/subMessageAlarm"
         android:singleLine="true"
-        android:hint="@string/type_alarm_message"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:textColor="?attr/textColor"
+        android:textColorHint="?attr/textColor"/>
 
     <EditText
         android:id="@+id/subMessageAlarm"
@@ -67,10 +73,12 @@
         android:drawablePadding="10dp"
         android:fontFamily="@font/lexend_regular"
         android:gravity="center"
+        android:hint="@string/type_details"
         android:imeOptions="actionDone"
         android:singleLine="true"
-        android:hint="@string/type_details"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:textColorHint="?attr/textColor"
+        android:textColor="?attr/textColor"/>
 
     <Button
         android:id="@+id/createAlarm"

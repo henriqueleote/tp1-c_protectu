@@ -60,8 +60,7 @@
         android:drawablePadding="10dp"
         android:entries="@array/panic_values"
         android:fontFamily="@font/lexend_regular"
-        android:gravity="center"
-        />
+        android:gravity="center" />
 
     <Button
         android:id="@+id/sosButton"

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -64,6 +65,12 @@ public class NewAlarmFragment extends BottomSheetDialogFragment {
         subMessage = view.findViewById(R.id.subMessageAlarm);
         createAlarm = view.findViewById(R.id.createAlarm);
         firebaseFirestore = FirebaseFirestore.getInstance();
+
+        Spinner spinner = view.findViewById(R.id.alarmType);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(), R.array.alarm_types, R.layout.color_spinner_alert_layout);
+        adapter.setDropDownViewResource(R.layout.spinner_dropdown_layout);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(alarmType.getOnItemSelectedListener());
 
         //On click closes the form sheet
         closeButton.setOnClickListener(new View.OnClickListener() {
