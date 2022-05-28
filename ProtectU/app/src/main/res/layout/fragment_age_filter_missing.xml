@@ -11,14 +11,8 @@
     app:behavior_peekHeight="0dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/designOnly"
-        android:layout_width="160dp"
-        android:layout_height="5dp"
-        android:layout_centerHorizontal="true"
-        app:cardBackgroundColor="?attr/textColor" />
 
-
+    
     <ImageView
         android:id="@+id/closeFilterID"
         android:layout_width="25dp"
