@@ -104,25 +104,6 @@
         app:layout_constraintEnd_toEndOf="@+id/contactRel"
         app:layout_constraintTop_toBottomOf="@+id/contactRel" />
 
-    <ImageView
-        android:id="@+id/profileImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:src="@drawable/ic_bottom_profile_black_24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:src="@drawable/ic_camera_black_24dp"
-        app:layout_constraintBottom_toBottomOf="@+id/profileImageView"
-        app:layout_constraintEnd_toEndOf="@+id/profileImageView"
-        app:tint="?attr/textColor" />
 
     <ImageView
         android:id="@+id/backButton"

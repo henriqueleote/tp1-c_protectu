@@ -64,17 +64,16 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_below="@+id/titleAgeFilterID"
-        android:layout_marginTop="10dp"
-        >
+        android:layout_marginTop="10dp">
 
         <CheckBox
             android:id="@+id/childrensFilterID"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginLeft="30dp"
-            android:button="@null"
             android:background="?android:attr/listChoiceIndicatorMultiple"
-            android:backgroundTint="?attr/textColor"/>
+            android:backgroundTint="?attr/textColor"
+            android:button="@null" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -82,19 +81,18 @@
             android:layout_marginTop="20dp"
             android:layout_toRightOf="@+id/childrensFilterID"
             android:fontFamily="@font/lexend_regular"
-            android:text="Childrens"
+            android:text="@string/childrens"
             android:textColor="?attr/textColor"
             android:textSize="15sp" />
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:id="@+id/seconFilterID"
+        android:id="@+id/secondFilterID"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_below="@+id/firstFilterID"
-        android:layout_marginTop="10dp"
-        >
+        android:layout_marginTop="10dp">
 
         <CheckBox
             android:id="@+id/adultsFilterID"
@@ -111,7 +109,7 @@
             android:layout_marginTop="20dp"
             android:layout_toRightOf="@+id/adultsFilterID"
             android:fontFamily="@font/lexend_regular"
-            android:text="Adults"
+            android:text="@string/adults"
             android:textColor="?attr/textColor"
             android:textSize="15sp" />
 
@@ -121,7 +119,7 @@
         android:id="@+id/finalFilterID"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_below="@+id/seconFilterID"
+        android:layout_below="@+id/secondFilterID"
         android:layout_marginTop="10dp">
 
         <CheckBox
@@ -139,7 +137,7 @@
             android:layout_marginTop="20dp"
             android:layout_toRightOf="@+id/seniorsFilterID"
             android:fontFamily="@font/lexend_regular"
-            android:text="Seniors"
+            android:text="@string/seniors"
             android:textColor="?attr/textColor"
             android:textSize="15sp"
 
@@ -157,7 +155,7 @@
         android:layout_marginTop="10dp"
         android:backgroundTint="@color/primary_button"
         android:fontFamily="@font/lexend_regular"
-        android:text="Show Results"
+        android:text="@string/show_results"
         android:textColor="#FFFFFF" />
 
 </RelativeLayout>

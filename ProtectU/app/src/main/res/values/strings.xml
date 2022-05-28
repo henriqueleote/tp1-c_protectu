@@ -68,7 +68,7 @@
     <string name="requestHelp">Request Help</string>
     <string name="newPost">New Post</string>
     <string name="description">Description</string>
-    <string name="addImage1">Add Image(max. 1)</string>
+    <string name="addImage1">Add Image (max. 1)</string>
     <string name="Create">Create</string>
     <string name="newMessage">New Message</string>
     <string name="message">Message</string>
@@ -150,11 +150,17 @@
     <string name="myPublications">My Publications</string>
     <string name="noPublications">There are no Publications</string>
     <string name="make_verified">Make verified</string>
-    <string name="title_of_the_new">Title of the New</string>
+    <string name="title_of_the_new">Title of the News post</string>
     <string name="push_alert">Push alert</string>
     <string name="add_marker">Add marker</string>
     <string name="add_zone">Add zone</string>
     <string name="filter_map">Filter map</string>
     <string name="filter">Filter</string>
     <string name="choose_pin">Choose pin</string>
+    <string name="new_post">New Post</string>
+    <string name="title">Title</string>
+    <string name="childrens">Childrens</string>
+    <string name="adults">Adults</string>
+    <string name="seniors">Seniors</string>
+    <string name="show_results">Show Results</string>
 </resources>

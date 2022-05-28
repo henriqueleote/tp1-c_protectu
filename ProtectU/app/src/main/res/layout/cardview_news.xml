@@ -50,7 +50,6 @@
                     android:fontFamily="@font/lexend_bold"
                     android:layout_marginTop="26dp"
                     android:layout_marginLeft="10dp"
-                    android:text="Title"
                     android:textSize="20dp"
                     app:layout_constraintTop_toBottomOf="@+id/newsImage"
                     app:layout_constraintStart_toEndOf="@+id/newsPublisherImage"
@@ -67,7 +66,6 @@
                     app:layout_constraintStart_toEndOf="@+id/newsPublisherImage"
                     app:layout_constraintTop_toBottomOf="@+id/newsTitle"
                     app:layout_constraintBottom_toTopOf="@+id/seeMoreText"
-                    android:text="text"
                     android:textColor="?attr/textColor"/>
 
                 <TextView

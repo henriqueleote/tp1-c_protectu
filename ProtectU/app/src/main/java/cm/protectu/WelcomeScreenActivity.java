@@ -74,7 +74,6 @@ public class WelcomeScreenActivity extends AppCompatActivity {
 
         }
     };
-    //private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,8 +107,8 @@ public class WelcomeScreenActivity extends AppCompatActivity {
         // add few more layouts if you want
         layouts = new int[]{
                 R.layout.welcome1,
-                R.layout.welcome1,
-                R.layout.welcome1};
+                R.layout.welcome2,
+                R.layout.welcome3};
 
         // adding bottom dots
         addBottomDots(0);

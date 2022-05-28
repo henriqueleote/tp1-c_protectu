@@ -20,8 +20,7 @@
                 android:id="@+id/newsBigImage"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_camera_black_24dp" />
+                android:scaleType="centerCrop"/>
 
             <ImageView
                 android:id="@+id/back_id"
@@ -41,7 +40,6 @@
                 android:layout_marginTop="50dp"
                 android:layout_marginRight="50dp"
                 android:fontFamily="@font/lexend_bold"
-                android:text="Titulo"
                 android:textColor="?attr/textColor"
                 app:autoSizeMaxTextSize="40sp"
                 app:autoSizeMinTextSize="12sp"
@@ -70,7 +68,6 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/calendar"
                     android:fontFamily="@font/lexend_regular"
-                    android:text="20 August, 2021"
                     android:textSize="15dp"
                     android:textColor="?attr/textColor"/>
             </RelativeLayout>
@@ -84,12 +81,11 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="50dp"
                 android:fontFamily="@font/lexend_regular"
-                android:text="alsdkmçldfmlfafksldfsd"
+                android:textColor="?attr/textColor"
                 app:autoSizeMaxTextSize="30sp"
                 app:autoSizeMinTextSize="12sp"
                 app:autoSizeStepGranularity="2sp"
-                app:autoSizeTextType="uniform"
-                android:textColor="?attr/textColor"/>
+                app:autoSizeTextType="uniform" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -115,7 +111,6 @@
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/publisherImg"
                     android:fontFamily="@font/lexend_regular"
-                    android:text="dsfsdf"
                     android:textSize="15dp"
                     android:textColor="?attr/textColor"/>
 

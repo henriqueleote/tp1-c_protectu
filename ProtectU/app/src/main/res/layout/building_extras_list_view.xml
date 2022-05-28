@@ -28,7 +28,6 @@
                     android:layout_below="@+id/buildingExtrasImageView"
                     android:text=""/>
 
-
         </RelativeLayout>
 
 </RelativeLayout>

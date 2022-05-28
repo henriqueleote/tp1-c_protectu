@@ -1,22 +1,35 @@
 package cm.protectu.News;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
+import com.smarteist.autoimageslider.SliderView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Locale;
 
+import cm.protectu.Buildings.SliderAdapter;
+import cm.protectu.LocationAddress;
 import cm.protectu.R;
+import cm.protectu.UserDataClass;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class NewsDetailsFragment extends Fragment {
@@ -25,12 +38,14 @@ public class NewsDetailsFragment extends Fragment {
     private TextView newsBigTitle, newsDate, newsBigText, publisherID;
     private NewsCardClass card;
     String imgURL1, imgURL2;
+    FirebaseFirestore firebaseFirestore;
 
     public NewsDetailsFragment(NewsCardClass card){
         this.card = card;
     }
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.fragment_details_news, container, false);
         imageBack = view.findViewById(R.id.back_id);
         newsBigTitle = view.findViewById(R.id.newsBigTitle);
@@ -40,9 +55,12 @@ public class NewsDetailsFragment extends Fragment {
         newsBigImage = view.findViewById(R.id.newsBigImage);
         pubImage = view.findViewById(R.id.publisherImg);
 
+        firebaseFirestore = FirebaseFirestore.getInstance();
+
         newsBigTitle.setText(card.getNewsTitle());
         newsBigText.setText(card.getNewsText());
-        publisherID.setText(card.getPubID());
+
+        getUser();
 
         newsDate.setText(new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(card.getDate()));
         //go back to the news frame
@@ -70,12 +88,26 @@ public class NewsDetailsFragment extends Fragment {
             Glide.with(getActivity())
                     .load(imgURL2)
                     .centerCrop()
-                    
                     .circleCrop()
                     .into(pubImage);
         }
 
         return view;
+    }
+
+    public void getUser(){
+        firebaseFirestore.collection("users")
+                .document(card.getPubID())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        UserDataClass userDataClass = documentSnapshot.toObject(UserDataClass.class);
+                        if (userDataClass != null && userDataClass.getFirstName() != null) {
+                            publisherID.setText(userDataClass.getFirstName() + " " + userDataClass.getLastName());
+                        }
+                    }
+                });
     }
 }
 

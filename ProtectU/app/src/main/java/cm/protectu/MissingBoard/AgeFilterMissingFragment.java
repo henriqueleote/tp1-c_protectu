@@ -58,7 +58,7 @@ public class AgeFilterMissingFragment extends BottomSheetDialogFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         //Link the layout to the Fragment
-        View view = inflater.inflate(R.layout.fragment_age_filter_mssing, container, false);
+        View view = inflater.inflate(R.layout.fragment_age_filter_missing, container, false);
 
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();

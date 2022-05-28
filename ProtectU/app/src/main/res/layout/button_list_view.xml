@@ -9,18 +9,16 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/icon_24dp" />
+            android:layout_height="30dp" />
 
         <TextView
             android:id="@+id/radioButtonName"
-            android:layout_alignBaseline="@+id/radioButtonIcon"
-            android:layout_toRightOf="@+id/radioButtonIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/radioButtonIcon"
+            android:layout_toRightOf="@+id/radioButtonIcon"
             android:paddingLeft="10dp"
             android:paddingRight="6dp"
-            android:text="Teste"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <RadioButton

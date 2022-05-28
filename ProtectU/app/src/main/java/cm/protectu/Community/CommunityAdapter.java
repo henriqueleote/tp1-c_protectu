@@ -239,7 +239,6 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
                     MakeVerifiedFragment makeVerifiedFragment = new MakeVerifiedFragment(communityFragment,card,messageID,adapter,holder);
                     makeVerifiedFragment.show(communityFragment.getParentFragmentManager(), makeVerifiedFragment.getTag());
-
                     Log.d(TAG, "Success");
                 }
                 })
