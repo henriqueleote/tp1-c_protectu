@@ -91,18 +91,12 @@ public class CustomizationFragment extends Fragment implements AdapterView.OnIte
                         public void onClick(DialogInterface dialog, int id) {
                             switch (position) {
                                 case 1: //Light Mode
-//                                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-//                                    getActivity().setTheme(R.style.Theme_Light);
                                     CustomizationManager.getInstance().saveTheme("light");
                                     getActivity().recreate();
                                     break;
                                 case 2: // Dark Mode
-//                                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-//                                    getActivity().setTheme(R.style.Theme_Dark);
                                     CustomizationManager.getInstance().saveTheme("dark");
                                     getActivity().recreate();
-                                    break;
-                                case 3: // Blue Mode
                                     break;
                                 default: // System Default
                             }

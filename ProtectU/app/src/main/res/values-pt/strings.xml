@@ -60,7 +60,6 @@
         <item>Escolher Tema</item>
         <item>Claro</item>
         <item>Escuro</item>
-        <item>Azul</item>
     </string-array>
     <string name="newPost">Nova Publicação</string>
     <string name="description">Descrição</string>

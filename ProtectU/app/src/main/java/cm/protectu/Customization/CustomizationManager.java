@@ -36,29 +36,6 @@ public class CustomizationManager {
     }
 
 
-//    public void loadTheme() {
-//        String themeChosen = sharedPreferences.getString("theme", "light");
-//        System.out.println("Tema: " + themeChosen);
-//        switch (themeChosen.toLowerCase(Locale.ROOT)) {
-//            case "dark":
-//                ct.setTheme(R.style.Theme_Dark);
-//                break;
-//            default:
-//                ct.setTheme(R.style.Theme_Light);
-//
-//        }
-
-
-//        if (selectedTheme.equalsIgnoreCase("dark")) {
-//            ct.setTheme(R.style.Theme_Dark);
-////                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-//        } else if (selectedTheme.equalsIgnoreCase("light")) {
-//            ct.setTheme(R.style.Theme_Light);
-////            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-//        }
-//    }
-
-
     public void saveTheme(String theme) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("theme", theme);
