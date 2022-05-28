@@ -144,7 +144,6 @@
     <string name="create_hospital_details">Create hospital details</string>
     <string name="beds_number">Beds number</string>
     <string name="create_war_details">Create war details</string>
-    <bool name="notifications">true</bool>
     <string name="cancel">Cancel</string>
     <string name="video">Video</string>
     <string name="myPublications">My Publications</string>
