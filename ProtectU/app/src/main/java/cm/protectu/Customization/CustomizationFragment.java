@@ -21,6 +21,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Locale;
+
 import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.Map.MapFragment;
 import cm.protectu.R;
@@ -58,7 +60,7 @@ public class CustomizationFragment extends Fragment implements AdapterView.OnIte
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_layout);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
-
+        checkSelected();
 
         //go back to the map frame
         arrowBack.setOnClickListener(new View.OnClickListener() {
@@ -104,6 +106,17 @@ public class CustomizationFragment extends Fragment implements AdapterView.OnIte
         //Returns the view
         return view;
 
+    }
+
+    private void checkSelected() {
+        switch (CustomizationManager.getInstance().getSelectedTheme().toLowerCase(Locale.ROOT)) {
+            case "light":
+                spinner.setSelection(1);
+                break;
+            case "dark":
+                spinner.setSelection(2);
+                break;
+        }
     }
 
 
