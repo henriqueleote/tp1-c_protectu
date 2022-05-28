@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">ProtectU</string>
     <string name="profile">Профіль</string>
-    <string name="map">карта</string>
+    <string name="map">Мапа</string>
     <string name="error_enter_your_name">Введіть ім\'я</string>
     <string name="error_enter_your_surname">Введіть своє прізвище</string>
     <string name="error_enter_your_mail">Введіть свою пошту</string>
@@ -27,7 +27,7 @@
     <string name="registration_sucessful">Реєстрація успішна</string>
     <string name="registration_failed">Помилка реєстрації</string>
     <string name="see_you_next_time">Побачимось наступного разу</string>
-    <string name="want_to_go_to_login">Хочеться перейти на сторінку входу</string>
+    <string name="want_to_go_to_login">Хочете перейти на сторінку входу</string>
     <string name="yes">ТАК</string>
     <string name="no">НІ</string>
     <string name="lbl_languague">Мова</string>
@@ -36,43 +36,131 @@
     <string name="contact">\\Контакт:</string>
     <string name="loading_user_data">Завантаження даних користувача…</string>
     <string name="loading_image">Завантаження зображення…</string>
-    <string name="About">Про</string>
+    <string name="About">Про нас</string>
     <string name="Language">Мова</string>
     <string name="notifications">Сповіщення</string>
     <string name="Customization">Налаштування</string>
     <string name="news">Новини</string>
     <string name="panic">Паніка</string>
     <string name="Community">Спільнота</string>
-    <string name="missingBoard">Відсутня дошка</string>
+    <string name="missingBoard">Дошка загублених</string>
     <string name="Age">Вік</string>
     <string name="Name">Ім\'я</string>
     <string name="searchTheName">Пошук імені..</string>
     <string name="publicationsInCommunity">Публікації в спільноті</string>
     <string name="publicationsInMissing">Публікації відсутні</string>
     <string name="numberOfPeople">Кількість людей</string>
-    <string name="requestHelp">Запит на допомогу</string>
+    <string name="requestHelp">Попросити допомоги</string>
     <string name="newPost">Новий пост</string>
     <string name="description">Опис</string>
     <string name="addImage1">Додати зображення (макс. 1)</string>
-    <string name="Create">Створюйте</string>
+    <string name="Create">Створити</string>
     <string name="newMessage">Нове повідомлення</string>
-    <string name="message">повідомлення</string>
-    <string name="pick_image_intent_text">Виберіть фотографію</string>
+    <string name="message">Повідомлення</string>
+    <string name="pick_image_intent_text">Оберіть фотографію</string>
     <string name="gallery">Галерея</string>
     <string name="camera">Камера</string>
-    <string name="see_more">побачити більше</string>
+    <string name="see_more">більше</string>
     <string name="question_app_will_restart">Програма перезапуститься, ви впевнені?</string>
-    <string name="map_of_shelters">Карта притулків</string>
+    <string name="map_of_shelters">Мапа притулків</string>
     <string name="theme">Тема</string>
-    <string name="pay_attention">Зверніть увагу на повітряну сигналізацію у вашому районі</string>
+    <string name="pay_attention">Слідкуйте за повідомленнями про повітряну тривогу у вашому районі</string>
     <string-array name="panic_values">
-        <item>Невеликий</item>
-        <item>Сильний</item>
-        <item>Терміново</item>
+        <item>Невеликий рівень</item>
+        <item>Помірний рівень</item>
+        <item>Терміновий рівень</item>
     </string-array>
     <string-array name="theme_values">
         <item>Виберіть тему</item>
-        <item>Світло</item>
-        <item>Темний</item>
+        <item>Світла</item>
+        <item>Темна</item>
     </string-array>
+    <string-array name="alarm_types">
+        <item>Червона</item>
+        <item>Зелена</item>
+    </string-array>
+    <string name="type_alarm_message">Введіть заголовок повідомлення</string>
+    <string name="type_details">Введіть деталі повідомлення</string>
+    <string name="send_alert">Надіслати</string>
+    <string name="new_alarm">Нова тривога</string>
+    <string name="enable_notifications">Дозволити сповіщення</string>
+    <string name="logging_in">Вхід...</string>
+    <string name="registering">Реєстрація...</string>
+    <string name="areYouSureProgressLost">Ви впевнені, що хочете повернутися? Усі дані буде втрачено</string>
+    <string name="chooseExtras">Обрати додаткові</string>
+    <string name="add">Додати</string>
+    <string name="images_mandatory">Зображення обов\'язкові</string>
+    <string name="limit_six_images">Не можна опублікувати більше ніж 6 зображень</string>
+    <string name="loading_images">Завантаження фотографії(ій)...</string>
+    <string name="error">Помилка</string>
+    <string name="name_mandatory">Ім\'я обов\'язкове</string>
+    <string name="description_mandatory">Опис обов\'язковий</string>
+    <string name="adding_bunker">Додавання бункеру</string>
+    <string name="loading">Завантаження...</string>
+    <string name="magnitude">вмістимості</string>
+    <string name="deads">померлих</string>
+    <string name="missing">зниклих</string>
+    <string name="richter_mandatory">Шкала Ріхтера обов\'язкова</string>
+    <string name="death_count_mandatory">Кількість померлих обов\'язкова</string>
+    <string name="missing_count_mandatory">Кількість зниклих обов\'язкова</string>
+    <string name="adding_earthquake">Додавання землетрусу</string>
+    <string name="adding_fire">Додавання пожежі</string>
+    <string name="beds">Спальних місць</string>
+    <string name="beds_count_mandatory">Кількість спальних місць обов\'язкова</string>
+    <string name="adding_hospital">Додавання лікарні</string>
+    <string name="adding_war">Додавання зони активних бойових дій</string>
+    <string name="version">Версія</string>
+    <string name="group">Група</string>
+    <string name="terms">Умови та основні положення</string>
+    <string name="contacts">Контакти</string>
+    <string name="sign_in">Увійти</string>
+    <string name="sign_up">Зареєсруватися</string>
+    <string name="login_anonymously">Увійти Анонімно</string>
+    <string name="send_email">Надіслати лист</string>
+    <string name="password">Пароль</string>
+    <string name="show_password">Показати пароль</string>
+    <string name="first_name">Ім\'я</string>
+    <string name="last_name">Призвіще</string>
+    <string name="phone_number">Телефон</string>
+    <string name="confirm_password">Підтвердіть пароль</string>
+    <string name="security_pin">Код безпеки</string>
+    <string name="hide_password">Приховати пароль</string>
+    <string name="what_it_has">Що містить у собі?</string>
+    <string name="swipe_to_see_all">Свайпніть щоб побачити усе</string>
+    <string name="create_bunker_details">Створити деталі бункеру</string>
+    <string name="add_building_extras">Додати додаткові параметри</string>
+    <string name="add_images_max_six">Додати зображення (макс. 6)</string>
+    <string name="_magnitude">Місткість</string>
+    <string name="deaths">Померлих</string>
+    <string name="_missing">Зниклих</string>
+    <string name="richter_scale">Шкала Ріхтера (0–10)</string>
+    <string name="death_number">Кількість смертей</string>
+    <string name="missing_number">Кількість зниклих</string>
+    <string name="emergency_number">Телефон</string>
+    <string name="create_earthquake_details">Додати деталі землетрусу</string>
+    <string name="create_fire_details">Додати деталі пожежі</string>
+    <string name="number_of_beds">Кількість спальних місць</string>
+    <string name="create_hospital_details">Додати деталі лікарні</string>
+    <string name="beds_number">Кількість спальних місць</string>
+    <string name="create_war_details">Додати деталі про бойові дії</string>
+    <string name="cancel">Скасувати</string>
+    <string name="video">Відео</string>
+    <string name="myPublications">Мої публікації</string>
+    <string name="noPublications">Нема публікацій</string>
+    <string name="make_verified">Зробити верифікованим</string>
+    <string name="title_of_the_new">Заголовок повідомлення</string>
+    <string name="push_alert">Надіслати оповіщення</string>
+    <string name="add_marker">Додати помітку</string>
+    <string name="add_zone">Додати зону</string>
+    <string name="filter_map">Відфільтрувати мапу</string>
+    <string name="filter">Відфільтрувати</string>
+    <string name="choose_pin">Обрати помітку</string>
+    <string name="new_post">Новий пост</string>
+    <string name="title">Заголовок</string>
+    <string name="childrens">Діти</string>
+    <string name="adults">Дорослі</string>
+    <string name="seniors">Пенсіонери</string>
+    <string name="show_results">Показати результати</string>
+    <string name="no_posts">Немає постів</string>
+    <string name="delete_account">Видалити акаунт</string>
 </resources>
