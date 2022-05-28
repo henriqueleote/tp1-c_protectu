@@ -51,6 +51,7 @@
             android:fontFamily="@font/lexend_regular"
             android:text="Esta aplicação foi desenvolvida no âmbito de uma disciplina do segundo ano, Computação Móvel, do curso de Engenharia Informática, do Instituto Politécnico de Setúbal. Tendo esta sido desenvolvida pelo grupo descrito mais a baixo. \nEsta aplicação tem como principal objetivo ajudar pessoas que se encontrem em perigo, mais precisamente de acontecimentos bélicos, pelo que nesta é providenciada informações de lugares seguros, em que locais estão a ocorrer estes acontecimentos, quais as pessoas que se encontram desaparecidas entre outras informações/funções. \n
 "
+            android:justificationMode="inter_word"
             android:textColor="?attr/textColor" />
 
         <TextView
@@ -97,7 +98,7 @@
             android:fontFamily="@font/lexend_regular"
             android:paddingTop="5dp"
             android:text="André Matias, David Belchior, Guilherme Oliveira, Henrique Leote, Pedro Peralta, Uliana Pyrohovska"
-            android:textColor="@color/black" />
+            android:textColor="?attr/textColor" />
 
         <TextView
             android:id="@+id/termsResponsID"
