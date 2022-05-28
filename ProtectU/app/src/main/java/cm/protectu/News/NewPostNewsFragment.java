@@ -22,6 +22,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
+import androidx.core.widget.ImageViewCompat;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -209,6 +210,8 @@ public class NewPostNewsFragment extends BottomSheetDialogFragment {
             Glide.with(getActivity())
                     .load(imguri)
                     .into(upLoadedImage);
+
+            ImageViewCompat.setImageTintList(upLoadedImage, null);
 
 
             ProgressDialog mDialog = new ProgressDialog(getActivity());
