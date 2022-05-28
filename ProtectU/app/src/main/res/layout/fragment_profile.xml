@@ -72,7 +72,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/ic_edit_black_24dp" />
+            android:src="@drawable/ic_edit_black_24dp"
+            app:tint="?attr/textColor"/>
 
     </LinearLayout>
 
@@ -84,7 +85,8 @@
         android:fontFamily="@font/lexend_regular"
         app:layout_constraintTop_toBottomOf="@+id/nameAndEditLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:textColor="?attr/textColor"/>
 
     <TextView
         android:id="@+id/contactTextView"
@@ -95,7 +97,7 @@
         app:layout_constraintTop_toBottomOf="@+id/emailTextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:tint="?attr/textColor" />
+        android:textColor="?attr/textColor" />
 
     <Button
         android:id="@+id/removeCommunityButton"
@@ -114,10 +116,7 @@
         android:id="@+id/removeMissingButton"
         android:layout_width="250dp"
         android:layout_height="75dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginBottom="85dp"
-        android:backgroundTint="#ff1100"
+        android:backgroundTint="#ED1C0E"
         android:fontFamily="@font/lexend_regular"
         android:scaleType="fitXY"
         android:text="@string/publicationsInMissing"
