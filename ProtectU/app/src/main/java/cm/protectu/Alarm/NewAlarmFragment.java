@@ -41,11 +41,15 @@ public class NewAlarmFragment extends BottomSheetDialogFragment {
     private Button createAlarm;
 
     private boolean alarmT;
+
     //Firebase Authentication
     private FirebaseFirestore firebaseFirestore;
 
     //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
+
+    public NewAlarmFragment() {
+    }
 
     @Nullable
     @Override

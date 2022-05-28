@@ -26,6 +26,8 @@ public class AboutFragment extends Fragment {
     //Image witch we can go to the back fragment(Map Fragment)
     private ImageView arrowBack;
 
+    public AboutFragment(){}
+
 
     @Nullable
     @Override

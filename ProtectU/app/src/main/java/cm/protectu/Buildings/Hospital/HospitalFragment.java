@@ -54,10 +54,11 @@ public class HospitalFragment extends Fragment {
     String hospitalContact;
     private GeoPoint location;
 
-
-
     //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
+
+    public HospitalFragment() {
+    }
 
     public HospitalFragment(String buildingID){
         this.buildingID = buildingID;

@@ -67,6 +67,9 @@ public class BunkerFragment extends Fragment {
         this.buildingID = buildingID;
     }
 
+    public BunkerFragment() {
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

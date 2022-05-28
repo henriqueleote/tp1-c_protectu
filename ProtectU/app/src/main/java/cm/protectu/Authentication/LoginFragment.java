@@ -58,6 +58,9 @@ public class LoginFragment extends BottomSheetDialogFragment {
 
     private CheckBox passwordCheckBox;
 
+    public LoginFragment() {
+    }
+
     //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
 

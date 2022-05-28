@@ -54,13 +54,14 @@ public class WarFragment extends Fragment {
     String warContact;
     private GeoPoint location;
 
-
-
     //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
 
     public WarFragment(String buildingID){
         this.buildingID = buildingID;
+    }
+
+    public WarFragment() {
     }
 
     @Nullable

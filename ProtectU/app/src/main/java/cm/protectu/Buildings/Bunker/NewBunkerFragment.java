@@ -90,6 +90,9 @@ public class NewBunkerFragment extends Fragment {
     //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
 
+    public NewBunkerFragment() {
+    }
+
     public NewBunkerFragment(GeoPoint location){
         this.location = location;
     }

@@ -35,6 +35,10 @@ public class AlarmFragment extends AlertDialog {
 
     private AlarmClass alarm;
 
+    public AlarmFragment(@NonNull Context context) {
+        super(context);
+    }
+
     public AlarmFragment(@NonNull Context context, AlarmClass alarmClass) {
         super(context);
         this.alarm = alarmClass;

@@ -82,6 +82,9 @@ public class EditProfileFragment extends Fragment {
 
     private static final String TAG = MainActivity.class.getName();
 
+    public EditProfileFragment() {
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

@@ -88,6 +88,9 @@ public class NewWarFragment extends Fragment {
         this.location = location;
     }
 
+    public NewWarFragment() {
+    }
+
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         //Link the layout to the Fragment

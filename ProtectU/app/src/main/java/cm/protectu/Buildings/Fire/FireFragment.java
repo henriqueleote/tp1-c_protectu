@@ -54,10 +54,11 @@ public class FireFragment extends Fragment {
     String fireContact;
     private GeoPoint location;
 
-
-
     //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
+
+    public FireFragment() {
+    }
 
     public FireFragment(String buildingID){
         this.buildingID = buildingID;

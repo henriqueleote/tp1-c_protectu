@@ -67,6 +67,9 @@ public class EarthquakeFragment extends Fragment {
         this.buildingID = buildingID;
     }
 
+    public EarthquakeFragment() {
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

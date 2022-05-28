@@ -52,6 +52,8 @@ public class MapBuildingFragment extends BottomSheetDialogFragment {
 
     private FloatingActionButton phoneButton, mapsButton;
 
+    public MapBuildingFragment() {
+    }
 
     //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();

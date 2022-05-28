@@ -48,6 +48,9 @@ public class NewsFragment extends Fragment {
     private NewsFragment fragment;
     private ImageView menuImageView;
 
+    public NewsFragment() {
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

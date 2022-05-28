@@ -59,6 +59,8 @@ public class NewMissingPostFragment extends Fragment {
 
     private static final String TAG =  AuthActivity.class.getName();
 
+    public NewMissingPostFragment() {
+    }
 
     @Nullable
     @Override

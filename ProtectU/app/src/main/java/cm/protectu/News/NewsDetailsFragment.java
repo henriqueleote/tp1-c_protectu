@@ -30,6 +30,9 @@ public class NewsDetailsFragment extends Fragment {
     String imgURL1, imgURL2;
     FirebaseFirestore firebaseFirestore;
 
+    public NewsDetailsFragment() {
+    }
+
     public NewsDetailsFragment(NewsCardClass card){
         this.card = card;
     }

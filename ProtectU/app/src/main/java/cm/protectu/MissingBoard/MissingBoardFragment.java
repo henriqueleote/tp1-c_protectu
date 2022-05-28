@@ -60,6 +60,9 @@ public class MissingBoardFragment extends Fragment {
         this.userID = userID;
     }
 
+    public MissingBoardFragment() {
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

@@ -45,6 +45,9 @@ public class ForgotPasswordFragment extends BottomSheetDialogFragment {
     //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
 
+    public ForgotPasswordFragment() {
+    }
+
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         //Link the layout to the Fragment

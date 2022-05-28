@@ -29,6 +29,9 @@ public class NotificationsFragment extends Fragment {
     private ImageView btnBack;
     private String notifications;
 
+    public NotificationsFragment() {
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

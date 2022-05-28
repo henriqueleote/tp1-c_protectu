@@ -69,6 +69,9 @@ public class NewPostNewsFragment extends BottomSheetDialogFragment {
         this.photoFile = null;
     }
 
+    public NewPostNewsFragment() {
+    }
+
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         //Link the layout to the Fragment

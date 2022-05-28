@@ -85,6 +85,9 @@ public class NewEarthquakeFragment extends Fragment {
         this.location = location;
     }
 
+    public NewEarthquakeFragment() {
+    }
+
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         //Link the layout to the Fragment

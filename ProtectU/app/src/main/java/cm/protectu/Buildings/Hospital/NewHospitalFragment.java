@@ -78,6 +78,9 @@ public class NewHospitalFragment extends Fragment {
 
     private GeoPoint location;
 
+    public NewHospitalFragment() {
+    }
+
     //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
 

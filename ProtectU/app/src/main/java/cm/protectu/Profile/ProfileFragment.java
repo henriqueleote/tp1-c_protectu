@@ -54,6 +54,9 @@ public class ProfileFragment extends Fragment {
     //TAG for debug logs
     private static final String TAG = MainActivity.class.getName();
 
+    public ProfileFragment() {
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

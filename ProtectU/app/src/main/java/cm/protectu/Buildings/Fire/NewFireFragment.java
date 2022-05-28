@@ -81,6 +81,9 @@ public class NewFireFragment extends Fragment {
     //TAG for debug logs
     private static final String TAG = AuthActivity.class.getName();
 
+    public NewFireFragment() {
+    }
+
     public NewFireFragment(GeoPoint location){
         this.location = location;
     }

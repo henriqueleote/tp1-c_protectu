@@ -51,6 +51,9 @@ public class MissingPostFragment extends Fragment {
         this.urlMissing = urlMissing;
     }
 
+    public MissingPostFragment() {
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
