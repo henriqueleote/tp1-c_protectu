@@ -135,7 +135,7 @@ public class NewsFragment extends Fragment {
 
     public void newsCardsData() {
         listOfNewsCardClasses.clear();
-        firebaseFirestore.collection("news").orderBy("date", Query.Direction.ASCENDING)
+        firebaseFirestore.collection("news").orderBy("date", Query.Direction.DESCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

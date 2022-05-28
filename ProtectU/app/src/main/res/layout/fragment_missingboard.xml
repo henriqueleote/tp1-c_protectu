@@ -42,7 +42,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/ageFilterButtonID"
             android:layout_width="70dp"
-            android:layout_height="25dp"
+            android:layout_height="30dp"
             app:cardCornerRadius="10dp"
             app:cardBackgroundColor="@color/white"
             android:fontFamily="@font/lexend_regular"
@@ -62,7 +62,7 @@
                     android:fontFamily="@font/lexend_regular"
                     android:text="@string/Age"
                     android:textColor="?attr/textColor"
-                    android:textSize="18dp" />
+                    android:textSize="15dp" />
 
             </RelativeLayout>
 
@@ -70,9 +70,8 @@
         </androidx.cardview.widget.CardView>
 
 
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="120dp"
+       <androidx.cardview.widget.CardView
+            android:layout_width="150dp"
             android:layout_height="30dp"
             app:cardCornerRadius="15dp"
             android:layout_below="@+id/titleMissingMainID"
@@ -81,23 +80,19 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="50dp">
 
-
             <SearchView
                 android:id="@+id/searchID"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="text"
                 android:queryHint="@string/searchTheName"
-                android:background="?attr/backgroundColorSelected"
-                ></SearchView>
+                android:background="?attr/backgroundColorSelected"/>
 
             <ListView
                 android:id="@+id/listToSearchID"
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
                 android:layout_marginTop="40dp" />
-
-
 
         </androidx.cardview.widget.CardView>
 
