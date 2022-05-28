@@ -16,7 +16,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
         android:src="@drawable/ic_arrow_back_black_24dp"
-        app:tint="@color/black" />
+        app:tint="?attr/textColor" />
 
 
     <TextView
@@ -26,7 +26,7 @@
         android:fontFamily="@font/lexend_regular"
         android:paddingTop="15dp"
         android:text="@string/notifications"
-        android:textColor="@color/black"
+        android:textColor="?attr/textColor"
         android:textSize="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
