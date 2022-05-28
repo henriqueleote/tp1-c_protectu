@@ -82,8 +82,8 @@
                 android:id="@+id/uploadVideo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleX="1.6"
                 android:layout_centerInParent="true"
+                android:scaleX="1.6"
                 android:visibility="invisible" />
         </RelativeLayout>
 

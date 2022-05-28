@@ -27,6 +27,7 @@ import android.widget.VideoView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.FileProvider;
+import androidx.core.widget.ImageViewCompat;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -315,6 +316,9 @@ public class NewMessageCommunityFragment extends BottomSheetDialogFragment {
                     }
                 });
             }
+
+            //Clear Tint from ImageView
+            ImageViewCompat.setImageTintList(upLoadedImage, null);
 
             mDialog.setCancelable(false);
             mDialog.show();
