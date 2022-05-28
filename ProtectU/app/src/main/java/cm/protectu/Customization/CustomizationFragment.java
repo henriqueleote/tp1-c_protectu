@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
@@ -34,6 +35,7 @@ public class CustomizationFragment extends Fragment implements AdapterView.OnIte
     private ImageView arrowBack;
 
     private Spinner spinner;
+    private Button btnSave;
 
 
     @Nullable
@@ -46,6 +48,7 @@ public class CustomizationFragment extends Fragment implements AdapterView.OnIte
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
         arrowBack = view.findViewById(R.id.backID);
+        btnSave = view.findViewById(R.id.btnSave);
 
 
         spinner = view.findViewById(R.id.spinner_theme);
@@ -68,6 +71,26 @@ public class CustomizationFragment extends Fragment implements AdapterView.OnIte
             }
         });
 
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage(R.string.question_app_will_restart)
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                getActivity().recreate();
+                            }
+                        })
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                            }
+                        });
+                // Create the AlertDialog object and return it
+                builder.show();
+            }
+        });
+
 
         //Checks if there is a session, if not, redirects to the Auth page
         if (mAuth.getCurrentUser() == null) {
@@ -84,35 +107,15 @@ public class CustomizationFragment extends Fragment implements AdapterView.OnIte
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-        if (position != 0) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage(R.string.question_app_will_restart)
-                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            switch (position) {
-                                case 1: //Light Mode
-                                    CustomizationManager.getInstance().saveTheme("light");
-                                    getActivity().recreate();
-                                    break;
-                                case 2: // Dark Mode
-                                    CustomizationManager.getInstance().saveTheme("dark");
-                                    getActivity().recreate();
-                                    break;
-                                default: // System Default
-                            }
-                        }
-                    })
-                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.dismiss();
-                            return;
-                        }
-                    });
-            // Create the AlertDialog object and return it
-            builder.show();
+        switch (position) {
+            case 1: //Light Mode
+                CustomizationManager.getInstance().saveTheme("light");
+                break;
+            case 2: // Dark Mode
+                CustomizationManager.getInstance().saveTheme("dark");
+                break;
+            default: // System Default
         }
-
-
     }
 
 
