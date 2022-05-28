@@ -253,7 +253,7 @@ public class MissingBoardFragment extends Fragment {
 
     public void refreshCards(ArrayList<MissingCardClass> missCards){
         if(missCards.isEmpty()){
-            Toast.makeText(getActivity(), "Não existem publicações", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), R.string.no_posts, Toast.LENGTH_SHORT).show();
         }else{
             missingCardClasses.clear();
             missingCardClasses.addAll(missCards);

@@ -1,6 +1,8 @@
 package cm.protectu.News;
 
 import android.content.Context;
+import android.icu.text.DateFormat;
+import android.os.Build;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -47,6 +50,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder>{
         return new NewsAdapter.MyViewHolder(LayoutInflater.from(context).inflate(R.layout.cardview_news, parent, false));
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         if(listOfNewsCardClasses.get(position).getNewsText().length() >= 60){
@@ -56,6 +60,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder>{
             holder.newsText.setText(listOfNewsCardClasses.get(position).getNewsText() + "");
         }
         holder.newsTitle.setText(listOfNewsCardClasses.get(position).getNewsTitle() + "");
+        holder.dateText.setText(DateFormat.getDateInstance(DateFormat.FULL).format(listOfNewsCardClasses.get(position).getDate()));
         imgURL1 = listOfNewsCardClasses.get(position).getImageURL();
         Log.d(TAG,"DATA ->" + listOfNewsCardClasses.get(position).getImageURL());
         if(!imgURL1.equals("")){
@@ -102,6 +107,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.MyViewHolder>{
             newsTitle = itemView.findViewById(R.id.newsTitle);
             newsPublisherImage = itemView.findViewById(R.id.newsPublisherImage);
             cardNews = itemView.findViewById(R.id.cardNews);
+            dateText = itemView.findViewById(R.id.dateText);
         }
     }
 }
