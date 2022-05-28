@@ -36,7 +36,7 @@ public class WelcomeScreenActivity extends AppCompatActivity {
     private int[] layouts;
     private PrefManager prefManager;
     private Button btnBegin;
-    private ImageView btnNext;
+    private ImageView btnNext, icon;
     private TextView txtNext,skip;
 
     private static final String TAG = WelcomeScreenActivity.class.getName();
@@ -100,6 +100,7 @@ public class WelcomeScreenActivity extends AppCompatActivity {
         btnNext = findViewById(R.id.btn_next);
         txtNext = findViewById(R.id.text_next);
         skip = findViewById(R.id.Skip);
+        icon = findViewById(R.id.icon);
 
 
         // layouts of all welcome sliders
