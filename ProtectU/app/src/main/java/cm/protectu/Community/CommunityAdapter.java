@@ -241,7 +241,6 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                     MakeVerifiedFragment makeVerifiedFragment = new MakeVerifiedFragment(communityFragment,card,messageID,adapter,holder);
                     makeVerifiedFragment.show(communityFragment.getParentFragmentManager(), makeVerifiedFragment.getTag());
 
-                    adaptConstrains(holder, true);
                     Log.d(TAG, "Success");
                 }
                 })
@@ -280,6 +279,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
 
     }
 
+
     /**
      * This method is responsible for adjusting the text when the message has an image and when it doesn't, use Picasso to place the image in the image view
      *
@@ -310,6 +310,14 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                     public void onPrepared(MediaPlayer mp) {
                         holder.videoView.start();
                         holder.videoView.pause();
+                    }
+                });
+
+                recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                    @Override
+                    public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                        super.onScrolled(recyclerView, dx, dy);
+                        mediaController.hide();
                     }
                 });
 
