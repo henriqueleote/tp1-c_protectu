@@ -66,7 +66,7 @@ public class NewsDetailsFragment extends Fragment {
             newsBigImage.setVisibility(View.GONE);
         }
         imgURL2 = card.getPubImgURL();
-        if(imgURL2 != null){
+        if(!imgURL2.equals("null")){
             Glide.with(getActivity())
                     .load(imgURL2)
                     .centerCrop()

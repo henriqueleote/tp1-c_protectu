@@ -2,6 +2,7 @@ package cm.protectu.News;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -112,7 +113,21 @@ public class NewPostNewsFragment extends BottomSheetDialogFragment {
          */
         upLoadedImage.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {dispatchTakePictureIntent();
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage(R.string.pick_image_intent_text)
+                        .setPositiveButton(R.string.gallery, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                imageFileChooser();
+                            }
+                        })
+                        .setNegativeButton(R.string.camera, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dispatchTakePictureIntent();
+                            }
+                        });
+                // Create the AlertDialog object and return it
+                builder.show();
             }
         });
 
@@ -147,6 +162,13 @@ public class NewPostNewsFragment extends BottomSheetDialogFragment {
 
         //Returns the view
         return view;
+    }
+
+    public void imageFileChooser(){
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent, 1);
     }
 
     /**
@@ -206,6 +228,11 @@ public class NewPostNewsFragment extends BottomSheetDialogFragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK) {
+
+            if(data.getData() != null){
+                imguri = data.getData();
+                Log.d(TAG, "Value: " + data.getData());
+            }
 
             Glide.with(getActivity())
                     .load(imguri)
