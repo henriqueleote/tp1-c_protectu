@@ -56,7 +56,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_bottom_map_black_24dp"
-                    app:tint="@color/black" />
+                    app:tint="?attr/textColor" />
 
                 <TextView
                     android:id="@+id/locationTextView"
@@ -65,7 +65,7 @@
                     android:layout_gravity="center_vertical"
                     android:fontFamily="@font/lexend_regular"
                     android:textSize="18sp"
-                    android:textColor="@color/black" />
+                    android:textColor="?attr/textColor" />
             </LinearLayout>
 
             <RelativeLayout
