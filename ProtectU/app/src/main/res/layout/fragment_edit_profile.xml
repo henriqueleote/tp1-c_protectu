@@ -73,6 +73,7 @@
             app:ccp_defaultNameCode="PT"
             android:layout_weight="0"
             android:ellipsize="end"
+            app:ccp_contentColor="?attr/textColor"
             android:maxLines="1"/>
 
         <EditText
