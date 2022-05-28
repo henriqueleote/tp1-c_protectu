@@ -39,7 +39,7 @@ public class NewsDetailsFragment extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_details_news, container, false);
+        View view = inflater.inflate(R.layout.fragment_news_details, container, false);
         imageBack = view.findViewById(R.id.back_id);
         newsBigTitle = view.findViewById(R.id.newsBigTitle);
         newsDate = view.findViewById(R.id.newsDate);

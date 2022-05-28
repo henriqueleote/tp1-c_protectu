@@ -127,31 +127,22 @@
 
     <androidx.cardview.widget.CardView
         android:id="@+id/uploadImageID"
-        android:layout_width="match_parent"
+        android:layout_width="175dp"
         android:layout_height="150dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginEnd="40dp"
+        android:layout_marginTop="10dp"
         android:elevation="20dp"
-        app:cardCornerRadius="15dp"
+        app:cardCornerRadius="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/informationAboutAddImagesID">
-
-
-        <ImageView
-            android:id="@+id/imageUplaodedID"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY" />
+        app:layout_constraintTop_toBottomOf="@+id/informationAboutAddImagesID"
+        android:backgroundTint="?attr/backgroundColorSelected">
 
         <ImageView
-            android:id="@+id/uploadImageIconID"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
+            android:id="@+id/imagesImageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
             android:src="@drawable/ic_camera_black_24dp"
-            android:background="?attr/backgroundColorSelected"
             app:tint="?attr/textColor" />
 
     </androidx.cardview.widget.CardView>

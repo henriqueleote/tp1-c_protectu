@@ -73,8 +73,8 @@ public class NewMissingPostFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         arrowBack = view.findViewById(R.id.backID);
         cardView = view.findViewById(R.id.uploadImageID);
-        imageUploaded = view.findViewById(R.id.imageUplaodedID);
-        cameraIcon = view.findViewById(R.id.uploadImageIconID);
+        imageUploaded = view.findViewById(R.id.imagesImageView);
+        cameraIcon = view.findViewById(R.id.imagesImageView);
         name = view.findViewById(R.id.nameNewMissingPostID);
         age = view.findViewById(R.id.ageNewMissingPostID);
         description = view.findViewById(R.id.descriptionNewMissingPostID);
