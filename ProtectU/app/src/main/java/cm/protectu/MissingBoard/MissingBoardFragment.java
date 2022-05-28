@@ -60,6 +60,8 @@ public class MissingBoardFragment extends Fragment {
         this.userID = userID;
     }
 
+    public MissingBoardFragment() {
+    }
 
     @Nullable
     @Override

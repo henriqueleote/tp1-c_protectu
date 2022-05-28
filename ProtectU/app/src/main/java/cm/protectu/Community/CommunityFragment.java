@@ -54,6 +54,9 @@ public class CommunityFragment extends Fragment {
         this.userID = userID;
     }
 
+    public CommunityFragment() {
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
