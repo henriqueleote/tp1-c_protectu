@@ -21,8 +21,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_camera_black_24dp"
-                app:tint="?attr/textColor" />
+                android:src="@drawable/ic_camera_black_24dp" />
 
             <ImageView
                 android:id="@+id/back_id"
@@ -106,7 +105,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:src="@drawable/ic_bottom_profile_black_24dp"
-                    app:tint="?attr/textColor" />
+                     />
 
                 <TextView
                     android:id="@+id/publisherID"
