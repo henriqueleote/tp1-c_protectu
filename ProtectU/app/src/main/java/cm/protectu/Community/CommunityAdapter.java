@@ -190,7 +190,6 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
         }
     }
 
-    //TODO: CHANGE THE METHOD VERIFICATION WHEN HE CREATE THE AUTHORITY USERS
 
 
     public void adaptConstrains(MyViewHolder holder, boolean isVerified) {
@@ -366,7 +365,6 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
     }
 
 
-    //TODO: CHANGE THE METHOD DESC
 
     /**
      * method that checks if the user already has a like or dislike in the message, if he already has a like or dislike, don't let him put it, if he doesn't,

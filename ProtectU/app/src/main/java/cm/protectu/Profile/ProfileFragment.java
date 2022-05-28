@@ -27,7 +27,6 @@ import cm.protectu.Community.CommunityFragment;
 import cm.protectu.MainActivity;
 import cm.protectu.MissingBoard.MissingBoardFragment;
 import cm.protectu.R;
-import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 
 public class ProfileFragment extends Fragment {
@@ -102,7 +101,6 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        //TODO remove missing publication
         removeMissingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,7 +112,6 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        //TODO remove community publication
         removeCommunityBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

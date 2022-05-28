@@ -81,7 +81,6 @@ public class NewMissingPostFragment extends Fragment {
 
 
 
-        //TODO Check the animation
         //Checks if there is a session, if not, redirects to the Auth page
         if (mAuth.getCurrentUser() == null) {
             getActivity().finish();
@@ -254,7 +253,6 @@ public class NewMissingPostFragment extends Fragment {
             Glide.with(getActivity())
                     .load(imguri)
                     .centerCrop()
-                    
                     .into(imageUploaded);
             cameraIcon.setVisibility(View.INVISIBLE);
 

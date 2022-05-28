@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import cm.protectu.Authentication.AuthActivity;
-import cm.protectu.Community.SortCommunityCardClass;
 import cm.protectu.MainActivity;
 import cm.protectu.R;
 
@@ -90,8 +89,6 @@ public class MissingBoardFragment extends Fragment {
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
 
-
-        //TODO Check the animation
         //Checks if there is a session, if not, redirects to the Auth page
         if (mAuth.getCurrentUser() == null) {
             getActivity().finish();

@@ -181,7 +181,6 @@ public class NewMessageCommunityFragment extends BottomSheetDialogFragment {
             public void onClick(View view) {
                 createMessage(message.getText().toString().trim()
                         , mAuth.getUid());
-                getDialog().cancel();
             }
         });
 
@@ -243,7 +242,6 @@ public class NewMessageCommunityFragment extends BottomSheetDialogFragment {
         }
     }
 
-    //TODO: REVIEW THE DOCUMENTATION
 
     /**
      * This method create a file for the photo, with the chosen directory for the file
@@ -376,6 +374,7 @@ public class NewMessageCommunityFragment extends BottomSheetDialogFragment {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "DocumentSnapshot with the ID: " + documentReference.getId());
+                        getDialog().cancel();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

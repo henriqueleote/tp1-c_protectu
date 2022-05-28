@@ -63,7 +63,6 @@ public class CommunityFragment extends Fragment {
         //Initialize Firebase Authentication
         mAuth = FirebaseAuth.getInstance();
 
-        //TODO Check the animation
         //Checks if there is a session, if not, redirects to the Auth page
         if (mAuth.getCurrentUser() == null) {
             getActivity().finish();
@@ -110,7 +109,6 @@ public class CommunityFragment extends Fragment {
         missingPeopleButton = view.findViewById(R.id.missingPeopleButton);
 
 
-        //TODO: DISABLE BUTTON
         /**
          *if the user is not logged in the add button disappears,
          * otherwise the button appears and if clicked it opens a bottom sheet that allows the creation of a new message in the community

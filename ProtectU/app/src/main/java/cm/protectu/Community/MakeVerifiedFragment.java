@@ -92,7 +92,6 @@ public class MakeVerifiedFragment extends BottomSheetDialogFragment {
                                         getDialog().cancel();
                                     }
                                 } else {
-                                    //TODO Maybe reload the page or kill the session?
                                     //Shows the error
                                     Log.w(TAG, "Error getting documents.", task.getException());
                                 }

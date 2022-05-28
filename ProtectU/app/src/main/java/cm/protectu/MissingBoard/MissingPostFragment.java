@@ -141,7 +141,6 @@ public class MissingPostFragment extends Fragment {
             }
         });
 
-        //TODO Check the animation
         //Checks if there is a session, if not, redirects to the Auth page
         if (mAuth.getCurrentUser() == null) {
             getActivity().finish();
