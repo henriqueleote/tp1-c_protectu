@@ -19,6 +19,7 @@
             android:layout_toRightOf="@+id/radioButtonIcon"
             android:paddingLeft="10dp"
             android:paddingRight="6dp"
+            android:textColor="?attr/textColor"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <RadioButton

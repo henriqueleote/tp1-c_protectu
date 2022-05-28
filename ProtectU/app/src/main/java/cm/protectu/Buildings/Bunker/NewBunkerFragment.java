@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
@@ -93,7 +94,7 @@ public class NewBunkerFragment extends Fragment {
     public NewBunkerFragment() {
     }
 
-    public NewBunkerFragment(GeoPoint location){
+    public NewBunkerFragment(GeoPoint location) {
         this.location = location;
     }
 
@@ -187,7 +188,7 @@ public class NewBunkerFragment extends Fragment {
 
                 String[] extras = new String[buildingExtras.size()];
 
-                for(int i = 0; i < buildingExtras.size(); i++){
+                for (int i = 0; i < buildingExtras.size(); i++) {
                     extras[i] = buildingExtras.get(i).getName();
                 }
 
@@ -205,11 +206,11 @@ public class NewBunkerFragment extends Fragment {
                     public void onClick(DialogInterface dialog, int which) {
                         buildingExtrasTextView.setText("");
                         selectedExtras.clear();
-                        for (int i = 0; i < checkedExtras.length; i++){
+                        for (int i = 0; i < checkedExtras.length; i++) {
                             boolean checked = checkedExtras[i];
                             if (checked) {
                                 selectedExtras.add(buildingExtras.get(i).getType());
-                                if(buildingExtrasTextView.getText().equals(""))
+                                if (buildingExtrasTextView.getText().equals(""))
                                     buildingExtrasTextView.setText(buildingExtras.get(i).getName());
                                 else
                                     buildingExtrasTextView.setText(buildingExtrasTextView.getText() + ", " + buildingExtras.get(i).getName());
@@ -247,40 +248,41 @@ public class NewBunkerFragment extends Fragment {
 
     @SuppressLint("NewApi")
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 1 && resultCode == RESULT_OK && (data.getData() != null || data.getClipData() != null)) {
             uriList.clear();
             imagesLinks.clear();
-            if(data.getClipData() != null){
+            ImageViewCompat.setImageTintList(imagesImageView, null);
+
+            if (data.getClipData() != null) {
                 int totalItems = data.getClipData().getItemCount();
 
-                if(totalItems < 1){
+                if (totalItems < 1) {
                     Toast.makeText(getActivity(), getString(R.string.images_mandatory), Toast.LENGTH_SHORT).show();
                     return;
-                }else if(totalItems > 6){
+                } else if (totalItems > 6) {
                     Toast.makeText(getActivity(), getString(R.string.limit_six_images), Toast.LENGTH_SHORT).show();
                     return;
-                }else{
+                } else {
                     Glide.with(getActivity())
-                            .load(data.getClipData().getItemAt(totalItems-1).getUri())
+                            .load(data.getClipData().getItemAt(totalItems - 1).getUri())
                             .centerCrop()
                             .into(imagesImageView);
 
-                    Log.d(TAG, "Value: " + data.getClipData().getItemAt(totalItems-1).getUri());
+                    Log.d(TAG, "Value: " + data.getClipData().getItemAt(totalItems - 1).getUri());
 
-                    for(int i = 0; i < totalItems; i++){
+                    for (int i = 0; i < totalItems; i++) {
                         uriList.add(data.getClipData().getItemAt(i).getUri());
                     }
                 }
 
-            }
-            else if(data.getData() != null){
+            } else if (data.getData() != null) {
                 Glide.with(getActivity())
                         .load(data.getData())
                         .centerCrop()
-                        
+
                         .into(imagesImageView);
 
                 uriList.add(data.getData());
@@ -301,32 +303,32 @@ public class NewBunkerFragment extends Fragment {
 
                 uploadTask
                         .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        mDialog.dismiss();
-                        Task<Uri> downloadUrl = imageRef.getDownloadUrl();
-                        downloadUrl.addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
-                            public void onSuccess(Uri uri) {
-                                imagesLinks.add(uri.toString());
-                                Log.d(TAG, "Link: " + uri.toString());
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                mDialog.dismiss();
+                                Task<Uri> downloadUrl = imageRef.getDownloadUrl();
+                                downloadUrl.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        imagesLinks.add(uri.toString());
+                                        Log.d(TAG, "Link: " + uri.toString());
+                                    }
+                                });
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception exception) {
+                                mDialog.dismiss();
+                                Toast.makeText(getActivity(), getString(R.string.error), Toast.LENGTH_SHORT).show();
                             }
                         });
-                    }
-                })
-                        .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        mDialog.dismiss();
-                        Toast.makeText(getActivity(), getString(R.string.error), Toast.LENGTH_SHORT).show();
-                    }
-                });
             });
 
         }
     }
 
-    public void createBunker(String bunkerName, String bunkerDescription, String contact){
+    public void createBunker(String bunkerName, String bunkerDescription, String contact) {
 
         // Name field check
         if (TextUtils.isEmpty(bunkerName)) {
@@ -349,7 +351,7 @@ public class NewBunkerFragment extends Fragment {
             return;
         }
 
-        if(uriList.isEmpty() && imagesLinks.isEmpty()){
+        if (uriList.isEmpty() && imagesLinks.isEmpty()) {
             Toast.makeText(getActivity(), getString(R.string.images_mandatory), Toast.LENGTH_SHORT).show();
             return;
         }
