@@ -27,7 +27,7 @@ import cm.protectu.Buildings.Earthquake.EarthquakeFragment;
 import cm.protectu.Buildings.Fire.FireFragment;
 import cm.protectu.Buildings.Hospital.HospitalFragment;
 import cm.protectu.Buildings.War.WarFragment;
-import cm.protectu.LocationAddress;
+import cm.protectu.Map.LocationAddress;
 import cm.protectu.R;
 
 public class MapBuildingFragment extends BottomSheetDialogFragment {

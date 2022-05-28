@@ -1,4 +1,4 @@
-package cm.protectu;
+package cm.protectu.Notifications;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -18,7 +18,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import cm.protectu.Map.MapFragment;
+import cm.protectu.PrefManager;
 import cm.protectu.Profile.ProfileFragment;
+import cm.protectu.R;
 
 public class NotificationsFragment extends Fragment {
 

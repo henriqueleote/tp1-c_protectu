@@ -2,12 +2,9 @@ package cm.protectu;
 
 import android.app.ActivityManager;
 import android.app.AlertDialog;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -16,27 +13,17 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.provider.Settings;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.app.NotificationCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
-import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -51,13 +38,12 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import cm.protectu.About.AboutFragment;
 import cm.protectu.Alarm.AlarmClass;
 import cm.protectu.Alarm.AlarmFragment;
 import cm.protectu.Authentication.AuthActivity;
+import cm.protectu.Authentication.UserDataClass;
 import cm.protectu.Community.ViewPagerFragment;
 import cm.protectu.Customization.CustomizationFragment;
 import cm.protectu.Customization.CustomizationManager;
@@ -65,6 +51,8 @@ import cm.protectu.Language.LanguageFragment;
 import cm.protectu.Map.FilterMapFragment;
 import cm.protectu.Map.MapFragment;
 import cm.protectu.News.NewsFragment;
+import cm.protectu.Notifications.NotificationService;
+import cm.protectu.Notifications.NotificationsFragment;
 import cm.protectu.Panic.PanicFragment;
 import cm.protectu.Profile.ProfileFragment;
 

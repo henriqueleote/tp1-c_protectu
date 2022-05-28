@@ -26,7 +26,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.Community.ViewPagerFragment;
 import cm.protectu.R;
-import cm.protectu.UserDataClass;
+import cm.protectu.Authentication.UserDataClass;
 
 
 public class MissingPostFragment extends Fragment {

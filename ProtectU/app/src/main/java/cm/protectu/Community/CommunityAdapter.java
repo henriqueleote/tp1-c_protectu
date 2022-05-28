@@ -44,7 +44,7 @@ import java.util.Date;
 
 import cm.protectu.MainActivity;
 import cm.protectu.R;
-import cm.protectu.UserDataClass;
+import cm.protectu.Authentication.UserDataClass;
 
 public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyViewHolder> {
 

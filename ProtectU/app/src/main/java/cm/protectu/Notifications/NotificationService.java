@@ -1,4 +1,4 @@
-package cm.protectu;
+package cm.protectu.Notifications;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,10 +17,8 @@ import androidx.core.app.NotificationCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.Filter;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
@@ -30,6 +27,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.Date;
 
 import cm.protectu.Alarm.AlarmClass;
+import cm.protectu.MainActivity;
+import cm.protectu.PrefManager;
+import cm.protectu.R;
 
 public class NotificationService extends Service {
     //Firebase Authentication

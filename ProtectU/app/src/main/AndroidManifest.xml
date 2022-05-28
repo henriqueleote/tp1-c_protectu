@@ -60,11 +60,11 @@
             android:exported="true"
             android:screenOrientation="portrait"></activity>
         <service
-            android:name=".NotificationService"
+            android:name=".Notifications.NotificationService"
             android:enabled="true">
         </service>
         <receiver
-            android:name=".SensorRestarterBroadcastReceiver"
+            android:name=".Notifications.SensorRestarterBroadcastReceiver"
             android:enabled="true"
             android:exported="true"
             android:label="RestartServiceWhenStopped">

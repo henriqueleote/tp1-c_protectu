@@ -44,7 +44,7 @@ import java.util.List;
 import java.util.Map;
 
 import cm.protectu.Authentication.AuthActivity;
-import cm.protectu.LocationAddress;
+import cm.protectu.Map.LocationAddress;
 import cm.protectu.Map.MapFragment;
 import cm.protectu.Map.MapPinTypeClass;
 import cm.protectu.R;

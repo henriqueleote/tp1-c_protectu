@@ -1,4 +1,4 @@
-package cm.protectu;
+package cm.protectu.Map;
 
 import android.content.Context;
 import android.location.Address;

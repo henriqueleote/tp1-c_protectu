@@ -3,7 +3,6 @@ package cm.protectu.Buildings.Bunker;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.location.Address;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,10 +30,9 @@ import com.google.firebase.firestore.GeoPoint;
 import com.smarteist.autoimageslider.SliderView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import cm.protectu.Authentication.AuthActivity;
-import cm.protectu.LocationAddress;
+import cm.protectu.Map.LocationAddress;
 import cm.protectu.Map.MapPinTypeClass;
 import cm.protectu.Buildings.SliderAdapter;
 import cm.protectu.Map.MapFragment;

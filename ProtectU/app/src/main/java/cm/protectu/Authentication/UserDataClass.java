@@ -1,4 +1,4 @@
-package cm.protectu;
+package cm.protectu.Authentication;
 
 public class UserDataClass {
     private String uid;

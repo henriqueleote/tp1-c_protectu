@@ -1,4 +1,4 @@
-package cm.protectu;
+package cm.protectu.Notifications;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

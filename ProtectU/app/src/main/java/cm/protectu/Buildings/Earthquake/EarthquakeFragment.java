@@ -35,7 +35,7 @@ import java.util.List;
 
 import cm.protectu.Authentication.AuthActivity;
 import cm.protectu.Buildings.SliderAdapter;
-import cm.protectu.LocationAddress;
+import cm.protectu.Map.LocationAddress;
 import cm.protectu.Map.MapFragment;
 import cm.protectu.R;
 
