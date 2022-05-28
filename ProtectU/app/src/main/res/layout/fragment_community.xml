@@ -29,7 +29,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:src="@drawable/ic_arrow_back_black_24dp"
-            app:tint="@color/black"
+            app:tint="?attr/textColor"
             android:visibility="gone"/>
 
         <TextView
