@@ -205,11 +205,11 @@ public class CommunityFragment extends Fragment {
                             cDialog.dismiss();
 
                             if (listOfCommunityCards.isEmpty()) {
-                                Toast.makeText(getActivity(), "" + R.string.noPublications, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), getString(R.string.noPublications), Toast.LENGTH_SHORT).show();
                             }
 
                         } else {
-                            Toast.makeText(getActivity(), ""+ R.string.error, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), getString(R.string.error), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
