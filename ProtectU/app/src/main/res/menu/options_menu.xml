@@ -3,4 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/logout"
         android:title="@string/logout"/>
+
+    <item android:id="@+id/delete_account"
+        android:title="@string/delete_account"/>
 </menu>

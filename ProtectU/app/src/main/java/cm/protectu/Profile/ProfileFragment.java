@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import cm.protectu.Authentication.AuthActivity;
+import cm.protectu.Authentication.DeleteAccountFragment;
 import cm.protectu.Community.CommunityFragment;
 import cm.protectu.MainActivity;
 import cm.protectu.MissingBoard.MissingBoardFragment;
@@ -30,8 +31,6 @@ import cm.protectu.R;
 
 
 public class ProfileFragment extends Fragment {
-    //Strings
-    String userName, lastName, phoneNumber, imageURL;
 
     //TextView
     TextView nameTextView, optionBtn, emailTextView, contactTextView;
@@ -47,9 +46,6 @@ public class ProfileFragment extends Fragment {
 
     //Firebase Firestore
     FirebaseFirestore firebaseFirestore;
-
-    static final int REQUEST_IMAGE_CAPTURE = 1;
-    static final int RESULT_OK = 1;
 
     //TAG for debug logs
     private static final String TAG = MainActivity.class.getName();
@@ -182,6 +178,10 @@ public class ProfileFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.logout:
                 logout();
+                break;
+            case R.id.delete_account:
+                DeleteAccountFragment fragment = new DeleteAccountFragment();
+                fragment.show(getParentFragmentManager(), fragment.getTag());
                 break;
             default:
                 break;
