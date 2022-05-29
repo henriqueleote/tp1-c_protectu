@@ -140,6 +140,26 @@ public class NewPostNewsFragment extends BottomSheetDialogFragment {
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                // Title's field check
+                if (TextUtils.isEmpty(title.getText().toString().trim())) {
+                    title.setError("Please enter a title");
+                    title.requestFocus();
+                    return;
+                }
+
+                // Message's field check
+                if (TextUtils.isEmpty(message.getText().toString().trim())) {
+                    message.setError("Please enter a message");
+                    message.requestFocus();
+                    return;
+                }
+
+
+                if (firebaseUrl == null){
+                    firebaseUrl = "";
+                }
+
                 firebaseFirestore.collection("users")
                         //where the userID is the same as the logged in user
                         .whereEqualTo("uid", mAuth.getCurrentUser().getUid())
@@ -285,18 +305,7 @@ public class NewPostNewsFragment extends BottomSheetDialogFragment {
      * @param newsText text written by the user
      * @param pubID
      */
-    public void createMessage(String newsText,String pubID, String newsTitle, String pubURL){
-        // Message's field check
-        if (TextUtils.isEmpty(newsText)) {
-            message.setError("Please enter a message");
-            message.requestFocus();
-            return;
-        }
-
-        if (firebaseUrl == null){
-            firebaseUrl = "";
-        }
-
+    public void createMessage(String newsText, String pubID, String newsTitle, String pubURL){
         DocumentReference documentReference = firebaseFirestore.collection("news").document();
         documentReference.set(new NewsCardClass(newsTitle,newsText,documentReference.getId(),firebaseUrl,pubURL,pubID, new Date()))
                 .addOnSuccessListener(new OnSuccessListener<Void>() {

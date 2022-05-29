@@ -163,6 +163,12 @@ public class MapFragment extends Fragment {
         buildingsList = new ArrayList<>();
         buildingAllExtrasList = new ArrayList<>();
 
+
+        //Only shows the button if its a admin or authority
+        if(!mAuth.getCurrentUser().isAnonymous())
+            if(!MainActivity.sessionUser.getUserType().equals("user"))
+                createBtn.setVisibility(View.VISIBLE);
+
         getLoadData();
 
         createBtn.setOnClickListener(new View.OnClickListener() {
@@ -304,11 +310,6 @@ public class MapFragment extends Fragment {
                                         MapStyleOptions.loadRawResourceStyle(
                                                 getActivity(), R.raw.style_default_map));
                             }
-
-                            //Only shows the button if its a admin or authority
-                            if(!mAuth.getCurrentUser().isAnonymous())
-                                if(!MainActivity.sessionUser.getUserType().equals("user"))
-                                    createBtn.setVisibility(View.VISIBLE);
 
                             currentLocation = location;
 

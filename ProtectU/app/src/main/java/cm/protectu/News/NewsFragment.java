@@ -76,6 +76,12 @@ public class NewsFragment extends Fragment {
         newsAdapter = new NewsAdapter(getActivity(), listOfNewsCardClasses,mAuth, getParentFragmentManager());
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 1));
         recyclerView.setAdapter(newsAdapter);
+        floatingActionButton = view.findViewById(R.id.createMessageButton);
+
+        //Only shows the button if its a admin or authority
+        if(!mAuth.getCurrentUser().isAnonymous())
+            if(!MainActivity.sessionUser.getUserType().equals("user"))
+                floatingActionButton.setVisibility(View.VISIBLE);
 
 
         swipeToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -93,9 +99,10 @@ public class NewsFragment extends Fragment {
                 }, 800);
             }
         });
+
+
         newsCardsData();
 
-        floatingActionButton = view.findViewById(R.id.createMessageButton);
         fragment = this;
 
         //TODO: DISABLE BUTTON

@@ -47,7 +47,6 @@
         </androidx.recyclerview.widget.RecyclerView>
 
 
-
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/createMessageButton"
             android:layout_width="wrap_content"
@@ -62,7 +61,8 @@
             android:focusable="true"
             app:backgroundTint="?attr/floatButton"
             app:pressedTranslationZ="12dp"
-            app:srcCompat="@drawable/ic_add_black_24dp" />
+            app:srcCompat="@drawable/ic_add_black_24dp"
+            android:visibility="invisible"/>
 
     </RelativeLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
