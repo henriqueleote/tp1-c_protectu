@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
@@ -38,6 +39,7 @@ public class CustomizationFragment extends Fragment implements AdapterView.OnIte
 
     private Spinner spinner;
     private Button btnSave;
+    private CheckBox cbAutomaticLayout;
 
     String setting;
 
@@ -53,14 +55,19 @@ public class CustomizationFragment extends Fragment implements AdapterView.OnIte
         mAuth = FirebaseAuth.getInstance();
         arrowBack = view.findViewById(R.id.backID);
         btnSave = view.findViewById(R.id.btnSave);
+        cbAutomaticLayout = view.findViewById(R.id.cbAutomaticTheme);
 
-
+        //Styling the Spinner
         spinner = view.findViewById(R.id.spinner_theme);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(), R.array.theme_values, R.layout.color_spinner_layout);
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_layout);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
+
         checkSelected();
+
+        // Verify if automatic theme functionality is activated
+        isAutomaticTheme();
 
         //go back to the map frame
         arrowBack.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +89,7 @@ public class CustomizationFragment extends Fragment implements AdapterView.OnIte
                 builder.setMessage(R.string.question_app_will_restart)
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
+                                CustomizationManager.getInstance().switchAutomaticTheme(cbAutomaticLayout.isChecked());
                                 CustomizationManager.getInstance().saveTheme(setting);
                                 getActivity().recreate();
                             }
@@ -106,6 +114,13 @@ public class CustomizationFragment extends Fragment implements AdapterView.OnIte
         //Returns the view
         return view;
 
+    }
+
+    private void isAutomaticTheme() {
+        if (CustomizationManager.getInstance().isAutomaticTheme())
+            cbAutomaticLayout.setChecked(true);
+        else
+            cbAutomaticLayout.setChecked(false);
     }
 
     private void checkSelected() {

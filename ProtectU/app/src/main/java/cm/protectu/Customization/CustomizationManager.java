@@ -45,4 +45,14 @@ public class CustomizationManager {
     public String getSelectedTheme() {
         return sharedPreferences.getString("theme", "light");
     }
+
+    public void switchAutomaticTheme(boolean value){
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("automaticTheme", value);
+        editor.commit();
+    }
+
+    public boolean isAutomaticTheme(){
+        return sharedPreferences.getBoolean("automaticTheme", false);
+    }
 }

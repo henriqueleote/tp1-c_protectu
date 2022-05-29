@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     private NavigationView sideBar;
 
     //for brightness sensor
-    private float floatThreshold = 1;
+    private float floatThreshold = 100;
     private SensorManager sensorManager;
     private Sensor sensorLight;
 
@@ -87,29 +87,37 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     private static boolean active = false;
 
+    private boolean darkSensor;
+
     boolean connected = false;
 
+    private boolean automaticLayout;
+
     public static Fragment currentFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         MainActivity.context = getApplicationContext();
 
         //Read and Load Themes
-        if (CustomizationManager.getInstance().getSelectedTheme().equalsIgnoreCase("dark"))
+        if (CustomizationManager.getInstance().getSelectedTheme().equalsIgnoreCase("dark")) {
+            darkSensor = true;
             setTheme(R.style.Theme_Dark);
-        else
+        }
+        else{
             setTheme(R.style.Theme_Light);
-//        if (AppCompatDelegate.getDefaultNightMode()== AppCompatDelegate.MODE_NIGHT_YES){
-//            setTheme(R.style.Theme_Dark);
-//        }else
-//            setTheme(R.style.Theme_Light);
+            darkSensor = false;
+        }
+
         PrefManager prefManager = new PrefManager(this);
+
+        automaticLayout = CustomizationManager.getInstance().isAutomaticTheme();
 
         mSensorService = new NotificationService();
         mServiceIntent = new Intent(this, NotificationService.class);
         if (prefManager.getNotifications().equals("true") && !isMyServiceRunning(mSensorService.getClass())) {
             startService(mServiceIntent);
-        }else stopService(mServiceIntent);
+        } else stopService(mServiceIntent);
         //brightness sensor
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensorLight = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
@@ -117,12 +125,21 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             @Override
             public void onSensorChanged(SensorEvent event) {
                 float floatSensorValue = event.values[0]; // brightness
-
-                if (floatSensorValue < floatThreshold){
-                    //g.setMapStyle(MapStyleOptions.loadRawResourceStyle(getActivity(), R.raw.style_dark_map));
-                }
-                else {
-                    //This code is when the room is light
+                if (CustomizationManager.getInstance().isAutomaticTheme()) {
+                    if (floatSensorValue < floatThreshold) {
+                        if (!darkSensor) {
+                            CustomizationManager.getInstance().saveTheme("dark");
+                            darkSensor = true;
+                            recreate();
+                        }
+                    }
+                    else {
+                        if (darkSensor) {
+                            CustomizationManager.getInstance().saveTheme("light");
+                            darkSensor = false;
+                            recreate();
+                        }
+                    }
                 }
             }
 
@@ -135,16 +152,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         super.onCreate(savedInstanceState);
 
-
-        //Load language
-//        String languageToLoad = LanguageManagerClass.getInstance().readLocale();
-//        Locale locale;
-//        locale = new Locale(languageToLoad);
-//        Locale.setDefault(locale);
-//        Configuration config = new Configuration();
-//        config.locale = locale;
-//        this.getBaseContext().getResources().updateConfiguration(config,
-//                this.getBaseContext().getResources().getDisplayMetrics());
 
         //Link the layout to the activity
         setContentView(R.layout.activity_main);
@@ -200,7 +207,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                                     DocumentSnapshot document = task.getResult().getDocuments().get(task.getResult().getDocuments().size() - 1);
                                     AlarmClass alarmClass = document.toObject(AlarmClass.class);
                                     long cur = System.currentTimeMillis();
-                                    if(active && alarmClass.getTime().before((new Date(cur + 120000))) && alarmClass.getTime().after((new Date(cur - 120000)))){
+                                    if (active && alarmClass.getTime().before((new Date(cur + 120000))) && alarmClass.getTime().after((new Date(cur - 120000)))) {
                                         AlarmFragment g = new AlarmFragment(MainActivity.this, alarmClass);
                                         g.show();
 
@@ -253,7 +260,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     //Method to load Fragments
     public boolean loadFragment(Fragment fragment) {
-        if (fragment != null) {
+        if (!isDestroyed() && fragment != null) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, fragment)
@@ -272,13 +279,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         //Switch case to load the fragment based on the bottom navbar option
         switch (item.getItemId()) {
             case R.id.navigation_map:
-                if(FilterMapFragment.filteredMapPinClasses != null)
+                if (FilterMapFragment.filteredMapPinClasses != null)
                     FilterMapFragment.filteredMapPinClasses.clear();
                 currentFragment = new MapFragment();
                 break;
 
             case R.id.navigation_profile:
-                if(mAuth.getCurrentUser().isAnonymous()){
+                if (mAuth.getCurrentUser().isAnonymous()) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setMessage(R.string.want_to_go_to_login)
                             .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
@@ -294,7 +301,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                             });
                     // Create the AlertDialog object and return it
                     builder.show();
-                }else{
+                } else {
                     getUserData(-1);
                     currentFragment = new ProfileFragment();
                 }
@@ -311,7 +318,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 break;
 
             case R.id.navigation_panic:
-                if(mAuth.getCurrentUser().isAnonymous()){
+                if (mAuth.getCurrentUser().isAnonymous()) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setMessage(R.string.want_to_go_to_login)
                             .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
@@ -327,7 +334,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                             });
                     // Create the AlertDialog object and return it
                     builder.show();
-                }else{
+                } else {
                     PanicFragment bottomPanic = new PanicFragment();
                     bottomPanic.show(getSupportFragmentManager(), bottomPanic.getTag());
                     break;
@@ -345,7 +352,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         startActivity(new Intent(MainActivity.this, AuthActivity.class));
     }
 
-    public void getUserData(int code){
+    public void getUserData(int code) {
         currentFragment = new MapFragment();
         //Firebase Authentication function get the data from firebase with certain criteria
         firebaseFirestore.collection("users")
@@ -359,7 +366,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 sessionUser = document.toObject(UserDataClass.class);
                             }
-                            if(code == 1)
+                            if (code == 1)
                                 loadFragment(currentFragment);
                         } else {
                             //Shows the error
@@ -377,11 +384,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
             if (serviceClass.getName().equals(service.service.getClassName())) {
-                Log.i ("isMyServiceRunning?", true+ "");
+                Log.i("isMyServiceRunning?", true + "");
                 return true;
             }
         }
-        Log.i ("isMyServiceRunning?", false+ "");
+        Log.i("isMyServiceRunning?", false + "");
         return false;
     }
 

@@ -83,6 +83,39 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/lnLayoutCheckBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:background="?attr/backgroundColorSelected">
+
+        <TextView
+            android:id="@+id/lblAutomaticTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/textColor"
+            android:text="Automatic Theme"
+            android:layout_weight="1"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:layout_marginStart="15dp"
+            android:fontFamily="@font/lexend_regular"
+            android:textSize="15dp"/>
+
+        <CheckBox
+            android:id="@+id/cbAutomaticTheme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/lblAutomaticTheme"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="20dp"
+            android:backgroundTint="?attr/textColor" />
+
+    </LinearLayout>
+
     <Button
         android:id="@+id/btnSave"
         android:layout_width="wrap_content"
