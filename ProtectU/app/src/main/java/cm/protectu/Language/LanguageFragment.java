@@ -29,7 +29,7 @@ import cm.protectu.WelcomeScreenActivity;
 
 public class LanguageFragment extends Fragment {
 
-    private CheckBox portugueseCheck, englishCheck;
+    private CheckBox portugueseCheck, englishCheck, frenchCheck, germanCheck, ukrainianCheck;
     private Button btnSave;
     private ImageView btnBack;
     private PrefManager prefManager;
@@ -48,6 +48,11 @@ public class LanguageFragment extends Fragment {
         //Get elements from view
         portugueseCheck = view.findViewById(R.id.portugueseRadio);
         englishCheck = view.findViewById(R.id.englishRadio);
+        frenchCheck = view.findViewById(R.id.frenchRadio);
+        germanCheck = view.findViewById(R.id.germanRadio);
+        ukrainianCheck = view.findViewById(R.id.ukrainianRadio);
+
+
         btnSave = view.findViewById(R.id.btnSave);
         btnBack = view.findViewById(R.id.backID);
 
@@ -83,6 +88,9 @@ public class LanguageFragment extends Fragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked){
                     englishCheck.setChecked(false);
+                    frenchCheck.setChecked(false);
+                    germanCheck.setChecked(false);
+                    ukrainianCheck.setChecked(false);
                     language = "pt";
                 }
             }
@@ -94,7 +102,52 @@ public class LanguageFragment extends Fragment {
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked){
                     portugueseCheck.setChecked(false);
+                    frenchCheck.setChecked(false);
+                    germanCheck.setChecked(false);
+                    ukrainianCheck.setChecked(false);
                     language = "us";
+                }
+            }
+        });
+
+        //Depending on the selected checkbox, it adds to the array list, or removes if it was an uncheck
+        frenchCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked){
+                    portugueseCheck.setChecked(false);
+                    englishCheck.setChecked(false);
+                    germanCheck.setChecked(false);
+                    ukrainianCheck.setChecked(false);
+                    language = "fr";
+                }
+            }
+        });
+
+        //Depending on the selected checkbox, it adds to the array list, or removes if it was an uncheck
+        germanCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked){
+                    portugueseCheck.setChecked(false);
+                    englishCheck.setChecked(false);
+                    frenchCheck.setChecked(false);
+                    ukrainianCheck.setChecked(false);
+                    language = "de";
+                }
+            }
+        });
+
+        //Depending on the selected checkbox, it adds to the array list, or removes if it was an uncheck
+        ukrainianCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+                if (isChecked){
+                    portugueseCheck.setChecked(false);
+                    englishCheck.setChecked(false);
+                    frenchCheck.setChecked(false);
+                    germanCheck.setChecked(false);
+                    language = "uk";
                 }
             }
         });
@@ -128,6 +181,12 @@ public class LanguageFragment extends Fragment {
             portugueseCheck.setChecked(true);
         if(prefManager.getLanguage().equalsIgnoreCase("us"))
             englishCheck.setChecked(true);
+        if(prefManager.getLanguage().equalsIgnoreCase("fr"))
+            frenchCheck.setChecked(true);
+        if(prefManager.getLanguage().equalsIgnoreCase("de"))
+            germanCheck.setChecked(true);
+        if(prefManager.getLanguage().equalsIgnoreCase("uk"))
+            ukrainianCheck.setChecked(true);
 
     }
 }
