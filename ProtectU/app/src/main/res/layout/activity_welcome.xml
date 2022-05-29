@@ -38,7 +38,8 @@
         android:layout_alignParentBottom="true"
         android:text="Comecar"
         android:textColor="@android:color/white"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:backgroundTint="@color/primary_button"/>
 
     <TextView
         android:id="@+id/text_next"
