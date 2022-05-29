@@ -89,7 +89,7 @@
     <string name="registering">Registering...</string>
     <string name="areYouSureProgressLost">Are you sure you want to return? All progress will be lost</string>
     <string name="chooseExtras">Choose extras</string>
-    <string name="add">Adicionar</string>
+    <string name="add">Add</string>
     <string name="images_mandatory">Images are mandatory</string>
     <string name="limit_six_images">Cant have more than 6 images</string>
     <string name="loading_images">Loading image(s)...</string>
