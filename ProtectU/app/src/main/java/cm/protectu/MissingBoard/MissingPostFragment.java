@@ -1,5 +1,6 @@
 package cm.protectu.MissingBoard;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,8 +18,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -41,7 +44,7 @@ public class MissingPostFragment extends Fragment {
     private static final String TAG =  AuthActivity.class.getName();
 
 
-    public MissingPostFragment(String userID, String nameMissing , String description, String ageMssing, String phoneNumber, String urlProfile, String urlMissing) {
+    public MissingPostFragment(String userID, String nameMissing , String description, String ageMssing, String phoneNumber, String urlMissing) {
         this.userID = userID;
         this.nameMissing = nameMissing;
         this.description = description;
@@ -79,15 +82,25 @@ public class MissingPostFragment extends Fragment {
         profileImage = view.findViewById(R.id.foto);
         MissingImage = view.findViewById(R.id.imageMissingID);
 
-        //coloca a imagem do utilizador
-        if(!urlProfile.equals("null")){
-            Glide.with(getActivity())
-                    .load(urlProfile)
-                    .centerCrop()
-                    
-                    .circleCrop()
-                    .into(profileImage);
-        }
+        firebaseFirestore = FirebaseFirestore.getInstance();
+        firebaseFirestore.collection("users")
+                .document(userID)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        UserDataClass userDataClass = documentSnapshot.toObject(UserDataClass.class);
+                        if (userDataClass != null && userDataClass.getFirstName() != null) {
+                            if (!userDataClass.getImageURL().equals("null")) {
+                                Glide.with(getContext())
+                                        .load(userDataClass.getImageURL())
+                                        .centerCrop()
+                                        .circleCrop()
+                                        .into(profileImage);
+                            }
+                        }
+                    }
+                });
 
 
         //coloca a imagem da pessoa desaparecida

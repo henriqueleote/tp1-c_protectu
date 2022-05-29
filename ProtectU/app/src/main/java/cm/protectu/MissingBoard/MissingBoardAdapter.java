@@ -14,11 +14,14 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
+import cm.protectu.Authentication.UserDataClass;
 import cm.protectu.MainActivity;
 import cm.protectu.R;
 
@@ -97,6 +100,8 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
                 .into(holder.missingImage);
 
 
+
+
         /**
          *
          * Lets you go to the clicked card post
@@ -104,7 +109,7 @@ public class MissingBoardAdapter extends RecyclerView.Adapter<MissingBoardAdapte
         holder.cardMissing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MissingPostFragment fragment = new MissingPostFragment(mData.get(holder.getAdapterPosition()).getUserID(),mData.get(holder.getAdapterPosition()).getMissingName(),mData.get(holder.getAdapterPosition()).getDescription(),mData.get(holder.getAdapterPosition()).getMissingAge(),mData.get(holder.getAdapterPosition()).getPhoneNumber(),mData.get(pos).getFoto(),mData.get(pos).getFotoMissing());
+                MissingPostFragment fragment = new MissingPostFragment(mData.get(holder.getAdapterPosition()).getUserID(),mData.get(holder.getAdapterPosition()).getMissingName(),mData.get(holder.getAdapterPosition()).getDescription(),mData.get(holder.getAdapterPosition()).getMissingAge(),mData.get(holder.getAdapterPosition()).getPhoneNumber(),mData.get(pos).getFotoMissing());
                 FragmentTransaction transaction = parentFragment.beginTransaction();
                 transaction.replace(R.id.fragment_container, fragment);
                 transaction.addToBackStack(null);
