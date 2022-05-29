@@ -257,7 +257,7 @@ public class NewMissingPostFragment extends Fragment {
                     .load(imguri)
                     .centerCrop()
                     .into(imageUploaded);
-            
+
             imageUploaded.getLayoutParams().height= ViewGroup.LayoutParams.MATCH_PARENT;
             imageUploaded.getLayoutParams().width= ViewGroup.LayoutParams.MATCH_PARENT;
 

@@ -49,9 +49,9 @@
             android:layout_marginEnd="50dp"
             android:layout_marginBottom="50dp"
             android:fontFamily="@font/lexend_regular"
+            android:justificationMode="inter_word"
             android:text="Esta aplicação foi desenvolvida no âmbito de uma disciplina do segundo ano, Computação Móvel, do curso de Engenharia Informática, do Instituto Politécnico de Setúbal. Tendo esta sido desenvolvida pelo grupo descrito mais a baixo. \nEsta aplicação tem como principal objetivo ajudar pessoas que se encontrem em perigo, mais precisamente de acontecimentos bélicos, pelo que nesta é providenciada informações de lugares seguros, em que locais estão a ocorrer estes acontecimentos, quais as pessoas que se encontram desaparecidas entre outras informações/funções. \n
 "
-            android:justificationMode="inter_word"
             android:textColor="?attr/textColor" />
 
         <TextView
@@ -132,7 +132,7 @@
             android:layout_marginLeft="40dp"
             android:fontFamily="@font/lexend_regular"
             android:paddingTop="5dp"
-            android:text=" +351 960000000 \n example@gmail.com"
+            android:text=" +351 960000000 \n ProtectU@gmail.com"
             android:textColor="?attr/textColor" />
 
     </RelativeLayout>
