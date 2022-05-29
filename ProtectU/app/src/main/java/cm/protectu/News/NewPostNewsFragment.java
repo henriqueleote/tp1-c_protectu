@@ -232,7 +232,8 @@ public class NewPostNewsFragment extends BottomSheetDialogFragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == RESULT_OK) {
 
-            if(data.getData() != null){
+
+            if(data != null && data.getData() != null){
                 imguri = data.getData();
                 Log.d(TAG, "Value: " + data.getData());
             }
