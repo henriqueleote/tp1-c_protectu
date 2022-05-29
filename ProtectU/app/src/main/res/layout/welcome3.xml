@@ -6,37 +6,36 @@
 
     <ImageView
         android:id="@+id/imageView1"
-        android:layout_width="200dp"
-        android:layout_height="350dp"
+        android:layout_width="340px"
+        android:layout_height="710px"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="140dp"
-        android:src="@drawable/map_image"
         android:scaleType="fitXY"
-        android:layout_centerHorizontal="true" />
+        android:src="@drawable/welcome3" />
 
     <TextView
         android:id="@+id/function"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Comunidade"
-        android:textSize="25sp"
-        android:layout_marginTop="20dp"
-        android:textStyle="bold"
-        android:layout_centerHorizontal="true"
         android:layout_below="@+id/imageView1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="@string/Community"
         android:textColor="#000000"
-        />
+        android:textSize="25sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/function"
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
         android:layout_centerHorizontal="true"
+        android:layout_marginLeft="60dp"
         android:layout_marginTop="15dp"
+        android:layout_marginRight="60dp"
         android:justificationMode="inter_word"
-        android:text="Fala com a coumindade e partilha informação sobre acontecimentos."
+        android:text="@string/welcome3_text"
         android:textColor="#000000"
         android:textSize="15sp" />
 
