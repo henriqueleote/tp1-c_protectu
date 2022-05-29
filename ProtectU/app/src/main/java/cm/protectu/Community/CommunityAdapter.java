@@ -177,7 +177,7 @@ public class CommunityAdapter extends RecyclerView.Adapter<CommunityAdapter.MyVi
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("text/plain");
                     String shareBody = messageText;
-                    String shareSub = holder.userName.getText().toString() + " " + messageText;
+                    String shareSub = holder.userName.getText().toString() + ": " + messageText;
                     intent.putExtra(Intent.EXTRA_SUBJECT, shareBody);
                     intent.putExtra(Intent.EXTRA_TEXT, shareSub);
                     context.startActivity(Intent.createChooser(intent, "Share this Post"));

@@ -106,13 +106,18 @@ public class MissingPostFragment extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.setType("text/plain");
-                String shareBody = "Your Body here";
-                String shareSub = "Your Subject here";
+                StringBuilder str = new StringBuilder();
+                str.append("\nMissing Person: "+nameMissing);
+                str.append(" | Age: "+ ageMssing);
+                str.append("\nDescription: "+description);
+                String shareBody = str.toString();
+                String shareSub = str.toString();
                 intent.putExtra(Intent.EXTRA_SUBJECT,shareBody);
                 intent.putExtra(Intent.EXTRA_TEXT,shareSub);
                 startActivity(Intent.createChooser(intent,"Share this Post"));
             }
         });
+
 
         /**
          *
