@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
     private static Context context;
 
-    public static ViewPagerFragment viewPager;
+    public ViewPagerFragment viewPager;
 
     private static boolean active = false;
 
