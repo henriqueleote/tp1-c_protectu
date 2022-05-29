@@ -164,4 +164,7 @@
     <string name="no_posts">Немає постів</string>
     <string name="delete_account">Видалити акаунт</string>
     <string name="automatic_theme">Автоматична тема</string>
+    <string name="welcome3_text">Спілкуйтеся зі спільнотою та поділіться інформацією про події.</string>
+    <string name="welcome1_text">Дізнайтеся про розташування різних подій/об’єктів поблизу!</string>
+    <string name="welcome2_Text">Легко попросіть допомоги зі своєю тривожною кнопкою.</string>
 </resources>

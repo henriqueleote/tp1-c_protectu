@@ -161,4 +161,7 @@
     <string name="show_results">Montrer les résultats</string>
     <string name="delete_account">Supprimer le compte</string>
     <string name="automatic_theme">Thème automatique</string>
+    <string name="welcome3_text">Parlez à la communauté et partagez des informations sur les événements.</string>
+    <string name="welcome1_text">Obtenez l\'emplacement des différents événements/installations près de chez vous !</string>
+    <string name="welcome2_Text">Demandez facilement de l\'aide avec votre bouton panique.</string>
 </resources>

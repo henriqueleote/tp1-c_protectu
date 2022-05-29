@@ -76,4 +76,9 @@
     <string name="theme">Tema</string>
     <string name="pay_attention">Preste atenção aos alarmes aéreos em sua área</string>
     <string name="cancel">Cancel</string>
+    <string name="welcome1_text">Obtém a localização dos diferentes eventos/ instalações perto de ti!</string>
+    <string name="welcome2_Text">Peça ajuda facilmente com seu botão de pânico.</string>
+    <string name="welcome3_text">Fala com a coumindade e partilha informação sobre os acontecimentos.</string>
+    <string name="type_alarm_message">Titulo</string>
+    <string name="type_details">Mensagem</string>
 </resources>
