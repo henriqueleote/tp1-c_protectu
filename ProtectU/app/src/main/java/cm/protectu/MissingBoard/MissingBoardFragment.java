@@ -80,7 +80,7 @@ public class MissingBoardFragment extends Fragment {
         menuImageView = view.findViewById(R.id.menuImageView);
 
         int searchCloseButtonId = searchNames.getContext().getResources().getIdentifier("android:id/search_close_btn", null, null);
-        ImageView closeButton = (ImageView) this.searchNames.findViewById(searchCloseButtonId);
+        ImageView closeButton = this.searchNames.findViewById(searchCloseButtonId);
 
         fragment = this;
 
