@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.core.widget.ImageViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -256,8 +257,12 @@ public class NewMissingPostFragment extends Fragment {
                     .load(imguri)
                     .centerCrop()
                     .into(imageUploaded);
-            cameraIcon.setVisibility(View.INVISIBLE);
+            
+            imageUploaded.getLayoutParams().height= ViewGroup.LayoutParams.MATCH_PARENT;
+            imageUploaded.getLayoutParams().width= ViewGroup.LayoutParams.MATCH_PARENT;
 
+
+            ImageViewCompat.setImageTintList(imageUploaded, null);
 
 
             ProgressDialog mDialog = new ProgressDialog(getActivity());
