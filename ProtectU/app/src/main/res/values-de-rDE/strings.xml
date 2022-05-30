@@ -163,4 +163,5 @@
     <string name="welcome1_text">Holen Sie sich den Ort verschiedener Veranstaltungen/Einrichtungen in Ihrer Nähe!</string>
     <string name="welcome3_text">Sprechen Sie mit der Community und teilen Sie Informationen über Veranstaltungen.</string>
     <string name="welcome2_Text">Bitten Sie mit Ihrem Panikknopf ganz einfach um Hilfe.</string>
+    <string name="begin">Start</string>
 </resources>

@@ -168,4 +168,5 @@
     <string name="welcome1_text">Get the location of different events/facilities near you!</string>
     <string name="welcome2_Text">Easily ask for help with your panic button.</string>
     <string name="welcome3_text">Talk to the community and share information about events.</string>
+    <string name="begin">Begin</string>
 </resources>
