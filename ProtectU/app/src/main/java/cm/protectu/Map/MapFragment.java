@@ -195,10 +195,8 @@ public class MapFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(gMap.getMapType() == GoogleMap.MAP_TYPE_NORMAL){
-                    menuImageView.setColorFilter(ContextCompat.getColor(getContext(), R.color.white), android.graphics.PorterDuff.Mode.MULTIPLY);
                     gMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
                 }else{
-                    menuImageView.setColorFilter(ContextCompat.getColor(getContext(), R.attr.textColor), android.graphics.PorterDuff.Mode.MULTIPLY);
                     gMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
                 }
                 loadMap();
